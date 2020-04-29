@@ -20,6 +20,10 @@ knitr::opts_chunk$set(
 
 epoxy makes [glue] easy to use in R Markdown documents.
 
+_epoxy is in a proof-of-concept stage right now._
+_I'm still experimenting, so the API ~~may~~ will change._
+_I'd love to hear your thoughts, feel free to [open issues](https://github.com/gadenbuie/epoxy/issues)_.
+
 ## Installation
 
 You can install the proof-of-concept version of epoxy with [remotes].

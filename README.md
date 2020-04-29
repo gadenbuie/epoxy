@@ -10,6 +10,11 @@
 epoxy makes [glue](https://glue.tidyverse.org) easy to use in R Markdown
 documents.
 
+*epoxy is in a proof-of-concept stage right now.* *I’m still
+experimenting, so the API ~~may~~ will change.* *I’d love to hear your
+thoughts, feel free to [open
+issues](https://github.com/gadenbuie/epoxy/issues)*.
+
 ## Installation
 
 You can install the proof-of-concept version of epoxy with
