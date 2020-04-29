@@ -10,6 +10,8 @@ Authors@R:
 Description: Experimental. String interpolation for 'R Markdown'
     documents and 'Shiny' apps.
 License: MIT + file LICENSE
+URL: https://github.com/gadenbuie/epoxy
+BugReports: https://github.com/gadenbuie/epoxy/issues
 Imports: 
     glue,
     knitr

@@ -23,3 +23,5 @@ use_r("zzz")
 use_tidy_description()
 
 use_readme_rmd()
+
+use_github()
