@@ -156,7 +156,24 @@ mpg <- data.frame(
 ```{glue ref.label="car-name", glue_data = mpg}
 ```
 
+## Glue HTML Blocks
 
+Use the `glue_html` block to glue R and HTML together.
+The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
+
+````
+<ul>
+```{glue_html, glue_data = mpg}`r ''`
+  <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+```
+</ul>
+````
+
+<ul>
+```{glue_html, glue_data = mpg}
+  <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+```
+</ul>
 
 [glue]: https://glue.tidyverse.org
 [remotes]: https://remotes.r-lib.org

@@ -28,3 +28,4 @@ use_github()
 use_tidy_description()
 
 use_r("engines")
+use_package("rmarkdown")

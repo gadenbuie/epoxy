@@ -129,3 +129,24 @@ mpg <- data.frame(
   - A Chevrolet Malibu gets 19 city and 27 highway miles per gallon.
   - A Dodge Caravan gets 7 city and 24 highway miles per gallon.
   - A Ford Expedition gets 11 city and 17 highway miles per gallon.
+
+## Glue HTML Blocks
+
+Use the `glue_html` block to glue R and HTML together. The output is
+[raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
+
+    <ul>
+    ```{glue_html, glue_data = mpg}
+      <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+    ```
+    </ul>
+
+<ul>
+
+  <li><strong>Chevrolet</strong> <em>Malibu</em></li>
+
+  <li><strong>Dodge</strong> <em>Caravan</em></li>
+
+  <li><strong>Ford</strong> <em>Expedition</em></li>
+
+</ul>

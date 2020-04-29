@@ -14,7 +14,8 @@ URL: https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
 Imports: 
     glue,
-    knitr
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
