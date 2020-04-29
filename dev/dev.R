@@ -26,3 +26,5 @@ use_readme_rmd()
 
 use_github()
 use_tidy_description()
+
+use_r("engines")
