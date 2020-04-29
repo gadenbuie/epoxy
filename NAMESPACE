@@ -2,6 +2,7 @@
 
 export(epoxy_style_bold)
 export(epoxy_style_code)
+export(epoxy_style_collapse)
 export(epoxy_style_italic)
 export(epoxy_style_wrap)
 export(knitr_engine_glue)

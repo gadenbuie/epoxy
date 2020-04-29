@@ -63,21 +63,6 @@ among other options.
 With an amazing stroke of luck,
 RStudio autocompletion works inside `glue` chunks!
 
-### glue chunks are vectorized
-
-Unlike inline R code, the `glue` chunks are vectorized.
-This can be something to watch out for or it can be an advantage:
-
-````
-```{glue}`r ''`
-{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
-```
-````
-
-```{glue}
-{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
-```
-
 ### Style replaced values
 
 You can use the `expoxy_style_wrap()` with the `.transformer` chunk option
@@ -96,6 +81,43 @@ from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 ```{glue, .transformer = epoxy_style_bold()}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$dist)} mph.
+```
+
+### glue chunks are vectorized
+
+Unlike inline R code, the `glue` chunks are vectorized.
+This can be something to watch out for or it can be an advantage:
+
+````
+```{glue}`r ''`
+{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
+```
+````
+
+```{glue}
+{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
+```
+
+You can collapse fields automatically using the `epoxy_style_collapse()` transformer.
+You can then choose how vectors are collapsed by adding `*`, `&` or `|` 
+to the end of the expression.
+
+- `*` collapses with commas, e.g. `{letters[1:3]*}`.
+- `&` collapses with commas and adds `" and "` between the last two items
+- `|` collapses with commas and adds `" or "` between the last two items.
+
+````
+```{glue, .transformer = epoxy_style_collapse()}`r ''`
+- The first three letters are {letters[1:3]*}.
+- When capitalized, they are {LETTERS[1:3]&}.
+- They're indexed by {1:3|}.
+```
+````
+
+```{glue, .transformer = epoxy_style_collapse()}
+- The first three letters are {letters[1:3]*}.
+- When capitalized, they are {LETTERS[1:3]&}.
+- They're indexed by {1:3|}.
 ```
 
 ### Templating with glue chunks

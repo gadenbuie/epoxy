@@ -9,6 +9,14 @@
 Experimental. String interpolation for 'R Markdown'
     documents and 'Shiny' apps.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/gadenbuie/epoxy}
+  \item Report bugs at \url{https://github.com/gadenbuie/epoxy/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Garrick Aden-Buie \email{garrick@adenbuie.com} (\href{https://orcid.org/0000-0002-7111-0077}{ORCID})
 
