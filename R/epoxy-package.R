@@ -1,4 +1,4 @@
-#' @importFrom glue glue
+#' @importFrom glue glue glue_collapse glue_data
 #' @keywords internal
 "_PACKAGE"
 

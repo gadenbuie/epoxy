@@ -43,8 +43,8 @@ expressions in `{...}`, just like in `glue::glue()`.
     But on average the distance travelled was only _{mean(cars$dist)}_.
     ```
 
-The average speed of the cars was **15.4 mph.** But on average the
-distance travelled was only *42.98*.
+The average speed of the cars was **15.4 mph**. But on average the
+distance travelled was only *42.98 ft*.
 
 All of the arguments of `glue::glue()` are available as chunk options,
 so you can configure the `.open` and `.close` characters, e.g. `{{`
@@ -130,7 +130,9 @@ mpg <- data.frame(
   - A Dodge Caravan gets 7 city and 24 highway miles per gallon.
   - A Ford Expedition gets 11 city and 17 highway miles per gallon.
 
-## Glue HTML Blocks
+## Raw Blocks
+
+### HTML Blocks
 
 Use the `glue_html` block to glue R and HTML together. The output is
 [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
@@ -144,9 +146,27 @@ Use the `glue_html` block to glue R and HTML together. The output is
 <ul>
 
   <li><strong>Chevrolet</strong> <em>Malibu</em></li>
-
   <li><strong>Dodge</strong> <em>Caravan</em></li>
-
   <li><strong>Ford</strong> <em>Expedition</em></li>
 
 </ul>
+
+### LaTeX Blocks
+
+Similarly, you can also use `glue_latex` blocks to glue R and LaTeX
+together. By default, expressions in these types of blocks are wrapped
+in `<` and `>`.
+
+    \begin{itemize}
+    ```{glue_latex, glue_data = mpg}
+    \item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
+    ```
+    \end{itemize}
+
+In R Markdown knitting into a LaTeX output, this renders as:
+
+    \begin{itemize}
+    \item \textbf{Chevrolet} \textit{Malibu} gets 19 city and 27 highway miles per gallon.
+    \item \textbf{Dodge} \textit{Caravan} gets 7 city and 24 highway miles per gallon.
+    \item \textbf{Ford} \textit{Expedition} gets 11 city and 17 highway miles per gallon.
+    \end{itemize}

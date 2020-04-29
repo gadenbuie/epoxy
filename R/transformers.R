@@ -43,6 +43,6 @@ collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
   function(text, envir) {
     text <- sub(regexp, "", text)
     res <- glue::identity_transformer(text, envir)
-    glue::glue_collapse(res, sep = opts$sep, width = opts$width, last = opts$last)
+    glue_collapse(res, sep = opts$sep, width = opts$width, last = opts$last)
   }
 }

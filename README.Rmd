@@ -55,8 +55,8 @@ But on average the distance travelled was only _{mean(cars$dist)}_.
 ````
 
 ```{glue}
-The average speed of the cars was **{mean(cars$speed)} mph.**
-But on average the distance travelled was only _{mean(cars$dist)}_.
+The average speed of the cars was **{mean(cars$speed)} mph**.
+But on average the distance travelled was only _{mean(cars$dist)} ft_.
 ```
 
 All of the arguments of `glue::glue()` are available as chunk options,
@@ -156,7 +156,9 @@ mpg <- data.frame(
 ```{glue ref.label="car-name", glue_data = mpg}
 ```
 
-## Glue HTML Blocks
+## Raw Blocks
+
+### HTML Blocks
 
 Use the `glue_html` block to glue R and HTML together.
 The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
@@ -174,6 +176,30 @@ The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
   <li><strong>{manufacturer}</strong> <em>{model}</em></li>
 ```
 </ul>
+
+### LaTeX Blocks
+
+Similarly, you can also use `glue_latex` blocks to glue R and LaTeX together.
+By default, expressions in these types of blocks are wrapped in `<` and `>`.
+
+````
+\begin{itemize}
+```{glue_latex, glue_data = mpg}`r ''`
+\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
+```
+\end{itemize}
+````
+
+In R Markdown knitting into a LaTeX output,
+this renders as:
+
+````
+\begin{itemize}
+```{glue, glue_data = mpg, .open = "<", .close = ">"}
+\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
+```
+\end{itemize}
+````
 
 [glue]: https://glue.tidyverse.org
 [remotes]: https://remotes.r-lib.org
