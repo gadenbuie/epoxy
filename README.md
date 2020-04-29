@@ -67,7 +67,7 @@ something to watch out for or it can be an advantage:
 You can use the `expoxy_style_wrap()` with the `.transformer` chunk
 option to wrap the evaluated R expression in formating or templating
 text. Or you can use the pre-set `epoxy_style_bold()`,
-`epoxy_style_italic()`, or `epoxty_style_code()` style transformers.
+`epoxy_style_italic()`, or `epoxy_style_code()` style transformers.
 
     ```{glue, .transformer = epoxy_style_bold()}
     All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
