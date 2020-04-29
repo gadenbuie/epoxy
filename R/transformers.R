@@ -21,14 +21,21 @@ epoxy_style_code <- function() {
 }
 
 #' @export
-epoxy_style_collapse <- function() {
+epoxy_style_collapse <- function(
+  sep = ", ",
+  last = "",
+  last_and = " and ",
+  last_or = " or ",
+  sep_and = sep,
+  sep_or = sep
+) {
   function(text, envir) {
     collapse_fn <-
       switch(
         str_extract(text, "[*&|]$"),
-        "*" = collapse("[*]$", sep = ", ", last = ""),
-        "&" = collapse("[&]$", sep = ", ", last = " and "),
-        "|" = collapse("[|]$", sep = ", ", last = " or "),
+        "*" = collapse("[*]$", sep = sep,     last = last),
+        "&" = collapse("[&]$", sep = sep_and, last = last_or),
+        "|" = collapse("[|]$", sep = sep_or,  last = last_and),
         glue::identity_transformer
       )
     collapse_fn(text, envir)
@@ -36,13 +43,9 @@ epoxy_style_collapse <- function() {
 }
 
 collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
-  opts <- knitr::opts_current$get("glue_collapse") %||% list()
-  opts$sep <- opts$sep %||% sep
-  opts$width <- opts$width %||% width
-  opts$last <- opts$last %||% last
   function(text, envir) {
     text <- sub(regexp, "", text)
     res <- glue::identity_transformer(text, envir)
-    glue_collapse(res, sep = opts$sep, width = opts$width, last = opts$last)
+    glue_collapse(res, sep = sep, width = width, last = last)
   }
 }
