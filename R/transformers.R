@@ -34,8 +34,8 @@ epoxy_style_collapse <- function(
       switch(
         str_extract(text, "[*&|]$"),
         "*" = collapse("[*]$", sep = sep,     last = last),
-        "&" = collapse("[&]$", sep = sep_and, last = last_or),
-        "|" = collapse("[|]$", sep = sep_or,  last = last_and),
+        "&" = collapse("[&]$", sep = sep_and, last = last_and),
+        "|" = collapse("[|]$", sep = sep_or,  last = last_or),
         glue::identity_transformer
       )
     collapse_fn(text, envir)

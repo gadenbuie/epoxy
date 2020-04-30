@@ -101,8 +101,8 @@ transformer. You can then choose how vectors are collapsed by adding
     ```
 
   - The first three letters are a, b, c.
-  - When capitalized, they are A, B or C.
-  - They’re indexed by 1, 2 and 3.
+  - When capitalized, they are A, B and C.
+  - They’re indexed by 1, 2 or 3.
 
 You can change the separator between entries and between the last entry
 using the `sep`, `last` and the `_and` and `_or` specific arguments of
