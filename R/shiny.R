@@ -13,16 +13,18 @@ epoxyHTML <- function(
 ) {
   match.arg(.container, names(htmltools::tags))
 
-  x <- glue(
-    ...,
-    .placeholder = .placeholder,
-    .transformer = transformer_span(.class_item),
-    .na = .na,
-    .sep = .sep,
-    .end = .end,
-    .trim = .trim,
-    .start = .start
-  )
+  dots <- list(...)
+  dots$.placeholder = .placeholder
+  dots$.transformer = transformer_span(.class_item)
+  dots$.na = .na
+  dots$.sep = .sep
+  dots$.end = .end
+  dots$.trim = .trim
+  dots$.start = .start
+
+  dots <- purrr::map_if(dots, ~ inherits(.x, "shiny.tag"), format)
+
+  x <- rlang::eval_bare(rlang::call2(glue::glue, !!!dots))
 
   htmltools::tags[[.container]](
     id = .id,
