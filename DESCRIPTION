@@ -15,8 +15,10 @@ BugReports: https://github.com/gadenbuie/epoxy/issues
 Imports: 
     glue,
     knitr,
+    purrr,
+    rlang,
     rmarkdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
