@@ -61,9 +61,8 @@ transformer_span <- function(class = NULL) {
   }
 }
 
-renderExpoxyHTML <- function(expr, env = parent.frame(), quoted = FALSE, outputArgs=list()) {
-  installExprFunction(expr, "func", env, quoted)
-
+renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
+  installExprFunction(list(...), "func", env, quoted = FALSE)
   createRenderFunction(
     func,
     function(value, session, name, ...) {
