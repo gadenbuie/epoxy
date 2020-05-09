@@ -29,3 +29,5 @@ is_htmlish_output <- function(exclude = NULL) {
 collapse_space <- function(...) {
   paste(..., collapse = " ")
 }
+
+is_tag <- function(x) inherits(x, "shiny.tag")

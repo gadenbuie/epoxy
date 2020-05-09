@@ -7,7 +7,7 @@ $.extend(epoxyOutputBinding, {
     let items = el.querySelectorAll('[data-epoxy-item]');
     [...items].forEach(item => {
       item.classList.remove('epoxy-item__placeholder');
-      item.innerHTML = data[item.dataset.epoxyItem]
+      item.innerHTML = data[item.dataset.epoxyItem];
     });
   }
 });
