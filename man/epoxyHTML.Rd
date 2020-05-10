@@ -37,11 +37,9 @@ isn't provided.}
 
 \item{.sep}{[\code{character(1)}: \sQuote{""}]\cr Separator used to separate elements.}
 
-\item{.open}{[\code{character(1)}: \sQuote{\\{}]\cr The opening delimiter. Doubling the
-full delimiter escapes it.}
+\item{.open}{Opening template variable delimiter}
 
-\item{.close}{[\code{character(1)}: \sQuote{\\}}]\cr The closing delimiter. Doubling the
-full delimiter escapes it.}
+\item{.close}{Closing template variable delimiter}
 
 \item{.na}{[\code{character(1)}: \sQuote{NA}]\cr Value to replace NA values
 with. If \code{NULL} missing values are propagated, that is an \code{NA} result will

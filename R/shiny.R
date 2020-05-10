@@ -58,6 +58,8 @@
 #'   `<span>`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
+#' @param .open Opening template variable delimiter
+#' @param .close Closing template variable delimiter
 #' @inheritParams glue::glue
 #'
 #' @seealso renderEpoxyHTML
@@ -84,8 +86,8 @@ epoxyHTML <- function(
   dots$.na = .na
   dots$.sep = .sep
   dots$.trim = .trim
-  dots$.open = .open
-  dots$.close = .close
+  dots$.open = .open %||% "{{"
+  dots$.close = .close %||% "}}"
 
   tags <- purrr::keep(dots, is_tag)
   deps <- if (length(tags)) {
