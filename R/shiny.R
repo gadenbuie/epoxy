@@ -153,8 +153,8 @@ transformer_span <- function(class = NULL) {
 #' @seealso epoxyHTML
 #' @export
 renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
-  installExprFunction(list(...), "func", env, quoted = FALSE)
-  createRenderFunction(
+  shiny::installExprFunction(list(...), "func", env, quoted = FALSE)
+  shiny::createRenderFunction(
     func,
     function(value, session, name, ...) {
       value <- as.list(value)
