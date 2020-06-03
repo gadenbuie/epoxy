@@ -100,7 +100,7 @@ epoxyHTML <- function(
 
   out <- htmltools::tags[[.container]](
     id = .id,
-    class = collapse_space(c("epoxy-html", .class)),
+    class = collapse_space(c("epoxy-html epoxy-init", .class)),
     htmltools::HTML(res),
     htmltools::htmlDependency(
       name = "epoxy",
