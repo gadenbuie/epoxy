@@ -56,6 +56,23 @@ Expermimental. An glue-like output for Shiny. \code{epoxyHTML()} lets you use
 placeholders in your HTML such as \code{"{{height}}"}, that are provided values
 from the server by giving \code{renderEpoxyHTML()} a \code{height} value.
 }
+\section{HTML Markup}{
+ By default, placeholders are inserted into a \verb{<span>}
+element in your UI, with the classes specified in \code{.class_item}.
+
+\code{epoxyHTML()} also supports an HTML markup syntax similar to
+\href{https://pughtml.com/what-is-pug-html}{pug} (an HTML preprocessor). With the
+markup syntax, \code{"{{h3.example.basic\%basic-three demo}}"} creates a \code{demo}
+placeholder inside an \verb{<h3 id="basic-three" class="example basic"></h3>} tag.
+
+The placeholder template string follows the pattern \verb{\{\{<markup> <name>\}\}}.
+The markup syntax comes first, separated from the placeholder name by a space.
+The HTML element is first, followed by classes prefixed with \code{.} or and ID
+prefixed with \verb{\%}. Note that due to the way that \code{\link[glue:glue]{glue::glue()}} parses the
+template string, an \verb{\%} is needed instead of \verb{#}. The template markup can
+contain only one element and one ID, but many classes can be specified.
+}
+
 \examples{
 \dontrun{
 ui <- fluidPage(
