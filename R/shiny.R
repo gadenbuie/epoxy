@@ -21,6 +21,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(shiny)
+#'
 #' ui <- fluidPage(
 #'   h2("epoxyHTML demo"),
 #'   epoxy:::epoxyHTML(
@@ -28,15 +30,31 @@
 #'     fluidRow(
 #'       tags$div(
 #'         class = "col-xs-4",
-#'         selectInput("thing", "What is this {{color}} thing?", c("apple", "banana", "coconut", "dolphin"))
+#'         selectInput(
+#'           inputId = "thing",
+#'           label = "What is this {{color}} thing?",
+#'           choices = c("apple", "banana", "coconut", "dolphin")
+#'         )
 #'       ),
 #'       tags$div(
 #'         class = "col-xs-4",
-#'         selectInput("color", "What color is the {{thing}}?", c("red", "blue", "black", "green", "yellow"))
+#'         selectInput(
+#'           inputId = "color",
+#'           label = "What color is the {{thing}}?",
+#'           c("red", "blue", "black", "green", "yellow")
+#'         )
 #'       ),
 #'       tags$div(
 #'         class = "col-xs-4",
-#'         sliderInput("height", "How tall is the {{color}} {{thing}}?", value = 5, min = 0, max = 10, step = 0.1, post = "ft")
+#'         sliderInput(
+#'           inputId = "height",
+#'           label = "How tall is the {{color}} {{thing}}?",
+#'           value = 5,
+#'           min = 0,
+#'           max = 10,
+#'           step = 0.1,
+#'           post = "ft"
+#'         )
 #'       )
 #'     ),
 #'     tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
@@ -223,6 +241,7 @@ parse_html_markup <- function(x) {
 #' @seealso epoxyHTML
 #' @export
 renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
+  func <- NULL
   shiny::installExprFunction(list(...), "func", env, quoted = FALSE)
   shiny::createRenderFunction(
     func,
