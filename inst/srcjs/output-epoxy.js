@@ -3,6 +3,15 @@ $.extend(epoxyOutputBinding, {
   find: function(scope) {
     return $(scope).find('.epoxy-html');
   },
+  _is_empty: function(x) {
+    if (x === undefined || x === null) return true;
+    if (typeof x === 'number') return false;
+    if (typeof x === 'string') return false;
+    if (typeof x === 'boolean') return false;
+    if (Array.isArray(x) && x.length) return false;
+    if (x instanceof Object && Object.keys(x).length) return false;
+    return true;
+  },
   renderValue: function(el, data) {
     // remove copies of epoxyItem
     let elCopies = el.querySelectorAll('[data-epoxy-copy]')
@@ -14,6 +23,12 @@ $.extend(epoxyOutputBinding, {
       let itemName = item.dataset.epoxyItem;
 
       let itemData = data[itemName];
+      if (this._is_empty(itemData)) {
+        item.style.display = 'none';
+        next;
+      } else {
+        item.style.removeProperty('display')
+      }
       if (itemData instanceof Array) {
         let lastItem = item;
         item.innerHTML = itemData[0];
