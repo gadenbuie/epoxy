@@ -69,8 +69,10 @@
 #' @param .class Classes added to the output div, in addition to `.epoxy-html`
 #' @param .class_item Classes added to the `.container` wrapping each template
 #'   variable.
-#' @param .container The HTML element used for each template item, by default
-#'   `<span>`.
+#' @param .container The name of the HTML element to be used for the output
+#'   element, by default `"div"`.
+#' @param .container_item The name of the HTML element to be used for each template item,
+#'   by default `"span"`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
 #' @param .open Opening template variable delimiter
@@ -86,6 +88,7 @@ epoxyHTML <- function(
   .class = NULL,
   .class_item = NULL,
   .container = "div",
+  .container_item = "span",
   .placeholder = "",
   .sep = "",
   .open = "{{",
@@ -93,11 +96,12 @@ epoxyHTML <- function(
   .na = "",
   .trim = FALSE
 ) {
-  match.arg(.container, names(htmltools::tags))
+  .container <- match.arg(.container, names(htmltools::tags))
+  .container_item <- match.arg(.container_item, names(htmltools::tags))
 
   dots <- list(...)
   dots$.placeholder = .placeholder
-  dots$.transformer = transformer_html_markup(.class_item)
+  dots$.transformer = transformer_html_markup(.class_item, .container_item)
   dots$.na = .na
   dots$.sep = .sep
   dots$.trim = .trim
@@ -138,7 +142,7 @@ transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
 
-transformer_html_markup <- function(class = NULL) {
+transformer_html_markup <- function(class = NULL, element = "span") {
   class <- collapse_space(c("epoxy-item__placeholder", class))
   function(text, envir) {
     markup <- parse_html_markup(text)
@@ -146,13 +150,13 @@ transformer_html_markup <- function(class = NULL) {
       rlang::env_get(markup$item, env = envir, inherit = TRUE),
       error = function(...) get(".placeholder", envir = envir, inherits = FALSE)
     )
-    element <- markup$element
-    if (is.null(element)) element <- "span"
+    tag_name <- markup$element
+    if (is.null(tag_name)) tag_name <- element
     if (!is.null(markup$class)) {
       class <- collapse_space(class, markup$class)
     }
     htmltools::tag(
-      element,
+      tag_name,
       list(
         class = class,
         id = markup$id,

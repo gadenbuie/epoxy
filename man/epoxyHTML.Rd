@@ -10,6 +10,7 @@ epoxyHTML(
   .class = NULL,
   .class_item = NULL,
   .container = "div",
+  .container_item = "span",
   .placeholder = "",
   .sep = "",
   .open = "{{",
@@ -29,8 +30,11 @@ template variables. Use named values to provide initial placeholder values.}
 \item{.class_item}{Classes added to the \code{.container} wrapping each template
 variable.}
 
-\item{.container}{The HTML element used for each template item, by default
-\verb{<span>}.}
+\item{.container}{The name of the HTML element to be used for the output
+element, by default \code{"div"}.}
+
+\item{.container_item}{The name of the HTML element to be used for each template item,
+by default \code{"span"}.}
 
 \item{.placeholder}{Default placeholder if a template variable placeholder
 isn't provided.}

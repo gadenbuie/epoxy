@@ -23,6 +23,23 @@ test_that("epoxyHTML() works with htmltags, too", {
   expect_true(grepl("<p class=\"epoxy-item__placeholder\".+GOOD.*</p>", format(ex2)))
 })
 
+test_that("epoxyHTML(): .container and .container_item", {
+  div_span <- epoxyHTML("test", "{{item}}")
+  expect_s3_class(div_span, "shiny.tag")
+  expect_equal(div_span$name, "div")
+  expect_true(grepl("^<span", div_span$children[[1]]))
+
+  ul_li <- epoxyHTML("test", "{{item}}", .container = "ul", .container_item = "li")
+  expect_s3_class(ul_li, "shiny.tag")
+  expect_equal(ul_li$name, "ul")
+  expect_true(grepl("^<li", ul_li$children[[1]]))
+
+  ul_li <- epoxyHTML("test", "{{li item}}", .container = "ul")
+  expect_s3_class(ul_li, "shiny.tag")
+  expect_equal(ul_li$name, "ul")
+  expect_true(grepl("^<li", ul_li$children[[1]]))
+})
+
 test_that("parse_html_markup() returns a list", {
   expect_true(is.list(parse_html_markup("h1 item")))
 })
