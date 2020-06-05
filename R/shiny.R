@@ -161,7 +161,7 @@ transformer_html_markup <- function(class = NULL, element = "span") {
         class = class,
         id = markup$id,
         `data-epoxy-item` = markup$item,
-        placeholder
+        htmltools::HTML(placeholder)
       )
     )
   }
