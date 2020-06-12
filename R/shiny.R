@@ -242,7 +242,7 @@ parse_html_markup <- function(x) {
 #' @export
 renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
   func <- NULL
-  shiny::installExprFunction(list(...), "func", env, quoted = FALSE)
+  shiny::installExprFunction(lapply(list(...), format_tags), "func", env, quoted = FALSE)
   shiny::createRenderFunction(
     func,
     function(value, session, name, ...) {
@@ -253,4 +253,11 @@ renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
     epoxyHTML,
     outputArgs
   )
+}
+
+format_tags <- function(x) {
+  if (!inherits(x, c("shiny.tag", "shiny.tag.list"))) {
+    return(x)
+  }
+  format(x)
 }
