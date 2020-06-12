@@ -95,6 +95,10 @@
 #'   isn't provided.
 #' @param .open Opening template variable delimiter
 #' @param .close Closing template variable delimiter
+#' @param .watch The names of placeholders that should be watched as inputs.
+#'   Takes a list with names matching the event type that should be "watched" on
+#'   the server side. Currently only supports watching "click" events.
+#'   Clicking on these elements triggers `input$<.id>_<placeholder>_clicked`.
 #' @inheritParams glue::glue
 #'
 #' @seealso renderEpoxyHTML
@@ -112,14 +116,15 @@ epoxyHTML <- function(
   .open = "{{",
   .close = "}}",
   .na = "",
-  .trim = FALSE
+  .trim = FALSE,
+  .watch = NULL
 ) {
   .container <- match.arg(.container, names(htmltools::tags))
   .container_item <- match.arg(.container_item, names(htmltools::tags))
 
   dots <- list(...)
   dots$.placeholder = .placeholder
-  dots$.transformer = transformer_html_markup(.class_item, .container_item)
+  dots$.transformer = transformer_html_markup(.class_item, .container_item, .watch)
   dots$.na = .na
   dots$.sep = .sep
   dots$.trim = .trim
@@ -144,8 +149,9 @@ epoxyHTML <- function(
       name = "epoxy",
       version = "0.0.1",
       package = "epoxy",
-      src = "srcjs",
+      src = "shiny",
       script = "output-epoxy.js",
+      style = "epoxy.css",
       all_files = FALSE
     )
   )
@@ -160,7 +166,7 @@ transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
 
-transformer_html_markup <- function(class = NULL, element = "span") {
+transformer_html_markup <- function(class = NULL, element = "span", watch = NULL) {
   class <- collapse_space(c("epoxy-item__placeholder", class))
   function(text, envir) {
     markup <- parse_html_markup(text)
@@ -179,6 +185,7 @@ transformer_html_markup <- function(class = NULL, element = "span") {
         class = class,
         id = markup$id,
         `data-epoxy-item` = markup$item,
+        `data-epoxy-input-click` = if (markup$item %in% watch$click) NA,
         htmltools::HTML(placeholder)
       )
     )

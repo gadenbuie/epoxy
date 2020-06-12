@@ -1,0 +1,6 @@
+.epoxy-html [data-epoxy-input-click]:hover {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-color: currentcolor;
+  cursor: pointer;
+}
