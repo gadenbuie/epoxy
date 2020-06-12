@@ -284,7 +284,7 @@ renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs 
 
 format_tags <- function(x) {
   if (!inherits(x, c("shiny.tag", "shiny.tag.list"))) {
-    return(x)
+    return(unname(x))
   }
   format(x)
 }
