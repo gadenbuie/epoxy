@@ -1,6 +1,6 @@
 Package: epoxy
 Title: String Interpolation for 'R Markdown' Documents
-Version: 0.0.1.9000
+Version: 0.0.2.9000
 Authors@R: 
     person(given = "Garrick",
            family = "Aden-Buie",

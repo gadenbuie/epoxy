@@ -233,6 +233,9 @@ parse_html_markup <- function(x) {
 #'
 #' @param ... Named values corresponding to the template variables created with
 #'   the associated [epoxyHTML()] UI element.
+#' @param .list A named list or a [shiny::reactiveValues()] list with names
+#'   corresponding to the template variables created with the associated
+#'   [epoxyHTML()] UI element.
 #' @param env The environment in which to evaluate the `...`
 #' @param outputArgs A list of arguments to be passed through to the implicit
 #'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
@@ -240,11 +243,28 @@ parse_html_markup <- function(x) {
 #'
 #' @seealso epoxyHTML
 #' @export
-renderEpoxyHTML <- function(..., env = parent.frame(), outputArgs = list()) {
-  func <- NULL
-  shiny::installExprFunction(lapply(list(...), format_tags), "func", env, quoted = FALSE)
+renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs = list()) {
+  epoxyPrepare <- function(..., .list = NULL) {
+    if (!is.null(.list)) {
+      if (inherits(.list, "reactivevalues")) {
+        .list <- shiny::reactiveValuesToList(.list)
+      }
+      if (!is.list(.list)) {
+        stop("`.list` must be a list", call. = FALSE)
+      }
+      if (is.null(names(.list))) {
+        stop("`.list` must be a named list", call. = FALSE)
+      }
+    }
+    lapply(c(list(...), .list), format_tags)
+  }
+  shiny::installExprFunction(
+    name = "epoxyPrepare",
+    quoted = FALSE,
+    expr = epoxyPrepare(..., .list = .list)
+  )
   shiny::createRenderFunction(
-    func,
+    epoxyPrepare,
     function(value, session, name, ...) {
       value <- as.list(value)
       stopifnot(!is.null(names(value)))

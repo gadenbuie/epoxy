@@ -4,11 +4,15 @@
 \alias{renderEpoxyHTML}
 \title{Render Epoxy Output}
 \usage{
-renderEpoxyHTML(..., env = parent.frame(), outputArgs = list())
+renderEpoxyHTML(..., .list = NULL, env = parent.frame(), outputArgs = list())
 }
 \arguments{
 \item{...}{Named values corresponding to the template variables created with
 the associated \code{\link[=epoxyHTML]{epoxyHTML()}} UI element.}
+
+\item{.list}{A named list or a \code{\link[shiny:reactiveValues]{shiny::reactiveValues()}} list with names
+corresponding to the template variables created with the associated
+\code{\link[=epoxyHTML]{epoxyHTML()}} UI element.}
 
 \item{env}{The environment in which to evaluate the \code{...}}
 
