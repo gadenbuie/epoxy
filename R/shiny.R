@@ -145,15 +145,8 @@ epoxyHTML <- function(
     id = .id,
     class = collapse_space(c("epoxy-html epoxy-init", .class)),
     htmltools::HTML(res),
-    htmltools::htmlDependency(
-      name = "epoxy",
-      version = "0.0.1",
-      package = "epoxy",
-      src = "shiny",
-      script = "output-epoxy.js",
-      style = "epoxy.css",
-      all_files = FALSE
-    )
+    epoxy_dependency_output(),
+    if ("click" %in% names(.watch)) epoxy_dependency_click()
   )
   if (!is.null(deps) && length(deps)) {
     htmltools::attachDependencies(out, deps)
@@ -287,4 +280,27 @@ format_tags <- function(x) {
     return(unname(x))
   }
   format(x)
+}
+
+epoxy_dependency_output <- function() {
+  htmltools::htmlDependency(
+    name = "epoxy",
+    version = pkg_version(),
+    package = "epoxy",
+    src = "shiny",
+    script = "output-epoxy.js",
+    all_files = FALSE
+  )
+}
+
+epoxy_dependency_click <- function() {
+  htmltools::htmlDependency(
+    name = "epoxy-click",
+    version = pkg_version(),
+    package = "epoxy",
+    src = "shiny",
+    script = "output-epoxy-click.js",
+    stylesheet = "epoxy-click.css",
+    all_files = FALSE
+  )
 }
