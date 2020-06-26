@@ -137,7 +137,7 @@ epoxyHTML <- function(
     purrr::flatten(purrr::map(tags, htmltools::findDependencies))
   }
 
-  dots <- purrr::map_if(dots, ~ inherits(.x, "shiny.tag"), format)
+  dots <- purrr::map_if(dots, is_tag, format)
 
   res <- rlang::eval_bare(rlang::call2(glue::glue, !!!dots))
 
