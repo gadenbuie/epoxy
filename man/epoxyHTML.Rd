@@ -16,7 +16,8 @@ epoxyHTML(
   .open = "{{",
   .close = "}}",
   .na = "",
-  .trim = FALSE
+  .trim = FALSE,
+  .watch = NULL
 )
 }
 \arguments{
@@ -51,6 +52,9 @@ cause \code{NA} output. Otherwise the value is replaced by the value of \code{.n
 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{trim()} or not.}
+
+\item{.watch}{The names of placeholders that should be watched as inputs.
+Clicking on these elements triggers \verb{input$<.id>_<placeholder>_clicked}.}
 }
 \value{
 An HTML object.

@@ -1,0 +1,10 @@
+.epoxy-html [data-epoxy-input-click]:hover {
+  padding-bottom: 1px;
+  border-bottom: 1px dashed currentcolor;
+  cursor: pointer;
+}
+
+.epoxy-html [data-epoxy-input-click] {
+  padding-bottom: 1px;
+  border-bottom: 1px dashed #aaa;
+}

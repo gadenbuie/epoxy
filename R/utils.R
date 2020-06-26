@@ -30,4 +30,12 @@ collapse_space <- function(...) {
   paste(..., collapse = " ")
 }
 
-is_tag <- function(x) inherits(x, "shiny.tag")
+is_tag <- function(x) inherits(x, c("shiny.tag", "shiny.tag.list"))
+
+file_pkg <- function(...) system.file(..., package = "epoxy", mustWork = TRUE)
+
+pkg_version <- function() {
+  x <- read.dcf(file_pkg("DESCRIPTION"))
+  if (!"Version" %in% colnames(x)) return(NA)
+  unname(x[, "Version"])
+}
