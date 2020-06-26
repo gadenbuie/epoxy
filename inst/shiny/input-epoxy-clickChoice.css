@@ -1,0 +1,25 @@
+:root {
+  --epoxy-inline-clickChoice-color-hover: red;
+  --epoxy-inline-clickChoice-color-focus: blue;
+}
+
+.epoxy-inline-clickChoice-input {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  border-bottom: 1px dashed #aaa;
+}
+
+.epoxy-inline-clickChoice-input:hover {
+  color: var(--epoxy-inline-clickChoice-color-hover);
+}
+
+.epoxy-inline-clickChoice-input:hover {
+  color: var(--epoxy-inline-clickChoice-color-hover);
+  border-bottom: 1px dashed currentcolor;
+}
+
+.epoxy-inline-clickChoice-input:focus {
+  color: var(--epoxy-inline-clickChoice-color-focus);
+  border-bottom: 1px solid currentcolor;
+}
