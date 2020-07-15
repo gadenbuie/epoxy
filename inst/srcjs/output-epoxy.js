@@ -25,7 +25,7 @@ $.extend(epoxyOutputBinding, {
       let itemData = data[itemName];
       if (this._is_empty(itemData)) {
         item.style.display = 'none';
-        next;
+        return;
       } else {
         item.style.removeProperty('display')
       }
