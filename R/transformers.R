@@ -49,3 +49,27 @@ collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
     glue_collapse(res, sep = sep, width = width, last = last)
   }
 }
+
+# Overwrites `$` in the context of a glue chunk where `glue_data` was provided.
+# The new `$` is vectorized to be equivalent to `purrr::map(ll, "name")`.
+# epoxy_data_subset <- function(text, envir) {
+#   map_index <- function(x, y) {
+#     y <- substitute(y)
+#     x <- lapply(x, function(.x) base::`[[`(.x, y))
+#     x_len_1 <- vapply(x, function(x) length(x) == 1, logical(1))
+#     if (all(x_len_1)) unlist(x) else x
+#   }
+#   assign("$", envir = envir, map_index)
+#   glue::identity_transformer(text, envir)
+# }
+
+expoxy_style <- function(...) {
+  dots <- list(...)
+  are_closures <- vapply(dots, is.function, logical(1))
+
+  function(text, envir) {
+    Reduce(
+      x = dots
+    )
+  }
+}
