@@ -111,8 +111,8 @@ the `epoxy_style_collapse()` function.
 ### Templating with glue chunks
 
 It’s also possible to create a reusable template. Use the `ref.label`
-chunk option to reuse a template using the values in the `glue_data`
-chunk option, which can be a list or data frame.
+chunk option to reuse a template using the values in the `data` chunk
+option, which can be a list or data frame.
 
 ``` r
 mpg <- data.frame(
@@ -127,12 +127,35 @@ mpg <- data.frame(
     - A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
     ```
     
-    ```{glue ref.label="car-name", glue_data = mpg}
+    ```{glue ref.label="car-name", data = mpg}
     ```
 
   - A Chevrolet Malibu gets 19 city and 27 highway miles per gallon.
   - A Dodge Caravan gets 7 city and 24 highway miles per gallon.
   - A Ford Expedition gets 11 city and 17 highway miles per gallon.
+
+## Whisker Engine
+
+Sometimes the `glue` engine doesn’t quite deliver the template power you
+need. In these cases, you can use the `whisker` engine instead.
+
+    ```{r}
+    contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
+    ```
+    
+    ```{whisker data = contestant, echo=FALSE}
+    Hello {{name}}:
+    You have just won ${{value}}!
+    {{#in_ca}}
+    Well, ${{taxed}}, after taxes.
+    {{/in_ca}}
+    ```
+
+``` r
+contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
+```
+
+Hello R User: You have just won $1000\! Well, $600, after taxes.
 
 ## Raw Blocks
 
@@ -142,16 +165,12 @@ Use the `glue_html` block to glue R and HTML together. The output is
 [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
 
     <ul>
-    ```{glue_html, glue_data = mpg}
+    ```{glue_html, data = mpg}
       <li><strong>{manufacturer}</strong> <em>{model}</em></li>
     ```
     </ul>
 
 <ul>
-
-  <li><strong>Chevrolet</strong> <em>Malibu</em></li>
-  <li><strong>Dodge</strong> <em>Caravan</em></li>
-  <li><strong>Ford</strong> <em>Expedition</em></li>
 
 </ul>
 
@@ -162,7 +181,7 @@ together. By default, expressions in these types of blocks are wrapped
 in `<` and `>`.
 
     \begin{itemize}
-    ```{glue_latex, glue_data = mpg}
+    ```{glue_latex, data = mpg}
     \item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
     ```
     \end{itemize}
