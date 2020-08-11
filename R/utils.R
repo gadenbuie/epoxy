@@ -19,7 +19,10 @@ str_extract <- function(text, pattern) {
 }
 
 is_htmlish_output <- function(exclude = NULL) {
+  if (isTRUE(rmarkdown::metadata$always_allow_html)) return(TRUE)
+
   fmt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+  fmt <- sub("[+-].+$", "", fmt)
   fmt_htmlish <- c("markdown", "epub", "html", "html4", "html5", "revealjs",
                    "s5", "slideous", "slidy", "gfm")
   fmt_htmlish <- setdiff(fmt_htmlish, exclude)
