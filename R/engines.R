@@ -77,8 +77,8 @@ knitr_engine_glue_latex <- function(options) {
       .x = options[["data"]],
       code,
       .envir = glue_env,
-      .open = options[[".open"]] %||% "{",
-      .close = options[[".close"]] %||% "}",
+      .open = options[[".open"]] %||% "<",
+      .close = options[[".close"]] %||% ">",
       .na = options[[".na"]] %||% "",
       .trim = options[[".trim"]] %||% FALSE,
       .transformer = options[[".transformer"]] %||% glue::identity_transformer
