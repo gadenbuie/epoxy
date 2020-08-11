@@ -162,15 +162,21 @@ Hello R User: You have just won $1000\! Well, $600, after taxes.
 ### HTML Blocks
 
 Use the `glue_html` block to glue R and HTML together. The output is
-[raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
+[raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex). By default,
+expressions in these types of blocks are wrapped in `{{` and `}}`, like
+whisker templates above.
 
     <ul>
     ```{glue_html, data = mpg}
-      <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+      <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
     ```
     </ul>
 
 <ul>
+
+  <li><strong>Chevrolet</strong> <em>Malibu</em></li>
+  <li><strong>Dodge</strong> <em>Caravan</em></li>
+  <li><strong>Ford</strong> <em>Expedition</em></li>
 
 </ul>
 

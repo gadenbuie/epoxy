@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: yes
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -12,7 +13,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-
 # epoxy
 
 <!-- badges: start -->
@@ -197,18 +197,20 @@ Well, ${{taxed}}, after taxes.
 
 Use the `glue_html` block to glue R and HTML together.
 The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
+By default, expressions in these types of blocks are wrapped in `{{` and `}}`,
+like whisker templates above.
 
 ````
 <ul>
 ```{glue_html, data = mpg}`r ''`
-  <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+  <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
 ```
 </ul>
 ````
 
 <ul>
 ```{glue_html, data = mpg}
-  <li><strong>{manufacturer}</strong> <em>{model}</em></li>
+  <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
 ```
 </ul>
 
