@@ -12,7 +12,7 @@ knitr_engine_glue <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = parent.frame(2))
+    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
     if (!is.null(options[["data"]])) {
       assign("$", epoxy_data_subset, envir = glue_env)
     }
@@ -37,7 +37,7 @@ knitr_engine_glue_html <- function(options) {
   out <- if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = parent.frame(2))
+    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
     if (!is.null(options[["data"]])) {
       assign("$", epoxy_data_subset, envir = glue_env)
     }
@@ -69,7 +69,7 @@ knitr_engine_glue_latex <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = parent.frame(2))
+    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
     if (!is.null(options[["data"]])) {
       assign("$", epoxy_data_subset, envir = glue_env)
     }
@@ -107,7 +107,7 @@ knitr_engine_whisker <- function(options) {
         )
       }
     } else {
-      whisker::whisker.render(code, parent.frame(2))
+      whisker::whisker.render(code, options[[".envir"]] %||% knitr::knit_global())
     }
     code <- glue_collapse(code, sep = "\n")
     if (isTRUE(options$html_raw %||% FALSE)) {
