@@ -113,7 +113,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gadenbuie/epoxy" class="external-link">epoxy</a></span><span class="op">)</span></code></pre></div>
 <p>Loading epoxy adds a new chunk type called <code>epoxy</code>.</p>
-<p>⚠️ Note that previously, epoxy provided a <code>glue</code> chunk, but this clashes with a chunk engine provided by the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package. If you wish to restore use epoxy’s <code>glue</code> chunk, you can include <code>epoxy:::epoxy_set_knitr_engines(use_glue_chunk = TRUE)</code> in your document’s <code>setup</code> chunk.</p>
+<p>⚠️ Note that previously, epoxy provided a <code>glue</code> chunk, but this clashes with a chunk engine provided by the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package. If you wish to restore use epoxy’s <code>glue</code> chunk, you can include <code>epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)</code> in your document’s <code>setup</code> chunk.</p>
 <div class="section level3">
 <h3 id="epoxy-chunks">epoxy chunks<a class="anchor" aria-label="anchor" href="#epoxy-chunks"></a>
 </h3>
