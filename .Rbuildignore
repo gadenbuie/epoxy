@@ -1,6 +1,6 @@
 ^epoxy\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^dev$
+^_dev$
 ^README\.Rmd$
 ^_test$
