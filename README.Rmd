@@ -55,7 +55,7 @@ Loading epoxy adds a new chunk type called `epoxy`.
 ⚠️ Note that previously, epoxy provided a `glue` chunk,
 but this clashes with a chunk engine provided by the [glue] package.
 If you wish to restore use epoxy's `glue` chunk,
-you can include `epoxy:::epoxy_set_knitr_engines(use_glue_chunk = TRUE)`
+you can include `epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)`
 in your document's `setup` chunk.
 
 ### epoxy chunks
