@@ -13,6 +13,8 @@ epoxy_set_knitr_engines <- function(use_glue_engine = FALSE) {
 }
 
 knitr_engine_epoxy <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -37,6 +39,8 @@ knitr_engine_epoxy <- function(options) {
 }
 
 knitr_engine_epoxy_html <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -68,6 +72,8 @@ knitr_engine_epoxy_html <- function(options) {
 }
 
 knitr_engine_epoxy_latex <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -163,3 +169,22 @@ deprecate_glue_data_chunk_option <- function(options) {
   }
   options
 }
+
+
+deprecate_glue_engine_prefix <- local({
+  has_warned <- list()
+  function(options) {
+    if (options$engine == "glue" || grepl("glue_", options$engine)) {
+      if (isTRUE(has_warned[[options$engine]])) {
+        return(invisible())
+      } else {
+        has_warned[[options$engine]] <<- TRUE
+      }
+      suggested <- sub("glue_?", "epoxy", options$engine)
+      rlang::warn(c(
+        sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
+        "*" = sprintf("Please use the `%s` engine instead.", suggested),
+      ))
+    }
+  }
+})
