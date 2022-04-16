@@ -1,14 +1,18 @@
-epoxy_set_knitr_engines <- function() {
+epoxy_set_knitr_engines <- function(use_glue_engine = FALSE) {
   knitr::knit_engines$set(
-    glue = knitr_engine_glue,
-    "glue_html" = knitr_engine_glue_html,
-    "glue_latex" = knitr_engine_glue_latex,
+    epoxy = knitr_engine_epoxy,
+    "epoxy_html" = knitr_engine_epoxy_html,
+    "glue_html" = knitr_engine_epoxy_html,
+    "epoxy_latex" = knitr_engine_epoxy_latex,
+    "glue_latex" = knitr_engine_epoxy_latex,
     "whisker" = knitr_engine_whisker
   )
+  if (isTRUE(use_glue_engine)) {
+    knitr::knit_engines$set(glue = knitr_engine_epoxy)
+  }
 }
 
-#' @export
-knitr_engine_glue <- function(options) {
+knitr_engine_epoxy <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -32,8 +36,7 @@ knitr_engine_glue <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
-knitr_engine_glue_html <- function(options) {
+knitr_engine_epoxy_html <- function(options) {
   out <- if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -64,8 +67,7 @@ knitr_engine_glue_html <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
-knitr_engine_glue_latex <- function(options) {
+knitr_engine_epoxy_latex <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -89,7 +91,6 @@ knitr_engine_glue_latex <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
 knitr_engine_whisker <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)

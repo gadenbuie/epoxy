@@ -45,12 +45,12 @@ isn't provided.}
 
 \item{.close}{Closing template variable delimiter}
 
-\item{.na}{[\code{character(1)}: \sQuote{NA}]\cr Value to replace NA values
+\item{.na}{[\code{character(1)}: \sQuote{NA}]\cr Value to replace \code{NA} values
 with. If \code{NULL} missing values are propagated, that is an \code{NA} result will
 cause \code{NA} output. Otherwise the value is replaced by the value of \code{.na}.}
 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
-template with \code{trim()} or not.}
+template with \code{\link[glue:trim]{trim()}} or not.}
 }
 \value{
 An HTML object.

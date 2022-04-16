@@ -6,8 +6,7 @@
 \alias{epoxy-package}
 \title{epoxy: String Interpolation for 'R Markdown' Documents}
 \description{
-Experimental. String interpolation for 'R Markdown'
-    documents and 'Shiny' apps.
+Experimental. String interpolation for 'R Markdown' documents and 'Shiny' apps.
 }
 \seealso{
 Useful links:
