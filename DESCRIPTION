@@ -1,7 +1,7 @@
 Package: epoxy
 Title: String Interpolation for 'R Markdown' Documents
 Version: 0.0.2.9000
-Authors@R: 
+Authors@R:
     person(given = "Garrick",
            family = "Aden-Buie",
            role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Description: Experimental. String interpolation for 'R Markdown'
 License: MIT + file LICENSE
 URL: https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
-Imports: 
+Imports:
     glue,
     htmltools,
     knitr,
@@ -22,8 +22,9 @@ Imports:
     shiny,
     stringr,
     whisker
-Suggests: 
+Suggests:
     testthat
+Config/Needs/website: gadenbuie/grkgdown
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

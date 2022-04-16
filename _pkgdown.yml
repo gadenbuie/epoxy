@@ -1,0 +1,10 @@
+url: http://pkg.garrickadenbuie.com/rsprefs
+
+template:
+  package: grkgdown
+
+reference:
+- title: Templating for Shiny
+  contents:
+  - '`epoxyHTML`'
+  - '`renderEpoxyHTML`'
