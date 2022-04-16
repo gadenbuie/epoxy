@@ -3,6 +3,12 @@ url: http://pkg.garrickadenbuie.com/rsprefs
 template:
   package: grkgdown
 
+navbar:
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/gadenbuie/epoxy
+
 reference:
 - title: Templating for Shiny
   contents:
