@@ -4,7 +4,6 @@
 #' strings. They are designed to be used with the `.transformer` chunk option of
 #' in `epoxy` chunks.
 #'
-#' @export
 #' @name epoxy_style
 NULL
 
