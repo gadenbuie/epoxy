@@ -15,9 +15,10 @@ knitr::opts_chunk$set(
 # epoxy
 
 <!-- badges: start -->
+[![epoxy status badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
 <!-- badges: end -->
 
-epoxy makes [glue] easy to use in R Markdown documents.
+epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
 
 _epoxy is in a proof-of-concept stage right now._
 _I'm still experimenting, so the API ~~may~~ will change._
@@ -25,11 +26,22 @@ _I'd love to hear your thoughts, feel free to [open issues](https://github.com/g
 
 ## Installation
 
-You can install the proof-of-concept version of epoxy with [remotes].
+You can install the proof-of-concept version of epoxy with [remotes]
 
 ```{r eval=FALSE}
 # install.packages("remotes")
 remotes::install_github("gadenbuie/epoxy")
+```
+
+or from [gadenbuie.r-universe.dev](https://gadenbuie.r-universe.dev).
+
+```{r eval=FALSE}
+options(repos = c(
+  gadenbuie = "https://gadenbuie.r-universe.dev/",
+  getOptions(repos)
+))
+
+install.packages("epoxy")
 ```
 
 ## Example
@@ -38,22 +50,31 @@ remotes::install_github("gadenbuie/epoxy")
 library(epoxy)
 ```
 
-Loading epoxy adds a new chunk type called `glue`.
+Loading epoxy adds a new chunk type called `epoxy`.
 
-### glue chunks
+⚠️ Note that previously, epoxy provided a `glue` chunk,
+but this clashes with a chunk engine provided by the [glue] package.
+If you wish to restore use epoxy's `glue` chunk,
+you can include the following in your setup chunk.
 
-You can write regular markdown in the `glue` chunk,
+```r
+epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)
+```
+
+### epoxy chunks
+
+You can write regular markdown in the `epoxy` chunk,
 wrapping any R expressions in `{...}`,
 just like in `glue::glue()`.
 
 ````
-```{glue}`r ''`
+```{epoxy}`r ''`
 The average speed of the cars was **{mean(cars$speed)} mph.**
 But on average the distance travelled was only _{mean(cars$dist)}_.
 ```
 ````
 
-```{glue}
+```{epoxy}
 The average speed of the cars was **{mean(cars$speed)} mph**.
 But on average the distance travelled was only _{mean(cars$dist)} ft_.
 ```
@@ -64,45 +85,45 @@ e.g. `{{` instead of `{`,
 among other options.
 
 With an amazing stroke of luck,
-RStudio autocompletion works inside `glue` chunks!
+RStudio autocompletion works inside `epoxy` chunks!
 
 ### Style replaced values
 
-You can use the `expoxy_style_wrap()` with the `.transformer` chunk option
+You can use the `epoxy_style_wrap()` with the `.transformer` chunk option
 to wrap the evaluated R expression in formating or templating text.
-Or you can use the pre-set 
+Or you can use the pre-set
 `epoxy_style_bold()`, `epoxy_style_italic()`, or `epoxy_style_code()`
 style transformers.
 
 ````
-```{glue, .transformer = epoxy_style_bold()}`r ''`
+```{epoxy, .transformer = epoxy_style_bold()}`r ''`
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 ```
 ````
 
-```{glue, .transformer = epoxy_style_bold()}
+```{epoxy, .transformer = epoxy_style_bold()}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$dist)} mph.
 ```
 
-### glue chunks are vectorized
+### epoxy chunks are vectorized
 
-Unlike inline R code, the `glue` chunks are vectorized.
+Unlike inline R code, the `epoxy` chunks are vectorized.
 This can be something to watch out for or it can be an advantage:
 
 ````
-```{glue}`r ''`
+```{epoxy}`r ''`
 {1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
 ```
 ````
 
-```{glue}
+```{epoxy}
 {1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
 ```
 
 You can collapse fields automatically using the `epoxy_style_collapse()` transformer.
-You can then choose how vectors are collapsed by adding `*`, `&` or `|` 
+You can then choose how vectors are collapsed by adding `*`, `&` or `|`
 to the end of the expression.
 
 - `*` collapses with commas, e.g. `{letters[1:3]*}`.
@@ -110,14 +131,14 @@ to the end of the expression.
 - `|` collapses with commas and adds `" or "` between the last two items.
 
 ````
-```{glue, .transformer = epoxy_style_collapse()}`r ''`
+```{epoxy, .transformer = epoxy_style_collapse()}`r ''`
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
 ```
 ````
 
-```{glue, .transformer = epoxy_style_collapse()}
+```{epoxy, .transformer = epoxy_style_collapse()}
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
@@ -127,10 +148,10 @@ You can change the separator between entries and between the last entry
 using the `sep`, `last` and the `_and` and `_or` specific arguments
 of the `epoxy_style_collapse()` function.
 
-### Templating with glue chunks
+### Templating with epoxy chunks
 
 It's also possible to create a reusable template.
-Use the `ref.label` chunk option to reuse a template 
+Use the `ref.label` chunk option to reuse a template
 using the values in the `data` chunk option,
 which can be a list or data frame.
 
@@ -144,24 +165,24 @@ mpg <- data.frame(
 ```
 
 ````
-```{glue car-name, eval=FALSE}`r ''`
+```{epoxy car-name, eval=FALSE}`r ''`
 - A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
 ```
 
-```{glue ref.label="car-name", data = mpg}`r ''`
+```{epoxy ref.label="car-name", data = mpg}`r ''`
 ```
 ````
 
-```{glue car-name, eval=FALSE}
+```{epoxy car-name, eval=FALSE}
 - A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
 ```
 
-```{glue ref.label="car-name", data = mpg}
+```{epoxy ref.label="car-name", data = mpg}
 ```
 
 ## Whisker Engine
 
-Sometimes the `glue` engine doesn't quite deliver the template power you need.
+Sometimes the `epoxy` engine doesn't quite deliver the template power you need.
 In these cases, you can use the `whisker` engine instead.
 
 ````
@@ -194,33 +215,33 @@ Well, ${{taxed}}, after taxes.
 
 ### HTML Blocks
 
-Use the `glue_html` block to glue R and HTML together.
+Use the `epoxy_html` block to epoxy (glue) R and HTML together.
 The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
 By default, expressions in these types of blocks are wrapped in `{{` and `}}`,
 like whisker templates above.
 
 ````
 <ul>
-```{glue_html, data = mpg}`r ''`
+```{epoxy_html, data = mpg}`r ''`
   <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
 ```
 </ul>
 ````
 
 <ul>
-```{glue_html, data = mpg}
+```{epoxy_html, data = mpg}
   <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
 ```
 </ul>
 
 ### LaTeX Blocks
 
-Similarly, you can also use `glue_latex` blocks to glue R and LaTeX together.
+Similarly, you can also use `epoxy_latex` blocks to epoxy R and LaTeX together.
 By default, expressions in these types of blocks are wrapped in `<` and `>`.
 
 ````
 \begin{itemize}
-```{glue_latex, data = mpg}`r ''`
+```{epoxy_latex, data = mpg}`r ''`
 \item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
 ```
 \end{itemize}
@@ -231,7 +252,7 @@ this renders as:
 
 ````
 \begin{itemize}
-```{glue, data = mpg, .open = "<", .close = ">"}
+```{epoxy, data = mpg, .open = "<", .close = ">"}
 \item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
 ```
 \end{itemize}

@@ -1,7 +1,10 @@
-url: http://pkg.garrickadenbuie.com/rsprefs
+url: http://pkg.garrickadenbuie.com/epoxy
 
 template:
   package: grkgdown
+
+development:
+  mode: release
 
 navbar:
   components:
@@ -14,3 +17,6 @@ reference:
   contents:
   - '`epoxyHTML`'
   - '`renderEpoxyHTML`'
+- title: epoxy Style Transformers
+  contents:
+  - '`epoxy_style`'

@@ -1,14 +1,20 @@
-epoxy_set_knitr_engines <- function() {
+epoxy_set_knitr_engines <- function(use_glue_engine = FALSE) {
   knitr::knit_engines$set(
-    glue = knitr_engine_glue,
-    "glue_html" = knitr_engine_glue_html,
-    "glue_latex" = knitr_engine_glue_latex,
+    epoxy = knitr_engine_epoxy,
+    "epoxy_html" = knitr_engine_epoxy_html,
+    "glue_html" = knitr_engine_epoxy_html,
+    "epoxy_latex" = knitr_engine_epoxy_latex,
+    "glue_latex" = knitr_engine_epoxy_latex,
     "whisker" = knitr_engine_whisker
   )
+  if (isTRUE(use_glue_engine)) {
+    knitr::knit_engines$set(glue = knitr_engine_epoxy)
+  }
 }
 
-#' @export
-knitr_engine_glue <- function(options) {
+knitr_engine_epoxy <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -32,8 +38,9 @@ knitr_engine_glue <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
-knitr_engine_glue_html <- function(options) {
+knitr_engine_epoxy_html <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -64,8 +71,9 @@ knitr_engine_glue_html <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
-knitr_engine_glue_latex <- function(options) {
+knitr_engine_epoxy_latex <- function(options) {
+  deprecate_glue_engine_prefix(options)
+
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
@@ -89,7 +97,6 @@ knitr_engine_glue_latex <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @export
 knitr_engine_whisker <- function(options) {
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
@@ -162,3 +169,22 @@ deprecate_glue_data_chunk_option <- function(options) {
   }
   options
 }
+
+
+deprecate_glue_engine_prefix <- local({
+  has_warned <- list()
+  function(options) {
+    if (options$engine == "glue" || grepl("glue_", options$engine)) {
+      if (isTRUE(has_warned[[options$engine]])) {
+        return(invisible())
+      } else {
+        has_warned[[options$engine]] <<- TRUE
+      }
+      suggested <- sub("glue_?", "epoxy", options$engine)
+      rlang::warn(c(
+        sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
+        "i" = sprintf("Please use the `%s` engine instead.", suggested)
+      ))
+    }
+  }
+})

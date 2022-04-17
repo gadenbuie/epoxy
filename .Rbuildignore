@@ -5,3 +5,4 @@
 ^README\.Rmd$
 ^_test$
 ^\.github$
+^_pkgdown\.yml$
