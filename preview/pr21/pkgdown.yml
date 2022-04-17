@@ -1,9 +1,0 @@
-pandoc: 2.14.2
-pkgdown: 2.0.2
-pkgdown_sha: ~
-articles: {}
-last_built: 2022-04-17T03:16Z
-urls:
-  reference: http://pkg.garrickadenbuie.com/epoxy/preview/pr21/reference
-  article: http://pkg.garrickadenbuie.com/epoxy/preview/pr21/articles
-
