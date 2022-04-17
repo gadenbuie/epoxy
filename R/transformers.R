@@ -41,7 +41,6 @@ epoxy_style_code <- function() {
 #'   default, these are all `", "`.
 #' @param last,last_and,last_or Additional text added after `sep` before the
 #'   last element when the variable ends in `*`, `&`, or `|` respectively.
-#' @param
 #' @export
 epoxy_style_collapse <- function(
   sep = ", ",
