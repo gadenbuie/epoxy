@@ -1,3 +1,16 @@
+#' epoxy Style Transformers
+#'
+#' These transformers provide additional automatic formatting for the template
+#' strings. They are designed to be used with the `.transformer` chunk option of
+#' in `epoxy` chunks.
+#'
+#' @export
+#' @name epoxy_style
+NULL
+
+#' @describeIn epoxy_style Wrap variables
+#' @param before,after In `epoxy_style_wrap()`, the characters to be added
+#'   before and after variables in the template string.
 #' @export
 epoxy_style_wrap <- function(before = "**", after = "**") {
   function(text, envir) {
@@ -5,21 +18,31 @@ epoxy_style_wrap <- function(before = "**", after = "**") {
   }
 }
 
+#' @describeIn epoxy_style Embolden variables using markdown `**` syntax
 #' @export
 epoxy_style_bold <- function() {
   epoxy_style_wrap("**", "**")
 }
 
+#' @describeIn epoxy_style Italicize variables using markdown `_` syntax
 #' @export
 epoxy_style_italic <- function() {
   epoxy_style_wrap("_", "_")
 }
 
+#' @describeIn epoxy_style Code format variables using markdown backtick syntax
 #' @export
 epoxy_style_code <- function() {
   epoxy_style_wrap("`", "`")
 }
 
+#' @describeIn epoxy_style Collapse vector variables.
+#' @param sep,sep_and,sep_or The separator to use when joining the vector
+#'   elements when the variable ends in `*`, `&`, or `|` respectively. By
+#'   default, these are all `", "`.
+#' @param last,last_and,last_or Additional text added after `sep` before the
+#'   last element when the variable ends in `*`, `&`, or `|` respectively.
+#' @param
 #' @export
 epoxy_style_collapse <- function(
   sep = ", ",
