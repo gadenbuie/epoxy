@@ -9,8 +9,8 @@
 badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
 <!-- badges: end -->
 
-epoxy makes [glue](https://glue.tidyverse.org) easy to use in R Markdown
-documents.
+epoxy makes templating with [glue](https://glue.tidyverse.org) easy in R
+Markdown documents and Shiny apps.
 
 *epoxy is in a proof-of-concept stage right now.* *I’m still
 experimenting, so the API ~~may~~ will change.* *I’d love to hear your
@@ -49,8 +49,11 @@ Loading epoxy adds a new chunk type called `epoxy`.
 ⚠️ Note that previously, epoxy provided a `glue` chunk, but this clashes
 with a chunk engine provided by the [glue](https://glue.tidyverse.org)
 package. If you wish to restore use epoxy’s `glue` chunk, you can
-include `epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)` in
-your document’s `setup` chunk.
+include the following in your setup chunk.
+
+``` r
+epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)
+```
 
 ### epoxy chunks
 
@@ -70,11 +73,11 @@ so you can configure the `.open` and `.close` characters, e.g. `{{`
 instead of `{`, among other options.
 
 With an amazing stroke of luck, RStudio autocompletion works inside
-`glue` chunks!
+`epoxy` chunks!
 
 ### Style replaced values
 
-You can use the `expoxy_style_wrap()` with the `.transformer` chunk
+You can use the `epoxy_style_wrap()` with the `.transformer` chunk
 option to wrap the evaluated R expression in formating or templating
 text. Or you can use the pre-set `epoxy_style_bold()`,
 `epoxy_style_italic()`, or `epoxy_style_code()` style transformers.
@@ -87,9 +90,9 @@ text. Or you can use the pre-set `epoxy_style_bold()`,
 All cars stopped between **2** and **120** feet from a starting speed of
 **4**—**120** mph.
 
-### glue chunks are vectorized
+### epoxy chunks are vectorized
 
-Unlike inline R code, the `glue` chunks are vectorized. This can be
+Unlike inline R code, the `epoxy` chunks are vectorized. This can be
 something to watch out for or it can be an advantage:
 
     ```{epoxy}
@@ -127,7 +130,7 @@ You can change the separator between entries and between the last entry
 using the `sep`, `last` and the `_and` and `_or` specific arguments of
 the `epoxy_style_collapse()` function.
 
-### Templating with glue chunks
+### Templating with epoxy chunks
 
 It’s also possible to create a reusable template. Use the `ref.label`
 chunk option to reuse a template using the values in the `data` chunk
@@ -155,8 +158,8 @@ mpg <- data.frame(
 
 ## Whisker Engine
 
-Sometimes the `glue` engine doesn’t quite deliver the template power you
-need. In these cases, you can use the `whisker` engine instead.
+Sometimes the `epoxy` engine doesn’t quite deliver the template power
+you need. In these cases, you can use the `whisker` engine instead.
 
     ```{r}
     contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
@@ -180,10 +183,10 @@ Hello R User: You have just won $1000! Well, $600, after taxes.
 
 ### HTML Blocks
 
-Use the `epoxy_html` block to glue R and HTML together. The output is
-[raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex). By default,
-expressions in these types of blocks are wrapped in `{{` and `}}`, like
-whisker templates above.
+Use the `epoxy_html` block to epoxy (glue) R and HTML together. The
+output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex). By
+default, expressions in these types of blocks are wrapped in `{{` and
+`}}`, like whisker templates above.
 
     <ul>
     ```{epoxy_html, data = mpg}
@@ -199,7 +202,7 @@ whisker templates above.
 
 ### LaTeX Blocks
 
-Similarly, you can also use `epoxy_latex` blocks to glue R and LaTeX
+Similarly, you can also use `epoxy_latex` blocks to epoxy R and LaTeX
 together. By default, expressions in these types of blocks are wrapped
 in `<` and `>`.
 
