@@ -4,7 +4,7 @@
   with the [glue](https://glue.tidyverse.org) package, which provides a `glue`
   knitr engine with similar functionality. epoxy also provides `epoxy_html` and
   `epoxy_latex` knitr engines, although they can still be used via their aliases
-  `glue_html` and `glue_latex`.
+  `glue_html` and `glue_latex`. (#21)
 
 # epoxy 0.0.2
 
