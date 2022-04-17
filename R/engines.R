@@ -183,7 +183,7 @@ deprecate_glue_engine_prefix <- local({
       suggested <- sub("glue_?", "epoxy", options$engine)
       rlang::warn(c(
         sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
-        "*" = sprintf("Please use the `%s` engine instead.", suggested)
+        "i" = sprintf("Please use the `%s` engine instead.", suggested)
       ))
     }
   }
