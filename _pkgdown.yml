@@ -3,6 +3,9 @@ url: http://pkg.garrickadenbuie.com/rsprefs
 template:
   package: grkgdown
 
+development:
+  mode: release
+
 navbar:
   components:
     github:
