@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 # epoxy
 
 <!-- badges: start -->
-[![epoxy status badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
+[![epoxy r-universe badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
+[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
 <!-- badges: end -->
 
 epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
