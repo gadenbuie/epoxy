@@ -166,7 +166,6 @@ transformer_js_literal <- function(text, envir) {
 
 transformer_html_markup <- function(class = NULL, element = "span") {
   class <- collapse_space(c("epoxy-item__placeholder", class))
-  default_placeholder <- get(".placeholder", envir = envir, inherits = FALSE)
 
   function(text, envir) {
     markup <- parse_html_markup(text)
@@ -174,7 +173,7 @@ transformer_html_markup <- function(class = NULL, element = "span") {
       markup$item,
       env = envir,
       inherit = TRUE,
-      default = default_placeholder
+      default = get(".placeholder", envir = envir, inherits = FALSE)
     )
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element
