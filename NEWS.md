@@ -5,6 +5,12 @@
   knitr engine with similar functionality. epoxy also provides `epoxy_html` and
   `epoxy_latex` knitr engines, although they can still be used via their aliases
   `glue_html` and `glue_latex`. (#21)
+  
+* `epoxyHTML()` will now render elements with IDs using the `#` syntax, e.g.
+  `{{h3#name.author full_name}}` will create an element that is (essentially)
+  `<h3 id="name" class="author">{{ full_name }}</h3>` (#22).
+
+* epoxy requires glue >= 1.5.0.
 
 # epoxy 0.0.2
 

@@ -13,11 +13,10 @@
 #' placeholder inside an `<h3 id="basic-three" class="example basic"></h3>` tag.
 #'
 #' The placeholder template string follows the pattern `{{<markup> <name>}}`.
-#' The markup syntax comes first, separated from the placeholder name by a space.
-#' The HTML element is first, followed by classes prefixed with `.` or and ID
-#' prefixed with `%`. Note that due to the way that [glue::glue()] parses the
-#' template string, an `%` is needed instead of `#`. The template markup can
-#' contain only one element and one ID, but many classes can be specified.
+#' The markup syntax comes first, separated from the placeholder name by a
+#' space. The HTML element is first, followed by classes prefixed with `.` or
+#' and ID prefixed with `#`. The template markup can contain only one element
+#' and one ID, but many classes can be specified.
 #'
 #' @examples
 #' \dontrun{
@@ -127,6 +126,11 @@ epoxyHTML <- function(
   dots$.close = .close %||% "}}"
   dots$.envir = new.env(parent = emptyenv())
 
+  if (utils::packageVersion("glue") >= "1.5.0") {
+    # {glue} 1.5.0 added .comment arg that we use to disable # as comment
+    dots$.comment <- character()
+  }
+
   tags <- purrr::keep(dots, is_tag)
   deps <- if (length(tags)) {
     purrr::flatten(purrr::map(tags, htmltools::findDependencies))
@@ -162,11 +166,14 @@ transformer_js_literal <- function(text, envir) {
 
 transformer_html_markup <- function(class = NULL, element = "span") {
   class <- collapse_space(c("epoxy-item__placeholder", class))
+
   function(text, envir) {
     markup <- parse_html_markup(text)
-    placeholder <- tryCatch(
-      rlang::env_get(markup$item, env = envir, inherit = TRUE),
-      error = function(...) get(".placeholder", envir = envir, inherits = FALSE)
+    placeholder <- rlang::env_get(
+      markup$item,
+      env = envir,
+      inherit = TRUE,
+      default = get(".placeholder", envir = envir, inherits = FALSE)
     )
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element

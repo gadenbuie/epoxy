@@ -10,7 +10,7 @@ License: MIT + file LICENSE
 URL: https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
 Imports:
-    glue,
+    glue (>= 1.5.0),
     htmltools,
     knitr,
     purrr,
@@ -18,6 +18,7 @@ Imports:
     rmarkdown,
     shiny,
     stringr,
+    utils,
     whisker
 Suggests:
     testthat
