@@ -23,8 +23,10 @@ is_htmlish_output <- function(exclude = NULL) {
 
   fmt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
   fmt <- sub("[+-].+$", "", fmt)
-  fmt_htmlish <- c("markdown", "epub", "html", "html4", "html5", "revealjs",
-                   "s5", "slideous", "slidy", "gfm")
+  fmt_htmlish <- c(
+    "markdown", "epub", "html", "html4", "html5", "revealjs",
+    "s5", "slideous", "slidy", "gfm"
+  )
   fmt_htmlish <- setdiff(fmt_htmlish, exclude)
   fmt %in% fmt_htmlish
 }
