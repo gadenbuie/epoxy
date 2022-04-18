@@ -137,11 +137,10 @@ element in your UI, with the classes specified in <code>.class_item</code>.</p>
 markup syntax, <code>"{{h3.example.basic%basic-three demo}}"</code> creates a <code>demo</code>
 placeholder inside an <code>&lt;h3 id="basic-three" class="example basic"&gt;&lt;/h3&gt;</code> tag.</p>
 <p>The placeholder template string follows the pattern <code>{{&lt;markup&gt; &lt;name&gt;}}</code>.
-The markup syntax comes first, separated from the placeholder name by a space.
-The HTML element is first, followed by classes prefixed with <code>.</code> or and ID
-prefixed with <code>%</code>. Note that due to the way that <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code> parses the
-template string, an <code>%</code> is needed instead of <code>#</code>. The template markup can
-contain only one element and one ID, but many classes can be specified.</p>
+The markup syntax comes first, separated from the placeholder name by a
+space. The HTML element is first, followed by classes prefixed with <code>.</code> or
+and ID prefixed with <code>#</code>. The template markup can contain only one element
+and one ID, but many classes can be specified.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
