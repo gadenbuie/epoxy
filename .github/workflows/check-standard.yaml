@@ -44,3 +44,11 @@ jobs:
           extra-packages: rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v2
+
+      - name: "[Status] Update dashboard at gadenbuie/status"
+        uses: peter-evans/repository-dispatch@v1
+        if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') &&  matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        with:
+          token: ${{ secrets.GADENBUIE_STATUS_TOKEN }}
+          event-type: status-update
+          repository: gadenbuie/status
