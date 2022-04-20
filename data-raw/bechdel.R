@@ -34,10 +34,11 @@ bechdel <-
     runtime,
     poster
   ) %>%
+  inner_join(top_movies, ., by = "imdb_id") %>%
   mutate(
     across(where(is.character), ~ if_else(.x == "N/A", "", .x)),
+    across(budget:intgross, as.numeric),
     runtime = as.integer(sub(" min$", "", runtime))
-  ) %>%
-  inner_join(top_movies, ., by = "imdb_id")
+  )
 
 usethis::use_data(bechdel, overwrite = TRUE)
