@@ -170,21 +170,17 @@ deprecate_glue_data_chunk_option <- function(options) {
   options
 }
 
-
-deprecate_glue_engine_prefix <- local({
-  has_warned <- list()
-  function(options) {
-    if (options$engine == "glue" || grepl("glue_", options$engine)) {
-      if (isTRUE(has_warned[[options$engine]])) {
-        return(invisible())
-      } else {
-        has_warned[[options$engine]] <<- TRUE
-      }
-      suggested <- sub("glue_?", "epoxy", options$engine)
-      rlang::warn(c(
-        sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
-        "i" = sprintf("Please use the `%s` engine instead.", suggested)
-      ))
+deprecate_glue_engine_prefix <- function(options) {
+  if (options$engine == "glue" || grepl("glue_", options$engine)) {
+    if (isTRUE(has_warned[[options$engine]])) {
+      return(invisible())
+    } else {
+      has_warned[[options$engine]] <<- TRUE
     }
+    suggested <- sub("glue_?", "epoxy", options$engine)
+    rlang::warn(c(
+      sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
+      "i" = sprintf("Please use the `%s` engine instead.", suggested)
+    ))
   }
-})
+}
