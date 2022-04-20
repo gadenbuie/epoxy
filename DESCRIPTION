@@ -9,6 +9,8 @@ Description: Experimental. String interpolation for 'R Markdown' documents
 License: MIT + file LICENSE
 URL: https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
+Depends: 
+    R (>= 2.10)
 Imports:
     glue (>= 1.5.0),
     htmltools,
@@ -28,5 +30,3 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Depends: 
-    R (>= 2.10)
