@@ -103,9 +103,12 @@
     
 <style type="text/css">
 .epoxy-output {
-  border-left: 4px solid #eaeaea;
-  padding-left: 1em;
-  margin-bottom: 1.5em;
+    border-left: 2px solid var(--bs-primary, #0b535d);
+    padding: 1em;
+    margin-bottom: 1.5em;
+}
+.epoxy-output > :last-child {
+  margin-bottom: 0;
 }
 </style>
 <p>This vignette is heavily inspired by <a href="https://www.tjmahr.com/" class="external-link">Tristan Mahr</a>’s post <a href="https://www.tjmahr.com/lists-knitr-secret-weapon/" class="external-link"><em>Lists are my secret weapon for reporting stats with knitr</em></a>. Please read his original for an excellent introduction on how to better organize your data for inline reporting scenarios with lists. I’m going to borrow several examples directly from that post.</p>
