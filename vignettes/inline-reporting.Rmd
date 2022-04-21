@@ -121,8 +121,8 @@ knitted <- list(
 )
 ```
 
-````
-```{epoxy}`r ''`
+````{verbatim}
+```{epoxy}
 Report prepared on {knitted$when} from `{knitted$where}` 
 with knitr version {knitted$with} {emo::ji('happy')}. 
 Read more about [`knitr::knit()`]({knitted$doc_url}).
@@ -142,8 +142,8 @@ But `epoxy` chunks include a `data` chunk argument,
 which allows us to reference items in the `knitted` list
 directly without having to use `$`.
 
-````
-```{epoxy knitted-2, data = knitted}`r ''`
+````{verbatim}
+```{epoxy knitted-2, data = knitted}
 Report prepared on {when} from `{where}` 
 with knitr version {with} {emo::ji('happy')}. 
 Read more about [`knitr::knit()`]({doc_url}).
