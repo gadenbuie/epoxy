@@ -12,6 +12,10 @@
 
 * epoxy requires glue >= 1.5.0.
 
+* Added a new internal dataset, `bechdel`, containing details for a random
+  sample of ten movies that received a score of **3** on the 
+  [Bechdel Test](https://bechdeltest.com) (#24).
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)

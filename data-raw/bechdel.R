@@ -6,7 +6,7 @@ library(httr2)
 raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
 movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
 
-set.seed(424242)
+set.seed(424042)
 top_movies <-
   raw_bechdel %>%
   rename(bechdel_rating = rating) %>%
@@ -16,7 +16,7 @@ top_movies <-
   ) %>%
   filter(rated %in% c("N/A", "G", "PG", "PG-13")) %>%
   arrange(desc(bechdel_rating), desc(imdb_rating)) %>%
-  filter(imdb_rating > 6) %>%
+  filter(imdb_rating > 6, bechdel_rating == 3) %>%
   group_by(imdb_rating) %>%
   slice_sample(n = 2, replace = TRUE) %>%
   ungroup() %>%
@@ -71,8 +71,14 @@ bechdel <-
 
 # bechdel %>%
 #   select(.title = title, .poster = poster) %>%
-#   purrr::pmap(function(.title, .poster) htmltools::withTags(div(h3(.title), p(img(src = .poster))))) %>%
-#   htmltools::tagList() %>%
+#   purrr::pmap(function(.title, .poster) htmltools::withTags(
+#     div(
+#       style="max-width: 20vw; margin: 10px;",
+#       h3(.title),
+#       p(img(src = .poster, style = "max-width: 100%; max-height: 100%"))
+#     )
+#   )) %>%
+#   htmltools::div(style = "display: flex; flex-direction: row; flex-wrap: wrap") %>%
 #   htmltools::browsable()
 
 usethis::use_data(bechdel, overwrite = TRUE)
