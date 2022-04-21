@@ -8,7 +8,7 @@
 A data frame with 10 rows and 18 variables:
 \describe{
 \item{imdb_id}{IMDB Movie ID}
-\item{bechdel_rating}{Rating (0-3), 0 = unscored, 1. It has to have at least two \link{named} women in it, 2. Who talk to each other, 3. About something besides a man.}
+\item{bechdel_rating}{Rating (0-3), 0 = unscored, 1. It has to have at least two (named) women in it, 2. Who talk to each other, 3. About something besides a man.}
 \item{year}{Year}
 \item{title}{Title of movie}
 \item{budget}{Budget in $USD as of release year}
@@ -24,7 +24,7 @@ A data frame with 10 rows and 18 variables:
 \item{genre}{Genre}
 \item{awards}{Awards won by the movie, text description}
 \item{runtime}{Movie runtime in minutes}
-\item{poster}{URL of movie poster image}
+\item{poster}{URL of movie poster image, sourced from \href{https://www.themoviedb.org}{themoviedb.org}. Poster images URLs ar provided from the TMDB API but \pkg{epoxy} is not endorsed or certified by TMDB.}
 }
 }
 \source{
