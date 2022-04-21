@@ -19,6 +19,48 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/news/index.html</loc>
   </url>
   <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/404.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/articles/inline-reporting.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/authors.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/index.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/news/index.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/reference/epoxy-package.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/reference/epoxyHTML.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/reference/epoxy_style.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr25/reference/renderEpoxyHTML.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/bechdel.html</loc>
+  </url>
+  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy-package.html</loc>
   </url>
   <url>
