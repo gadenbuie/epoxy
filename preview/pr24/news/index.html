@@ -65,6 +65,7 @@
 <ul><li><p>epoxy’s knitr engine is now <code>epoxy</code> and not <code>glue</code>. This avoids a name clash with the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package, which provides a <code>glue</code> knitr engine with similar functionality. epoxy also provides <code>epoxy_html</code> and <code>epoxy_latex</code> knitr engines, although they can still be used via their aliases <code>glue_html</code> and <code>glue_latex</code>. (<a href="https://github.com/gadenbuie/epoxy/issues/21" class="external-link">#21</a>)</p></li>
 <li><p><code><a href="../reference/epoxyHTML.html">epoxyHTML()</a></code> will now render elements with IDs using the <code>#</code> syntax, e.g. <code>{{h3#name.author full_name}}</code> will create an element that is (essentially) <code>&lt;h3 id="name" class="author"&gt;{{ full_name }}&lt;/h3&gt;</code> (<a href="https://github.com/gadenbuie/epoxy/issues/22" class="external-link">#22</a>).</p></li>
 <li><p>epoxy requires glue &gt;= 1.5.0.</p></li>
+<li><p>Added a new internal dataset, <code>bechdel</code>, containing details for a random sample of ten movies that received a score of <strong>3</strong> on the <a href="https://bechdeltest.com" class="external-link">Bechdel Test</a> (<a href="https://github.com/gadenbuie/epoxy/issues/24" class="external-link">#24</a>).</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2" id="epoxy-002">epoxy 0.0.2<a class="anchor" aria-label="anchor" href="#epoxy-002"></a></h2>
