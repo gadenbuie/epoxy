@@ -170,7 +170,6 @@ deprecate_glue_data_chunk_option <- function(options) {
   options
 }
 
-
 deprecate_glue_engine_prefix <- local({
   has_warned <- list()
   function(options) {
