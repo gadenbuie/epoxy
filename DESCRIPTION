@@ -22,6 +22,8 @@ Imports:
     whisker
 Suggests:
     testthat
+VignetteBuilder: 
+    knitr
 Config/Needs/website: gadenbuie/grkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
