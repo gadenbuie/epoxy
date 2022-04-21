@@ -6,7 +6,7 @@
 #' @format A data frame with 10 rows and 18 variables:
 #' \describe{
 #'   \item{imdb_id}{IMDB Movie ID}
-#'   \item{bechdel_rating}{Rating (0-3), 0 = unscored, 1. It has to have at least two (named) women in it, 2. Who talk to each other, 3. About something besides a man.}
+#'   \item{bechdel_rating}{Rating (0-3): 0 = unscored; 1 = It has to have at least two (named) women in it; 2 = Who talk to each other; 3 = About something besides a man.}
 #'   \item{year}{Year}
 #'   \item{title}{Title of movie}
 #'   \item{budget}{Budget in $USD as of release year}
@@ -26,5 +26,6 @@
 #' }
 #' @source [TidyTuesday (2021-03-09)](https://github.com/rfordatascience/tidytuesday/blob/044e769/data/2021/2021-03-09/readme.md),
 #'   [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel),
-#'   [bechdeltest.com](http://bechdeltest.com/)
+#'   [bechdeltest.com](http://bechdeltest.com/),
+#'   [themoviedb.org](https://www.themoviedb.org)
 "bechdel"
