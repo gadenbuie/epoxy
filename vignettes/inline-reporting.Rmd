@@ -15,6 +15,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+emo_ji <- function(...) {
+  "&#x1F606;"
+}
 ```
 
 ```{css echo=FALSE}
@@ -124,7 +128,7 @@ knitted <- list(
 ````{verbatim}
 ```{epoxy}
 Report prepared on {knitted$when} from `{knitted$where}` 
-with knitr version {knitted$with} {emo::ji('happy')}. 
+with knitr version {knitted$with} {emo_ji('happy')}. 
 Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 ````
@@ -132,7 +136,7 @@ Read more about [`knitr::knit()`]({knitted$doc_url}).
 ::: epoxy-output
 ```{epoxy echo=FALSE}
 Report prepared on {knitted$when} from `{knitted$where}` 
-with knitr version {knitted$with} {emo::ji('happy')}. 
+with knitr version {knitted$with} {emo_ji('happy')}. 
 Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 :::
@@ -145,7 +149,7 @@ directly without having to use `$`.
 ````{verbatim}
 ```{epoxy knitted-2, data = knitted}
 Report prepared on {when} from `{where}` 
-with knitr version {with} {emo::ji('happy')}. 
+with knitr version {with} {emo_ji('happy')}. 
 Read more about [`knitr::knit()`]({doc_url}).
 ```
 ````
@@ -153,10 +157,16 @@ Read more about [`knitr::knit()`]({doc_url}).
 ::: epoxy-output
 ```{epoxy knitted-2, data = knitted}
 Report prepared on {when} from `{where}` 
-with knitr version {with} {emo::ji('happy')}. 
+with knitr version {with} {emo_ji('happy')}. 
 Read more about [`knitr::knit()`]({doc_url}).
 ```
 :::
+
+Note that we can still have arbitrary R code
+in epoxy inline expressions:
+the `emo_ji()` function —
+a vignette-safe version of `emo::ji()` —
+exists in my global environment.
 
 
 ## Reporting Model Results
