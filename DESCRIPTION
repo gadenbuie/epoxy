@@ -12,7 +12,7 @@ BugReports: https://github.com/gadenbuie/epoxy/issues
 Imports:
     glue (>= 1.5.0),
     htmltools,
-    knitr,
+    knitr (>= 1.37),
     purrr,
     rlang,
     rmarkdown,
