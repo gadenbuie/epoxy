@@ -23,9 +23,12 @@ emo_ji <- function(...) {
 
 ```{css echo=FALSE}
 .epoxy-output {
-  border-left: 4px solid #eaeaea;
-  padding-left: 1em;
-  margin-bottom: 1.5em;
+	border-left: 2px solid var(--bs-primary, #0b535d);
+	padding: 1em;
+	margin-bottom: 1.5em;
+}
+.epoxy-output > :last-child {
+  margin-bottom: 0;
 }
 ```
 
