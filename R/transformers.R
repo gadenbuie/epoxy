@@ -45,7 +45,14 @@ epoxy_style <- function(...) {
 
 pick_style <- function(style) {
   fn_name <- glue("epoxy_style_{style}")
-  rlang::as_function(fn_name)
+  tryCatch(
+    rlang::as_function(fn_name),
+    error = function(err) {
+      msg <- glue("`epoxy_style_{style}()` doesn't exist.")
+      info <- glue("`{style}` doesn't correspond to an {{epoxy}} function.")
+      rlang::abort(c(msg, x = info))
+    }
+  )
 }
 
 close_over_transformer <- function(expr, env) {

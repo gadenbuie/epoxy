@@ -61,3 +61,10 @@ test_that("epoxy_style() works", {
     "**`a`, `b`, ... and ... `c`**"
   )
 })
+
+test_that("epoxy_style() throws an error for unknown styles", {
+  expect_error(
+    epoxy_style("bold", "foo"),
+    "doesn't exist"
+  )
+})
