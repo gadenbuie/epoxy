@@ -61,6 +61,10 @@ default, these are all \code{", "}.}
 \item{last, last_and, last_or}{Additional text added after \code{sep} before the
 last element when the variable ends in \code{*}, \code{&}, or \code{|} respectively.}
 }
+\value{
+A function of \code{text} and \code{envir} suitable for the \code{.transformer}
+argument of \code{\link[glue:glue]{glue::glue()}}.
+}
 \description{
 These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the \code{.transformer} chunk option of
