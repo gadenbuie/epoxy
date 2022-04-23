@@ -9,13 +9,19 @@
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
 \usage{
-epoxy_style_wrap(before = "**", after = "**")
+epoxy_style(...)
 
-epoxy_style_bold()
+epoxy_style_wrap(
+  before = "**",
+  after = "**",
+  transformer = glue::identity_transformer
+)
 
-epoxy_style_italic()
+epoxy_style_bold(transformer = glue::identity_transformer)
 
-epoxy_style_code()
+epoxy_style_italic(transformer = glue::identity_transformer)
+
+epoxy_style_code(transformer = glue::identity_transformer)
 
 epoxy_style_collapse(
   sep = ", ",
@@ -23,10 +29,21 @@ epoxy_style_collapse(
   last_and = " and ",
   last_or = " or ",
   sep_and = sep,
-  sep_or = sep
+  sep_or = sep,
+  transformer = glue::identity_transformer
 )
 }
 \arguments{
+\item{...}{A list of style functions, e.g. \code{epoxy_style_bold} or the name of
+a style function, e.g. \code{"bold"}, or a call to a style function, e.g.
+\code{epoxy_style_bold()}. \code{epoxy_style()} chains the style functions together,
+applying the styles from left to right.
+
+For example, \code{epoxy_style("bold", "collapse")} results in replaced strings that
+are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the other
+hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector \emph{and then}
+embolden the entire string.}
+
 \item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
 before and after variables in the template string.}
 
@@ -40,7 +57,8 @@ last element when the variable ends in \code{*}, \code{&}, or \code{|} respectiv
 \description{
 These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the \code{.transformer} chunk option of
-in \code{epoxy} chunks.
+in \code{epoxy} chunks. You can use \code{epoxy_style()} to chain several transformers
+together.
 }
 \section{Functions}{
 \itemize{
@@ -55,3 +73,8 @@ in \code{epoxy} chunks.
 \item \code{epoxy_style_collapse}: Collapse vector variables.
 }}
 
+\examples{
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+
+}
