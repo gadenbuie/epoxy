@@ -2,7 +2,7 @@ pandoc: 2.14.2
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-04-23T12:52Z
+last_built: 2022-04-23T13:10Z
 urls:
   reference: http://pkg.garrickadenbuie.com/epoxy/preview/pr26/reference
   article: http://pkg.garrickadenbuie.com/epoxy/preview/pr26/articles

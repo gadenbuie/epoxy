@@ -108,13 +108,20 @@ together.</p>
 a style function, e.g. <code>"bold"</code>, or a call to a style function, e.g.
 <code>epoxy_style_bold()</code>. <code>epoxy_style()</code> chains the style functions together,
 applying the styles from left to right.</p>
-<p>For example, <code>epoxy_style("bold", "collapse")</code> results in replaced strings that
-are emboldened <em>and then</em> collapsed, e.g. <code>**a** and **b**</code>. On the other
-hand, <code>epoxy_style("collapse", "bold")</code>  will collapse the vector <em>and then</em>
-embolden the entire string.</p></dd>
+<p>For example, <code>epoxy_style("bold", "collapse")</code> results in replaced strings
+that are emboldened <em>and then</em> collapsed, e.g. <code>**a** and **b**</code>. On the
+other hand, <code>epoxy_style("collapse", "bold")</code>  will collapse the vector
+<em>and then</em> embolden the entire string.</p></dd>
 <dt>before, after</dt>
 <dd><p>In <code>epoxy_style_wrap()</code>, the characters to be added
 before and after variables in the template string.</p></dd>
+<dt>transformer</dt>
+<dd><p>The transformer to apply to the replacement string. This
+argument is used for chaining the transformer functions. By providing a
+function to this argument you can apply an additional transformation after
+the current transformation. In nearly all cases, you can let
+<code>epoxy_style()</code> handle this for you. The chain ends when
+<code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
 <dt>sep, sep_and, sep_or</dt>
 <dd><p>The separator to use when joining the vector
 elements when the variable ends in <code>*</code>, <code>&amp;</code>, or <code>|</code> respectively. By
