@@ -2,37 +2,93 @@
 #'
 #' These transformers provide additional automatic formatting for the template
 #' strings. They are designed to be used with the `.transformer` chunk option of
-#' in `epoxy` chunks.
+#' in `epoxy` chunks. You can use `epoxy_style()` to chain several transformers
+#' together.
 #'
-#' @name epoxy_style
-NULL
+#' @examples
+#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+#'
+#' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
+#'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
+#'   `epoxy_style_bold()`. `epoxy_style()` chains the style functions together,
+#'   applying the styles from left to right.
+#'
+#'   For example, `epoxy_style("bold", "collapse")` results in replaced strings
+#'   that are emboldened _and then_ collapsed, e.g. `**a** and **b**`. On the
+#'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
+#'   _and then_ embolden the entire string.
+#' @param transformer The transformer to apply to the replacement string. This
+#'   argument is used for chaining the transformer functions. By providing a
+#'   function to this argument you can apply an additional transformation after
+#'   the current transformation. In nearly all cases, you can let
+#'   `epoxy_style()` handle this for you. The chain ends when
+#'   [glue::identity_transformer()] is used as the `transformer`.
+#'
+#' @return A function of `text` and `envir` suitable for the `.transformer`
+#'   argument of [glue::glue()].
+#'
+#' @export
+epoxy_style <- function(...) {
+  parent_env <- rlang::caller_env()
+  dots <- rlang::enexprs(...)
+
+  dots <- purrr::modify_if(dots, rlang::is_call, close_over_transformer, parent_env)
+  dots <- purrr::modify_if(dots, rlang::is_symbol, rlang::eval_bare, parent_env)
+  dots <- purrr::modify_if(dots, is.character, pick_style)
+
+  purrr::reduce(dots, function(x, y) {
+    if (is.null(x)) return(y())
+    y(transformer = x)
+  }, .init = NULL)
+}
+
+pick_style <- function(style) {
+  fn_name <- glue("epoxy_style_{style}")
+  tryCatch(
+    rlang::as_function(fn_name),
+    error = function(err) {
+      msg <- glue("`epoxy_style_{style}()` doesn't exist.")
+      info <- glue("`{style}` doesn't correspond to an {{epoxy}} function.")
+      rlang::abort(c(msg, x = info))
+    }
+  )
+}
+
+close_over_transformer <- function(expr, env) {
+  rlang::new_function(
+    rlang::pairlist2(transformer = ),
+    rlang::call_modify(expr, transformer = rlang::sym("transformer")),
+    env
+  )
+}
 
 #' @describeIn epoxy_style Wrap variables
 #' @param before,after In `epoxy_style_wrap()`, the characters to be added
 #'   before and after variables in the template string.
 #' @export
-epoxy_style_wrap <- function(before = "**", after = "**") {
+epoxy_style_wrap <- function(before = "**", after = "**", transformer = glue::identity_transformer) {
   function(text, envir) {
-    paste0(before, glue::identity_transformer(text, envir), after)
+    paste0(before, transformer(text, envir), after)
   }
 }
 
 #' @describeIn epoxy_style Embolden variables using markdown `**` syntax
 #' @export
-epoxy_style_bold <- function() {
-  epoxy_style_wrap("**", "**")
+epoxy_style_bold <- function(transformer = glue::identity_transformer) {
+  epoxy_style_wrap("**", "**", transformer = transformer)
 }
 
 #' @describeIn epoxy_style Italicize variables using markdown `_` syntax
 #' @export
-epoxy_style_italic <- function() {
-  epoxy_style_wrap("_", "_")
+epoxy_style_italic <- function(transformer = glue::identity_transformer) {
+  epoxy_style_wrap("_", "_", transformer = transformer)
 }
 
 #' @describeIn epoxy_style Code format variables using markdown backtick syntax
 #' @export
-epoxy_style_code <- function() {
-  epoxy_style_wrap("`", "`")
+epoxy_style_code <- function(transformer = glue::identity_transformer) {
+  epoxy_style_wrap("`", "`", transformer = transformer)
 }
 
 #' @describeIn epoxy_style Collapse vector variables.
@@ -48,8 +104,17 @@ epoxy_style_collapse <- function(
   last_and = " and ",
   last_or = " or ",
   sep_and = sep,
-  sep_or = sep
+  sep_or = sep,
+  transformer = glue::identity_transformer
 ) {
+  collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
+    function(text, envir) {
+      text <- sub(regexp, "", text)
+      res <- transformer(text, envir)
+      glue_collapse(res, sep = sep, width = width, last = last)
+    }
+  }
+
   function(text, envir) {
     collapse_fn <-
       switch(
@@ -57,40 +122,8 @@ epoxy_style_collapse <- function(
         "*" = collapse("[*]$", sep = sep,     last = last),
         "&" = collapse("[&]$", sep = sep_and, last = last_and),
         "|" = collapse("[|]$", sep = sep_or,  last = last_or),
-        glue::identity_transformer
+        transformer
       )
     collapse_fn(text, envir)
-  }
-}
-
-collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
-  function(text, envir) {
-    text <- sub(regexp, "", text)
-    res <- glue::identity_transformer(text, envir)
-    glue_collapse(res, sep = sep, width = width, last = last)
-  }
-}
-
-# Overwrites `$` in the context of a glue chunk where `glue_data` was provided.
-# The new `$` is vectorized to be equivalent to `purrr::map(ll, "name")`.
-# epoxy_data_subset <- function(text, envir) {
-#   map_index <- function(x, y) {
-#     y <- substitute(y)
-#     x <- lapply(x, function(.x) base::`[[`(.x, y))
-#     x_len_1 <- vapply(x, function(x) length(x) == 1, logical(1))
-#     if (all(x_len_1)) unlist(x) else x
-#   }
-#   assign("$", envir = envir, map_index)
-#   glue::identity_transformer(text, envir)
-# }
-
-expoxy_style <- function(...) {
-  dots <- list(...)
-  are_closures <- vapply(dots, is.function, logical(1))
-
-  function(text, envir) {
-    Reduce(
-      x = dots
-    )
   }
 }
