@@ -39,13 +39,20 @@ a style function, e.g. \code{"bold"}, or a call to a style function, e.g.
 \code{epoxy_style_bold()}. \code{epoxy_style()} chains the style functions together,
 applying the styles from left to right.
 
-For example, \code{epoxy_style("bold", "collapse")} results in replaced strings that
-are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the other
-hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector \emph{and then}
-embolden the entire string.}
+For example, \code{epoxy_style("bold", "collapse")} results in replaced strings
+that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the
+other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
+\emph{and then} embolden the entire string.}
 
 \item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
 before and after variables in the template string.}
+
+\item{transformer}{The transformer to apply to the replacement string. This
+argument is used for chaining the transformer functions. By providing a
+function to this argument you can apply an additional transformation after
+the current transformation. In nearly all cases, you can let
+\code{epoxy_style()} handle this for you. The chain ends when
+\code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 
 \item{sep, sep_and, sep_or}{The separator to use when joining the vector
 elements when the variable ends in \code{*}, \code{&}, or \code{|} respectively. By

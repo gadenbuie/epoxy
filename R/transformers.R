@@ -10,15 +10,21 @@
 #'   `epoxy_style_bold()`. `epoxy_style()` chains the style functions together,
 #'   applying the styles from left to right.
 #'
-#'   For example, `epoxy_style("bold", "collapse")` results in replaced strings that
-#'   are emboldened _and then_ collapsed, e.g. `**a** and **b**`. On the other
-#'   hand, `epoxy_style("collapse", "bold")`  will collapse the vector _and then_
-#'   embolden the entire string.
+#'   For example, `epoxy_style("bold", "collapse")` results in replaced strings
+#'   that are emboldened _and then_ collapsed, e.g. `**a** and **b**`. On the
+#'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
+#'   _and then_ embolden the entire string.
 #'
 #' @examples
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
 #'
+#' @param transformer The transformer to apply to the replacement string. This
+#'   argument is used for chaining the transformer functions. By providing a
+#'   function to this argument you can apply an additional transformation after
+#'   the current transformation. In nearly all cases, you can let
+#'   `epoxy_style()` handle this for you. The chain ends when
+#'   [glue::identity_transformer()] is used as the `transformer`.
 #' @export
 epoxy_style <- function(...) {
   parent_env <- rlang::caller_env()
