@@ -12,6 +12,17 @@
 
 * epoxy requires glue >= 1.5.0.
 
+* Added a new internal dataset, `bechdel`, containing details for a random
+  sample of ten movies that received a score of **3** on the 
+  [Bechdel Test](https://bechdeltest.com) (#24).
+  
+* epoxy's style transformers can now be chained via `epoxy_style()`. For example
+  to use both `epoxy_style_bold()` and `epoxy_style_collapse()` on all
+  replacement strings, you can call `epoxy_style("bold", "collapse")`.
+  `epoxy_style()` accepts a style function name, e.g. `"collapse"`, the function
+  objet directly, e.g. `epoxy_style_collapse`, or a call to a style function,
+  e.g. `epoxy_style_collapse()` (#26).
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)
