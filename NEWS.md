@@ -31,6 +31,13 @@
   engines. Alternatively, you can force the desired syntax by setting the
   `syntax` option (#28).
 
+* epoxy's knitr engines can now be set manually via the newly exported (and 
+  renamed) `use_epoxy_knitr_engines()`. This function is called when epoxy is
+  loaded, so you most likely do not need to call it directly. In general, you
+  can instead simply `library(epoxy)`. epoxy previously provided a `glue` chunk
+  rather than an `epoxy` chunk and you can restore this behavior by calling
+  `use_epoxy_glue_engine()` (#30).
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)
