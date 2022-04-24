@@ -20,7 +20,7 @@
   to use both `epoxy_style_bold()` and `epoxy_style_collapse()` on all
   replacement strings, you can call `epoxy_style("bold", "collapse")`.
   `epoxy_style()` accepts a style function name, e.g. `"collapse"`, the function
-  objet directly, e.g. `epoxy_style_collapse`, or a call to a style function,
+  object directly, e.g. `epoxy_style_collapse`, or a call to a style function,
   e.g. `epoxy_style_collapse()` (#26).
   
 * Added a new `vignette("inline-reporting")` with thanks to @tjmahr for the
@@ -37,6 +37,11 @@
   can instead simply `library(epoxy)`. epoxy previously provided a `glue` chunk
   rather than an `epoxy` chunk and you can restore this behavior by calling
   `use_epoxy_glue_engine()` (#30).
+
+* Added a new chunk option, `epoxy_style`, that takes precedence over the
+  `.transformer` chunk option. The new chunk option is best paired with 
+  `epoxy_style()`, and for convenience you can prove a vector of style names or
+  a list of functions, e.g. `epoxy_style = c("bold", "collapse")` (#31).
 
 # epoxy 0.0.2
 
