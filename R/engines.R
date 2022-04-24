@@ -1,15 +1,60 @@
-epoxy_set_knitr_engines <- function(use_glue_engine = FALSE) {
+#' Use the epoxy knitr engines
+#'
+#' @description
+#' Sets \pkg{epoxy}'s \pkg{knitr} engines for use by \pkg{knitr} in R Markdown
+#' and other document formats powered by \pkg{knitr}. These engines are also
+#' set up when loading \pkg{epoxy} with `library()`, so in general you will not
+#' need to call this function explicitly.
+#'
+#' \pkg{epoxy} provides four \pkg{knitr} engines:
+#'
+#' * `epoxy` uses default \pkg{glue} syntax, e.g. `{var}` for markdown outputs
+#' * `epoxy_html` uses double brace syntax, e.g. `{{var}}` for HTML outputs
+#' * `epoxy_latex` uses double angle brackets syntax, e.g. `<<var>>` for LaTeX
+#'   outputs
+#' * `whisker` uses the \pkg{whisker} package which provides an R-based
+#'   implementation of the [mustache](https://mustache.github.io/) templating
+#'   language.
+#'
+#' For historical reasons, alias for the HTML and LaTeX engines are aliased are
+#' also created: `glue_html` and `glue_latex`. You may opt into a third alias —
+#' `glue` for the `epoxy` engine — by calling `use_epoxy_glue_engine()`, but
+#' note that this will most likely overwrite the `glue` engine provided by the
+#' \pkg{glue} package.
+#'
+#' @param use_glue_engine If `TRUE` (default `FALSE`), uses \pkg{epoxy}'s `glue`
+#'   engine, most likely overwriting the `glue` engine provided by \pkg{glue}.
+#'
+#' @return Silently sets \pkg{epoxy}'s knitr engines and invisible returns
+#'   [knitr::knit_engines] as they were prior to the function call.
+#'
+#' @export
+use_epoxy_knitr_engines <- function(use_glue_engine = FALSE) {
+  old <- knitr::knit_engines$get()
+
   knitr::knit_engines$set(
-    epoxy = knitr_engine_epoxy,
-    "epoxy_html" = knitr_engine_epoxy_html,
-    "glue_html" = knitr_engine_epoxy_html,
+    epoxy         = knitr_engine_epoxy,
+    "epoxy_html"  = knitr_engine_epoxy_html,
+    "glue_html"   = knitr_engine_epoxy_html,
     "epoxy_latex" = knitr_engine_epoxy_latex,
-    "glue_latex" = knitr_engine_epoxy_latex,
-    "whisker" = knitr_engine_whisker
+    "glue_latex"  = knitr_engine_epoxy_latex,
+    "whisker"     = knitr_engine_whisker
   )
+
   if (isTRUE(use_glue_engine)) {
-    knitr::knit_engines$set(glue = knitr_engine_epoxy)
+    use_epoxy_glue_engine()
   }
+
+  invisible(old)
+}
+
+#' @describeIn use_epoxy_knitr_engines Use \pkg{epoxy}'s `epoxy` engine as
+#'   the `glue` engine.
+#' @export
+use_epoxy_glue_engine <- function() {
+  old <- knitr::knit_engines$get()
+  knitr::knit_engines$set(glue = knitr_engine_epoxy)
+  invisible(old)
 }
 
 knitr_engine_epoxy <- function(options) {

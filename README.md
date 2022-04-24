@@ -48,7 +48,7 @@ package. If you wish to restore use epoxy’s `glue` chunk, you can
 include the following in your setup chunk.
 
 ``` r
-epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)
+use_epoxy_glue_engine()
 ```
 
 ### epoxy chunks
