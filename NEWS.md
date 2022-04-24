@@ -25,6 +25,11 @@
   
 * Added a new `vignette("inline-reporting")` with thanks to @tjmahr for the
   [inspiration](https://www.tjmahr.com/lists-knitr-secret-weapon/) (#25).
+  
+* The epoxy style transformers for bold, italic and code styles now choose the
+  correct syntax for the `epoxy` (markdown), `epoxy_html` and `epoxy_latex`
+  engines. Alternatively, you can force the desired syntax by setting the
+  `syntax` option (#28).
 
 # epoxy 0.0.2
 
