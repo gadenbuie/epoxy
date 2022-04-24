@@ -22,6 +22,9 @@
   `epoxy_style()` accepts a style function name, e.g. `"collapse"`, the function
   objet directly, e.g. `epoxy_style_collapse`, or a call to a style function,
   e.g. `epoxy_style_collapse()` (#26).
+  
+* Added a new `vignette("inline-reporting")` with thanks to @tjmahr for the
+  [inspiration](https://www.tjmahr.com/lists-knitr-secret-weapon/) (#25).
 
 # epoxy 0.0.2
 
