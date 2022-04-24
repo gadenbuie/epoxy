@@ -101,9 +101,20 @@ close_over_transformer <- function(expr, env) {
 #' @param before,after In `epoxy_style_wrap()`, the characters to be added
 #'   before and after variables in the template string.
 #' @export
-epoxy_style_wrap <- function(before = "**", after = before, transformer = glue::identity_transformer) {
+epoxy_style_wrap <- function(
+  before = "**",
+  after = before,
+  syntax = NULL,
+  transformer = glue::identity_transformer
+) {
   if (!is.null(getOption("epoxy.engine", NULL))) {
     force(list(before, after))
+  }
+  if (!is.null(syntax)) {
+    with_options(
+      list(epoxy.engine = syntax),
+      list(before, after)
+    )
   }
   function(text, envir) {
     paste0(before, transformer(text, envir), after)
@@ -113,10 +124,11 @@ epoxy_style_wrap <- function(before = "**", after = before, transformer = glue::
 #' @describeIn epoxy_style Embolden variables using `**` in markdown, `<strong>`
 #'   in HTML, or `\textbf{}` in LaTeX
 #' @export
-epoxy_style_bold <- function(transformer = glue::identity_transformer) {
+epoxy_style_bold <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = default_for_engine("**", "<strong>", "\\textbf{"),
     after = default_for_engine("**", "</strong>", "}"),
+    syntax = syntax,
     transformer = transformer
   )
 }
@@ -124,10 +136,11 @@ epoxy_style_bold <- function(transformer = glue::identity_transformer) {
 #' @describeIn epoxy_style Italicize variables using `_` in markdown, `<em>` in
 #'   HTML, or `\emph{}` in LaTeX
 #' @export
-epoxy_style_italic <- function(transformer = glue::identity_transformer) {
+epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = default_for_engine("_", "<em>", "\\emph{"),
     after = default_for_engine("_", "</em>", "}"),
+    syntax = syntax,
     transformer = transformer
   )
 }
@@ -135,10 +148,11 @@ epoxy_style_italic <- function(transformer = glue::identity_transformer) {
 #' @describeIn epoxy_style Code format variables using ` `` ` in markdown,
 #'   `<code>` in HTML, or `\texttt{}` in LaTeX
 #' @export
-epoxy_style_code <- function(transformer = glue::identity_transformer) {
+epoxy_style_code <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = default_for_engine("`", "<code>", "\\texttt{"),
     after = default_for_engine("`", "</code>", "}"),
+    syntax = syntax,
     transformer = transformer
   )
 }

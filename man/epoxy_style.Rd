@@ -14,14 +14,15 @@ epoxy_style(..., syntax = NULL)
 epoxy_style_wrap(
   before = "**",
   after = before,
+  syntax = NULL,
   transformer = glue::identity_transformer
 )
 
-epoxy_style_bold(transformer = glue::identity_transformer)
+epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
 
-epoxy_style_italic(transformer = glue::identity_transformer)
+epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
 
-epoxy_style_code(transformer = glue::identity_transformer)
+epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_collapse(
   sep = ", ",
