@@ -73,12 +73,12 @@ With an amazing stroke of luck, RStudio autocompletion works inside
 
 ### Style replaced values
 
-You can use the `epoxy_style_wrap()` with the `.transformer` chunk
-option to wrap the evaluated R expression in formating or templating
-text. Or you can use the pre-set `epoxy_style_bold()`,
-`epoxy_style_italic()`, or `epoxy_style_code()` style transformers.
+You can use the `epoxy_style_wrap()` with the `epoxy_style` chunk option
+to wrap the evaluated R expression in formatting or templating text. Or
+you can use the pre-set `epoxy_style_bold()`, `epoxy_style_italic()`, or
+`epoxy_style_code()` style transformers or with `epoxy_style()`.
 
-    ```{epoxy, .transformer = epoxy_style_bold()}
+    ```{epoxy, epoxy_style = epoxy_style("bold")}
     All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
     from a starting speed of {min(cars$speed)}---{max(cars$speed)}
     ```
@@ -112,7 +112,7 @@ transformer. You can then choose how vectors are collapsed by adding
 
 <!-- end list -->
 
-    ```{epoxy, .transformer = epoxy_style_collapse()}
+    ```{epoxy, epoxy_style = epoxy_style("collapse")}
     - The first three letters are {letters[1:3]*}.
     - When capitalized, they are {LETTERS[1:3]&}.
     - They're indexed by {1:3|}.
