@@ -6,6 +6,8 @@
 \alias{epoxy-package}
 \title{epoxy: String Interpolation for 'R Markdown' Documents}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 Experimental. String interpolation for 'R Markdown' documents and 'Shiny' apps.
 }
 \seealso{
