@@ -45,6 +45,12 @@
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/inline-reporting.html">Inline Reporting</a>
+  </div>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -89,11 +95,10 @@
 <!-- badges: start -->
 
 <p>epoxy makes templating with <a href="https://glue.tidyverse.org" class="external-link">glue</a> easy in R Markdown documents and Shiny apps.</p>
-<p><em>epoxy is in a proof-of-concept stage right now.</em> <em>I’m still experimenting, so the API <del>may</del> will change.</em> <em>I’d love to hear your thoughts, feel free to <a href="https://github.com/gadenbuie/epoxy/issues" class="external-link">open issues</a></em>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the proof-of-concept version of epoxy with <a href="https://remotes.r-lib.org" class="external-link">remotes</a></p>
+<p>You can install the latest version of epoxy with <a href="https://remotes.r-lib.org" class="external-link">remotes</a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gadenbuie/epoxy"</span><span class="op">)</span></code></pre></div>
@@ -101,7 +106,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   gadenbuie <span class="op">=</span> <span class="st">"https://gadenbuie.r-universe.dev/"</span>,
-  <span class="fu">getOptions</span><span class="op">(</span><span class="va">repos</span><span class="op">)</span>
+  <span class="fu">getOptions</span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>
 <span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"epoxy"</span><span class="op">)</span></code></pre></div>
@@ -114,7 +119,7 @@
 <p>Loading epoxy adds a new chunk type called <code>epoxy</code>.</p>
 <p>⚠️ Note that previously, epoxy provided a <code>glue</code> chunk, but this clashes with a chunk engine provided by the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package. If you wish to restore use epoxy’s <code>glue</code> chunk, you can include the following in your setup chunk.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">epoxy</span><span class="fu">:::</span><span class="fu">epoxy_set_knitr_engines</span><span class="op">(</span>use_glue_engine <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/use_epoxy_knitr_engines.html">use_epoxy_glue_engine</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="epoxy-chunks">epoxy chunks<a class="anchor" aria-label="anchor" href="#epoxy-chunks"></a>
 </h3>
@@ -130,8 +135,8 @@
 <div class="section level3">
 <h3 id="style-replaced-values">Style replaced values<a class="anchor" aria-label="anchor" href="#style-replaced-values"></a>
 </h3>
-<p>You can use the <code><a href="reference/epoxy_style.html">epoxy_style_wrap()</a></code> with the <code>.transformer</code> chunk option to wrap the evaluated R expression in formating or templating text. Or you can use the pre-set <code><a href="reference/epoxy_style.html">epoxy_style_bold()</a></code>, <code><a href="reference/epoxy_style.html">epoxy_style_italic()</a></code>, or <code><a href="reference/epoxy_style.html">epoxy_style_code()</a></code> style transformers.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{epoxy, .transformer = epoxy_style_bold()}</span></span>
+<p>You can use the <code><a href="reference/epoxy_style.html">epoxy_style_wrap()</a></code> with the <code>epoxy_style</code> chunk option to wrap the evaluated R expression in formatting or templating text. Or you can use the pre-set <code><a href="reference/epoxy_style.html">epoxy_style_bold()</a></code>, <code><a href="reference/epoxy_style.html">epoxy_style_italic()</a></code>, or <code><a href="reference/epoxy_style.html">epoxy_style_code()</a></code> style transformers or with <code><a href="reference/epoxy_style.html">epoxy_style()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{epoxy, epoxy_style = epoxy_style("bold")}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">from a starting speed of {min(cars$speed)}---{max(cars$speed)}</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span></code></pre></div>
@@ -159,7 +164,7 @@
 <li>
 <code>|</code> collapses with commas and adds <code>" or "</code> between the last two items.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{epoxy, .transformer = epoxy_style_collapse()}</span></span>
+<!-- end list --><div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{epoxy, epoxy_style = epoxy_style("collapse")}</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">- The first three letters are {letters[1:3]*}.</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">- When capitalized, they are {LETTERS[1:3]&amp;}.</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">- They're indexed by {1:3|}.</span></span>
