@@ -13,14 +13,9 @@ badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-unive
 epoxy makes templating with [glue](https://glue.tidyverse.org) easy in R
 Markdown documents and Shiny apps.
 
-*epoxy is in a proof-of-concept stage right now.* *I’m still
-experimenting, so the API ~~may~~ will change.* *I’d love to hear your
-thoughts, feel free to [open
-issues](https://github.com/gadenbuie/epoxy/issues)*.
-
 ## Installation
 
-You can install the proof-of-concept version of epoxy with
+You can install the latest version of epoxy with
 [remotes](https://remotes.r-lib.org)
 
 ``` r
