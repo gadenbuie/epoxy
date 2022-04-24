@@ -48,7 +48,7 @@ package. If you wish to restore use epoxy’s `glue` chunk, you can
 include the following in your setup chunk.
 
 ``` r
-epoxy:::epoxy_set_knitr_engines(use_glue_engine = TRUE)
+use_epoxy_glue_engine()
 ```
 
 ### epoxy chunks
@@ -69,7 +69,7 @@ so you can configure the `.open` and `.close` characters, e.g. `{{`
 instead of `{`, among other options.
 
 With an amazing stroke of luck, RStudio autocompletion works inside
-`epoxy` chunks!
+`epoxy` chunks\!
 
 ### Style replaced values
 
@@ -104,13 +104,13 @@ You can collapse fields automatically using the `epoxy_style_collapse()`
 transformer. You can then choose how vectors are collapsed by adding
 `*`, `&` or `|` to the end of the expression.
 
--   `*` collapses with commas, e.g. `{letters[1:3]*}`.
--   `&` collapses with commas and adds `" and "` between the last two
+  - `*` collapses with commas, e.g. `{letters[1:3]*}`.
+  - `&` collapses with commas and adds `" and "` between the last two
     items
--   `|` collapses with commas and adds `" or "` between the last two
+  - `|` collapses with commas and adds `" or "` between the last two
     items.
 
-<!-- -->
+<!-- end list -->
 
     ```{epoxy, .transformer = epoxy_style_collapse()}
     - The first three letters are {letters[1:3]*}.
@@ -118,9 +118,9 @@ transformer. You can then choose how vectors are collapsed by adding
     - They're indexed by {1:3|}.
     ```
 
--   The first three letters are a, b, c.
--   When capitalized, they are A, B and C.
--   They’re indexed by 1, 2 or 3.
+  - The first three letters are a, b, c.
+  - When capitalized, they are A, B and C.
+  - They’re indexed by 1, 2 or 3.
 
 You can change the separator between entries and between the last entry
 using the `sep`, `last` and the `_and` and `_or` specific arguments of
@@ -144,13 +144,13 @@ mpg <- data.frame(
     ```{epoxy car-name, eval=FALSE}
     - A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
     ```
-
+    
     ```{epoxy ref.label="car-name", data = mpg}
     ```
 
--   A Chevrolet Malibu gets 19 city and 27 highway miles per gallon.
--   A Dodge Caravan gets 7 city and 24 highway miles per gallon.
--   A Ford Expedition gets 11 city and 17 highway miles per gallon.
+  - A Chevrolet Malibu gets 19 city and 27 highway miles per gallon.
+  - A Dodge Caravan gets 7 city and 24 highway miles per gallon.
+  - A Ford Expedition gets 11 city and 17 highway miles per gallon.
 
 ## Whisker Engine
 
@@ -160,7 +160,7 @@ you need. In these cases, you can use the `whisker` engine instead.
     ```{r}
     contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
     ```
-
+    
     ```{whisker data = contestant, echo=FALSE}
     Hello {{name}}:
     You have just won ${{value}}!
@@ -173,7 +173,7 @@ you need. In these cases, you can use the `whisker` engine instead.
 contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
 ```
 
-Hello R User: You have just won $1000! Well, $600, after taxes.
+Hello R User: You have just won $1000\! Well, $600, after taxes.
 
 ## Raw Blocks
 
@@ -191,9 +191,11 @@ default, expressions in these types of blocks are wrapped in `{{` and
     </ul>
 
 <ul>
+
   <li><strong>Chevrolet</strong> <em>Malibu</em></li>
   <li><strong>Dodge</strong> <em>Caravan</em></li>
   <li><strong>Ford</strong> <em>Expedition</em></li>
+
 </ul>
 
 ### LaTeX Blocks
