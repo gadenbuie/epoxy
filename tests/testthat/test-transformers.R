@@ -68,3 +68,38 @@ test_that("epoxy_style() throws an error for unknown styles", {
     "doesn't exist"
   )
 })
+
+test_that("epoxy_style_*() functions choose default by engine", {
+  with_options(
+    list(epoxy.engine = "epoxy"),
+    expect_equal(
+      glue("{'word'}", .transformer = epoxy_style("bold")),
+      "**word**"
+    )
+  )
+
+  with_options(
+    list(epoxy.engine = "epoxy_html"),
+    expect_equal(
+      glue("{'word'}", .transformer = epoxy_style("bold")),
+      "<strong>word</strong>"
+    )
+  )
+
+  with_options(
+    list(epoxy.engine = "epoxy_latex"),
+    expect_equal(
+      glue("{'word'}", .transformer = epoxy_style("bold")),
+      "\\textbf{word}"
+    )
+  )
+
+  # markdown by default
+  with_options(
+    list(epoxy.engine = "foo"),
+    expect_equal(
+      glue("{'word'}", .transformer = epoxy_style("bold")),
+      "**word**"
+    )
+  )
+})

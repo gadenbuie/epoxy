@@ -3,11 +3,38 @@
 #' These transformers provide additional automatic formatting for the template
 #' strings. They are designed to be used with the `.transformer` chunk option of
 #' in `epoxy` chunks. You can use `epoxy_style()` to chain several transformers
-#' together.
+#' together. `epoxy_style()` and individual \pkg{epoxy} style functions can be
+#' used in `epoxy`, `epoxy_html` and `epoxy_latex` chunks and will choose the
+#' correct syntax for each.
+#'
+#' @section Output-specific styling:
+#'   The `epoxy_style_` functions will attempt to use the correct syntax for
+#'   styling the replacement text for markdown, HTML and LaTeX. This choice is
+#'   driven by the chunk engine where the styling function is used. The `epoxy`
+#'   engine corresponds to markdown, `epoxy_html` to HTML, and `epoxy_latex` to
+#'   LaTeX.
+#'
+#'   The engine detection only works when the epoxy style functions are used
+#'   with epoxy knitr engines and during the knitr rendering process. When
+#'   used outside of this context, you can choose the desired syntax by setting
+#'   the `epoxy.engine` option, e.g. `options(epoxy.engine = "epoxy_html")` for
+#'   the `epoxy_html` engine.
 #'
 #' @examples
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+#'
+#' old <- options(epoxy.engine = "epoxy_html")
+#' # In an epoxy_html chunk...
+#' # (you don't need to set that option, it's only needed for these examples)
+#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+#'
+#' options(epoxy.engine = "epoxy_latex")
+#' # Or in an epoxy_latex chunk...
+#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+#'
+#' # restore (or more likely unset) your original options
+#' options(old)
 #'
 #' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
 #'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
@@ -67,31 +94,66 @@ close_over_transformer <- function(expr, env) {
 #' @param before,after In `epoxy_style_wrap()`, the characters to be added
 #'   before and after variables in the template string.
 #' @export
-epoxy_style_wrap <- function(before = "**", after = "**", transformer = glue::identity_transformer) {
+epoxy_style_wrap <- function(before = "**", after = before, transformer = glue::identity_transformer) {
   function(text, envir) {
     paste0(before, transformer(text, envir), after)
   }
 }
 
-#' @describeIn epoxy_style Embolden variables using markdown `**` syntax
+#' @describeIn epoxy_style Embolden variables using `**` in markdown, `<strong>`
+#'   in HTML, or `\textbf{}` in LaTeX
 #' @export
 epoxy_style_bold <- function(transformer = glue::identity_transformer) {
-  epoxy_style_wrap("**", "**", transformer = transformer)
+  epoxy_style_wrap(
+    before = default_for_engine("**", "<strong>", "\\textbf{"),
+    after = default_for_engine("**", "</strong>", "}"),
+    transformer = transformer
+  )
 }
 
-#' @describeIn epoxy_style Italicize variables using markdown `_` syntax
+#' @describeIn epoxy_style Italicize variables using `_` in markdown, `<em>` in
+#'   HTML, or `\emph{}` in LaTeX
 #' @export
 epoxy_style_italic <- function(transformer = glue::identity_transformer) {
-  epoxy_style_wrap("_", "_", transformer = transformer)
+  epoxy_style_wrap(
+    before = default_for_engine("_", "<em>", "\\emph{"),
+    after = default_for_engine("_", "</em>", "}"),
+    transformer = transformer
+  )
 }
 
-#' @describeIn epoxy_style Code format variables using markdown backtick syntax
+#' @describeIn epoxy_style Code format variables using ` `` ` in markdown,
+#'   `<code>` in HTML, or `\texttt{}` in LaTeX
 #' @export
 epoxy_style_code <- function(transformer = glue::identity_transformer) {
-  epoxy_style_wrap("`", "`", transformer = transformer)
+  epoxy_style_wrap(
+    before = default_for_engine("`", "<code>", "\\texttt{"),
+    after = default_for_engine("`", "</code>", "}"),
+    transformer = transformer
+  )
 }
 
-#' @describeIn epoxy_style Collapse vector variables.
+default_for_engine <- function(md, html, latex) {
+  engine <- getOption("epoxy.engine", NULL) %||%
+    knitr::opts_current$get("engine")
+
+  if (is.null(engine)) {
+    return(md)
+  }
+
+  switch(
+    engine,
+    glue = ,
+    epoxy = md,
+    glue_html = ,
+    epoxy_html = html,
+    glue_latex = ,
+    epoxy_latex = latex,
+    md
+  )
+}
+
+#' @describeIn epoxy_style Collapse vector variables
 #' @param sep,sep_and,sep_or The separator to use when joining the vector
 #'   elements when the variable ends in `*`, `&`, or `|` respectively. By
 #'   default, these are all `", "`.

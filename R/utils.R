@@ -36,3 +36,9 @@ collapse_space <- function(...) {
 }
 
 is_tag <- function(x) inherits(x, "shiny.tag")
+
+with_options <- function(opts, expr) {
+  old <- options(opts)
+  on.exit(options(old))
+  force(expr)
+}

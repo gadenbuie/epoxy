@@ -13,7 +13,7 @@ epoxy_style(...)
 
 epoxy_style_wrap(
   before = "**",
-  after = "**",
+  after = before,
   transformer = glue::identity_transformer
 )
 
@@ -69,23 +69,55 @@ argument of \code{\link[glue:glue]{glue::glue()}}.
 These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the \code{.transformer} chunk option of
 in \code{epoxy} chunks. You can use \code{epoxy_style()} to chain several transformers
-together.
+together. \code{epoxy_style()} and individual \pkg{epoxy} style functions can be
+used in \code{epoxy}, \code{epoxy_html} and \code{epoxy_latex} chunks and will choose the
+correct syntax for each.
 }
 \section{Functions}{
 \itemize{
 \item \code{epoxy_style_wrap}: Wrap variables
 
-\item \code{epoxy_style_bold}: Embolden variables using markdown \verb{**} syntax
+\item \code{epoxy_style_bold}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
+in HTML, or \verb{\\textbf\{\}} in LaTeX
 
-\item \code{epoxy_style_italic}: Italicize variables using markdown \verb{_} syntax
+\item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
+HTML, or \verb{\\emph\{\}} in LaTeX
 
-\item \code{epoxy_style_code}: Code format variables using markdown backtick syntax
+\item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
+\verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
 
-\item \code{epoxy_style_collapse}: Collapse vector variables.
+\item \code{epoxy_style_collapse}: Collapse vector variables
 }}
+
+\section{Output-specific styling}{
+
+The \code{epoxy_style_} functions will attempt to use the correct syntax for
+styling the replacement text for markdown, HTML and LaTeX. This choice is
+driven by the chunk engine where the styling function is used. The \code{epoxy}
+engine corresponds to markdown, \code{epoxy_html} to HTML, and \code{epoxy_latex} to
+LaTeX.
+
+The engine detection only works when the epoxy style functions are used
+with epoxy knitr engines and during the knitr rendering process. When
+used outside of this context, you can choose the desired syntax by setting
+the \code{epoxy.engine} option, e.g. \code{options(epoxy.engine = "epoxy_html")} for
+the \code{epoxy_html} engine.
+}
 
 \examples{
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+
+old <- options(epoxy.engine = "epoxy_html")
+# In an epoxy_html chunk...
+# (you don't need to set that option, it's only needed for these examples)
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+
+options(epoxy.engine = "epoxy_latex")
+# Or in an epoxy_latex chunk...
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+
+# restore (or more likely unset) your original options
+options(old)
 
 }
