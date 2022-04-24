@@ -14,27 +14,27 @@
 #'   engine corresponds to markdown, `epoxy_html` to HTML, and `epoxy_latex` to
 #'   LaTeX.
 #'
-#'   The engine detection only works when the epoxy style functions are used
+#'   Automatic syntax selection only works when the epoxy style functions are used
 #'   with epoxy knitr engines and during the knitr rendering process. When
 #'   used outside of this context, you can choose the desired syntax by setting
-#'   the `epoxy.engine` option, e.g. `options(epoxy.engine = "epoxy_html")` for
-#'   the `epoxy_html` engine.
+#'   the `syntax` to one of `"markdown"`, `"html"` or `"latex"`.
 #'
 #' @examples
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 #' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
 #'
-#' old <- options(epoxy.engine = "epoxy_html")
 #' # In an epoxy_html chunk...
-#' # (you don't need to set that option, it's only needed for these examples)
-#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+#' # Note that you don't have to set `syntax = "html"`, it just knows
+#' glue::glue(
+#'   "{letters[1:3]&}",
+#'   .transformer = epoxy_style("bold", "collapse", syntax = "html")
+#' )
 #'
-#' options(epoxy.engine = "epoxy_latex")
 #' # Or in an epoxy_latex chunk...
-#' glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
-#'
-#' # restore (or more likely unset) your original options
-#' options(old)
+#' glue::glue(
+#'   "{letters[1:3]&}",
+#'   .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+#' )
 #'
 #' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
 #'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
@@ -45,6 +45,10 @@
 #'   that are emboldened _and then_ collapsed, e.g. `**a** and **b**`. On the
 #'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
 #'   _and then_ embolden the entire string.
+#' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
+#'   default is chosen based on the engine of the chunk where the style function
+#'   is called, or according to the option `epoxy.engine`. Caution: invalid
+#'   options are silently ignored, falling back to markdown syntax.
 #' @param transformer The transformer to apply to the replacement string. This
 #'   argument is used for chaining the transformer functions. By providing a
 #'   function to this argument you can apply an additional transformation after
@@ -56,7 +60,7 @@
 #'   argument of [glue::glue()].
 #'
 #' @export
-epoxy_style <- function(...) {
+epoxy_style <- function(..., syntax = NULL) {
   parent_env <- rlang::caller_env()
   dots <- rlang::enexprs(...)
 
@@ -64,10 +68,13 @@ epoxy_style <- function(...) {
   dots <- purrr::modify_if(dots, rlang::is_symbol, rlang::eval_bare, parent_env)
   dots <- purrr::modify_if(dots, is.character, pick_style)
 
-  purrr::reduce(dots, function(x, y) {
-    if (is.null(x)) return(y())
-    y(transformer = x)
-  }, .init = NULL)
+  with_options(
+    list(epoxy.engine = syntax),
+    purrr::reduce(dots, function(x, y) {
+      if (is.null(x)) return(y())
+      y(transformer = x)
+    }, .init = NULL)
+  )
 }
 
 pick_style <- function(style) {
@@ -95,6 +102,9 @@ close_over_transformer <- function(expr, env) {
 #'   before and after variables in the template string.
 #' @export
 epoxy_style_wrap <- function(before = "**", after = before, transformer = glue::identity_transformer) {
+  if (!is.null(getOption("epoxy.engine", NULL))) {
+    force(list(before, after))
+  }
   function(text, envir) {
     paste0(before, transformer(text, envir), after)
   }
@@ -143,10 +153,14 @@ default_for_engine <- function(md, html, latex) {
 
   switch(
     engine,
+    md = ,
+    markdown = ,
     glue = ,
     epoxy = md,
+    html = ,
     glue_html = ,
     epoxy_html = html,
+    latex = ,
     glue_latex = ,
     epoxy_latex = latex,
     md

@@ -9,7 +9,7 @@
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
 \usage{
-epoxy_style(...)
+epoxy_style(..., syntax = NULL)
 
 epoxy_style_wrap(
   before = "**",
@@ -43,6 +43,11 @@ For example, \code{epoxy_style("bold", "collapse")} results in replaced strings
 that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the
 other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
 \emph{and then} embolden the entire string.}
+
+\item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
+default is chosen based on the engine of the chunk where the style function
+is called, or according to the option \code{epoxy.engine}. Caution: invalid
+options are silently ignored, falling back to markdown syntax.}
 
 \item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
 before and after variables in the template string.}
@@ -97,27 +102,27 @@ driven by the chunk engine where the styling function is used. The \code{epoxy}
 engine corresponds to markdown, \code{epoxy_html} to HTML, and \code{epoxy_latex} to
 LaTeX.
 
-The engine detection only works when the epoxy style functions are used
+Automatic syntax selection only works when the epoxy style functions are used
 with epoxy knitr engines and during the knitr rendering process. When
 used outside of this context, you can choose the desired syntax by setting
-the \code{epoxy.engine} option, e.g. \code{options(epoxy.engine = "epoxy_html")} for
-the \code{epoxy_html} engine.
+the \code{syntax} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
 }
 
 \examples{
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
 
-old <- options(epoxy.engine = "epoxy_html")
 # In an epoxy_html chunk...
-# (you don't need to set that option, it's only needed for these examples)
-glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+# Note that you don't have to set `syntax = "html"`, it just knows
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "html")
+)
 
-options(epoxy.engine = "epoxy_latex")
 # Or in an epoxy_latex chunk...
-glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
-
-# restore (or more likely unset) your original options
-options(old)
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+)
 
 }
