@@ -1,0 +1,366 @@
+---
+title: "Inline Reporting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Inline Reporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+[knitr]: https://yihui.org/knitr/
+[tj-lists]: https://www.tjmahr.com/lists-knitr-secret-weapon/
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+emo_ji <- function(...) {
+  "&#x1F606;"
+}
+```
+
+```{css echo=FALSE}
+.epoxy-output {
+	border-left: 2px solid var(--bs-primary, #0b535d);
+	padding: 1em;
+	margin-bottom: 1.5em;
+}
+.epoxy-output > :last-child {
+  margin-bottom: 0;
+}
+```
+
+```{r setup, include = FALSE}
+library(epoxy)
+```
+
+This vignette is heavily inspired by
+[Tristan Mahr](https://www.tjmahr.com/)'s post
+[_Lists are my secret weapon for reporting stats with knitr_][tj-lists].
+Please read his original for an excellent introduction
+on how to better organize your data for inline reporting scenarios with lists.
+I'm going to borrow several examples directly from that post.
+
+## Plug-in reporting
+
+```{r ref.label="orange-summary-stats", eval = TRUE, echo = FALSE}
+```
+
+Both Tristan and Yihui Xie call _inline reporting_
+the act of interleaving R expressions in the prose of markdown text.
+When you click the **Knit** button or call `rmarkdown::render()`
+to build your report,
+`kntir` evaluates these R expressions, 
+turns them into text and plugs them into your output.
+
+The most common use case is for reporting descriptive statistics.
+To illustrate, I'll use the [`Orange` dataset](https://rdrr.io/r/datasets/Orange.html)
+which contains circumference measurements of 
+```{epoxy}
+{n_trees} orange trees at {n_timepoints} points in time.
+```
+
+Here is some R code we might use to summarize the `Orange` data:
+
+```{r orange-summary-stats}
+n_trees <- length(levels(Orange$Tree))
+n_timepoints <- length(unique(Orange$age))
+```
+
+And here are some lines we might include in a report about the growth of these trees:
+
+````{verbatim}
+```{r setup, include = FALSE}
+library(epoxy)
+```
+
+```{epoxy}
+The dataset contains {nrow(Orange)} tree size measurements
+from {n_trees} trees at {n_timepoints} time points in the study.
+```
+````
+
+::: epoxy-output
+```{epoxy echo=FALSE}
+The dataset contains {nrow(Orange)} tree size measurements
+from {n_trees} trees at {n_timepoints} timepoints in the study.
+```
+:::
+
+With normal R Markdown [inline reporting](https://bookdown.org/yihui/rmarkdown-cookbook/r-code.html)
+we would have written this in our `.Rmd` file instead:
+
+````{verbatim}
+The dataset contains `r nrow(Orange)` tree size measurements
+from `r n_trees` trees at `r n_timepoints` time points in the study.
+````
+
+The two forms are very similar,
+but the `epoxy` chunk approach provides a few advantages,
+as we'll discover in this vignette.
+
+## Collect your variables in lists
+
+In the above example,
+we used normal variables that were available in the global environment of our document.
+But a small structural change can bring great benefits.
+It's worth reading [Tristan's blog post][tj-lists], 
+but to steal his thunder: store your data in lists.
+
+We could, on the one hand,
+create variables named `knitted_when`, `knitted_where` and `knitted_with` 
+that all store facts about the knitting process.
+The `knitted_` prefix is helpful as an aid to remember that these variables are related.
+
+But you could store those three variables in a single object instead.
+Bundling everything into a `list()`
+allows you to report the results
+by accessing the list elements by name with `$`.
+
+```{r}
+knitted <- list(
+  when = format(Sys.Date()),
+  where = knitr::current_input(),
+  with = format(utils::packageVersion("knitr")),
+  doc_url = "https://rdrr.io/pkg/knitr/man/knit.html"
+)
+```
+
+````{verbatim}
+```{epoxy}
+Report prepared on {knitted$when} from `{knitted$where}` 
+with knitr version {knitted$with} {emo_ji('happy')}. 
+Read more about [`knitr::knit()`]({knitted$doc_url}).
+```
+````
+
+::: epoxy-output
+```{epoxy echo=FALSE}
+Report prepared on {knitted$when} from `{knitted$where}` 
+with knitr version {knitted$with} {emo_ji('happy')}. 
+Read more about [`knitr::knit()`]({knitted$doc_url}).
+```
+:::
+
+This is still essentially equivalent to R Markdown's inline R chunks.
+But `epoxy` chunks include a `data` chunk argument,
+which allows us to reference items in the `knitted` list
+directly without having to use `$`.
+
+````{verbatim}
+```{epoxy knitted-2, data = knitted}
+Report prepared on {when} from `{where}` 
+with knitr version {with} {emo_ji('happy')}. 
+Read more about [`knitr::knit()`]({doc_url}).
+```
+````
+
+::: epoxy-output
+```{epoxy knitted-2, data = knitted}
+Report prepared on {when} from `{where}` 
+with knitr version {with} {emo_ji('happy')}. 
+Read more about [`knitr::knit()`]({doc_url}).
+```
+:::
+
+Note that we can still have arbitrary R code
+in epoxy inline expressions:
+the `emo_ji()` function —
+a vignette-safe version of `emo::ji()` —
+exists in my global environment.
+
+
+## Reporting Model Results
+
+Suppose we have some model results that we've prepared into a table
+(for details, see [Tristan's blog post][tj-lists]).
+These results summarize a linear mixed model estimating population averages
+for trees grown in several ozone conditions.
+I've copied the resulting data frame into this vignette to avoid taking extra dependencies for this vignette.
+
+```{r}
+text_ready <- 
+  data.frame(
+    term = c("intercept", "hund_days", "ozone", "hund_days_ozone"),
+    estimate = c("4.25", "0.34", "&minus;0.14", "&minus;0.04"),
+    se = c(0.131, 0.013, 0.158, 0.015),
+    ci = c("[4.00, 4.51]", "[0.31, 0.36]", "[&minus;0.45, 0.17]","[&minus;0.07, &minus;0.01]"),
+    stringsAsFactors = FALSE
+  )
+```
+
+We can use `split()` to make a list of data frames that we can index by the values in the `term` column.
+
+```{r}
+stats <- split(text_ready, text_ready$term)
+```
+
+We now have a list of one-row dataframes:
+
+```{r}
+str(stats)
+```
+
+Now we can write up our results with inline reporting:
+
+````
+```{epoxy}`r ''`
+`r paste(knitr::knit_code$get("stats-paragraph"), collapse = "\n")`
+```
+````
+
+::: epoxy-output
+```{epoxy stats-paragraph}
+The average log-size in the control condition was
+{stats$intercept$estimate} units, 
+95% Wald CI {stats$intercept$ci}.
+There was not a statistically clear difference between the 
+ozone conditions for their intercepts (day-0 values), 
+*B* = {stats$ozone$estimate}, {stats$ozone$ci}.
+For the control group, the average growth rate was 
+{stats$hund_days$estimate} log-size units per 100 days, 
+{stats$hund_days$ci}. The growth rate for 
+the ozone treatment group was significantly slower, 
+*diff* = {stats$hund_days_ozone$estimate}, 
+{stats$hund_days_ozone$ci}.
+```
+:::
+
+### Inline reporting with autocomplete
+
+What's extra neat about epoxy — 
+and not readily apparent if you're reading this vignette —
+is that RStudio's autocomplete feature kicks in when you type `stats$`
+inside a braced expression `{ }`.
+
+Actually,
+because the IDE doesn't know about the `epoxy` knitr engine,
+the autocomplete tries to help out on every word.
+It's typically easy to ignore the suggestions for words that are part of the prose,
+and it's usually outweighed by the usefulness of being able to autocomplete
+the names in your data structures.
+
+### Intermittent inline-reporting
+
+Note that you don't need to write your entire document or even paragraph
+inside an `epoxy` chunk;
+you can wrap only the data-heavy parts as needed.
+
+````{verbatim}
+There was not a statistically clear difference between the 
+ozone conditions for their intercepts (day-0 values),
+```{epoxy}
+*B* = {stats$ozone$estimate}, {stats$ozone$ci}.
+```
+The growth rate for the ozone treatment group was significantly slower,
+```{epoxy}
+*diff* = {stats$hund_days_ozone$estimate}, {stats$hund_days_ozone$ci}.
+```
+````
+
+::: epoxy-output
+There was not a statistically clear difference between the 
+ozone conditions for their intercepts (day-0 values),
+```{epoxy}
+*B* = {stats$ozone$estimate}, {stats$ozone$ci}.
+```
+The growth rate for 
+the ozone treatment group was significantly slower,
+```{epoxy}
+*diff* = {stats$hund_days_ozone$estimate}, 
+{stats$hund_days_ozone$ci}.
+```
+:::
+
+## Repeated inline reporting
+
+Occasionally you may need to re-use the same phrase or document structure
+but for different slices of your data.
+
+### Vectorized inline reporting chunks
+
+Suppose we summarize the orange tree growth
+(normally I would use a combination of `dplyr::group_by()` and `dplyr::summarize()` here.)
+
+```{r orange_summary}
+summarize_tree_growth <- function(tree) {
+  tree <- Orange[Orange$Tree == tree, ]
+  tree <- data.frame(
+    tree = tree$Tree[1],
+    age_range = diff(range(tree$age)),
+    circumference_first = tree$circumference[1],
+    circumference_last = tree$circumference[nrow(tree)]
+  )
+  tree$growth_rate <- with(tree, (circumference_last - circumference_first) / age_range)
+  tree
+}
+
+orange_summary <- lapply(1:5, summarize_tree_growth)
+orange_summary <- do.call(rbind, orange_summary)
+orange_summary
+```
+
+`epoxy` chunks, like `glue::glue()`, are vectorized,
+so if we find ourselves needing to repeat the same thing over and over again,
+we can use this feature to our advantage.
+
+````{verbatim}
+A quick recap of the growth observed in the orange trees:
+
+```{epoxy data = orange_summary}
+- Tree number {tree} started out at {circumference_first}mm and,
+  over {age_range} days, grew to be {circumference_last}mm.
+```
+````
+
+::: epoxy-output
+A quick recap of the growth observed in the orange trees:
+
+```{epoxy data = orange_summary}
+- Tree number {tree} started out at {circumference_first}mm and,
+  over {age_range} days, grew to be {circumference_last}mm.
+```
+:::
+
+### Template inline reporting chunks
+
+By using [knitr's reference labels feature](https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html#ref-label),
+and the `epoxy` `data` chunk option we saw above,
+you can create an epoxy template
+that you can re-use like a parameterized chunk.
+
+You start by creating a labelled `epoxy` chunk with `eval = FALSE`
+
+````{verbatim}
+```{epoxy average-growth, eval=FALSE}
+an average of {signif(growth_rate * 7, 2)}mm per week.
+```
+````
+
+```{epoxy average-growth, eval=FALSE}
+an average of {signif(growth_rate * 7, 2)}mm per week.
+```
+
+that you can later use in your prose 
+by referencing the chunk with `ref.label`
+and providing a different slice of data via the `data` chunk option.
+
+````{verbatim}
+The fourth tree was the largest tree at the end of the study, growing
+```{epoxy ref.label="average-growth", data = summarize_tree_growth(4)}
+```
+Meanwhile, the smallest tree was the third, which grew at
+```{epoxy ref.label="average-growth", data = summarize_tree_growth(3)}
+```
+````
+
+::: epoxy-output
+The fourth tree was the largest tree at the end of the study, growing
+```{epoxy ref.label="average-growth", data = summarize_tree_growth(4)}
+```
+Meanwhile, the smallest tree was the third, which grew at
+```{epoxy ref.label="average-growth", data = summarize_tree_growth(3)}
+```
+:::
