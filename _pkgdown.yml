@@ -13,13 +13,13 @@ navbar:
       href: https://github.com/gadenbuie/epoxy
 
 reference:
+- title: epoxy Style Transformers
+  contents:
+  - '`epoxy_style`'
 - title: Templating for Shiny
   contents:
   - '`epoxyHTML`'
   - '`renderEpoxyHTML`'
-- title: epoxy Style Transformers
-  contents:
-  - '`epoxy_style`'
 - title: Example Datasets
   description: |
     Interesting datasets that can help you explore, learn, and practice using epoxy.
