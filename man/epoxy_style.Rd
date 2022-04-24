@@ -9,19 +9,20 @@
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
 \usage{
-epoxy_style(...)
+epoxy_style(..., syntax = NULL)
 
 epoxy_style_wrap(
   before = "**",
-  after = "**",
+  after = before,
+  syntax = NULL,
   transformer = glue::identity_transformer
 )
 
-epoxy_style_bold(transformer = glue::identity_transformer)
+epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
 
-epoxy_style_italic(transformer = glue::identity_transformer)
+epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
 
-epoxy_style_code(transformer = glue::identity_transformer)
+epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_collapse(
   sep = ", ",
@@ -43,6 +44,11 @@ For example, \code{epoxy_style("bold", "collapse")} results in replaced strings
 that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the
 other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
 \emph{and then} embolden the entire string.}
+
+\item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
+default is chosen based on the engine of the chunk where the style function
+is called, or according to the option \code{epoxy.engine}. Caution: invalid
+options are silently ignored, falling back to markdown syntax.}
 
 \item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
 before and after variables in the template string.}
@@ -69,23 +75,55 @@ argument of \code{\link[glue:glue]{glue::glue()}}.
 These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the \code{.transformer} chunk option of
 in \code{epoxy} chunks. You can use \code{epoxy_style()} to chain several transformers
-together.
+together. \code{epoxy_style()} and individual \pkg{epoxy} style functions can be
+used in \code{epoxy}, \code{epoxy_html} and \code{epoxy_latex} chunks and will choose the
+correct syntax for each.
 }
 \section{Functions}{
 \itemize{
 \item \code{epoxy_style_wrap}: Wrap variables
 
-\item \code{epoxy_style_bold}: Embolden variables using markdown \verb{**} syntax
+\item \code{epoxy_style_bold}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
+in HTML, or \verb{\\textbf\{\}} in LaTeX
 
-\item \code{epoxy_style_italic}: Italicize variables using markdown \verb{_} syntax
+\item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
+HTML, or \verb{\\emph\{\}} in LaTeX
 
-\item \code{epoxy_style_code}: Code format variables using markdown backtick syntax
+\item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
+\verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
 
-\item \code{epoxy_style_collapse}: Collapse vector variables.
+\item \code{epoxy_style_collapse}: Collapse vector variables
 }}
+
+\section{Output-specific styling}{
+
+The \code{epoxy_style_} functions will attempt to use the correct syntax for
+styling the replacement text for markdown, HTML and LaTeX. This choice is
+driven by the chunk engine where the styling function is used. The \code{epoxy}
+engine corresponds to markdown, \code{epoxy_html} to HTML, and \code{epoxy_latex} to
+LaTeX.
+
+Automatic syntax selection only works when the epoxy style functions are used
+with epoxy knitr engines and during the knitr rendering process. When
+used outside of this context, you can choose the desired syntax by setting
+the \code{syntax} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
+}
 
 \examples{
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+
+# In an epoxy_html chunk...
+# Note that you don't have to set `syntax = "html"`, it just knows
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "html")
+)
+
+# Or in an epoxy_latex chunk...
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+)
 
 }
