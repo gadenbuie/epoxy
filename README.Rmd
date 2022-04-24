@@ -135,7 +135,7 @@ to the end of the expression.
 ```
 ````
 
-```{epoxy, epoxy_style = epoxy_style("collapse"))}
+```{epoxy, epoxy_style = epoxy_style("collapse")}
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
