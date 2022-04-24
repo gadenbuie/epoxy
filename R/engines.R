@@ -75,7 +75,7 @@ knitr_engine_epoxy <- function(options) {
       .close = options[[".close"]] %||% "}",
       .na = options[[".na"]] %||% "",
       .trim = options[[".trim"]] %||% FALSE,
-      .transformer = options[[".transformer"]] %||% glue::identity_transformer
+      .transformer = epoxy_options_get_transformer(options)
     )
   }
   options$results <- "asis"
@@ -101,7 +101,7 @@ knitr_engine_epoxy_html <- function(options) {
       .close = options[[".close"]] %||% "}}",
       .na = options[[".na"]] %||% "",
       .trim = options[[".trim"]] %||% FALSE,
-      .transformer = options[[".transformer"]] %||% glue::identity_transformer
+      .transformer = epoxy_options_get_transformer(options)
     )
     code <- glue_collapse(code, sep = "\n")
     if (isTRUE(options$html_raw %||% TRUE)) {
@@ -134,7 +134,7 @@ knitr_engine_epoxy_latex <- function(options) {
       .close = options[[".close"]] %||% ">",
       .na = options[[".na"]] %||% "",
       .trim = options[[".trim"]] %||% FALSE,
-      .transformer = options[[".transformer"]] %||% glue::identity_transformer
+      .transformer = epoxy_options_get_transformer(options)
     )
   }
   options$results <- "asis"
@@ -197,6 +197,14 @@ epoxy_data_subset <- function(x, y) {
   x <- lapply(x, function(.x) base::`[[`(.x, y))
   x_len_1 <- vapply(x, function(x) length(x) == 1, logical(1))
   if (all(x_len_1)) unlist(x) else x
+}
+
+epoxy_options_get_transformer <- function(options) {
+  style <- options[["epoxy_style"]]
+  if (is.vector(style) || is.list(style)) {
+    return(epoxy_style(!!!style))
+  }
+  style %||% options[[".transformer"]] %||% glue::identity_transformer
 }
 
 deprecate_glue_data_chunk_option <- function(options) {

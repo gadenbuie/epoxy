@@ -86,20 +86,20 @@ RStudio autocompletion works inside `epoxy` chunks!
 
 ### Style replaced values
 
-You can use the `epoxy_style_wrap()` with the `.transformer` chunk option
-to wrap the evaluated R expression in formating or templating text.
+You can use the `epoxy_style_wrap()` with the `epoxy_style` chunk option
+to wrap the evaluated R expression in formatting or templating text.
 Or you can use the pre-set
 `epoxy_style_bold()`, `epoxy_style_italic()`, or `epoxy_style_code()`
-style transformers.
+style transformers or with `epoxy_style()`.
 
 ````
-```{epoxy, .transformer = epoxy_style_bold()}`r ''`
+```{epoxy, epoxy_style = epoxy_style("bold")}`r ''`
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 ```
 ````
 
-```{epoxy, .transformer = epoxy_style_bold()}
+```{epoxy, epoxy_style = epoxy_style("bold")}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$dist)} mph.
 ```
@@ -128,14 +128,14 @@ to the end of the expression.
 - `|` collapses with commas and adds `" or "` between the last two items.
 
 ````
-```{epoxy, .transformer = epoxy_style_collapse()}`r ''`
+```{epoxy, epoxy_style = epoxy_style("collapse")}`r ''`
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
 ```
 ````
 
-```{epoxy, .transformer = epoxy_style_collapse()}
+```{epoxy, epoxy_style = epoxy_style("collapse"))}
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
