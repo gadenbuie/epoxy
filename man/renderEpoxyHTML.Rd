@@ -20,11 +20,44 @@ corresponding to the template variables created with the associated
 call to \code{\link[=epoxyHTML]{epoxyHTML()}} when \code{renderEpoxyHTML} is used in an interactive R
 Markdown document.}
 }
+\value{
+A server-side Shiny render function that should be assigned to
+Shiny's \code{output} object and named to match the \code{.id} of the corresponding
+\code{\link[=epoxyHTML]{epoxyHTML()}} call.
+}
 \description{
 Server-side render function used to provide values for template items. Use
 named values matching the template variable names in the associated
-\code{epoxyHTML()}.
+\code{epoxyHTML()}. When the values are updated by the app, \code{renderEpoxyHTML()}
+will update the values shown in the app's UI.
+}
+\examples{
+# This small app shows the current time using `epoxyHTML()`
+# to provide the HTML template and `renderEpoxyHTML()` to
+# update the current time every second.
+
+ui <- shiny::fluidPage(
+  shiny::h2("Current Time"),
+  epoxyHTML(
+    "time",
+    shiny::p("The current time is {{strong time}}.")
+  )
+)
+
+server <- function(input, output, session) {
+  current_time <- shiny::reactive({
+    shiny::invalidateLater(1000)
+    strftime(Sys.time(), "\%F \%T")
+  })
+
+  output$time <- renderEpoxyHTML(time = current_time())
+}
+
+if (interactive()) {
+  shiny::shinyApp(ui, server)
+}
+
 }
 \seealso{
-epoxyHTML
+\code{\link[=epoxyHTML]{epoxyHTML()}}
 }
