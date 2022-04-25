@@ -19,33 +19,31 @@
 #' and one ID, but many classes can be specified.
 #'
 #' @examples
-#' \dontrun{
-#' library(shiny)
-#'
-#' ui <- fluidPage(
-#'   h2("epoxyHTML demo"),
-#'   epoxy:::epoxyHTML(
-#'     'test',
-#'     fluidRow(
-#'       tags$div(
+#' ui <- shiny::fluidPage(
+#'   shiny::h2("epoxyHTML demo"),
+#'   epoxyHTML(
+#'     .id = 'test',
+#'     .class_item = "inner",
+#'     shiny::fluidRow(
+#'       shiny::tags$div(
 #'         class = "col-xs-4",
-#'         selectInput(
+#'         shiny::selectInput(
 #'           inputId = "thing",
 #'           label = "What is this {{color}} thing?",
 #'           choices = c("apple", "banana", "coconut", "dolphin")
 #'         )
 #'       ),
-#'       tags$div(
+#'       shiny::tags$div(
 #'         class = "col-xs-4",
-#'         selectInput(
+#'         shiny::selectInput(
 #'           inputId = "color",
 #'           label = "What color is the {{thing}}?",
 #'           c("red", "blue", "black", "green", "yellow")
 #'         )
 #'       ),
-#'       tags$div(
+#'       shiny::tags$div(
 #'         class = "col-xs-4",
-#'         sliderInput(
+#'         shiny::sliderInput(
 #'           inputId = "height",
 #'           label = "How tall is the {{color}} {{thing}}?",
 #'           value = 5,
@@ -56,13 +54,13 @@
 #'         )
 #'       )
 #'     ),
-#'     tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
+#'     shiny::tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
+#'     # Default values for placeholders above.
 #'     thing = "THING",
 #'     color = "COLOR",
-#'     height = "HEIGHT",
-#'     .class_item = "inner"
+#'     height = "HEIGHT"
 #'   ),
-#'   tags$style(HTML(
+#'   shiny::tags$style(shiny::HTML(
 #'     '.big { font-size: 1.5em; }
 #'     .inner:not(.epoxy-item__placeholder) { background-color: rgba(254, 233, 105, 0.5)}
 #'     .epoxy-item__placeholder { color: #999999; }'
@@ -70,14 +68,15 @@
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   output$test <- epoxy:::renderEpoxyHTML(
+#'   output$test <- renderEpoxyHTML(
 #'     thing = input$thing,
 #'     color = input$color,
 #'     height = input$height
 #'   )
 #' }
 #'
-#' shinyApp(ui, server)
+#' if (interactive()) {
+#'   shiny::shinyApp(ui, server)
 #' }
 #'
 #' @param .id The output id
