@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Experimental. String interpolation for 'R Markdown' documents and 'Shiny' apps.
+Extra strength 'glue' for data-driven templating. String interpolation for 'R Markdown' documents and 'Shiny' apps, built on the 'glue' and 'whisker' packages.
 }
 \seealso{
 Useful links:
