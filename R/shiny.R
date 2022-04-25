@@ -236,7 +236,34 @@ parse_html_markup <- function(x) {
 #'
 #' Server-side render function used to provide values for template items. Use
 #' named values matching the template variable names in the associated
-#' `epoxyHTML()`.
+#' `epoxyHTML()`. When the values are updated by the app, `renderEpoxyHTML()`
+#' will update the values shown in the app's UI.
+#'
+#' @examples
+#' # This small app shows the current time using `epoxyHTML()`
+#' # to provide the HTML template and `renderEpoxyHTML()` to
+#' # update the current time every second.
+#'
+#' ui <- shiny::fluidPage(
+#'   shiny::h2("Current Time"),
+#'   epoxyHTML(
+#'     "time",
+#'     shiny::p("The current time is {{strong time}}.")
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   current_time <- shiny::reactive({
+#'     shiny::invalidateLater(1000)
+#'     strftime(Sys.time(), "%F %T")
+#'   })
+#'
+#'   output$time <- renderEpoxyHTML(time = current_time())
+#' }
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(ui, server)
+#' }
 #'
 #' @param ... Named values corresponding to the template variables created with
 #'   the associated [epoxyHTML()] UI element.
@@ -248,7 +275,11 @@ parse_html_markup <- function(x) {
 #'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
 #'   Markdown document.
 #'
-#' @seealso epoxyHTML
+#' @return A server-side Shiny render function that should be assigned to
+#'   Shiny's `output` object and named to match the `.id` of the corresponding
+#'   [epoxyHTML()] call.
+#'
+#' @seealso [epoxyHTML()]
 #' @export
 renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs = list()) {
   epoxyPrepare <- function(..., .list = NULL) {
