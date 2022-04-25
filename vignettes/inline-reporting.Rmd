@@ -52,7 +52,7 @@ Both Tristan and Yihui Xie call _inline reporting_
 the act of interleaving R expressions in the prose of markdown text.
 When you click the **Knit** button or call `rmarkdown::render()`
 to build your report,
-`kntir` evaluates these R expressions, 
+`knitr` evaluates these R expressions, 
 turns them into text and plugs them into your output.
 
 The most common use case is for reporting descriptive statistics.
