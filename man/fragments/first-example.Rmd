@@ -1,0 +1,30 @@
+To use epoxy in your R Markdown document,
+create a new chunk using the engine of your choice.
+In that chunk, write in markdown, HTML, or LaTeX as needed,
+wrapping R expressions inside the delimiters for the epoxy chunk.
+
+````{verbatim}
+```{epoxy}
+The average speed of the cars was **{mean(cars$speed)} mph.**
+But on average the distance traveled was only _{mean(cars$dist)}_.
+```
+````
+
+```{epoxy}
+The average speed of the cars was **{mean(cars$speed)} mph**.
+But on average the distance traveled was only _{mean(cars$dist)} ft_.
+```
+
+`epoxy` is built around `glue::glue()`,
+which evaluates the R expressions in the `{ }`
+and inserts the results into the string.
+The chunk above is equivalent to this call to `glue::glue()`:
+
+```{r}
+glue::glue("The average speed of the cars was **{mean(cars$speed)} mph**.
+But on average the distance traveled was only _{mean(cars$dist)} ft_.")
+```
+
+One immediate advantage of using `epoxy` instead of `glue::glue()`
+is that RStudio's autocompletion feature works inside `epoxy` chunks!
+Typing `cars$` in the chunk will suggest the columns of `cars`.

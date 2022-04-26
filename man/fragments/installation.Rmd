@@ -1,0 +1,20 @@
+You can install the latest version of epoxy with [remotes]
+
+```{r eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("gadenbuie/epoxy")
+```
+
+or from [gadenbuie.r-universe.dev](https://gadenbuie.r-universe.dev).
+
+```{r eval=FALSE}
+options(repos = c(
+  gadenbuie = "https://gadenbuie.r-universe.dev/",
+  getOptions("repos")
+))
+
+install.packages("epoxy")
+```
+
+
+[remotes]: https://remotes.r-lib.org
