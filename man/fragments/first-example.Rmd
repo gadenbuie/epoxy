@@ -11,6 +11,11 @@ at LaGuardia Airport in New York in May of 1973.
 ```
 ````
 
+```{r include=FALSE}
+# Subset `airquality` dataset to May, 1973
+airquality_may <- airquality[airquality$Month == 5, ]
+```
+
 When rendered, epoxy fills in the `{ }` for you:
 
 ```{r echo=FALSE}
