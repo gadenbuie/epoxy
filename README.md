@@ -63,23 +63,6 @@ use_epoxy_glue_engine()
 
 ## Use epoxy
 
-```` default
-```{r}
-# Subset `airquality` dataset to May, 1973
-airquality_may <- airquality[airquality$Month == 5, ]
-```
-
-```{epoxy}
-The average temperature was {signif(mean(airquality_may$Temp))}
-at LaGuardia Airport in New York in May of 1973.
-```
-````
-
-When rendered, epoxy fills in the `{ }` for you:
-
-    #> > The average temperature was 65.5484
-    #> at LaGuardia Airport in New York in May of 1973.
-
 To use epoxy in your R Markdown document, create a new chunk using the
 engine of your choice. In that chunk, write in markdown, HTML, or LaTeX
 as needed, wrapping R expressions inside the delimiters for the epoxy
@@ -95,8 +78,9 @@ But on average the distance traveled was only _{mean(cars$dist)}_.
 The average speed of the cars was **15.4 mph**. But on average the
 distance traveled was only *42.98 ft*.
 
-`epoxy` is built around `glue::glue()`, so the chunk above is equivalent
-to the following.
+`epoxy` is built around `glue::glue()`, which evaluates the R
+expressions in the `{ }` and inserts the results into the string. The
+chunk above is equivalent to this call to `glue::glue()`:
 
 ``` r
 glue::glue("The average speed of the cars was **{mean(cars$speed)} mph**.
