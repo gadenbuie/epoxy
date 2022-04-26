@@ -1,0 +1,49 @@
+
+````{verbatim}
+```{r}
+# Subset `airquality` dataset to May, 1973
+airquality_may <- airquality[airquality$Month == 5, ]
+```
+
+```{epoxy}
+The average temperature was {signif(mean(airquality_may$Temp))}
+at LaGuardia Airport in New York in May of 1973.
+```
+````
+
+When rendered, epoxy fills in the `{ }` for you:
+
+```{r echo=FALSE}
+glue::glue("> The average temperature was {signif(mean(airquality_may$Temp))}
+at LaGuardia Airport in New York in May of 1973.")
+```
+
+
+To use epoxy in your R Markdown document,
+create a new chunk using the engine of your choice.
+In that chunk, write in markdown, HTML, or LaTeX as needed,
+wrapping R expressions inside the delimiters for the epoxy chunk.
+
+````{verbatim}
+```{epoxy}
+The average speed of the cars was **{mean(cars$speed)} mph.**
+But on average the distance traveled was only _{mean(cars$dist)}_.
+```
+````
+
+```{epoxy}
+The average speed of the cars was **{mean(cars$speed)} mph**.
+But on average the distance traveled was only _{mean(cars$dist)} ft_.
+```
+
+`epoxy` is built around `glue::glue()`,
+so the chunk above is equivalent to the following.
+
+```{r}
+glue::glue("The average speed of the cars was **{mean(cars$speed)} mph**.
+But on average the distance traveled was only _{mean(cars$dist)} ft_.")
+```
+
+One immediate advantage of using `epoxy` instead of `glue::glue()`
+is that RStudio's autocompletion feature works inside `epoxy` chunks!
+Typing `cars$` in the chunk will suggest the columns of `cars`.
