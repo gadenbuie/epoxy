@@ -151,26 +151,14 @@
 <div class="section level2">
 <h2 id="use-epoxy">Use epoxy<a class="anchor" aria-label="anchor" href="#use-epoxy"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a># Subset `airquality` dataset to May, 1973</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>airquality_may &lt;- airquality[airquality$Month == 5, ]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>The average temperature was {signif(mean(airquality_may$Temp))}</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>at LaGuardia Airport in New York in May of 1973.</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<p>When rendered, epoxy fills in the <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> for you:</p>
-<pre><code><span class="co">#&gt; &gt; The average temperature was 65.5484</span>
-<span class="co">#&gt; at LaGuardia Airport in New York in May of 1973.</span></code></pre>
 <p>To use epoxy in your R Markdown document, create a new chunk using the engine of your choice. In that chunk, write in markdown, HTML, or LaTeX as needed, wrapping R expressions inside the delimiters for the epoxy chunk.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>The average speed of the cars was **{mean(cars$speed)} mph.**</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>But on average the distance traveled was only _{mean(cars$dist)}_.</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>The average speed of the cars was **{mean(cars$speed)} mph.**</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>But on average the distance traveled was only _{mean(cars$dist)}_.</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p>The average speed of the cars was <strong>15.4 mph</strong>. But on average the distance traveled was only <em>42.98 ft</em>.</p>
-<p><code>epoxy</code> is built around <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, so the chunk above is equivalent to the following.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p><code>epoxy</code> is built around <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, which evaluates the R expressions in the <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> and inserts the results into the string. The chunk above is equivalent to this call to <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The average speed of the cars was **{mean(cars$speed)} mph**.
 But on average the distance traveled was only _{mean(cars$dist)} ft_."</span><span class="op">)</span>
 <span class="co">#&gt; The average speed of the cars was **15.4 mph**.</span>
@@ -224,7 +212,7 @@ from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 <h3 id="templating-with-epoxy-chunks">Templating with epoxy chunks<a class="anchor" aria-label="anchor" href="#templating-with-epoxy-chunks"></a>
 </h3>
 <p>It’s also possible to create a reusable template. Use the <code>ref.label</code> chunk option to reuse a template using the values in the <code>data</code> chunk option, which can be a list or data frame.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mpg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
   manufacturer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chevrolet"</span>, <span class="st">"Dodge"</span>, <span class="st">"Ford"</span><span class="op">)</span>,
   model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Malibu"</span>, <span class="st">"Caravan"</span>, <span class="st">"Expedition"</span><span class="op">)</span>,
@@ -259,7 +247,7 @@ You have just won ${{value}}!
 Well, ${{taxed}}, after taxes.
 {{/in_ca}}
 ```</code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">contestant</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"R User"</span>, value <span class="op">=</span> <span class="fl">1000</span>, taxed <span class="op">=</span> <span class="fl">600</span>, in_ca <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Hello R User: You have just won $1000! Well, $600, after taxes.</p>
 </div>
