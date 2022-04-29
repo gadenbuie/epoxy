@@ -42,14 +42,15 @@ library(epoxy)
 
 Loading epoxy adds four new [knitr
 engines](https://bookdown.org/yihui/rmarkdown/language-engines.html), or
-chunk types. Each type lets you intermix text with R code or data, and
-each is geared toward a different output context:
+chunk types. Each type lets you intermix text with R code or data
+(`expr` in the table below), and each is geared toward a different
+output context.
 
 | Engine        | Output Context       |                         Delimiter                         |
 | :------------ | :------------------- | :-------------------------------------------------------: |
-| `epoxy`       | all-purpose markdown |                           `{ }`                           |
-| `epoxy_html`  | HTML                 |                          `{{ }}`                          |
-| `epoxy_latex` | LaTeX                |                           `< >`                           |
+| `epoxy`       | all-purpose markdown |                         `{expr}`                          |
+| `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
+| `epoxy_latex` | LaTeX                |                         `<expr>`                          |
 | `whisker`     | all-purpose          | [mustache template language](https://mustache.github.io/) |
 
 ⚠️ **Caution:** Previously, epoxy provided a `glue` engine, but this
