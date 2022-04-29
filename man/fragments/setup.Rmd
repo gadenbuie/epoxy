@@ -2,22 +2,26 @@
 library(epoxy)
 ```
 
-Loading epoxy adds four new knitr engines, or chunk types.
+Loading epoxy adds four new [knitr engines][knitr-engines], or chunk types.
 Each type lets you intermix text with R code or data,
 and each is geared toward a different output context:
 
-* `epoxy` is an all-purpose glue chunk and uses `{ }` for delimiters
-* `epoxy_html` is a glue chunk for HTML and uses `{{ }}` for delimiters
-* `epoxy_latex` is a glue chunk for LaTeX and uses `< >` for delimiters
-* `whisker` is an all-purpose chunk for the [mustache template language][whisker]
+| Engine        | Output Context       |               Delimiter               |
+| :------------ | :------------------- | :-----------------------------------: |
+| `epoxy`       | all-purpose markdown |                 `{ }`                 |
+| `epoxy_html`  | HTML                 |                `{{ }}`                |
+| `epoxy_latex` | LaTeX                |                 `< >`                 |
+| `whisker`     | all-purpose          | [mustache template language][whisker] |
 
-[whisker]: https://mustache.github.io/
-
-⚠️ **Caution:** Previously, epoxy provided a `glue` chunk,
-but this clashes with a chunk engine provided by the [glue] package.
-If you wish to restore use epoxy's `glue` chunk,
-you can include the following in your setup chunk.
+⚠️ **Caution:** Previously, epoxy provided a `glue` engine,
+but this conflicts with a similar chunk engine by the [glue] package.
+You can update existing documents to use the `epoxy` engine,
+or you can explicitly use epoxy's `glue` chunk
+by including the following in your setup chunk.
 
 ```r
 use_epoxy_glue_engine()
 ```
+
+[whisker]: https://mustache.github.io/
+[knitr-engines]: https://bookdown.org/yihui/rmarkdown/language-engines.html
