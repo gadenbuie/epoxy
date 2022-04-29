@@ -132,19 +132,37 @@
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gadenbuie/epoxy" class="external-link">epoxy</a></span><span class="op">)</span></code></pre></div>
-<p>Loading epoxy adds four new knitr engines, or chunk types. Each type lets you intermix text with R code or data, and each is geared toward a different output context:</p>
-<ul>
-<li>
-<code>epoxy</code> is an all-purpose glue chunk and uses <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> for delimiters</li>
-<li>
-<code>epoxy_html</code> is a glue chunk for HTML and uses <code>{{ }}</code> for delimiters</li>
-<li>
-<code>epoxy_latex</code> is a glue chunk for LaTeX and uses <code>&lt; &gt;</code> for delimiters</li>
-<li>
-<code>whisker</code> is an all-purpose chunk for the <a href="https://mustache.github.io/" class="external-link">mustache template language</a>
-</li>
-</ul>
-<p>⚠️ <strong>Caution:</strong> Previously, epoxy provided a <code>glue</code> chunk, but this clashes with a chunk engine provided by the [glue] package. If you wish to restore use epoxy’s <code>glue</code> chunk, you can include the following in your setup chunk.</p>
+<p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html" class="external-link">knitr engines</a>, or chunk types. Each type lets you intermix text with R code or data (<code>expr</code> in the table below), and each is geared toward a different output context.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Engine</th>
+<th align="left">Output Context</th>
+<th align="center">Delimiter</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>epoxy</code></td>
+<td align="left">all-purpose markdown</td>
+<td align="center"><code>{expr}</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>epoxy_html</code></td>
+<td align="left">HTML</td>
+<td align="center"><code>{{expr}}</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>epoxy_latex</code></td>
+<td align="left">LaTeX</td>
+<td align="center"><code>&lt;expr&gt;</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>whisker</code></td>
+<td align="left">all-purpose</td>
+<td align="center"><a href="https://mustache.github.io/" class="external-link">mustache template language</a></td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>Caution:</strong> Previously, epoxy provided a <code>glue</code> engine, but this conflicts with a similar chunk engine by the [glue] package. You can update existing documents to use the <code>epoxy</code> engine, or you can explicitly use epoxy’s <code>glue</code> chunk by including the following in your setup chunk.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/use_epoxy_knitr_engines.html">use_epoxy_glue_engine</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
