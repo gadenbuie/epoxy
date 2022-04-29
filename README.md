@@ -40,22 +40,24 @@ install.packages("epoxy")
 library(epoxy)
 ```
 
-Loading epoxy adds four new knitr engines, or chunk types. Each type
-lets you intermix text with R code or data, and each is geared toward a
-different output context:
+Loading epoxy adds four new [knitr
+engines](https://bookdown.org/yihui/rmarkdown/language-engines.html), or
+chunk types. Each type lets you intermix text with R code or data
+(`expr` in the table below), and each is geared toward a different
+output context.
 
-  - `epoxy` is an all-purpose glue chunk and uses `{ }` for delimiters
-  - `epoxy_html` is a glue chunk for HTML and uses `{{ }}` for
-    delimiters
-  - `epoxy_latex` is a glue chunk for LaTeX and uses `< >` for
-    delimiters
-  - `whisker` is an all-purpose chunk for the [mustache template
-    language](https://mustache.github.io/)
+| Engine        | Output Context       |                         Delimiter                         |
+| :------------ | :------------------- | :-------------------------------------------------------: |
+| `epoxy`       | all-purpose markdown |                         `{expr}`                          |
+| `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
+| `epoxy_latex` | LaTeX                |                         `<expr>`                          |
+| `whisker`     | all-purpose          | [mustache template language](https://mustache.github.io/) |
 
-⚠️ **Caution:** Previously, epoxy provided a `glue` chunk, but this
-clashes with a chunk engine provided by the
-[glue](https://glue.tidyverse.org) package. If you wish to restore use
-epoxy’s `glue` chunk, you can include the following in your setup chunk.
+⚠️ **Caution:** Previously, epoxy provided a `glue` engine, but this
+conflicts with a similar chunk engine by the
+[glue](https://glue.tidyverse.org) package. You can update existing
+documents to use the `epoxy` engine, or you can explicitly use epoxy’s
+`glue` chunk by including the following in your setup chunk.
 
 ``` r
 use_epoxy_glue_engine()
