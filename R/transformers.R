@@ -36,6 +36,30 @@
 #'   .transformer = epoxy_style("bold", "collapse", syntax = "latex")
 #' )
 #'
+#' # Other Transfomers ----
+#'
+#' # Apply `format()` to all replacements
+#' number <- 1.234234234
+#' glue::glue(
+#'   "{number}",
+#'   .transformer = epoxy_style_format(digits = 4)
+#' )
+#'
+#' # Apply _any_ function to all replacements
+#' glue::glue(
+#'   "{number}",
+#'   .transformer = epoxy_style_apply(round, digits = 0)
+#' )
+#'
+#' glue::glue(
+#'   "{number}",
+#'   .transformer = epoxy_style(
+#'     epoxy_style_apply(~ .x * 100),
+#'     epoxy_style_apply(round, digits = 2),
+#'     epoxy_style_apply(~ paste0(.x, "%"))
+#'   )
+#' )
+#'
 #' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
 #'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
 #'   `epoxy_style_bold()`. `epoxy_style()` chains the style functions together,
@@ -94,7 +118,7 @@ pick_style <- function(style) {
 
 close_over_transformer <- function(expr, env) {
   rlang::new_function(
-    rlang::pairlist2(transformer = ),
+    rlang::pairlist2(transformer = glue::identity_transformer),
     rlang::call_modify(expr, transformer = rlang::sym("transformer")),
     env
   )
@@ -148,14 +172,24 @@ epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_trans
   )
 }
 
-#' @describeIn epoxy_style Format numbers and values using `format()` (Apply
-#'   styler first in `epoxy_style()`)
+#' @describeIn epoxy_style Format numbers and values using `format()`. Accepts
+#'   arguments in `...` that are passed to `format()`.
 #' @export
 epoxy_style_format <- function(..., transformer = glue::identity_transformer) {
-  dots <- list(...)
+  epoxy_style_apply(format, ..., transformer = transformer)
+}
+
+#' @describeIn epoxy_style Apply a function to all replacement expressions
+#' @export
+epoxy_style_apply <- function(
+  .f = identity,
+  ...,
+  transformer = glue::identity_transformer
+) {
+  .f <- purrr::partial(purrr::as_mapper(.f, ...), ...)
   function(text, envir) {
-    dots$x <- eval(parse(text = text, keep.source = FALSE), envir)
-    eval(rlang::call2(format, !!!dots), envir)
+    # text <- eval(parse(text = text, keep.source = FALSE), envir)
+    .f(transformer(text, envir))
   }
 }
 

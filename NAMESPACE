@@ -2,6 +2,7 @@
 
 export(epoxyHTML)
 export(epoxy_style)
+export(epoxy_style_apply)
 export(epoxy_style_bold)
 export(epoxy_style_code)
 export(epoxy_style_collapse)

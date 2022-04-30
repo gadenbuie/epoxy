@@ -6,6 +6,7 @@
 \alias{epoxy_style_bold}
 \alias{epoxy_style_italic}
 \alias{epoxy_style_format}
+\alias{epoxy_style_apply}
 \alias{epoxy_style_code}
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
@@ -24,6 +25,8 @@ epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
 epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_format(..., transformer = glue::identity_transformer)
+
+epoxy_style_apply(.f = identity, ..., transformer = glue::identity_transformer)
 
 epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
@@ -95,8 +98,10 @@ in HTML, or \verb{\\textbf\{\}} in LaTeX
 \item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
 HTML, or \verb{\\emph\{\}} in LaTeX
 
-\item \code{epoxy_style_format}: Format numbers and values using \code{format()} (Apply
-styler first in \code{epoxy_style()})
+\item \code{epoxy_style_format}: Format numbers and values using \code{format()}. Accepts
+arguments in \code{...} that are passed to \code{format()}.
+
+\item \code{epoxy_style_apply}: Apply a function to all replacement expressions
 
 \item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
 \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
@@ -133,6 +138,30 @@ glue::glue(
 glue::glue(
   "{letters[1:3]&}",
   .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+)
+
+# Other Transfomers ----
+
+# Apply `format()` to all replacements
+number <- 1.234234234
+glue::glue(
+  "{number}",
+  .transformer = epoxy_style_format(digits = 4)
+)
+
+# Apply _any_ function to all replacements
+glue::glue(
+  "{number}",
+  .transformer = epoxy_style_apply(round, digits = 0)
+)
+
+glue::glue(
+  "{number}",
+  .transformer = epoxy_style(
+    epoxy_style_apply(~ .x * 100),
+    epoxy_style_apply(round, digits = 2),
+    epoxy_style_apply(~ paste0(.x, "\%"))
+  )
 )
 
 }
