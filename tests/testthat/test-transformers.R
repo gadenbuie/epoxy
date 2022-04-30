@@ -165,7 +165,7 @@ test_that("epoxy_style_format() works", {
   expect_equal(
     glue(
       "{list(a = 'one')} {number}",
-       .transformer = epoxy_style_format(digits = 2)
+      .transformer = epoxy_style_format(digits = 2)
     ),
     "one 1.2"
   )
