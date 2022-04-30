@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   epoxy: epoxy.html
   inline-reporting: inline-reporting.html
-last_built: 2022-04-30T12:15Z
+last_built: 2022-04-30T12:19Z
 urls:
   reference: http://pkg.garrickadenbuie.com/epoxy/preview/pr37/reference
   article: http://pkg.garrickadenbuie.com/epoxy/preview/pr37/articles
