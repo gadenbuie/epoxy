@@ -140,3 +140,74 @@ test_that("epoxy_style_*() functions choose syntax by argument", {
     "\\textbf{text}"
   )
 })
+
+test_that("epoxy_style_format() works", {
+  number <- 1.234234234234
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style_format(digits = 2, nsmall = 3)),
+    "1.234"
+  )
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style_format(digits = 2)),
+    "1.2"
+  )
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style(
+      epoxy_style_format(digits = 3),
+      "bold"
+    )),
+    "**1.23**"
+  )
+
+  expect_equal(
+    glue(
+      "{list(a = 'one')} {number}",
+      .transformer = epoxy_style_format(digits = 4)
+    ),
+    "one 1.234"
+  )
+})
+
+test_that("epoxy_style_apply()", {
+  number <- 1.234234234234
+
+  expect_equal(
+    glue(
+      "{number} {number}",
+      .transformer = epoxy_style(
+        epoxy_style_apply(~ .x + 10),
+        epoxy_style_apply(round, digits = 2)
+      )
+    ),
+    "11.23 11.23"
+  )
+
+  expect_equal(
+    glue(
+      "{word}{missing}",
+      word = "here",
+      missing = NULL,
+      .transformer = epoxy_style(
+        epoxy_style_apply(~ if (!length(.x)) "" else .x)
+      )
+    ),
+    "here"
+  )
+
+  scale_pct <- function(x, digits = 2) {
+    paste0(round(x * 100, digits), "%")
+  }
+
+  expect_equal(
+    glue(
+      "{x} less than 100% is {y}",
+      x = 0.333666,
+      y = 0.666666,
+      .transformer = epoxy_style_apply(scale_pct, digits = 0)
+    ),
+    "33% less than 100% is 67%"
+  )
+})

@@ -5,6 +5,8 @@
 \alias{epoxy_style_wrap}
 \alias{epoxy_style_bold}
 \alias{epoxy_style_italic}
+\alias{epoxy_style_format}
+\alias{epoxy_style_apply}
 \alias{epoxy_style_code}
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
@@ -21,6 +23,10 @@ epoxy_style_wrap(
 epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
+
+epoxy_style_format(..., transformer = glue::identity_transformer)
+
+epoxy_style_apply(.f = identity, ..., transformer = glue::identity_transformer)
 
 epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
@@ -43,7 +49,11 @@ applying the styles from left to right.
 For example, \code{epoxy_style("bold", "collapse")} results in replaced strings
 that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the
 other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
-\emph{and then} embolden the entire string.}
+\emph{and then} embolden the entire string.
+
+In \code{epoxy_style_format()} and \code{epoxy_style_apply()}, the \code{...} are passed
+to the underlying call the underlying function call (\code{format()} in the case
+of \code{epoxy_style_format()}).}
 
 \item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
 default is chosen based on the engine of the chunk where the style function
@@ -59,6 +69,8 @@ function to this argument you can apply an additional transformation after
 the current transformation. In nearly all cases, you can let
 \code{epoxy_style()} handle this for you. The chain ends when
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
+
+\item{.f}{A function, function name or \code{\link[purrr:map]{purrr::map()}}-style inline function.}
 
 \item{sep, sep_and, sep_or}{The separator to use when joining the vector
 elements when the variable ends in \code{*}, \code{&}, or \code{|} respectively. By
@@ -88,6 +100,11 @@ in HTML, or \verb{\\textbf\{\}} in LaTeX
 
 \item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
 HTML, or \verb{\\emph\{\}} in LaTeX
+
+\item \code{epoxy_style_format}: Format numbers and values using \code{format()}. Accepts
+arguments in \code{...} that are passed to \code{format()}.
+
+\item \code{epoxy_style_apply}: Apply a function to all replacement expressions
 
 \item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
 \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
@@ -125,5 +142,9 @@ glue::glue(
   "{letters[1:3]&}",
   .transformer = epoxy_style("bold", "collapse", syntax = "latex")
 )
+
+# Other Transfomers ----
+
+# Apply `format()` to all replacements
 
 }
