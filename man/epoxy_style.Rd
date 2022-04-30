@@ -51,8 +51,9 @@ that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On t
 other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
 \emph{and then} embolden the entire string.
 
-In \code{epoxy_style_format()}, the \code{...} are passed to the underlying call to
-\code{format()}.}
+In \code{epoxy_style_format()} and \code{epoxy_style_apply()}, the \code{...} are passed
+to the underlying call the underlying function call (\code{format()} in the case
+of \code{epoxy_style_format()}).}
 
 \item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
 default is chosen based on the engine of the chunk where the style function
@@ -68,6 +69,8 @@ function to this argument you can apply an additional transformation after
 the current transformation. In nearly all cases, you can let
 \code{epoxy_style()} handle this for you. The chain ends when
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
+
+\item{.f}{A function, function name or \code{\link[purrr:map]{purrr::map()}}-style inline function.}
 
 \item{sep, sep_and, sep_or}{The separator to use when joining the vector
 elements when the variable ends in \code{*}, \code{&}, or \code{|} respectively. By
@@ -143,25 +146,5 @@ glue::glue(
 # Other Transfomers ----
 
 # Apply `format()` to all replacements
-number <- 1.234234234
-glue::glue(
-  "{number}",
-  .transformer = epoxy_style_format(digits = 4)
-)
-
-# Apply _any_ function to all replacements
-glue::glue(
-  "{number}",
-  .transformer = epoxy_style_apply(round, digits = 0)
-)
-
-glue::glue(
-  "{number}",
-  .transformer = epoxy_style(
-    epoxy_style_apply(~ .x * 100),
-    epoxy_style_apply(round, digits = 2),
-    epoxy_style_apply(~ paste0(.x, "\%"))
-  )
-)
 
 }

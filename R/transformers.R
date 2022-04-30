@@ -39,26 +39,26 @@
 #' # Other Transfomers ----
 #'
 #' # Apply `format()` to all replacements
-#' number <- 1.234234234
-#' glue::glue(
-#'   "{number}",
-#'   .transformer = epoxy_style_format(digits = 4)
-#' )
-#'
-#' # Apply _any_ function to all replacements
-#' glue::glue(
-#'   "{number}",
-#'   .transformer = epoxy_style_apply(round, digits = 0)
-#' )
-#'
-#' glue::glue(
-#'   "{number}",
-#'   .transformer = epoxy_style(
-#'     epoxy_style_apply(~ .x * 100),
-#'     epoxy_style_apply(round, digits = 2),
-#'     epoxy_style_apply(~ paste0(.x, "%"))
-#'   )
-#' )
+# number <- 1.234234234
+# glue::glue(
+#   "{number}",
+#   .transformer = epoxy_style_format(digits = 4)
+# )
+#
+# # Apply _any_ function to all replacements
+# glue::glue(
+#   "{number}",
+#   .transformer = epoxy_style_apply(round, digits = 0)
+# )
+#
+# glue::glue(
+#   "{number}",
+#   .transformer = epoxy_style(
+#     epoxy_style_apply(~ .x * 100),
+#     epoxy_style_apply(round, digits = 2),
+#     epoxy_style_apply(~ paste0(.x, "%"))
+#   )
+# )
 #'
 #' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
 #'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
@@ -70,8 +70,9 @@
 #'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
 #'   _and then_ embolden the entire string.
 #'
-#'   In `epoxy_style_format()`, the `...` are passed to the underlying call to
-#'   `format()`.
+#'   In `epoxy_style_format()` and `epoxy_style_apply()`, the `...` are passed
+#'   to the underlying call the underlying function call (`format()` in the case
+#'   of `epoxy_style_format()`).
 #' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
 #'   default is chosen based on the engine of the chunk where the style function
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
@@ -180,6 +181,7 @@ epoxy_style_format <- function(..., transformer = glue::identity_transformer) {
 }
 
 #' @describeIn epoxy_style Apply a function to all replacement expressions
+#' @param .f A function, function name or [purrr::map()]-style inline function.
 #' @export
 epoxy_style_apply <- function(
   .f = identity,
