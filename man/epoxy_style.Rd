@@ -5,6 +5,7 @@
 \alias{epoxy_style_wrap}
 \alias{epoxy_style_bold}
 \alias{epoxy_style_italic}
+\alias{epoxy_style_format}
 \alias{epoxy_style_code}
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
@@ -21,6 +22,8 @@ epoxy_style_wrap(
 epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
+
+epoxy_style_format(..., transformer = glue::identity_transformer)
 
 epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
@@ -43,7 +46,10 @@ applying the styles from left to right.
 For example, \code{epoxy_style("bold", "collapse")} results in replaced strings
 that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}. On the
 other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
-\emph{and then} embolden the entire string.}
+\emph{and then} embolden the entire string.
+
+In \code{epoxy_style_format()}, the \code{...} are passed to the underlying call to
+\code{format()}.}
 
 \item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
 default is chosen based on the engine of the chunk where the style function
@@ -88,6 +94,9 @@ in HTML, or \verb{\\textbf\{\}} in LaTeX
 
 \item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
 HTML, or \verb{\\emph\{\}} in LaTeX
+
+\item \code{epoxy_style_format}: Format numbers and values using \code{format()} (Apply
+styler first in \code{epoxy_style()})
 
 \item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
 \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX

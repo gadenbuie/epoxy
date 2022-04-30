@@ -140,3 +140,33 @@ test_that("epoxy_style_*() functions choose syntax by argument", {
     "\\textbf{text}"
   )
 })
+
+test_that("epoxy_style_format() works", {
+  number <- 1.234234234234
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style_format(digits = 2, nsmall = 3)),
+    "1.234"
+  )
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style_format(digits = 2)),
+    "1.2"
+  )
+
+  expect_equal(
+    glue("{number}", .transformer = epoxy_style(
+      epoxy_style_format(digits = 3),
+      "bold"
+    )),
+    "**1.23**"
+  )
+
+  expect_equal(
+    glue(
+      "{list(a = 'one')} {number}",
+       .transformer = epoxy_style_format(digits = 2)
+    ),
+    "one 1.2"
+  )
+})

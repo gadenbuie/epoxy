@@ -45,6 +45,9 @@
 #'   that are emboldened _and then_ collapsed, e.g. `**a** and **b**`. On the
 #'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
 #'   _and then_ embolden the entire string.
+#'
+#'   In `epoxy_style_format()`, the `...` are passed to the underlying call to
+#'   `format()`.
 #' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
 #'   default is chosen based on the engine of the chunk where the style function
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
@@ -143,6 +146,17 @@ epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_trans
     syntax = syntax,
     transformer = transformer
   )
+}
+
+#' @describeIn epoxy_style Format numbers and values using `format()` (Apply
+#'   styler first in `epoxy_style()`)
+#' @export
+epoxy_style_format <- function(..., transformer = glue::identity_transformer) {
+  dots <- list(...)
+  function(text, envir) {
+    dots$x <- eval(parse(text = text, keep.source = FALSE), envir)
+    eval(rlang::call2(format, !!!dots), envir)
+  }
 }
 
 #' @describeIn epoxy_style Code format variables using ` `` ` in markdown,
