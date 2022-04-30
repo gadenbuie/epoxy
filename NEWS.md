@@ -43,12 +43,13 @@
   `epoxy_style()`, and for convenience you can prove a vector of style names or
   a list of functions, e.g. `epoxy_style = c("bold", "collapse")` (#31).
 
-* A new styler, `epoxy_style_format()`, can be used to globally format numbers
-  in an `epoxy` chunk. E.g. `.transformer = epoxy_style_format(digits = 2)` can
-  be used to format all numbers in an `epoxy` chunk with 2 significant digits.
-  When used with other stylers, `epoxy_style_format()` should appear first:
-  e.g. `epoxy_style("format", "bold")` and not `epoxy_style("bold", "format")`.
-  (#37)
+* Two new stylers, `epoxy_style_format()` and `epoxy_style_apply()`, can be used
+  to globally format numbers in an `epoxy` chunk. E.g. `.transformer =
+  epoxy_style_format(digits = 2)` can be used to format all numbers in an 
+  `epoxy` chunk with 2 significant digits. The format styler is powered by the 
+  more general `epoxy_style_apply()`, which allows you to apply arbitrary
+  functions to the replacements using the syntax familiar to users of
+  `purrr::map()` (#37).
 
 # epoxy 0.0.2
 
