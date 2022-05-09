@@ -1,0 +1,57 @@
+````markdown
+```{r}`r ''`
+`r paste(knitr::knit_code$get("airbnb-data"), collapse = "\n")`
+```
+
+```{epoxy epoxy_style = my_style}`r ''`
+`r paste(knitr::knit_code$get("airbnb-epoxy"), collapse = "\n")`
+```
+````
+
+
+```{r airbnb-data, echo = FALSE}
+# Airbnb stats that may not be completely accurate
+airbnb <- list(
+ countries = 220,
+ cities = 1e5,
+ avg_stay = 4.326,
+ avg_cost = 184.952,
+ hosts = 4.12e6
+)
+
+# Define number/dollar styles to apply consistently
+my_style <- epoxy_style_format(
+ dollar = scales::label_dollar(accuracy = 1),
+ number = scales::label_number(
+   accuracy = 0.1,
+   scale_cut = scales::cut_short_scale()
+ )
+)
+```
+
+With standard inline R code in R Markdown, we can write the following:
+
+````markdown
+* Airbnb includes listings in `r airbnb$cities` cities
+  in `r airbnb$countries` countries
+  from around `r airbnb$hosts` hosts.
+  The average guest stays `r airbnb$avg_stay` nights
+  at a rate of `r airbnb$avg_cost` per night.
+````
+
+* Airbnb includes listings in 10^5 cities
+  in `r I(airbnb$countries)` countries
+  from around 4.12 × 10^6 hosts.
+  The average guest stays `r airbnb$avg_stay` nights
+  at a rate of `r airbnb$avg_cost` per night.
+
+Using `epoxy` and the light-weight `fmt()` function from `epoxy_style_format()`,
+we can improve the readability and formatting of the interwoven numbers.
+
+```{epoxy airbnb-epoxy, epoxy_style = my_style}
+* Airbnb includes listings in {fmt(airbnb$cities, ",")} cities
+  in {fmt(airbnb$countries, "auto")} countries
+  from around {fmt(airbnb$hosts, "#")} hosts.
+  The average guest stays {fmt(airbnb$avg_stay, "#")} nights
+  at a rate of {fmt(airbnb$avg_cost, "$")} per night.
+```

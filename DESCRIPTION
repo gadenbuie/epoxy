@@ -24,6 +24,7 @@ Imports:
     utils,
     whisker
 Suggests:
+    scales (>= 1.1.0),
     testthat
 VignetteBuilder: 
     knitr
