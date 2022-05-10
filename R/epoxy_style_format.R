@@ -160,7 +160,7 @@ labellers_summarize <- function() {
     label = labels
   )
 
-  labellers <- aggregate(
+  labellers <- stats::aggregate(
     labellers[-1],
     list(applies = labellers$applies),
     function(label) {
