@@ -140,6 +140,8 @@ labeller_factory <- function(labellers = labellers_list()) {
 }
 
 labellers_summarize <- function() {
+  tools::toTitleCase("for rcmdcheck")
+
   args <- rlang::fn_fmls(epoxy_style_format)[labellers_names()]
   args <- purrr::modify_if(args, rlang::is_symbol, rlang::expr_text)
   args <- purrr::modify_if(args, rlang::is_call_simple, rlang::call_name)
