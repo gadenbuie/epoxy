@@ -21,6 +21,7 @@ Imports:
     rmarkdown,
     shiny,
     stringr,
+    tools,
     utils,
     whisker
 Suggests:

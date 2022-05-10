@@ -21,6 +21,10 @@ epoxy_style_format(
   pvalue = scales::label_pvalue(),
   scientific = scales::label_scientific(),
   wrap = scales::label_wrap(width = 80),
+  uppercase = toupper,
+  lowercase = tolower,
+  titlecase = tools::toTitleCase,
+  ...,
   transformer = glue::identity_transformer
 )
 }
@@ -30,7 +34,8 @@ within an inline format function, \code{fmt()}. To apply formatting, wrap embrac
 expressions in \code{fmt(expr, label)}, where \code{label} is the name of a labeller
 function from \pkg{scales} (with or without the leading \code{label_}), e.g.
 \code{"dollar"} or \code{"label_dollar"} for \code{\link[scales:label_dollar]{scales::label_dollar()}}. Short \code{label}
-forms exist for some labellers, e.g. \code{"$"} for \code{"dollar"}.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
+forms exist for some labellers, e.g. \code{"$"} for \code{"dollar"}. See the full
+listing in the table below.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
 # Airbnb stats that may not be completely accurate
 airbnb <- list(
  countries = 220,
@@ -39,7 +44,25 @@ airbnb <- list(
  avg_cost = 184.952,
  hosts = 4.12e6
 )
+```
+}\if{html}{\out{</div>}}
 
+With standard inline R code in R Markdown, we can write the following:\if{html}{\out{<div class="sourceCode default">}}\preformatted{* Airbnb includes listings in `r airbnb$cities` cities
+  in `r airbnb$countries` countries
+  from around `r airbnb$hosts` hosts.
+  The average guest stays `r airbnb$avg_stay` nights
+  at a rate of `r airbnb$avg_cost` per night.
+}\if{html}{\out{</div>}}
+\itemize{
+\item Airbnb includes listings in 10^5 cities
+in 220 countries
+from around 4.12 × 10^6 hosts.
+The average guest stays 4.326 nights
+at a rate of 184.952 per night.
+}
+
+Using \code{epoxy} and the light-weight \code{fmt()} function from \code{epoxy_style_format()},
+we can improve the readability and formatting of the interwoven numbers.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r my_style, echo = FALSE\}
 # Define number/dollar styles to apply consistently
 my_style <- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -58,23 +81,6 @@ my_style <- epoxy_style_format(
   at a rate of \{fmt(airbnb$avg_cost, "$")\} per night.
 ```
 }\if{html}{\out{</div>}}
-
-With standard inline R code in R Markdown, we can write the following:\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{* Airbnb includes listings in 10<sup>5</sup> cities
-  in 220 countries
-  from around 4.12 &times; 10<sup>6</sup> hosts.
-  The average guest stays 4.326 nights
-  at a rate of 184.952 per night.
-}\if{html}{\out{</div>}}
-\itemize{
-\item Airbnb includes listings in 10^5 cities
-in 220 countries
-from around 4.12 × 10^6 hosts.
-The average guest stays 4.326 nights
-at a rate of 184.952 per night.
-}
-
-Using \code{epoxy} and the light-weight \code{fmt()} function from \code{epoxy_style_format()},
-we can improve the readability and formatting of the interwoven numbers.
 \itemize{
 \item Airbnb includes listings in 100,000 cities
 in 220 countries
@@ -82,24 +88,27 @@ from around 4.1M hosts.
 The average guest stays 4.3 nights
 at a rate of $185 per night.
 }
-\subsection{\code{fmt()} labellers}{\tabular{ll}{
+\subsection{\code{fmt()} labels for formatters}{\tabular{ll}{
    \code{label} \tab Applies formatting with \cr
    \code{"bytes"} \tab \code{\link[scales:label_bytes]{scales::label_bytes()}} \cr
-   \code{","}, \code{"comma"} \tab \code{\link[scales:label_number]{scales::label_comma()}} \cr
    \code{"d"}, \code{"date"} \tab \code{\link[scales:label_date]{scales::label_date()}} \cr
-   \code{"date_short"}, \code{"ds"} \tab \code{\link[scales:label_date]{scales::label_date_short()}} \cr
+   \code{"ds"}, \code{"date_short"} \tab \code{\link[scales:label_date]{scales::label_date_short()}} \cr
+   \code{"dt"}, \code{"time"} \tab \code{\link[scales:label_date]{scales::label_time()}} \cr
    \code{"$"}, \code{"dollar"} \tab \code{\link[scales:label_dollar]{scales::label_dollar()}} \cr
    \code{"log"} \tab \code{\link[scales:label_log]{scales::label_log()}} \cr
-   \code{"math"} \tab \code{\link[scales:label_parse]{scales::label_math()}} \cr
    \code{"#"}, \code{"number"} \tab \code{\link[scales:label_number]{scales::label_number()}} \cr
+   \code{","}, \code{"comma"} \tab \code{\link[scales:label_number]{scales::label_comma()}} \cr
    \code{"a"}, \code{"auto"}, \code{"number_auto"} \tab \code{\link[scales:label_number_auto]{scales::label_number_auto()}} \cr
    \code{"o"}, \code{"ordinal"} \tab \code{\link[scales:label_ordinal]{scales::label_ordinal()}} \cr
    \code{"parse"} \tab \code{\link[scales:label_parse]{scales::label_parse()}} \cr
-   \code{"\%"}, \code{"pct"}, \code{"percent"} \tab \code{\link[scales:label_percent]{scales::label_percent()}} \cr
+   \code{"math"} \tab \code{\link[scales:label_parse]{scales::label_math()}} \cr
+   \code{"pct"}, \code{"\%"}, \code{"percent"} \tab \code{\link[scales:label_percent]{scales::label_percent()}} \cr
    \code{"p"}, \code{"pvalue"} \tab \code{\link[scales:label_pvalue]{scales::label_pvalue()}} \cr
-   \code{"scientific"}, \code{"si"} \tab \code{\link[scales:label_scientific]{scales::label_scientific()}} \cr
-   \code{"dt"}, \code{"time"} \tab \code{\link[scales:label_date]{scales::label_time()}} \cr
+   \code{"si"}, \code{"scientific"} \tab \code{\link[scales:label_scientific]{scales::label_scientific()}} \cr
    \code{"wrap"} \tab \code{\link[scales:label_wrap]{scales::label_wrap()}} \cr
+   \code{"uc"}, \code{"uppercase"} \tab \code{\link[=toupper]{toupper()}} \cr
+   \code{"lc"}, \code{"lowercase"} \tab \code{\link[=tolower]{tolower()}} \cr
+   \code{"tc"}, \code{"titlecase"} \tab \code{\link[tools:toTitleCase]{tools::toTitleCase()}} \cr
 }
 
 }
