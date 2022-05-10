@@ -20,6 +20,7 @@ Imports:
     rlang,
     rmarkdown,
     shiny,
+    stats,
     stringr,
     tools,
     utils,
