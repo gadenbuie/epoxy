@@ -43,13 +43,17 @@
   `epoxy_style()`, and for convenience you can prove a vector of style names or
   a list of functions, e.g. `epoxy_style = c("bold", "collapse")` (#31).
 
-* Two new stylers, `epoxy_style_format()` and `epoxy_style_apply()`, can be used
-  to globally format numbers in an `epoxy` chunk. E.g. `.transformer =
-  epoxy_style_format(digits = 2)` can be used to format all numbers in an 
-  `epoxy` chunk with 2 significant digits. The format styler is powered by the 
-  more general `epoxy_style_apply()`, which allows you to apply arbitrary
-  functions to the replacements using the syntax familiar to users of
-  `purrr::map()` (#37).
+* A new styler, `epoxy_style_apply()`, can be used to globally apply a
+  function to glue expressions. `epoxy_style_apply()` uses the same syntax as 
+  `purrr::map()` for defining the function, i.e. `tolower` or `~ tolower(.x)`
+  (#37).
+  
+* `epoxy_style_format()` provides a small inline function, `fmt()` that can be
+  used to apply specific formatting to an expression. It wraps all of the
+  label functions from the scales package and provides shortcuts for many
+  labellers. For example, `{fmt(x, "%")}` will format `x` as a percentage using
+  `scales::label_percent()` and `{fmt(x, "$")}` will format `x` as a dollar
+  figure. You can also provide your own functions (#39).
 
 # epoxy 0.0.2
 

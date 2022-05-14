@@ -70,9 +70,8 @@
 #'   other hand, `epoxy_style("collapse", "bold")`  will collapse the vector
 #'   _and then_ embolden the entire string.
 #'
-#'   In `epoxy_style_format()` and `epoxy_style_apply()`, the `...` are passed
-#'   to the underlying call the underlying function call (`format()` in the case
-#'   of `epoxy_style_format()`).
+#'   In `epoxy_style_apply()`, the `...` are passed to the underlying call the
+#'   underlying function call.
 #' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
 #'   default is chosen based on the engine of the chunk where the style function
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
@@ -87,6 +86,7 @@
 #' @return A function of `text` and `envir` suitable for the `.transformer`
 #'   argument of [glue::glue()].
 #'
+#' @family epoxy-style glue transformers
 #' @export
 epoxy_style <- function(..., syntax = NULL) {
   parent_env <- rlang::caller_env()
@@ -171,13 +171,6 @@ epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_trans
     syntax = syntax,
     transformer = transformer
   )
-}
-
-#' @describeIn epoxy_style Format numbers and values using `format()`. Accepts
-#'   arguments in `...` that are passed to `format()`.
-#' @export
-epoxy_style_format <- function(..., transformer = glue::identity_transformer) {
-  epoxy_style_apply(format, ..., transformer = transformer)
 }
 
 #' @describeIn epoxy_style Apply a function to all replacement expressions

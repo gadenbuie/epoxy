@@ -20,10 +20,13 @@ Imports:
     rlang,
     rmarkdown,
     shiny,
+    stats,
     stringr,
+    tools,
     utils,
     whisker
 Suggests:
+    scales (>= 1.1.0),
     testthat
 VignetteBuilder: 
     knitr
@@ -32,4 +35,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

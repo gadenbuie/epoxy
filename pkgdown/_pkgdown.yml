@@ -16,6 +16,7 @@ reference:
 - title: epoxy Style Transformers
   contents:
   - '`epoxy_style`'
+  - '`epoxy_style_format`'
   - '`use_epoxy_knitr_engines`'
 - title: Templating for Shiny
   contents:
