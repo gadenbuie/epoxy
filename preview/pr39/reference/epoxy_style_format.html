@@ -5,7 +5,8 @@ expressions in fmt(expr, label), where label is the name of a labeller
 function from scales (with or without the leading label_), e.g.
 "dollar" or "label_dollar" for scales::label_dollar(). Short label
 forms exist for some labellers, e.g. "$" for "dollar". See the full
-listing in the table below.```{r}
+listing in the table below.
+```{r}
 # Airbnb stats that may not be completely accurate
 airbnb &amp;lt;- list(
  countries = 220,
@@ -16,7 +17,8 @@ airbnb &amp;lt;- list(
 )
 ```
 
-With standard inline R code in R Markdown, we can write the following:* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -30,7 +32,8 @@ at a rate of 184.952 per night.
 
 
 Using epoxy and the light-weight fmt() function from epoxy_style_format(),
-we can improve the readability and formatting of the interwoven numbers.```{r my_style, echo = FALSE}
+we can improve the readability and formatting of the interwoven numbers.
+```{r my_style, echo = FALSE}
 # Define number/dollar styles to apply consistently
 my_style &amp;lt;- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -89,7 +92,8 @@ expressions in fmt(expr, label), where label is the name of a labeller
 function from scales (with or without the leading label_), e.g.
 "dollar" or "label_dollar" for scales::label_dollar(). Short label
 forms exist for some labellers, e.g. "$" for "dollar". See the full
-listing in the table below.```{r}
+listing in the table below.
+```{r}
 # Airbnb stats that may not be completely accurate
 airbnb &amp;lt;- list(
  countries = 220,
@@ -100,7 +104,8 @@ airbnb &amp;lt;- list(
 )
 ```
 
-With standard inline R code in R Markdown, we can write the following:* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -114,7 +119,8 @@ at a rate of 184.952 per night.
 
 
 Using epoxy and the light-weight fmt() function from epoxy_style_format(),
-we can improve the readability and formatting of the interwoven numbers.```{r my_style, echo = FALSE}
+we can improve the readability and formatting of the interwoven numbers.
+```{r my_style, echo = FALSE}
 # Define number/dollar styles to apply consistently
 my_style &amp;lt;- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -245,7 +251,8 @@ expressions in <code>fmt(expr, label)</code>, where <code>label</code> is the na
 function from <span class="pkg">scales</span> (with or without the leading <code>label_</code>), e.g.
 <code>"dollar"</code> or <code>"label_dollar"</code> for <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code>. Short <code>label</code>
 forms exist for some labellers, e.g. <code>"$"</code> for <code>"dollar"</code>. See the full
-listing in the table below.</p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+listing in the table below.</p>
+<p></p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Airbnb stats that may not be completely accurate</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">airbnb &lt;- list(</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in"> countries = 220,</span></span>
@@ -254,7 +261,8 @@ listing in the table below.</p><div class="sourceCode markdown"><pre><code><span
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in"> avg_cost = 184.952,</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in"> hosts = 4.12e6</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span></code></pre><p></p></div>
-<p>With standard inline R code in R Markdown, we can write the following:</p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>* Airbnb includes listings in `r airbnb$cities` cities</span>
+<p>With standard inline R code in R Markdown, we can write the following:</p>
+<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>* Airbnb includes listings in `r airbnb$cities` cities</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  in `r airbnb$countries` countries</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  from around `r airbnb$hosts` hosts.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  The average guest stays `r airbnb$avg_stay` nights</span>
@@ -264,7 +272,8 @@ from around 4.12 × 10^6 hosts.
 The average guest stays 4.326 nights
 at a rate of 184.952 per night.</p></li>
 </ul><p>Using <code>epoxy</code> and the light-weight <code>fmt()</code> function from <code>epoxy_style_format()</code>,
-we can improve the readability and formatting of the interwoven numbers.</p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r my_style, echo = FALSE}</span></span>
+we can improve the readability and formatting of the interwoven numbers.</p>
+<p></p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r my_style, echo = FALSE}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Define number/dollar styles to apply consistently</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">my_style &lt;- epoxy_style_format(</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in"> dollar = scales::label_dollar(accuracy = 1),</span></span>
@@ -310,7 +319,83 @@ at a rate of $185 per night.</p></li>
 <span class="op">)</span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <dl><dt>bytes</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"bytes"</code>. Default is
+<code><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">scales::label_bytes()</a></code>.</p></dd>
+<dt>date</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"date" or "d"</code>. Default
+is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date()</a></code>.</p></dd>
+<dt>date_short</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"date_short" or "ds"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date_short()</a></code>.</p></dd>
+<dt>time</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"time" or "dt"</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_time()</a></code>.</p></dd>
+<dt>dollar</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"dollar" or "$"</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code>.</p></dd>
+<dt>log</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"log"</code>. Default is
+<code><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">scales::label_log()</a></code>.</p></dd>
+<dt>number</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"number" or "#"</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_number()</a></code>.</p></dd>
+<dt>comma</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"comma" or ","</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_comma()</a></code>.</p></dd>
+<dt>number_auto</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"number_auto", "a", or "auto"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_number_auto.html" class="external-link">scales::label_number_auto()</a></code>.</p></dd>
+<dt>ordinal</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"ordinal" or "o"</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">scales::label_ordinal()</a></code>.</p></dd>
+<dt>parse</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"parse"</code>. Default is
+<code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_parse()</a></code>.</p></dd>
+<dt>math</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"math"</code>. Default is
+<code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_math()</a></code>.</p></dd>
+<dt>percent</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"percent", "pct", or "%"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">scales::label_percent()</a></code>.</p></dd>
+<dt>pvalue</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"pvalue" or "p"</code>.
+Default is <code><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">scales::label_pvalue()</a></code>.</p></dd>
+<dt>scientific</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"scientific" or "si"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">scales::label_scientific()</a></code>.</p></dd>
+<dt>wrap</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"wrap"</code>. Default is
+<code><a href="https://scales.r-lib.org/reference/label_wrap.html" class="external-link">scales::label_wrap()</a></code>.</p></dd>
+<dt>uppercase</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"uppercase" or "uc"</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code>.</p></dd>
+<dt>lowercase</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"lowercase" or "lc"</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code>.</p></dd>
+<dt>titlecase</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"titlecase" or "tc"</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
+<dt>...</dt>
+<dd><p>Additional formatting functions as named arguments. The name of
+the argument in <code>...</code> determines the <code>label</code> value associated with the
+formatter in <code>fmt()</code>.</p>
+<p>For example, providing <code>url = utils::URLencode</code> would allow you to apply
+URL-encoding formatting using <code>fmt(expr, "url")</code>.</p></dd>
+<dt>transformer</dt>
+<dd><p>The transformer to apply to the replacement string. This
+argument is used for chaining the transformer functions. By providing a
+function to this argument you can apply an additional transformation after
+the current transformation. In nearly all cases, you can let
+<code><a href="epoxy_style.html">epoxy_style()</a></code> handle this for you. The chain ends when
+<code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
+</dl></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">'{fmt(0.2, "%")} of revenue generates {fmt(42000, "$")} in profits.'</span>,</span>
+<span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20% of revenue generates $42,000 in profits.</span>
+<span class="r-in"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
