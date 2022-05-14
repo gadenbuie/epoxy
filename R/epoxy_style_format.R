@@ -71,6 +71,7 @@
 #'   URL-encoding formatting using `fmt(expr, "url")`.
 #' @inheritParams epoxy_style
 #'
+#' @family epoxy-style glue transformers
 #' @export
 epoxy_style_format  <- function(
   bytes       = scales::label_bytes(),

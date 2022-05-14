@@ -86,6 +86,7 @@
 #' @return A function of `text` and `envir` suitable for the `.transformer`
 #'   argument of [glue::glue()].
 #'
+#' @family epoxy-style glue transformers
 #' @export
 epoxy_style <- function(..., syntax = NULL) {
   parent_env <- rlang::caller_env()

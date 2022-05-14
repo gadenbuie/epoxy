@@ -185,3 +185,8 @@ glue::glue(
 )
 
 }
+\seealso{
+Other epoxy-style glue transformers: 
+\code{\link{epoxy_style}()}
+}
+\concept{epoxy-style glue transformers}

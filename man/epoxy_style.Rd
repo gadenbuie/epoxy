@@ -141,3 +141,8 @@ glue::glue(
 # Apply `format()` to all replacements
 
 }
+\seealso{
+Other epoxy-style glue transformers: 
+\code{\link{epoxy_style_format}()}
+}
+\concept{epoxy-style glue transformers}
