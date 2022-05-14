@@ -19,6 +19,58 @@
 #' knitr::kable(labellers[, 2:1], row.names = FALSE, col.names = c("`label`", "Applies formatting with"))
 #' ```
 #'
+#' @examples
+#' glue::glue(
+#'   '{fmt(0.2, "%")} of revenue generates {fmt(42000, "$")} in profits.',
+#'   .transformer = epoxy_style_format()
+#' )
+#'
+#' @param bytes The function to apply to when `label` is `"bytes"`. Default is
+#'   [scales::label_bytes()].
+#' @param date The function to apply to when `label` is `"date" or "d"`. Default
+#'   is [scales::label_date()].
+#' @param date_short The function to apply to when `label` is `"date_short" or
+#'   "ds"`. Default is [scales::label_date_short()].
+#' @param time The function to apply to when `label` is `"time" or "dt"`.
+#'   Default is [scales::label_time()].
+#' @param dollar The function to apply to when `label` is `"dollar" or "$"`.
+#'   Default is [scales::label_dollar()].
+#' @param log The function to apply to when `label` is `"log"`. Default is
+#'   [scales::label_log()].
+#' @param number The function to apply to when `label` is `"number" or "#"`.
+#'   Default is [scales::label_number()].
+#' @param comma The function to apply to when `label` is `"comma" or ","`.
+#'   Default is [scales::label_comma()].
+#' @param number_auto The function to apply to when `label` is `"number_auto",
+#'   "a", or "auto"`. Default is [scales::label_number_auto()].
+#' @param ordinal The function to apply to when `label` is `"ordinal" or "o"`.
+#'   Default is [scales::label_ordinal()].
+#' @param parse The function to apply to when `label` is `"parse"`. Default is
+#'   [scales::label_parse()].
+#' @param math The function to apply to when `label` is `"math"`. Default is
+#'   [scales::label_math()].
+#' @param percent The function to apply to when `label` is `"percent", "pct", or
+#'   "%"`. Default is [scales::label_percent()].
+#' @param pvalue The function to apply to when `label` is `"pvalue" or "p"`.
+#'   Default is [scales::label_pvalue()].
+#' @param scientific The function to apply to when `label` is `"scientific" or
+#'   "si"`. Default is [scales::label_scientific()].
+#' @param wrap The function to apply to when `label` is `"wrap"`. Default is
+#'   [scales::label_wrap()].
+#' @param uppercase The function to apply to when `label` is `"uppercase" or
+#'   "uc"`. Default is [toupper()].
+#' @param lowercase The function to apply to when `label` is `"lowercase" or
+#'   "lc"`. Default is [tolower()].
+#' @param titlecase The function to apply to when `label` is `"titlecase" or
+#'   "tc"`. Default is [tools::toTitleCase()].
+#' @param ... Additional formatting functions as named arguments. The name of
+#'   the argument in `...` determines the `label` value associated with the
+#'   formatter in `fmt()`.
+#'
+#'   For example, providing `url = utils::URLencode` would allow you to apply
+#'   URL-encoding formatting using `fmt(expr, "url")`.
+#' @inheritParams epoxy_style
+#'
 #' @export
 epoxy_style_format  <- function(
   bytes       = scales::label_bytes(),
@@ -173,4 +225,30 @@ labellers_summarize <- function() {
 
   rownames(labellers) <- labellers$applies
   labellers[fns[-seq_along(extras)], ]
+}
+
+labellers_params <- function() {
+  args <- rlang::fn_fmls(epoxy_style_format)[labellers_names()]
+  args <- purrr::map(args, rlang::expr_text)
+  args <- purrr::map_chr(args, function(expr) {
+    expr <- sub("\\(.+\\)$", "()", expr)
+    if (grepl("\\(\\)$", expr)) {
+      return(expr)
+    }
+    paste0(expr, "()")
+  })
+
+  extras <- labeller_extras()
+
+  values <- purrr::map_chr(names(args), function(label) {
+    label <- c(label, names(extras[extras == label]))
+    knitr::combine_words(label, before = '"', and = " or ")
+  })
+
+  glue(
+    "#' @param {param} The function to apply to when `label` is `{values}`. Default is [{fn}].",
+    param = names(args),
+    fn = unname(args),
+    values = values
+  )
 }

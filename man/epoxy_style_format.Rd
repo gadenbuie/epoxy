@@ -28,6 +28,71 @@ epoxy_style_format(
   transformer = glue::identity_transformer
 )
 }
+\arguments{
+\item{bytes}{The function to apply to when \code{label} is \code{"bytes"}. Default is
+\code{\link[scales:label_bytes]{scales::label_bytes()}}.}
+
+\item{date}{The function to apply to when \code{label} is \verb{"date" or "d"}. Default
+is \code{\link[scales:label_date]{scales::label_date()}}.}
+
+\item{date_short}{The function to apply to when \code{label} is \verb{"date_short" or "ds"}. Default is \code{\link[scales:label_date]{scales::label_date_short()}}.}
+
+\item{time}{The function to apply to when \code{label} is \verb{"time" or "dt"}.
+Default is \code{\link[scales:label_date]{scales::label_time()}}.}
+
+\item{dollar}{The function to apply to when \code{label} is \verb{"dollar" or "$"}.
+Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
+
+\item{log}{The function to apply to when \code{label} is \code{"log"}. Default is
+\code{\link[scales:label_log]{scales::label_log()}}.}
+
+\item{number}{The function to apply to when \code{label} is \verb{"number" or "#"}.
+Default is \code{\link[scales:label_number]{scales::label_number()}}.}
+
+\item{comma}{The function to apply to when \code{label} is \verb{"comma" or ","}.
+Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
+
+\item{number_auto}{The function to apply to when \code{label} is \verb{"number_auto", "a", or "auto"}. Default is \code{\link[scales:label_number_auto]{scales::label_number_auto()}}.}
+
+\item{ordinal}{The function to apply to when \code{label} is \verb{"ordinal" or "o"}.
+Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
+
+\item{parse}{The function to apply to when \code{label} is \code{"parse"}. Default is
+\code{\link[scales:label_parse]{scales::label_parse()}}.}
+
+\item{math}{The function to apply to when \code{label} is \code{"math"}. Default is
+\code{\link[scales:label_parse]{scales::label_math()}}.}
+
+\item{percent}{The function to apply to when \code{label} is \verb{"percent", "pct", or "\%"}. Default is \code{\link[scales:label_percent]{scales::label_percent()}}.}
+
+\item{pvalue}{The function to apply to when \code{label} is \verb{"pvalue" or "p"}.
+Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
+
+\item{scientific}{The function to apply to when \code{label} is \verb{"scientific" or "si"}. Default is \code{\link[scales:label_scientific]{scales::label_scientific()}}.}
+
+\item{wrap}{The function to apply to when \code{label} is \code{"wrap"}. Default is
+\code{\link[scales:label_wrap]{scales::label_wrap()}}.}
+
+\item{uppercase}{The function to apply to when \code{label} is \verb{"uppercase" or "uc"}. Default is \code{\link[=toupper]{toupper()}}.}
+
+\item{lowercase}{The function to apply to when \code{label} is \verb{"lowercase" or "lc"}. Default is \code{\link[=tolower]{tolower()}}.}
+
+\item{titlecase}{The function to apply to when \code{label} is \verb{"titlecase" or "tc"}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+
+\item{...}{Additional formatting functions as named arguments. The name of
+the argument in \code{...} determines the \code{label} value associated with the
+formatter in \code{fmt()}.
+
+For example, providing \code{url = utils::URLencode} would allow you to apply
+URL-encoding formatting using \code{fmt(expr, "url")}.}
+
+\item{transformer}{The transformer to apply to the replacement string. This
+argument is used for chaining the transformer functions. By providing a
+function to this argument you can apply an additional transformation after
+the current transformation. In nearly all cases, you can let
+\code{epoxy_style()} handle this for you. The chain ends when
+\code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
+}
 \description{
 Makes available all of the \code{label_} functions from the \pkg{scales} package
 within an inline format function, \code{fmt()}. To apply formatting, wrap embraced
@@ -35,7 +100,9 @@ expressions in \code{fmt(expr, label)}, where \code{label} is the name of a labe
 function from \pkg{scales} (with or without the leading \code{label_}), e.g.
 \code{"dollar"} or \code{"label_dollar"} for \code{\link[scales:label_dollar]{scales::label_dollar()}}. Short \code{label}
 forms exist for some labellers, e.g. \code{"$"} for \code{"dollar"}. See the full
-listing in the table below.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
+listing in the table below.
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
 # Airbnb stats that may not be completely accurate
 airbnb <- list(
  countries = 220,
@@ -47,7 +114,9 @@ airbnb <- list(
 ```
 }\if{html}{\out{</div>}}
 
-With standard inline R code in R Markdown, we can write the following:\if{html}{\out{<div class="sourceCode default">}}\preformatted{* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -62,7 +131,9 @@ at a rate of 184.952 per night.
 }
 
 Using \code{epoxy} and the light-weight \code{fmt()} function from \code{epoxy_style_format()},
-we can improve the readability and formatting of the interwoven numbers.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r my_style, echo = FALSE\}
+we can improve the readability and formatting of the interwoven numbers.
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r my_style, echo = FALSE\}
 # Define number/dollar styles to apply consistently
 my_style <- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -112,4 +183,11 @@ at a rate of $185 per night.
 }
 
 }
+}
+\examples{
+glue::glue(
+  '{fmt(0.2, "\%")} of revenue generates {fmt(42000, "$")} in profits.',
+  .transformer = epoxy_style_format()
+)
+
 }
