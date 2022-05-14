@@ -5,7 +5,8 @@ expressions in fmt(expr, label), where label is the name of a labeller
 function from scales (with or without the leading label_), e.g.
 "dollar" or "label_dollar" for scales::label_dollar(). Short label
 forms exist for some labellers, e.g. "$" for "dollar". See the full
-listing in the table below.```{r}
+listing in the table below.
+```{r}
 # Airbnb stats that may not be completely accurate
 airbnb &amp;lt;- list(
  countries = 220,
@@ -16,7 +17,8 @@ airbnb &amp;lt;- list(
 )
 ```
 
-With standard inline R code in R Markdown, we can write the following:* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -30,7 +32,8 @@ at a rate of 184.952 per night.
 
 
 Using epoxy and the light-weight fmt() function from epoxy_style_format(),
-we can improve the readability and formatting of the interwoven numbers.```{r my_style, echo = FALSE}
+we can improve the readability and formatting of the interwoven numbers.
+```{r my_style, echo = FALSE}
 # Define number/dollar styles to apply consistently
 my_style &amp;lt;- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -89,7 +92,8 @@ expressions in fmt(expr, label), where label is the name of a labeller
 function from scales (with or without the leading label_), e.g.
 "dollar" or "label_dollar" for scales::label_dollar(). Short label
 forms exist for some labellers, e.g. "$" for "dollar". See the full
-listing in the table below.```{r}
+listing in the table below.
+```{r}
 # Airbnb stats that may not be completely accurate
 airbnb &amp;lt;- list(
  countries = 220,
@@ -100,7 +104,8 @@ airbnb &amp;lt;- list(
 )
 ```
 
-With standard inline R code in R Markdown, we can write the following:* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -114,7 +119,8 @@ at a rate of 184.952 per night.
 
 
 Using epoxy and the light-weight fmt() function from epoxy_style_format(),
-we can improve the readability and formatting of the interwoven numbers.```{r my_style, echo = FALSE}
+we can improve the readability and formatting of the interwoven numbers.
+```{r my_style, echo = FALSE}
 # Define number/dollar styles to apply consistently
 my_style &amp;lt;- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -245,7 +251,8 @@ expressions in <code>fmt(expr, label)</code>, where <code>label</code> is the na
 function from <span class="pkg">scales</span> (with or without the leading <code>label_</code>), e.g.
 <code>"dollar"</code> or <code>"label_dollar"</code> for <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code>. Short <code>label</code>
 forms exist for some labellers, e.g. <code>"$"</code> for <code>"dollar"</code>. See the full
-listing in the table below.</p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+listing in the table below.</p>
+<p></p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Airbnb stats that may not be completely accurate</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">airbnb &lt;- list(</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in"> countries = 220,</span></span>
@@ -254,7 +261,8 @@ listing in the table below.</p><div class="sourceCode markdown"><pre><code><span
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in"> avg_cost = 184.952,</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in"> hosts = 4.12e6</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span></code></pre><p></p></div>
-<p>With standard inline R code in R Markdown, we can write the following:</p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>* Airbnb includes listings in `r airbnb$cities` cities</span>
+<p>With standard inline R code in R Markdown, we can write the following:</p>
+<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>* Airbnb includes listings in `r airbnb$cities` cities</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  in `r airbnb$countries` countries</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  from around `r airbnb$hosts` hosts.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  The average guest stays `r airbnb$avg_stay` nights</span>
@@ -264,7 +272,8 @@ from around 4.12 × 10^6 hosts.
 The average guest stays 4.326 nights
 at a rate of 184.952 per night.</p></li>
 </ul><p>Using <code>epoxy</code> and the light-weight <code>fmt()</code> function from <code>epoxy_style_format()</code>,
-we can improve the readability and formatting of the interwoven numbers.</p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r my_style, echo = FALSE}</span></span>
+we can improve the readability and formatting of the interwoven numbers.</p>
+<p></p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r my_style, echo = FALSE}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Define number/dollar styles to apply consistently</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">my_style &lt;- epoxy_style_format(</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in"> dollar = scales::label_dollar(accuracy = 1),</span></span>
@@ -389,6 +398,25 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20% of revenue generates $42,000 in profits.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Add your own formatting functions</span></span>
+<span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">'&lt;https://example.com?q={fmt("search terms go here", "url")}&gt;'</span>,</span>
+<span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span></span>
+<span class="r-in">    url <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;https://example.com?q=search%20terms%20go%20here&gt;</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># To set labeller options, provide the label calls</span></span>
+<span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">'{fmt(0.2123, "%")} of revenue generates {fmt(42000.134, "$")} in profits.'</span>,</span>
+<span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span></span>
+<span class="r-in">    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span class="r-in">    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
