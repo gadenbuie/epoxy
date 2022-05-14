@@ -104,8 +104,6 @@ correct syntax for each.</p>
 
 <span class="fu">epoxy_style_italic</span><span class="op">(</span>syntax <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span>
 
-<span class="fu">epoxy_style_format</span><span class="op">(</span><span class="va">...</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span>
-
 <span class="fu">epoxy_style_apply</span><span class="op">(</span>.f <span class="op">=</span> <span class="va">identity</span>, <span class="va">...</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span>
 
 <span class="fu">epoxy_style_code</span><span class="op">(</span>syntax <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span>
@@ -132,9 +130,8 @@ applying the styles from left to right.</p>
 that are emboldened <em>and then</em> collapsed, e.g. <code>**a** and **b**</code>. On the
 other hand, <code>epoxy_style("collapse", "bold")</code>  will collapse the vector
 <em>and then</em> embolden the entire string.</p>
-<p>In <code>epoxy_style_format()</code> and <code>epoxy_style_apply()</code>, the <code>...</code> are passed
-to the underlying call the underlying function call (<code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> in the case
-of <code>epoxy_style_format()</code>).</p></dd>
+<p>In <code>epoxy_style_apply()</code>, the <code>...</code> are passed to the underlying call the
+underlying function call.</p></dd>
 <dt>syntax</dt>
 <dd><p>One of <code>"markdown"</code> (or <code>"md"</code>), <code>"html"</code>, or <code>"latex"</code>. The
 default is chosen based on the engine of the chunk where the style function
@@ -172,8 +169,6 @@ last element when the variable ends in <code>*</code>, <code>&amp;</code>, or <c
 in HTML, or <code>\textbf{}</code> in LaTeX</p></li>
 <li><p><code>epoxy_style_italic</code>: Italicize variables using <code>_</code> in markdown, <code>&lt;em&gt;</code> in
 HTML, or <code>\emph{}</code> in LaTeX</p></li>
-<li><p><code>epoxy_style_format</code>: Format numbers and values using <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>. Accepts
-arguments in <code>...</code> that are passed to <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>.</p></li>
 <li><p><code>epoxy_style_apply</code>: Apply a function to all replacement expressions</p></li>
 <li><p><code>epoxy_style_code</code>: Code format variables using <code>``</code> in markdown,
 <code>&lt;code&gt;</code> in HTML, or <code>\texttt{}</code> in LaTeX</p></li>
@@ -192,6 +187,11 @@ LaTeX.</p>
 with epoxy knitr engines and during the knitr rendering process. When
 used outside of this context, you can choose the desired syntax by setting
 the <code>syntax</code> to one of <code>"markdown"</code>, <code>"html"</code> or <code>"latex"</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other epoxy-style glue transformers: 
+<code><a href="epoxy_style_format.html">epoxy_style_format</a>()</code></p></div>
     </div>
 
     <div class="section level2">
