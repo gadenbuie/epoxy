@@ -25,6 +25,23 @@
 #'   .transformer = epoxy_style_format()
 #' )
 #'
+#' # Add your own formatting functions
+#' glue::glue(
+#'   '<https://example.com?q={fmt("search terms go here", "url")}>',
+#'   .transformer = epoxy_style_format(
+#'     url = utils::URLencode
+#'   )
+#' )
+#'
+#' # To set labeller options, provide the label calls
+#' glue::glue(
+#'   '{fmt(0.2123, "%")} of revenue generates {fmt(42000.134, "$")} in profits.',
+#'   .transformer = epoxy_style_format(
+#'     percent = scales::label_percent(accuracy = 0.1),
+#'     dollar = scales::label_dollar(accuracy = 10)
+#'   )
+#' )
+#'
 #' @param bytes The function to apply to when `label` is `"bytes"`. Default is
 #'   [scales::label_bytes()].
 #' @param date The function to apply to when `label` is `"date" or "d"`. Default

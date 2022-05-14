@@ -100,7 +100,9 @@ expressions in \code{fmt(expr, label)}, where \code{label} is the name of a labe
 function from \pkg{scales} (with or without the leading \code{label_}), e.g.
 \code{"dollar"} or \code{"label_dollar"} for \code{\link[scales:label_dollar]{scales::label_dollar()}}. Short \code{label}
 forms exist for some labellers, e.g. \code{"$"} for \code{"dollar"}. See the full
-listing in the table below.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
+listing in the table below.
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r\}
 # Airbnb stats that may not be completely accurate
 airbnb <- list(
  countries = 220,
@@ -112,7 +114,9 @@ airbnb <- list(
 ```
 }\if{html}{\out{</div>}}
 
-With standard inline R code in R Markdown, we can write the following:\if{html}{\out{<div class="sourceCode default">}}\preformatted{* Airbnb includes listings in `r airbnb$cities` cities
+With standard inline R code in R Markdown, we can write the following:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{* Airbnb includes listings in `r airbnb$cities` cities
   in `r airbnb$countries` countries
   from around `r airbnb$hosts` hosts.
   The average guest stays `r airbnb$avg_stay` nights
@@ -127,7 +131,9 @@ at a rate of 184.952 per night.
 }
 
 Using \code{epoxy} and the light-weight \code{fmt()} function from \code{epoxy_style_format()},
-we can improve the readability and formatting of the interwoven numbers.\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r my_style, echo = FALSE\}
+we can improve the readability and formatting of the interwoven numbers.
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{```\{r my_style, echo = FALSE\}
 # Define number/dollar styles to apply consistently
 my_style <- epoxy_style_format(
  dollar = scales::label_dollar(accuracy = 1),
@@ -182,6 +188,23 @@ at a rate of $185 per night.
 glue::glue(
   '{fmt(0.2, "\%")} of revenue generates {fmt(42000, "$")} in profits.',
   .transformer = epoxy_style_format()
+)
+
+# Add your own formatting functions
+glue::glue(
+  '<https://example.com?q={fmt("search terms go here", "url")}>',
+  .transformer = epoxy_style_format(
+    url = utils::URLencode
+  )
+)
+
+# To set labeller options, provide the label calls
+glue::glue(
+  '{fmt(0.2123, "\%")} of revenue generates {fmt(42000.134, "$")} in profits.',
+  .transformer = epoxy_style_format(
+    percent = scales::label_percent(accuracy = 0.1),
+    dollar = scales::label_dollar(accuracy = 10)
+  )
 )
 
 }
