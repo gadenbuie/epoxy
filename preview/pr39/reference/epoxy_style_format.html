@@ -393,30 +393,33 @@ the current transformation. In nearly all cases, you can let
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">'{fmt(0.2, "%")} of revenue generates {fmt(42000, "$")} in profits.'</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">revenue</span> <span class="op">&lt;-</span> <span class="fl">0.2123</span></span>
+<span class="r-in"><span class="va">sales</span> <span class="op">&lt;-</span> <span class="fl">42000.134</span></span>
+<span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">'{fmt(revenue, "%")} of revenue generates {fmt(sales, "$")} in profits.'</span>,</span>
 <span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20% of revenue generates $42,000 in profits.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Add your own formatting functions</span></span>
-<span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">'&lt;https://example.com?q={fmt("search terms go here", "url")}&gt;'</span>,</span>
-<span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span></span>
-<span class="r-in">    url <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;https://example.com?q=search%20terms%20go%20here&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21% of revenue generates $42,000.13 in profits.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># To set labeller options, provide the label calls</span></span>
 <span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">'{fmt(0.2123, "%")} of revenue generates {fmt(42000.134, "$")} in profits.'</span>,</span>
+<span class="r-in">  <span class="st">'{fmt(revenue, "%")} of revenue generates {fmt(sales, "$")} in profits.'</span>,</span>
 <span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span></span>
 <span class="r-in">    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span class="r-in">    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Add your own formatting functions</span></span>
+<span class="r-in"><span class="va">search</span> <span class="op">&lt;-</span> <span class="st">"why are cats scared of cucumbers"</span></span>
+<span class="r-in"><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">'&lt;https://example.com?q={fmt(search, "url")}&gt;'</span>,</span>
+<span class="r-in">  .transformer <span class="op">=</span> <span class="fu">epoxy_style_format</span><span class="op">(</span></span>
+<span class="r-in">    url <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;https://example.com?q=why%20are%20cats%20scared%20of%20cucumbers&gt;</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
