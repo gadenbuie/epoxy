@@ -131,7 +131,7 @@ labellers_list <- function(env = rlang::caller_env(), ...) {
   )
 }
 
-labeller_extras <- function() {
+labellers_extras <- function() {
   c(
     "$"    = "dollar",
     "#"    = "number",
@@ -155,16 +155,15 @@ labeller_extras <- function() {
 labeller_factory <- function(labellers = labellers_list()) {
   force(labellers)
 
-  # labeller_extras <- sub("^label_", "", labeller_extras())
-  labeller_extras <- labeller_extras()
+  labellers_extras <- labellers_extras()
   default_names <- labellers_names()
 
   match_label <- function(label) {
     call <- rlang::caller_call()
     label <- sub("^label_", "", label)
 
-    if (label %in% names(labeller_extras)) {
-      labeller_extras[label]
+    if (label %in% names(labellers_extras)) {
+      labellers_extras[label]
     } else if (rlang::has_name(labellers, label)) {
       label
     } else {
@@ -199,7 +198,7 @@ labellers_summarize <- function() {
   args <- purrr::modify_if(args, rlang::is_call_simple, rlang::call_name)
   args <- purrr::modify_if(args, purrr::negate(rlang::is_string), rlang::expr_text)
 
-  extras <- labeller_extras()
+  extras <- labellers_extras()
   extras_fns <- args[unname(extras)]
   labels <- c(names(extras), names(args))
 
@@ -238,7 +237,7 @@ labellers_params <- function() {
     paste0(expr, "()")
   })
 
-  extras <- labeller_extras()
+  extras <- labellers_extras()
 
   values <- purrr::map_chr(names(args), function(label) {
     label <- c(label, names(extras[extras == label]))
