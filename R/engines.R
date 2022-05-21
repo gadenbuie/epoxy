@@ -204,7 +204,7 @@ epoxy_options_get_transformer <- function(options) {
   if (is.vector(style) || is.list(style)) {
     return(epoxy_style(!!!style))
   }
-  style %||% options[[".transformer"]] %||% glue::identity_transformer
+  style %||% options[[".transformer"]] %||% epoxy_style_format()
 }
 
 deprecate_glue_data_chunk_option <- function(options) {
