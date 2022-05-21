@@ -54,6 +54,10 @@
   labellers. For example, `{fmt(x, "%")}` will format `x` as a percentage using
   `scales::label_percent()` and `{fmt(x, "$")}` will format `x` as a dollar
   figure. You can also provide your own functions (#39).
+  
+* `epoxy_style_format()` is now the default transformer for all epoxy chunks,
+  making the inline `fmt()` function available in `epoxy`, `epoxy_html` and
+  `epoxy_latex` chunks (#44).
 
 # epoxy 0.0.2
 
