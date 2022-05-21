@@ -19,14 +19,14 @@ Imports:
     purrr,
     rlang,
     rmarkdown,
-    shiny,
     stats,
-    stringr,
     tools,
     utils,
     whisker
 Suggests:
     scales (>= 1.1.0),
+    shiny,
+    stringr,
     testthat
 VignetteBuilder: 
     knitr

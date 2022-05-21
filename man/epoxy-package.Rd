@@ -6,7 +6,7 @@
 \alias{epoxy-package}
 \title{epoxy: String Interpolation for 'R Markdown' Documents}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
 Extra strength 'glue' for data-driven templating. String interpolation for 'R Markdown' documents and 'Shiny' apps, built on the 'glue' and 'whisker' packages.
 }

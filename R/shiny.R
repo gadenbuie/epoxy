@@ -18,7 +18,7 @@
 #' and ID prefixed with `#`. The template markup can contain only one element
 #' and one ID, but many classes can be specified.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("shiny")
 #' ui <- shiny::fluidPage(
 #'   shiny::h2("epoxyHTML demo"),
 #'   epoxyHTML(
@@ -112,6 +112,8 @@ epoxyHTML <- function(
   .na = "",
   .trim = FALSE
 ) {
+  rlang::check_installed("stringr")
+
   .container <- match.arg(.container, names(htmltools::tags))
   .container_item <- match.arg(.container_item, names(htmltools::tags))
 
@@ -281,6 +283,8 @@ parse_html_markup <- function(x) {
 #' @seealso [epoxyHTML()]
 #' @export
 renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs = list()) {
+  rlang::check_installed("shiny")
+
   epoxyPrepare <- function(..., .list = NULL) {
     if (!is.null(.list)) {
       if (inherits(.list, "reactivevalues")) {

@@ -77,6 +77,7 @@ and one ID, but many classes can be specified.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ui <- shiny::fluidPage(
   shiny::h2("epoxyHTML demo"),
   epoxyHTML(
@@ -136,7 +137,7 @@ server <- function(input, output, session) {
 if (interactive()) {
   shiny::shinyApp(ui, server)
 }
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 renderEpoxyHTML
