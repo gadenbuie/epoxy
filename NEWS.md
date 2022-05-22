@@ -55,9 +55,15 @@
   `scales::label_percent()` and `{fmt(x, "$")}` will format `x` as a dollar
   figure. You can also provide your own functions (#39).
   
-* `epoxy_style_format()` is now the default transformer for all epoxy chunks,
-  making the inline `fmt()` function available in `epoxy`, `epoxy_html` and
-  `epoxy_latex` chunks (#44).
+* By default, `epoxy_style_format()` (#44) and `epoxy_style_collapse()` (#45) 
+  are now available in all epoxy chunks. This means you won't need to specify
+  the `epoxy_style` chunk option to use the inline `fmt()` function or the
+  `*`, `&`, or `|` collapse syntax.
+  
+* `epoxy_style_collapse()` now uses the [and ackage](https://and.rossellhayes.com/),
+  which provides language-aware conjoining of strings. As a result, the
+  `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
+  and are silently ignored if provided (#45).
 
 # epoxy 0.0.2
 
