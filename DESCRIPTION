@@ -13,6 +13,7 @@ BugReports: https://github.com/gadenbuie/epoxy/issues
 Depends: 
     R (>= 2.10)
 Imports:
+    and (>= 0.0.0.9007),
     glue (>= 1.5.0),
     htmltools,
     knitr (>= 1.37),
@@ -36,3 +37,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+Remotes:  
+    rossellhayes/and

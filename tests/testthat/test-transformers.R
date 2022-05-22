@@ -181,3 +181,76 @@ test_that("epoxy_style_apply()", {
     "33% less than 100% is 67%"
   )
 })
+
+
+describe("epoxy_style_collapse()", {
+  it("does nothing by default", {
+    expect_equal(
+      glue("{1:3}", .transformer = epoxy_style_collapse()),
+      c("1", "2", "3")
+    )
+  })
+
+  it("collapses with custom separators", {
+    expect_equal(
+      glue("{1:3*}", .transformer = epoxy_style_collapse()),
+      "1, 2, 3"
+    )
+
+    expect_equal(
+      glue("{1:3*}", .transformer = epoxy_style_collapse(" - ")),
+      "1 - 2 - 3"
+    )
+
+    expect_equal(
+      glue("{1:3*}", .transformer = epoxy_style_collapse(" - ", "... ")),
+      "1 - 2... 3"
+    )
+  })
+
+  it("collapses with and()", {
+    expect_equal(
+      glue("{1:3&}", .transformer = epoxy_style_collapse()),
+      "1, 2, and 3"
+    )
+
+    expect_equal(
+      glue("{1:3&}", .transformer = epoxy_style_collapse(language = "es")),
+      "1, 2 y 3"
+    )
+  })
+
+  it("collapses with or()", {
+    expect_equal(
+      glue("{1:3|}", .transformer = epoxy_style_collapse()),
+      "1, 2, or 3"
+    )
+
+    expect_equal(
+      glue("{1:3|}", .transformer = epoxy_style_collapse(language = "es")),
+      "1, 2 o 3"
+    )
+  })
+
+  it("chains transformers", {
+    expect_equal(
+      glue("{1:3&}", .transformer = epoxy_style_collapse(transformer = epoxy_style_bold())),
+      "**1**, **2**, and **3**"
+    )
+
+    expect_equal(
+      glue("{1:3*}", .transformer = epoxy_style_collapse(transformer = epoxy_style_bold())),
+      "**1**, **2**, **3**"
+    )
+
+    expect_equal(
+      glue("{1:3&}", .transformer = epoxy_style_bold(transformer = epoxy_style_collapse())),
+      "**1, 2, and 3**"
+    )
+
+    expect_equal(
+      glue("{1:3*}", .transformer = epoxy_style_bold(transformer = epoxy_style_collapse())),
+      "**1, 2, 3**"
+    )
+  })
+})

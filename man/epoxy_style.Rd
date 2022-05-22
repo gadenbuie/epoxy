@@ -29,11 +29,9 @@ epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_collapse(
   sep = ", ",
-  last = "",
-  last_and = " and ",
-  last_or = " or ",
-  sep_and = sep,
-  sep_or = sep,
+  last = sep,
+  language = NULL,
+  ...,
   transformer = glue::identity_transformer
 )
 }
@@ -49,7 +47,9 @@ other hand, \code{epoxy_style("collapse", "bold")}  will collapse the vector
 \emph{and then} embolden the entire string.
 
 In \code{epoxy_style_apply()}, the \code{...} are passed to the underlying call the
-underlying function call.}
+underlying function call.
+
+In \code{epoxy_style_collapse()}, the \code{...} are ignored.}
 
 \item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
 default is chosen based on the engine of the chunk where the style function
@@ -68,12 +68,14 @@ the current transformation. In nearly all cases, you can let
 
 \item{.f}{A function, function name or \code{\link[purrr:map]{purrr::map()}}-style inline function.}
 
-\item{sep, sep_and, sep_or}{The separator to use when joining the vector
-elements when the variable ends in \code{*}, \code{&}, or \code{|} respectively. By
-default, these are all \code{", "}.}
+\item{sep, last}{The separator to use when joining the vector elements when
+the expression ends with a \code{*}. Elements are separated by \code{sep}, except for
+the last two elements, which use \code{last}.}
 
-\item{last, last_and, last_or}{Additional text added after \code{sep} before the
-last element when the variable ends in \code{*}, \code{&}, or \code{|} respectively.}
+\item{language}{In \code{epoxy_style_collapse()}, \code{language} is passed to
+\code{\link[and:and]{and::and()}} or \code{\link[and:and]{and::or()}} to choose the correct and/or phrase and spacing
+for the \code{language}. By default, will follow the system language. See
+\link[and:and_languages]{and::and_languages} for supported languages.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer}

@@ -72,6 +72,8 @@
 #'
 #'   In `epoxy_style_apply()`, the `...` are passed to the underlying call the
 #'   underlying function call.
+#'
+#'   In `epoxy_style_collapse()`, the `...` are ignored.
 #' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
 #'   default is chosen based on the engine of the chunk where the style function
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
@@ -225,19 +227,19 @@ default_for_engine <- function(md, html, latex) {
 }
 
 #' @describeIn epoxy_style Collapse vector variables
-#' @param sep,sep_and,sep_or The separator to use when joining the vector
-#'   elements when the variable ends in `*`, `&`, or `|` respectively. By
-#'   default, these are all `", "`.
-#' @param last,last_and,last_or Additional text added after `sep` before the
-#'   last element when the variable ends in `*`, `&`, or `|` respectively.
+#' @param sep,last The separator to use when joining the vector elements when
+#'   the expression ends with a `*`. Elements are separated by `sep`, except for
+#'   the last two elements, which use `last`.
+#' @param language In `epoxy_style_collapse()`, `language` is passed to
+#'   [and::and()] or [and::or()] to choose the correct and/or phrase and spacing
+#'   for the `language`. By default, will follow the system language. See
+#'   [and::and_languages] for supported languages.
 #' @export
 epoxy_style_collapse <- function(
   sep = ", ",
-  last = "",
-  last_and = " and ",
-  last_or = " or ",
-  sep_and = sep,
-  sep_or = sep,
+  last = sep,
+  language = NULL,
+  ...,
   transformer = glue::identity_transformer
 ) {
   collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
@@ -248,13 +250,27 @@ epoxy_style_collapse <- function(
     }
   }
 
+  and_or <- function(and = "and") {
+    function(text, envir) {
+      conjoin <- if (and == "and") {
+        text <- sub("[&]$", "", text)
+        and::and
+      } else {
+        text <- sub("[|]$", "", text)
+        and::or
+      }
+      text <- transformer(text, envir)
+      conjoin(text, language = language)
+    }
+  }
+
   function(text, envir) {
     collapse_fn <-
       switch(
         str_extract(text, "[*&|]$"),
-        "*" = collapse("[*]$", sep = sep,     last = last),
-        "&" = collapse("[&]$", sep = sep_and, last = last_and),
-        "|" = collapse("[|]$", sep = sep_or,  last = last_or),
+        "*" = collapse("[*]$", sep = sep, last = last),
+        "&" = and_or("and"),
+        "|" = and_or("or"),
         transformer
       )
     collapse_fn(text, envir)
