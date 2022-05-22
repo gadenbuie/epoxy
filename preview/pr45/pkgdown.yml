@@ -1,0 +1,11 @@
+pandoc: 2.14.2
+pkgdown: 2.0.3
+pkgdown_sha: ~
+articles:
+  epoxy: epoxy.html
+  inline-reporting: inline-reporting.html
+last_built: 2022-05-22T11:55Z
+urls:
+  reference: http://pkg.garrickadenbuie.com/epoxy/preview/pr45/reference
+  article: http://pkg.garrickadenbuie.com/epoxy/preview/pr45/articles
+
