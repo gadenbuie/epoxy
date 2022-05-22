@@ -44,6 +44,8 @@ jobs:
           extra-packages: rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v2
+        env:
+          LANGUAGE: en
 
       - name: Update gadenbuie/status dashboard
         uses: gadenbuie/status/actions/status-update-rcmdcheck@main
