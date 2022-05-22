@@ -211,31 +211,32 @@ describe("epoxy_style_collapse()", {
   it("collapses with and()", {
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_style_collapse()),
-      "1, 2, and 3"
+      and::and(1:3)
     )
 
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_style_collapse(language = "es")),
-      "1, 2 y 3"
+      and::and(1:3, language = "es")
     )
   })
 
   it("collapses with or()", {
     expect_equal(
       glue("{1:3|}", .transformer = epoxy_style_collapse()),
-      "1, 2, or 3"
+      and::or(1:3)
     )
 
     expect_equal(
       glue("{1:3|}", .transformer = epoxy_style_collapse(language = "es")),
-      "1, 2 o 3"
+      and::or(1:3, language = "es")
     )
   })
 
   it("chains transformers", {
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_style_collapse(transformer = epoxy_style_bold())),
-      "**1**, **2**, and **3**"
+      and::and(glue("**{1:3}**"))
+      # "**1**, **2**, and **3**"
     )
 
     expect_equal(
@@ -245,7 +246,8 @@ describe("epoxy_style_collapse()", {
 
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_style_bold(transformer = epoxy_style_collapse())),
-      "**1, 2, and 3**"
+      glue("**{and::and(1:3)}**")
+      # "**1, 2, and 3**"
     )
 
     expect_equal(
@@ -257,12 +259,13 @@ describe("epoxy_style_collapse()", {
   it("is part of the default transformer", {
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_options_get_transformer(list())),
-      "1, 2, and 3"
+      and::and(1:3)
     )
 
     expect_equal(
       glue("{fmt(1:3 + 0.25 * 1:3, '$')&}", .transformer = epoxy_options_get_transformer(list())),
-      "$1.25, $2.50, and $3.75"
+      and::and(c("$1.25", "$2.50", "$3.75"))
+      # "$1.25, $2.50, and $3.75"
     )
   })
 })
