@@ -2,6 +2,7 @@
 % Please edit documentation in R/engines.R
 \name{epoxy}
 \alias{epoxy}
+\alias{epoxy_html}
 \title{Epoxy string interpolation}
 \usage{
 epoxy(
@@ -12,6 +13,22 @@ epoxy(
   .envir = parent.frame(),
   .open = "{",
   .close = "}",
+  .na = "",
+  .null = "",
+  .comment = "#",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+)
+
+epoxy_html(
+  ...,
+  .data = NULL,
+  .style = NULL,
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "{{",
+  .close = "}}",
   .na = "",
   .null = "",
   .comment = "#",
@@ -70,3 +87,8 @@ evaluation. For example transformers see \code{vignette("transformers")}.}
 The functions power the knitr chunk engines and are wrappers around
 \code{\link[glue:glue]{glue::glue()}}, with a few extra conveniences provided by \pkg{epoxy}.
 }
+\section{Functions}{
+\itemize{
+\item \code{epoxy_html}: epoxy for HTML
+}}
+

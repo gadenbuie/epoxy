@@ -2,6 +2,7 @@
 
 export(epoxy)
 export(epoxyHTML)
+export(epoxy_html)
 export(epoxy_style)
 export(epoxy_style_apply)
 export(epoxy_style_bold)

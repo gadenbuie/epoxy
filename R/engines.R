@@ -138,14 +138,16 @@ knitr_engine_epoxy <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
+#' @describeIn epoxy epoxy for HTML
+#' @export
 epoxy_html <- function(
   ...,
   .data = NULL,
   .style = NULL,
   .sep = "",
   .envir = parent.frame(),
-  .open = "{",
-  .close = "}",
+  .open = "{{",
+  .close = "}}",
   .na = "",
   .null = "",
   .comment = "#",
@@ -153,61 +155,56 @@ epoxy_html <- function(
   .trim = FALSE,
   .transformer = NULL
 ) {
-
-  glue_env <- .envir
-  if (!is.null(.data)) {
-    glue_env <- new.env(parent = .envir)
-    assign("$", epoxy_data_subset, envir = glue_env)
-  }
-
-  opts_transformer <- list(
-    epoxy_style = .style,
-    .transformer = .transformer
-  )
-
-  glue_data(
-    .x = .data,
+  epoxy(
     ...,
-    .sep     = .sep,
-    .envir   = glue_env,
-    .open    = .open,
-    .close   = .close,
-    .na      = .na,
-    .null    = .null,
+    .data = .data,
+    .style = .style,
+    .sep = .sep,
+    .envir = .envir,
+    .open = .open,
+    .close = .close,
+    .na = .na,
+    .null = .null,
     .comment = .comment,
     .literal = .literal,
-    .trim    = .trim,
-    .transformer = epoxy_options_get_transformer(opts_transformer)
+    .trim = .trim,
+    .transformer = .transformer
   )
 }
 
 knitr_engine_epoxy_html <- function(options) {
   deprecate_glue_engine_prefix(options)
 
-  out <- if (isTRUE(options$eval) && is_htmlish_output()) {
+  out <- NULL
+  if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
-    if (!is.null(options[["data"]])) {
-      assign("$", epoxy_data_subset, envir = glue_env)
-    }
-    code <- glue_data(
-      .x = options[["data"]],
+
+    out <- epoxy(
       code,
-      .envir = glue_env,
-      .open = options[[".open"]] %||% "{{",
-      .close = options[[".close"]] %||% "}}",
-      .na = options[[".na"]] %||% "",
-      .trim = options[[".trim"]] %||% FALSE,
-      .transformer = epoxy_options_get_transformer(options)
+      .data        = options[["data"]],
+      .style       = options[["epoxy_style"]],
+      .sep         = "",
+      .envir       = options[[".envir"]]   %||% knitr::knit_global(),
+      .open        = options[[".open"]]    %||% "{{",
+      .close       = options[[".close"]]   %||% "}}",
+      .na          = options[[".na"]]      %||% "",
+      .null        = options[[".null"]]    %||% "",
+      .trim        = options[[".trim"]]    %||% FALSE,
+      .comment     = options[[".comment"]] %||% "#",
+      .literal     = options[[".literal"]] %||% FALSE,
+      .transformer = options[[".transformer"]]
     )
-    code <- glue_collapse(code, sep = "\n")
+
+    out <- glue_collapse(out, sep = "\n")
+
     if (isTRUE(options$html_raw %||% TRUE)) {
       # use pandoc's raw html block by default, but this isn't always available
       # so it can be disabled with the html_raw chunk option.
-      code <- paste0('\n```{=html}\n', code, "\n```")
+      out <- paste0('\n```{=html}\n', out, "\n```")
     }
-    code
+
+    out
   }
   options$results <- "asis"
   options$echo <- options[[".echo"]] %||% FALSE
