@@ -110,11 +110,9 @@ correct syntax for each.</p>
 
 <span class="fu">epoxy_style_collapse</span><span class="op">(</span>
   sep <span class="op">=</span> <span class="st">", "</span>,
-  last <span class="op">=</span> <span class="st">""</span>,
-  last_and <span class="op">=</span> <span class="st">" and "</span>,
-  last_or <span class="op">=</span> <span class="st">" or "</span>,
-  sep_and <span class="op">=</span> <span class="va">sep</span>,
-  sep_or <span class="op">=</span> <span class="va">sep</span>,
+  last <span class="op">=</span> <span class="va">sep</span>,
+  language <span class="op">=</span> <span class="cn">NULL</span>,
+  <span class="va">...</span>,
   transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -131,7 +129,8 @@ that are emboldened <em>and then</em> collapsed, e.g. <code>**a** and **b**</cod
 other hand, <code>epoxy_style("collapse", "bold")</code>  will collapse the vector
 <em>and then</em> embolden the entire string.</p>
 <p>In <code>epoxy_style_apply()</code>, the <code>...</code> are passed to the underlying call the
-underlying function call.</p></dd>
+underlying function call.</p>
+<p>In <code>epoxy_style_collapse()</code>, the <code>...</code> are ignored.</p></dd>
 <dt>syntax</dt>
 <dd><p>One of <code>"markdown"</code> (or <code>"md"</code>), <code>"html"</code>, or <code>"latex"</code>. The
 default is chosen based on the engine of the chunk where the style function
@@ -149,13 +148,15 @@ the current transformation. In nearly all cases, you can let
 <code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
 <dt>.f</dt>
 <dd><p>A function, function name or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>-style inline function.</p></dd>
-<dt>sep, sep_and, sep_or</dt>
-<dd><p>The separator to use when joining the vector
-elements when the variable ends in <code>*</code>, <code>&amp;</code>, or <code>|</code> respectively. By
-default, these are all <code>", "</code>.</p></dd>
-<dt>last, last_and, last_or</dt>
-<dd><p>Additional text added after <code>sep</code> before the
-last element when the variable ends in <code>*</code>, <code>&amp;</code>, or <code>|</code> respectively.</p></dd>
+<dt>sep, last</dt>
+<dd><p>The separator to use when joining the vector elements when
+the expression ends with a <code>*</code>. Elements are separated by <code>sep</code>, except for
+the last two elements, which use <code>last</code>.</p></dd>
+<dt>language</dt>
+<dd><p>In <code>epoxy_style_collapse()</code>, <code>language</code> is passed to
+<code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::and()</a></code> or <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::or()</a></code> to choose the correct and/or phrase and spacing
+for the <code>language</code>. By default, will follow the system language. See
+<a href="https://and.rossellhayes.com/reference/and_languages.html" class="external-link">and::and_languages</a> for supported languages.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
