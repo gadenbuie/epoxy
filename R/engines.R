@@ -155,20 +155,23 @@ epoxy_html <- function(
   .trim = FALSE,
   .transformer = NULL
 ) {
-  epoxy(
-    ...,
-    .data = .data,
-    .style = .style,
-    .sep = .sep,
-    .envir = .envir,
-    .open = .open,
-    .close = .close,
-    .na = .na,
-    .null = .null,
-    .comment = .comment,
-    .literal = .literal,
-    .trim = .trim,
-    .transformer = .transformer
+  with_options(
+    list(epoxy.engine = "html"),
+    epoxy(
+      ...,
+      .data = .data,
+      .style = .style,
+      .sep = .sep,
+      .envir = .envir,
+      .open = .open,
+      .close = .close,
+      .na = .na,
+      .null = .null,
+      .comment = .comment,
+      .literal = .literal,
+      .trim = .trim,
+      .transformer = .transformer
+    )
   )
 }
 
@@ -228,20 +231,23 @@ epoxy_latex <- function(
   .trim = FALSE,
   .transformer = NULL
 ) {
-  epoxy(
-    ...,
-    .data = .data,
-    .style = .style,
-    .sep = .sep,
-    .envir = .envir,
-    .open = .open,
-    .close = .close,
-    .na = .na,
-    .null = .null,
-    .comment = .comment,
-    .literal = .literal,
-    .trim = .trim,
-    .transformer = .transformer
+  with_options(
+    list(epoxy.engine = "latex"),
+    epoxy(
+      ...,
+      .data = .data,
+      .style = .style,
+      .sep = .sep,
+      .envir = .envir,
+      .open = .open,
+      .close = .close,
+      .na = .na,
+      .null = .null,
+      .comment = .comment,
+      .literal = .literal,
+      .trim = .trim,
+      .transformer = .transformer
+    )
   )
 }
 
