@@ -211,25 +211,62 @@ knitr_engine_epoxy_html <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
+#' @describeIn epoxy epoxy for LaTeX
+#' @export
+epoxy_latex <- function(
+  ...,
+  .data = NULL,
+  .style = NULL,
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "<",
+  .close = ">",
+  .na = "",
+  .null = "",
+  .comment = "#",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+) {
+  epoxy(
+    ...,
+    .data = .data,
+    .style = .style,
+    .sep = .sep,
+    .envir = .envir,
+    .open = .open,
+    .close = .close,
+    .na = .na,
+    .null = .null,
+    .comment = .comment,
+    .literal = .literal,
+    .trim = .trim,
+    .transformer = .transformer
+  )
+}
+
 knitr_engine_epoxy_latex <- function(options) {
   deprecate_glue_engine_prefix(options)
 
-  out <- if (isTRUE(options$eval)) {
+  out <- NULL
+  if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
-    if (!is.null(options[["data"]])) {
-      assign("$", epoxy_data_subset, envir = glue_env)
-    }
-    glue_data(
-      .x = options[["data"]],
+
+    out <- epoxy(
       code,
-      .envir = glue_env,
-      .open = options[[".open"]] %||% "<",
-      .close = options[[".close"]] %||% ">",
-      .na = options[[".na"]] %||% "",
-      .trim = options[[".trim"]] %||% FALSE,
-      .transformer = epoxy_options_get_transformer(options)
+      .data        = options[["data"]],
+      .style       = options[["epoxy_style"]],
+      .sep         = "",
+      .envir       = options[[".envir"]]   %||% knitr::knit_global(),
+      .open        = options[[".open"]]    %||% "<",
+      .close       = options[[".close"]]   %||% ">",
+      .na          = options[[".na"]]      %||% "",
+      .null        = options[[".null"]]    %||% "",
+      .trim        = options[[".trim"]]    %||% FALSE,
+      .comment     = options[[".comment"]] %||% "#",
+      .literal     = options[[".literal"]] %||% FALSE,
+      .transformer = options[[".transformer"]]
     )
   }
   options$results <- "asis"

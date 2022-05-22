@@ -3,6 +3,7 @@
 \name{epoxy}
 \alias{epoxy}
 \alias{epoxy_html}
+\alias{epoxy_latex}
 \title{Epoxy string interpolation}
 \usage{
 epoxy(
@@ -29,6 +30,22 @@ epoxy_html(
   .envir = parent.frame(),
   .open = "{{",
   .close = "}}",
+  .na = "",
+  .null = "",
+  .comment = "#",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+)
+
+epoxy_latex(
+  ...,
+  .data = NULL,
+  .style = NULL,
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "<",
+  .close = ">",
   .na = "",
   .null = "",
   .comment = "#",
@@ -90,5 +107,7 @@ The functions power the knitr chunk engines and are wrappers around
 \section{Functions}{
 \itemize{
 \item \code{epoxy_html}: epoxy for HTML
+
+\item \code{epoxy_latex}: epoxy for LaTeX
 }}
 
