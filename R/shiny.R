@@ -110,6 +110,8 @@ epoxyHTML <- function(
   .open = "{{",
   .close = "}}",
   .na = "",
+  .null = "",
+  .literal = FALSE,
   .trim = FALSE
 ) {
   rlang::check_installed("stringr")
@@ -119,18 +121,17 @@ epoxyHTML <- function(
 
   dots <- list(...)
   dots$.placeholder = .placeholder
-  dots$.transformer = transformer_html_markup(.class_item, .container_item)
+  dots$.transformer = epoxyHTML_transformer(.class_item, .container_item)
   dots$.na = .na
   dots$.sep = .sep
+  dots$.null = .null
   dots$.trim = .trim
   dots$.open = .open %||% "{{"
   dots$.close = .close %||% "}}"
+  # disable # as comment so we can use it for id syntax (requires glue >= 1.5)
+  dots$.comment <- character()
+  dots$.literal = .literal
   dots$.envir = new.env(parent = emptyenv())
-
-  if (utils::packageVersion("glue") >= "1.5.0") {
-    # {glue} 1.5.0 added .comment arg that we use to disable # as comment
-    dots$.comment <- character()
-  }
 
   tags <- purrr::keep(dots, is_tag)
   deps <- if (length(tags)) {
@@ -165,7 +166,10 @@ transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
 
-transformer_html_markup <- function(class = NULL, element = "span") {
+epoxyHTML_transformer <- function(
+  class = NULL,
+  element = "span"
+) {
   class <- collapse_space(c("epoxy-item__placeholder", class))
 
   function(text, envir) {
