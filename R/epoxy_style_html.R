@@ -1,0 +1,99 @@
+
+epoxy_style_html <- function(
+  class = NULL,
+  element = "span",
+  .transformer = glue::identity_transformer
+) {
+  class <- collapse_space(c("epoxy-item__placeholder", class))
+
+  function(text, envir) {
+    markup <- parse_html_markup(text)
+    placeholder <- rlang::env_get(
+      markup$item,
+      env = envir,
+      inherit = TRUE,
+      default = get(".placeholder", envir = envir, inherits = FALSE)
+    )
+    tag_name <- markup$element
+    if (is.null(tag_name)) tag_name <- element
+    if (!is.null(markup$class)) {
+      class <- collapse_space(class, markup$class)
+    }
+    htmltools::tag(
+      tag_name,
+      list(
+        class = class,
+        id = markup$id,
+        `data-epoxy-item` = markup$item,
+        htmltools::HTML(placeholder)
+      )
+    )
+  }
+}
+
+parse_html_markup <- function(x) {
+  x_og <- x
+  x <- trimws(x)
+  n_spaces <- str_count(x, " ")
+  if (n_spaces == 0) {
+    return(list(item = x))
+  }
+
+  # pug-like syntax starts with # (id), . (class), or element name
+  has_el_syntax <-
+    substr(x, 1, 1) %in% c("#", "%", ".") ||
+    grepl(html_element_rgx(), x)
+
+  if (!has_el_syntax) {
+    return(list(item = x))
+  }
+
+  x <- strsplit(x, " ")[[1]]
+  item_id <- paste(x[-1], collapse = " ")
+
+  rgx_markup <- "(([#%. ]|^)[[:alnum:]_-]+)"
+  m <- str_extract_all(x[1], rgx_markup)[[1]]
+
+  if (!length(m)) {
+    # should have been caught but just in case
+    return(list(item = item_id))
+  }
+
+  out <- list(item = item_id)
+  for (m_part in m) {
+    if (grepl("^[.]", m_part)) {
+      out$class <- c(out$class, sub("^[.]", "", m_part))
+    } else if (grepl("^[#%]", m_part)) {
+      this_id <- sub("^[#%]", "", m_part)
+      if (!is.null(out$id)) {
+        rlang::abort(c(
+          "Multiple IDs were specified, please specify only one ID.",
+          i = out$id,
+          x = this_id
+        ))
+      }
+      out$id <- this_id
+    } else {
+      if (!is.null(out$element)) {
+        rlang::abort("Multiple elements were specified, please specify only one element.")
+      }
+      if (!m_part %in% names(htmltools::tags)) {
+        rlang::abort(glue::glue("Uknown tag used in markup: `{m_part}`"))
+      }
+      out$element <- m_part
+    }
+  }
+
+  if (!is.null(out$class)) {
+    out$class <- paste(out$class, collapse = " ")
+  }
+
+  out <- out[intersect(c("item", "element", "class", "id"), names(out))]
+
+  out
+}
+
+html_element_rgx <- function() {
+  rgx <- paste(names(htmltools::tags), collapse = "|")
+  sprintf("^(%s)[#%%.[:alnum:]]* ", rgx)
+}
