@@ -200,27 +200,45 @@ epoxyHTML_transformer <- function(
 parse_html_markup <- function(x) {
   x_og <- x
   x <- trimws(x)
-  if (sum(grepl(" ", x)) == 0) {
+  n_spaces <- str_count(x, " ")
+  if (n_spaces == 0) {
     return(list(item = x))
   }
-  x <- strsplit(x, " ")[[1]]
-  if (length(x) != 2) {
-    # TODO: better error message
-    rlang::abort(glue::glue('Bad markup: "{x_og}"'))
+
+  # pug-like syntax starts with # (id), . (class), or element name
+  has_el_syntax <-
+    substr(x, 1, 1) %in% c("#", "%", ".") ||
+    grepl(html_element_rgx(), x)
+
+  if (!has_el_syntax) {
+    return(list(item = x))
   }
-  item_id <- x[2]
+
+  x <- strsplit(x, " ")[[1]]
+  item_id <- paste(x[-1], collapse = " ")
+
   rgx_markup <- "(([#%. ]|^)[[:alnum:]_-]+)"
-  m <- stringr::str_extract_all(x[1], rgx_markup)[[1]]
-  if (!length(m)) return(list(item = item_id))
+  m <- str_extract_all(x[1], rgx_markup)[[1]]
+
+  if (!length(m)) {
+    # should have been caught but just in case
+    return(list(item = item_id))
+  }
+
   out <- list(item = item_id)
   for (m_part in m) {
     if (grepl("^[.]", m_part)) {
       out$class <- c(out$class, sub("^[.]", "", m_part))
     } else if (grepl("^[#%]", m_part)) {
+      this_id <- sub("^[#%]", "", m_part)
       if (!is.null(out$id)) {
-        rlang::abort("Multiple IDs were specified, please specify only one ID.")
+        rlang::abort(c(
+          "Multiple IDs were specified, please specify only one ID.",
+          i = out$id,
+          x = this_id
+        ))
       }
-      out$id <- sub("^[#%]", "", m_part)
+      out$id <- this_id
     } else {
       if (!is.null(out$element)) {
         rlang::abort("Multiple elements were specified, please specify only one element.")
@@ -231,11 +249,21 @@ parse_html_markup <- function(x) {
       out$element <- m_part
     }
   }
+
   if (!is.null(out$class)) {
     out$class <- paste(out$class, collapse = " ")
   }
+
+  out <- out[intersect(c("item", "element", "class", "id"), names(out))]
+
   out
 }
+
+html_element_rgx <- function() {
+  rgx <- paste(names(htmltools::tags), collapse = "|")
+  sprintf("^(%s)[#%%.[:alnum:]]* ", rgx)
+}
+
 
 #' Render Epoxy Output
 #'
