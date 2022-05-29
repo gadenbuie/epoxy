@@ -13,6 +13,45 @@ describe("parse_html_markup()", {
     )
   })
 
+  it("returns a list", {
+    expect_true(is.list(parse_html_markup("h1 item")))
+  })
+
+  it ("returns the item if only item", {
+    expect_equal(parse_html_markup("item")$item, "item")
+    expect_equal(parse_html_markup(" item")$item, "item")
+    expect_equal(parse_html_markup("      item")$item, "item")
+    expect_equal(parse_html_markup("item      ")$item, "item")
+    expect_equal(parse_html_markup("... item")$item, "item")
+  })
+
+  it ("parses html elements", {
+    expect_equal(parse_html_markup("h1 item")$element, "h1")
+    expect_equal(parse_html_markup("span item")$element, "span")
+  })
+
+  it ("parses class into a single string", {
+    m <- parse_html_markup(".a.b.c item")
+    expect_equal(length(m$class), 1L)
+    expect_equal(m$class, "a b c")
+
+    m <- parse_html_markup("h2.a.b.c item")
+    expect_equal(length(m$class), 1L)
+    expect_equal(m$class, "a b c")
+  })
+
+  it ("parses IDs using # or %",{
+    m <- parse_html_markup("#id item")
+    expect_equal(length(m$id), 1L)
+    expect_equal(m$id, "id")
+
+    m <- parse_html_markup("%id item")
+    expect_equal(length(m$id), 1L)
+    expect_equal(m$id, "id")
+
+    expect_error(parse_html_markup("%one%two item"))
+  })
+
   it("syntax examples", {
     expect_equal(
       parse_html_markup("li item"),
