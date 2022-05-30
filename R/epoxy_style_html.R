@@ -57,7 +57,7 @@ parse_html_markup <- function(x) {
   # pug-like syntax starts with # (id), . (class), or element name
   has_el_syntax <-
     substr(x, 1, 1) %in% c("#", "%", ".") ||
-    grepl(html_element_rgx(), x)
+      grepl(html_element_rgx(), x)
 
   if (!has_el_syntax) {
     return(list(item = x))
