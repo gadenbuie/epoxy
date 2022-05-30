@@ -1,6 +1,33 @@
 
+#' Concise syntax for expressions inside HTML elements
+#'
+#' `epoxy_style_html()` provides a [pug](https://pughtml.com/what-is-pug-html)-
+#' like syntax for expressions in HTML that are wrapped in HTML elements.
+#'
+# TODO: Description of syntax here.
+#'
+#' @examples
+#' # epoxy_style_html() is included by default in `epoxy_html()`
+#'
+#' epoxy_html("<ul>{{ li letter[1:3] }}</ul>")
+#' epoxy_html("<ul>{{ li.alpha letter[1:3] }}</ul>")
+#'
+#' epoxy_html(
+#'   "{{ h3#title title }}",
+#'   title = "Epoxy Style for HTML"
+#' )
+#'
+#' @param class `[character()]`\cr Additional classes to be added to the inline
+#'   HTML element.
+#' @param element `[character()`\cr The default HTML element tag name to be used
+#'   when an element isn't specified in the expression.
+#' @inheritParams epoxy_style
+#'
+#' @family epoxy-style glue transformers
+#' @export
 epoxy_style_html <- function(
   class = NULL,
+  element = "span",
   transformer = glue::identity_transformer
 ) {
   function(text, envir) {

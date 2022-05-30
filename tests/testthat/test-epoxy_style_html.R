@@ -46,6 +46,25 @@ describe("epoxy_style_html()", {
       html_chr('<span class="test-class" id="test-id">a</span><span class="test-class" id="test-id">b</span><span class="test-class" id="test-id">c</span>')
     )
   })
+
+  it("uses a configurable default element", {
+    expect_equal(
+      epoxy_style_html()(".class x[1]", env),
+      html_chr('<span class="class">a</span>')
+    )
+
+    expect_equal(
+      epoxy_style_html(element = "div")(".class x[1]", env),
+      html_chr('<div class="class">a</div>')
+    )
+  })
+
+  it("adds a configurable default class", {
+    expect_equal(
+      epoxy_style_html(class = "special")("mark.other x[1]", env),
+      html_chr('<mark class="special other">a</mark>')
+    )
+  })
 })
 
 describe("parse_html_markup()", {
