@@ -1,34 +1,49 @@
 
 epoxy_style_html <- function(
   class = NULL,
-  element = "span",
-  .transformer = glue::identity_transformer
+  transformer = glue::identity_transformer
 ) {
-  class <- collapse_space(c("epoxy-item__placeholder", class))
-
   function(text, envir) {
     markup <- parse_html_markup(text)
-    placeholder <- rlang::env_get(
-      markup$item,
-      env = envir,
-      inherit = TRUE,
-      default = get(".placeholder", envir = envir, inherits = FALSE)
-    )
+
+    text <- transformer(markup$item, envir)
+
+    if (identical(names(markup), "item")) {
+      # regular glue text, no added html markup
+      return(text)
+    }
+
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element
     if (!is.null(markup$class)) {
-      class <- collapse_space(class, markup$class)
+      class <- collapse_space(c(class, markup$class))
     }
-    htmltools::tag(
-      tag_name,
-      list(
-        class = class,
-        id = markup$id,
-        `data-epoxy-item` = markup$item,
-        htmltools::HTML(placeholder)
+
+    html <- lapply(text, function(x) {
+      htmltools::tag(
+        tag_name,
+        list(class = class, id = markup$id, x),
+        .noWS = c("inside", "outside")
       )
-    )
+    })
+
+    out <-
+      if (length(html) == 1) {
+        html[[1]]
+      } else {
+        htmltools::tagList(html)
+      }
+
+    html_chr(out)
   }
+}
+
+html_chr <- function(x) {
+  if (!is.character(x)) {
+    x <- format(x)
+  }
+  class(x) <- c("html", class(x))
+  x
 }
 
 parse_html_markup <- function(x) {
