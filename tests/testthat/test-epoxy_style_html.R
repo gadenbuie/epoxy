@@ -125,4 +125,26 @@ describe("parse_html_markup()", {
       parse_html_markup("#one#two item")
     )
   })
+
+  it("allows dashes, underscores and numbers in classes and ids", {
+    expect_equal(
+      parse_html_markup(".this-class x"),
+      list(item = "x", class = "this-class")
+    )
+
+    expect_equal(
+      parse_html_markup("span.this-class x"),
+      list(item = "x", element = "span", class = "this-class")
+    )
+
+    expect_equal(
+      parse_html_markup("#this-id x"),
+      list(item = "x", id = "this-id")
+    )
+
+    expect_equal(
+      parse_html_markup("span#this-id x"),
+      list(item = "x", element = "span", id = "this-id")
+    )
+  })
 })

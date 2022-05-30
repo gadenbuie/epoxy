@@ -95,5 +95,5 @@ parse_html_markup <- function(x) {
 
 html_element_rgx <- function() {
   rgx <- paste(names(htmltools::tags), collapse = "|")
-  sprintf("^(%s)[#%%.[:alnum:]]* ", rgx)
+  sprintf("^(%s)[#%%.[:alnum:]_-]* ", rgx)
 }
