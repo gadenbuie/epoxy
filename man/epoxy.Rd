@@ -25,7 +25,7 @@ epoxy(
 epoxy_html(
   ...,
   .data = NULL,
-  .style = NULL,
+  .style = c("collapse", "format", "html"),
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",

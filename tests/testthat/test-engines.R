@@ -111,3 +111,30 @@ Well, ${{taxed}}, after taxes.
 
   expect_error(render_rmd(rmd))
 })
+
+
+describe("epoxy_html()", {
+  it("returns an html glue character", {
+    expect_s3_class(
+      epoxy_html("word"),
+      c("html", "glue", "character")
+    )
+
+    expect_s3_class(
+      epoxy_html("{{'word'}}"),
+      c("html", "glue", "character")
+    )
+  })
+
+  it("uses html, collapse stylers by default", {
+    expect_equal(
+      epoxy_html("{{ span letters[1:3] }}"),
+      html_chr(glue("<span>a</span><span>b</span><span>c</span>"))
+    )
+
+    expect_equal(
+      epoxy_html("{{ span letters[1:3] *}}"),
+      html_chr(glue("<span>a, b, c</span>"))
+    )
+  })
+})

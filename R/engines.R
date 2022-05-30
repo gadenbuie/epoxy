@@ -143,7 +143,7 @@ knitr_engine_epoxy <- function(options) {
 epoxy_html <- function(
   ...,
   .data = NULL,
-  .style = NULL,
+  .style = c("collapse", "format", "html"),
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
@@ -155,24 +155,26 @@ epoxy_html <- function(
   .trim = FALSE,
   .transformer = NULL
 ) {
-  with_options(
-    list(epoxy.engine = "html"),
-    epoxy(
-      ...,
-      .data = .data,
-      .style = .style,
-      .sep = .sep,
-      .envir = .envir,
-      .open = .open,
-      .close = .close,
-      .na = .na,
-      .null = .null,
-      .comment = .comment,
-      .literal = .literal,
-      .trim = .trim,
-      .transformer = .transformer
+  res <-
+    with_options(
+      list(epoxy.engine = "html"),
+      epoxy(
+        ...,
+        .data = .data,
+        .style = .style,
+        .sep = .sep,
+        .envir = .envir,
+        .open = .open,
+        .close = .close,
+        .na = .na,
+        .null = .null,
+        .comment = .comment,
+        .literal = .literal,
+        .trim = .trim,
+        .transformer = .transformer
+      )
     )
-  )
+  html_chr(res)
 }
 
 knitr_engine_epoxy_html <- function(options) {
