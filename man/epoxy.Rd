@@ -130,17 +130,28 @@ epoxy(
 )
 
 epoxy(
-  "I'd be happy to watch {title |}.",
+  "I'd be happy to watch { title| }.",
   .data = movies,
   .style = c("italic", "collapse")
 )
 
 epoxy(
-  "They were directed by {director &}.",
+  "They were directed by { director& }.",
   .data = movies,
   .style = c("collapse", "bold")
 )
 
 epoxy("The budget for *{title}* was {fmt(budget, '$')}.", .data = movie)
 
+epoxy_html(
+  "I'd be happy to watch {{ title| }}.",
+  .data = movies,
+  .style = c("italic", "collapse")
+)
+
+epoxy_latex(
+  "I'd be happy to watch < title| >.",
+  .data = movies,
+  .style = c("italic", "collapse")
+)
 }
