@@ -62,6 +62,8 @@ use_epoxy_glue_engine <- function() {
 #' The functions power the knitr chunk engines and are wrappers around
 #' [glue::glue()], with a few extra conveniences provided by \pkg{epoxy}.
 #'
+#' @example man/examples/epoxy.R
+#'
 #' @param .data A data set
 #' @param .style For [epoxy_style()]
 #### Inlined from https://github.com/tidyverse/glue/blob/main/R/glue.R#L15-L18
