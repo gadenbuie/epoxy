@@ -27,12 +27,42 @@ the current transformation. In nearly all cases, you can let
 \description{
 \code{epoxy_style_html()} provides a \href{https://pughtml.com/what-is-pug-html}{pug}-
 like syntax for expressions in HTML that are wrapped in HTML elements.
+\subsection{Syntax}{
+
+You can specify the HTML element and its \code{id} and \code{class} into which the
+text of the expression will be placed. The template is to specify the element
+using the syntax below, followed by the R expression, separated by a space:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{\{\{ [<element>][#<id> | .<class>...] expr \}\}
+}\if{html}{\out{</div>}}
+
+For example, to place the expression in a \verb{<li>} element with \code{id = "food"}
+and \code{class = "fruit"}, you could write
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{\{\{ li#food.fruit fruit_name \}\}
+}\if{html}{\out{</div>}}
+
+Each item in the HTML template is optional:
+\enumerate{
+\item If a specific HTML element is desired, the element name must be first. If
+no element is specified, the default as set by the \code{element} argument of
+\code{\link[=epoxy_style_html]{epoxy_style_html()}} will be used.
+\item IDs are specified using \verb{#<id>} and only one ID may be present
+\item Classes are written using \verb{.<class>} and as many classes as desired are
+allowed.
+}
+
+If the expression is a vector, the same element container will be used for
+each item in the vector.
+}
 }
 \examples{
-# epoxy_style_html() is included by default in `epoxy_html()`
-
 epoxy_html("<ul>{{ li letters[1:3] }}</ul>")
 epoxy_html("<ul>{{ li.alpha letters[1:3] }}</ul>")
+epoxy_html("<ul>{{ li#my-letter letters[7] }}</ul>")
+
+# The default element is used if no element is directly requested
+epoxy_html("My name starts with {{ .name-letter letters[7] }}")
 
 epoxy_html(
   "{{ h3#title title }}",
@@ -41,6 +71,8 @@ epoxy_html(
 
 }
 \seealso{
+Used by default in \code{\link[=epoxy_html]{epoxy_html()}}
+
 Other epoxy-style glue transformers: 
 \code{\link{epoxy_style_format}()},
 \code{\link{epoxy_style}()}

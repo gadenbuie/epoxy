@@ -1,16 +1,48 @@
 
 #' Concise syntax for expressions inside HTML elements
 #'
+#' @description
 #' `epoxy_style_html()` provides a [pug](https://pughtml.com/what-is-pug-html)-
 #' like syntax for expressions in HTML that are wrapped in HTML elements.
 #'
-# TODO: Description of syntax here.
+#' ## Syntax
+#'
+#' You can specify the HTML element and its `id` and `class` into which the
+#' text of the expression will be placed. The template is to specify the element
+#' using the syntax below, followed by the R expression, separated by a space:
+#'
+#' ```
+#' {{ [<element>][#<id> | .<class>...] expr }}
+#' ```
+#'
+#' For example, to place the expression in a `<li>` element with `id = "food"`
+#' and `class = "fruit"`, you could write
+#'
+#' ```
+#' {{ li#food.fruit fruit_name }}
+#' ```
+#'
+#' Each item in the HTML template is optional:
+#'
+#' 1. If a specific HTML element is desired, the element name must be first. If
+#'    no element is specified, the default as set by the `element` argument of
+#'    [epoxy_style_html()] will be used.
+#'
+#' 2. IDs are specified using `#<id>` and only one ID may be present
+#'
+#' 3. Classes are written using `.<class>` and as many classes as desired are
+#'    allowed.
+#'
+#' If the expression is a vector, the same element container will be used for
+#' each item in the vector.
 #'
 #' @examples
-#' # epoxy_style_html() is included by default in `epoxy_html()`
-#'
 #' epoxy_html("<ul>{{ li letters[1:3] }}</ul>")
 #' epoxy_html("<ul>{{ li.alpha letters[1:3] }}</ul>")
+#' epoxy_html("<ul>{{ li#my-letter letters[7] }}</ul>")
+#'
+#' # The default element is used if no element is directly requested
+#' epoxy_html("My name starts with {{ .name-letter letters[7] }}")
 #'
 #' epoxy_html(
 #'   "{{ h3#title title }}",
@@ -23,6 +55,7 @@
 #'   when an element isn't specified in the expression.
 #' @inheritParams epoxy_style
 #'
+#' @seealso Used by default in [epoxy_html()]
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style_html <- function(
