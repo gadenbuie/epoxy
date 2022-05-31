@@ -9,8 +9,8 @@
 #' @examples
 #' # epoxy_style_html() is included by default in `epoxy_html()`
 #'
-#' epoxy_html("<ul>{{ li letter[1:3] }}</ul>")
-#' epoxy_html("<ul>{{ li.alpha letter[1:3] }}</ul>")
+#' epoxy_html("<ul>{{ li letters[1:3] }}</ul>")
+#' epoxy_html("<ul>{{ li.alpha letters[1:3] }}</ul>")
 #'
 #' epoxy_html(
 #'   "{{ h3#title title }}",
