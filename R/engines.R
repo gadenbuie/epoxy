@@ -73,7 +73,7 @@ use_epoxy_glue_engine <- function() {
 ####
 #' @inheritParams glue::glue
 #'
-#' @describeIn epoxy epoxy: super `glue()`
+#' @describeIn epoxy super `glue()`
 #' @export
 epoxy <- function(
   ...,
@@ -147,7 +147,7 @@ knitr_engine_epoxy <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @describeIn epoxy epoxy super `glue()` for HTML
+#' @describeIn epoxy super `glue()` for HTML
 #' @export
 epoxy_html <- function(
   ...,
@@ -225,7 +225,7 @@ knitr_engine_epoxy_html <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @describeIn epoxy epoxy super `glue()` for LaTeX
+#' @describeIn epoxy super `glue()` for LaTeX
 #' @export
 epoxy_latex <- function(
   ...,
