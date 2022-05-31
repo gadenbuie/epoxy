@@ -232,6 +232,74 @@ describe("epoxy_style_collapse()", {
     )
   })
 
+  describe("collapse whitespace edge cases", {
+    it("trims whitespace for `and`", {
+      expect_equal(
+        glue("{1:3& }", .transformer = epoxy_style_collapse()),
+        and::and(1:3)
+      )
+
+      expect_equal(
+        glue("{1:3 & }", .transformer = epoxy_style_collapse()),
+        and::and(1:3)
+      )
+
+      expect_equal(
+        glue("{ 1:3 & }", .transformer = epoxy_style_collapse()),
+        and::and(1:3)
+      )
+
+      expect_equal(
+        glue("{ 1:3& }", .transformer = epoxy_style_collapse()),
+        and::and(1:3)
+      )
+    })
+
+    it("trims whitespace for `or`", {
+      expect_equal(
+        glue("{1:3| }", .transformer = epoxy_style_collapse()),
+        and::or(1:3)
+      )
+
+      expect_equal(
+        glue("{1:3 | }", .transformer = epoxy_style_collapse()),
+        and::or(1:3)
+      )
+
+      expect_equal(
+        glue("{ 1:3 | }", .transformer = epoxy_style_collapse()),
+        and::or(1:3)
+      )
+
+      expect_equal(
+        glue("{ 1:3| }", .transformer = epoxy_style_collapse()),
+        and::or(1:3)
+      )
+    })
+
+    it("trims whitespace for `commas`", {
+      expect_equal(
+        glue("{1:3* }", .transformer = epoxy_style_collapse()),
+        "1, 2, 3"
+      )
+
+      expect_equal(
+        glue("{1:3 * }", .transformer = epoxy_style_collapse()),
+        "1, 2, 3"
+      )
+
+      expect_equal(
+        glue("{ 1:3 * }", .transformer = epoxy_style_collapse()),
+        "1, 2, 3"
+      )
+
+      expect_equal(
+        glue("{ 1:3* }", .transformer = epoxy_style_collapse()),
+        "1, 2, 3"
+      )
+    })
+  })
+
   it("chains transformers", {
     expect_equal(
       glue("{1:3&}", .transformer = epoxy_style_collapse(transformer = epoxy_style_bold())),
