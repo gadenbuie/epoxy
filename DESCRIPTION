@@ -22,7 +22,6 @@ Imports:
     rmarkdown,
     stats,
     tools,
-    utils,
     whisker
 Suggests:
     scales (>= 1.1.0),
