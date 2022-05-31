@@ -106,8 +106,10 @@ The functions power the knitr chunk engines and are wrappers around
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_html}: epoxy for HTML
+\item \code{epoxy}: epoxy: super \code{glue()}
 
-\item \code{epoxy_latex}: epoxy for LaTeX
+\item \code{epoxy_html}: epoxy super \code{glue()} for HTML
+
+\item \code{epoxy_latex}: epoxy super \code{glue()} for LaTeX
 }}
 

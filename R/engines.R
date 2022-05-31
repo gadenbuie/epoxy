@@ -72,6 +72,8 @@ use_epoxy_glue_engine <- function() {
 #'   full delimiter escapes it.
 ####
 #' @inheritParams glue::glue
+#'
+#' @describeIn epoxy epoxy: super `glue()`
 #' @export
 epoxy <- function(
   ...,
@@ -145,7 +147,7 @@ knitr_engine_epoxy <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @describeIn epoxy epoxy for HTML
+#' @describeIn epoxy epoxy super `glue()` for HTML
 #' @export
 epoxy_html <- function(
   ...,
@@ -223,7 +225,7 @@ knitr_engine_epoxy_html <- function(options) {
   knitr::engine_output(options, options$code, out)
 }
 
-#' @describeIn epoxy epoxy for LaTeX
+#' @describeIn epoxy epoxy super `glue()` for LaTeX
 #' @export
 epoxy_latex <- function(
   ...,
