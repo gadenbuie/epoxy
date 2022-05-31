@@ -32,7 +32,7 @@ epoxy_html(
   .close = "}}",
   .na = "",
   .null = "",
-  .comment = "#",
+  .comment = "",
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL

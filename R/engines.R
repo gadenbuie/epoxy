@@ -157,7 +157,7 @@ epoxy_html <- function(
   .close = "}}",
   .na = "",
   .null = "",
-  .comment = "#",
+  .comment = "",
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL
