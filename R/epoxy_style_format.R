@@ -211,6 +211,7 @@ labeller_factory <- function(labellers = labellers_list()) {
   }
 }
 
+# nocov start
 labellers_summarize <- function() {
   tools::toTitleCase("for rcmdcheck")
 
@@ -232,7 +233,9 @@ labellers_summarize <- function() {
     label = labels
   )
 
-  labellers <- stats::aggregate(
+  aggregate <- get("aggregate", envir = asNamespace("stats"), inherits = FALSE)
+
+  labellers <- aggregate(
     labellers[-1],
     list(applies = labellers$applies),
     function(label) {
@@ -272,3 +275,4 @@ labellers_params <- function() {
     values = values
   )
 }
+# nocov end
