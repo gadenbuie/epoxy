@@ -94,6 +94,8 @@ from the server by giving <code><a href="renderEpoxyHTML.html">renderEpoxyHTML()
   .open <span class="op">=</span> <span class="st">"{{"</span>,
   .close <span class="op">=</span> <span class="st">"}}"</span>,
   .na <span class="op">=</span> <span class="st">""</span>,
+  .null <span class="op">=</span> <span class="st">""</span>,
+  .literal <span class="op">=</span> <span class="cn">FALSE</span>,
   .trim <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -129,6 +131,17 @@ isn't provided.</p></dd>
 <dd><p>[<code>character(1)</code>: ‘NA’]<br> Value to replace <code>NA</code> values
 with. If <code>NULL</code> missing values are propagated, that is an <code>NA</code> result will
 cause <code>NA</code> output. Otherwise the value is replaced by the value of <code>.na</code>.</p></dd>
+<dt>.null</dt>
+<dd><p>[<code>character(1)</code>: ‘character()’]<br> Value to replace
+NULL values with. If <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> whole output is <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>. If
+<code>NULL</code> all NULL values are dropped (as in <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>). Otherwise the
+value is replaced by the value of <code>.null</code>.</p></dd>
+<dt>.literal</dt>
+<dd><p>[<code>boolean(1)</code>: ‘FALSE’]<br> Whether to treat single or
+double quotes, backticks, and comments as regular characters (vs. as
+syntactic elements), when parsing the expression string. Setting <code>.literal = TRUE</code> probably only makes sense in combination with a custom
+<code>.transformer</code>, as is the case with <code>glue_col()</code>. Regard this argument
+(especially, its name) as experimental.</p></dd>
 <dt>.trim</dt>
 <dd><p>[<code>logical(1)</code>: ‘TRUE’]<br> Whether to trim the input
 template with <code><a href="https://glue.tidyverse.org/reference/trim.html" class="external-link">trim()</a></code> or not.</p></dd>

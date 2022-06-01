@@ -70,6 +70,9 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy-package.html</loc>
   </url>
   <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy.html</loc>
+  </url>
+  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxyHTML.html</loc>
   </url>
   <url>
@@ -77,6 +80,9 @@
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_style_format.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_style_html.html</loc>
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/index.html</loc>
