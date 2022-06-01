@@ -2,31 +2,12 @@
   if (is.null(x)) y else x
 }
 
-in_knitr <- function() {
-  !is.null(knitr::current_input())
-}
-
-abort <- function(..., .envir = parent.frame()) {
-  stop(glue(..., .envir = .envir), call. = FALSE)
-}
-
 str_extract <- function(text, pattern) {
   m <- regexpr(pattern, text)
   x <- regmatches(text, m, invert = NA)
   x <- vapply(x, `[`, 2L, FUN.VALUE = character(1))
   x[is.na(x)] <- ""
   x
-}
-
-str_extract2 <- function(text, pattern) {
-  regmatches(
-    x = text,
-    m = regexpr(
-      pattern = pattern,
-      text = text,
-      perl = TRUE
-    )
-  )
 }
 
 str_extract_all <- function(text, pattern) {
@@ -40,7 +21,7 @@ str_count <- function(text, pattern) {
   vapply(x, length, integer(1))
 }
 
-is_htmlish_output <- function(exclude = NULL) {
+is_htmlish_output <- function(exclude = NULL) { # nocov start
   if (isTRUE(rmarkdown::metadata$always_allow_html)) return(TRUE)
 
   fmt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
@@ -51,7 +32,7 @@ is_htmlish_output <- function(exclude = NULL) {
   )
   fmt_htmlish <- setdiff(fmt_htmlish, exclude)
   fmt %in% fmt_htmlish
-}
+} # nocov end
 
 collapse_space <- function(...) {
   paste(..., collapse = " ")
