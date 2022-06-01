@@ -13,11 +13,15 @@ navbar:
       href: https://github.com/gadenbuie/epoxy
 
 reference:
+- title: epoxy, super-glue wrappers
+  contents:
+  - '`use_epoxy_knitr_engines`'
+  - '`epoxy`'
 - title: epoxy Style Transformers
   contents:
   - '`epoxy_style`'
   - '`epoxy_style_format`'
-  - '`use_epoxy_knitr_engines`'
+  - '`epoxy_style_html`'
 - title: Templating for Shiny
   contents:
   - '`epoxyHTML`'

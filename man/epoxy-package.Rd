@@ -2,7 +2,6 @@
 % Please edit documentation in R/epoxy-package.R
 \docType{package}
 \name{epoxy-package}
-\alias{epoxy}
 \alias{epoxy-package}
 \title{epoxy: String Interpolation for 'R Markdown' Documents}
 \description{

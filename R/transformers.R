@@ -265,6 +265,7 @@ epoxy_style_collapse <- function(
   }
 
   function(text, envir) {
+    text <- trimws(text)
     collapse_fn <-
       switch(
         str_extract(text, "[*&|]$"),

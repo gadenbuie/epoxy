@@ -64,6 +64,12 @@
   which provides language-aware conjoining of strings. As a result, the
   `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
   and are silently ignored if provided (#45).
+  
+* `epoxy`, `epoxy_html()` and `epoxy_latex()` are now exported functions that
+  power the knitr engines and use the same defaults (#46).
+  
+* The HTML element syntax used in `epoxyHTML()` is now available in
+  `epoxy_style_html()` and is used by default in `epoxy_html()` (#46).
 
 # epoxy 0.0.2
 

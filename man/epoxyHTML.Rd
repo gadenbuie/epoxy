@@ -16,6 +16,8 @@ epoxyHTML(
   .open = "{{",
   .close = "}}",
   .na = "",
+  .null = "",
+  .literal = FALSE,
   .trim = FALSE
 )
 }
@@ -48,6 +50,17 @@ isn't provided.}
 \item{.na}{[\code{character(1)}: \sQuote{NA}]\cr Value to replace \code{NA} values
 with. If \code{NULL} missing values are propagated, that is an \code{NA} result will
 cause \code{NA} output. Otherwise the value is replaced by the value of \code{.na}.}
+
+\item{.null}{[\code{character(1)}: \sQuote{character()}]\cr Value to replace
+NULL values with. If \code{character()} whole output is \code{character()}. If
+\code{NULL} all NULL values are dropped (as in \code{paste0()}). Otherwise the
+value is replaced by the value of \code{.null}.}
+
+\item{.literal}{[\code{boolean(1)}: \sQuote{FALSE}]\cr Whether to treat single or
+double quotes, backticks, and comments as regular characters (vs. as
+syntactic elements), when parsing the expression string. Setting \code{.literal = TRUE} probably only makes sense in combination with a custom
+\code{.transformer}, as is the case with \code{glue_col()}. Regard this argument
+(especially, its name) as experimental.}
 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{\link[glue:trim]{trim()}} or not.}

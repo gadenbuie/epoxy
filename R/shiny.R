@@ -110,6 +110,8 @@ epoxyHTML <- function(
   .open = "{{",
   .close = "}}",
   .na = "",
+  .null = "",
+  .literal = FALSE,
   .trim = FALSE
 ) {
   rlang::check_installed("stringr")
@@ -119,18 +121,17 @@ epoxyHTML <- function(
 
   dots <- list(...)
   dots$.placeholder = .placeholder
-  dots$.transformer = transformer_html_markup(.class_item, .container_item)
+  dots$.transformer = epoxyHTML_transformer(.class_item, .container_item)
   dots$.na = .na
   dots$.sep = .sep
+  dots$.null = .null
   dots$.trim = .trim
   dots$.open = .open %||% "{{"
   dots$.close = .close %||% "}}"
+  # disable # as comment so we can use it for id syntax (requires glue >= 1.5)
+  dots$.comment <- character()
+  dots$.literal = .literal
   dots$.envir = new.env(parent = emptyenv())
-
-  if (utils::packageVersion("glue") >= "1.5.0") {
-    # {glue} 1.5.0 added .comment arg that we use to disable # as comment
-    dots$.comment <- character()
-  }
 
   tags <- purrr::keep(dots, is_tag)
   deps <- if (length(tags)) {
@@ -165,7 +166,10 @@ transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
 
-transformer_html_markup <- function(class = NULL, element = "span") {
+epoxyHTML_transformer <- function(
+  class = NULL,
+  element = "span"
+) {
   class <- collapse_space(c("epoxy-item__placeholder", class))
 
   function(text, envir) {
@@ -191,46 +195,6 @@ transformer_html_markup <- function(class = NULL, element = "span") {
       )
     )
   }
-}
-
-parse_html_markup <- function(x) {
-  x_og <- x
-  x <- trimws(x)
-  if (sum(grepl(" ", x)) == 0) {
-    return(list(item = x))
-  }
-  x <- strsplit(x, " ")[[1]]
-  if (length(x) != 2) {
-    # TODO: better error message
-    rlang::abort(glue::glue('Bad markup: "{x_og}"'))
-  }
-  item_id <- x[2]
-  rgx_markup <- "(([#%. ]|^)[[:alnum:]_-]+)"
-  m <- stringr::str_extract_all(x[1], rgx_markup)[[1]]
-  if (!length(m)) return(list(item = item_id))
-  out <- list(item = item_id)
-  for (m_part in m) {
-    if (grepl("^[.]", m_part)) {
-      out$class <- c(out$class, sub("^[.]", "", m_part))
-    } else if (grepl("^[#%]", m_part)) {
-      if (!is.null(out$id)) {
-        rlang::abort("Multiple IDs were specified, please specify only one ID.")
-      }
-      out$id <- sub("^[#%]", "", m_part)
-    } else {
-      if (!is.null(out$element)) {
-        rlang::abort("Multiple elements were specified, please specify only one element.")
-      }
-      if (!m_part %in% names(htmltools::tags)) {
-        rlang::abort(glue::glue("Uknown tag used in markup: `{m_part}`"))
-      }
-      out$element <- m_part
-    }
-  }
-  if (!is.null(out$class)) {
-    out$class <- paste(out$class, collapse = " ")
-  }
-  out
 }
 
 #' Render Epoxy Output

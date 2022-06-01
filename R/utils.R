@@ -18,6 +18,28 @@ str_extract <- function(text, pattern) {
   x
 }
 
+str_extract2 <- function(text, pattern) {
+  regmatches(
+    x = text,
+    m = regexpr(
+      pattern = pattern,
+      text = text,
+      perl = TRUE
+    )
+  )
+}
+
+str_extract_all <- function(text, pattern) {
+  m <- gregexpr(pattern, text, perl = TRUE)
+  regmatches(text, m)
+}
+
+str_count <- function(text, pattern) {
+  m <- gregexpr(pattern, text, perl = TRUE)
+  x <- regmatches(text, m)
+  vapply(x, length, integer(1))
+}
+
 is_htmlish_output <- function(exclude = NULL) {
   if (isTRUE(rmarkdown::metadata$always_allow_html)) return(TRUE)
 

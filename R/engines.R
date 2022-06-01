@@ -57,84 +57,235 @@ use_epoxy_glue_engine <- function() {
   invisible(old)
 }
 
+#' Epoxy string interpolation
+#'
+#' The functions power the knitr chunk engines and are wrappers around
+#' [glue::glue()], with a few extra conveniences provided by \pkg{epoxy}.
+#'
+#' @example man/examples/epoxy.R
+#'
+#' @param .data A data set
+#' @param .style For [epoxy_style()]
+#### Inlined from https://github.com/tidyverse/glue/blob/main/R/glue.R#L15-L18
+#### to avoid https://github.com/r-lib/roxygen2/issues/1355
+#' @param .open \[`character(1)`: \sQuote{\\\{}]\cr The opening delimiter. Doubling the
+#'   full delimiter escapes it.
+#' @param .close \[`character(1)`: \sQuote{\\\}}]\cr The closing delimiter. Doubling the
+#'   full delimiter escapes it.
+####
+#' @inheritParams glue::glue
+#'
+#' @describeIn epoxy super `glue()`
+#' @export
+epoxy <- function(
+  ...,
+  .data = NULL,
+  .style = NULL,
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "{",
+  .close = "}",
+  .na = "",
+  .null = "",
+  .comment = "#",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+) {
+
+  glue_env <- .envir
+  if (!is.null(.data)) {
+    glue_env <- new.env(parent = .envir)
+    assign("$", epoxy_data_subset, envir = glue_env)
+  }
+
+  opts_transformer <- list(
+    epoxy_style = .style,
+    .transformer = .transformer
+  )
+
+  glue_data(
+    .x = .data,
+    ...,
+    .sep     = .sep,
+    .envir   = glue_env,
+    .open    = .open,
+    .close   = .close,
+    .na      = .na,
+    .null    = .null,
+    .comment = .comment,
+    .literal = .literal,
+    .trim    = .trim,
+    .transformer = epoxy_options_get_transformer(opts_transformer)
+  )
+}
+
 knitr_engine_epoxy <- function(options) {
   deprecate_glue_engine_prefix(options)
 
   out <- if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
-    if (!is.null(options[["data"]])) {
-      assign("$", epoxy_data_subset, envir = glue_env)
-    }
-    glue_data(
-      .x = options[["data"]],
+
+    epoxy(
       code,
-      .envir = glue_env,
-      .open = options[[".open"]] %||% "{",
-      .close = options[[".close"]] %||% "}",
-      .na = options[[".na"]] %||% "",
-      .trim = options[[".trim"]] %||% FALSE,
-      .transformer = epoxy_options_get_transformer(options)
+      .data        = options[["data"]],
+      .style       = options[["epoxy_style"]],
+      .sep         = "",
+      .envir       = options[[".envir"]]   %||% knitr::knit_global(),
+      .open        = options[[".open"]]    %||% "{",
+      .close       = options[[".close"]]   %||% "}",
+      .na          = options[[".na"]]      %||% "",
+      .null        = options[[".null"]]    %||% "",
+      .trim        = options[[".trim"]]    %||% FALSE,
+      .comment     = options[[".comment"]] %||% "#",
+      .literal     = options[[".literal"]] %||% FALSE,
+      .transformer = options[[".transformer"]]
     )
   }
+
   options$results <- "asis"
   options$echo <- options[[".echo"]] %||% FALSE
   knitr::engine_output(options, options$code, out)
+}
+
+#' @describeIn epoxy super `glue()` for HTML
+#' @export
+epoxy_html <- function(
+  ...,
+  .data = NULL,
+  .style = c("collapse", "format", "html"),
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "{{",
+  .close = "}}",
+  .na = "",
+  .null = "",
+  .comment = "",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+) {
+  res <-
+    with_options(
+      list(epoxy.engine = "html"),
+      epoxy(
+        ...,
+        .data = .data,
+        .style = .style,
+        .sep = .sep,
+        .envir = .envir,
+        .open = .open,
+        .close = .close,
+        .na = .na,
+        .null = .null,
+        .comment = .comment,
+        .literal = .literal,
+        .trim = .trim,
+        .transformer = .transformer
+      )
+    )
+  html_chr(res)
 }
 
 knitr_engine_epoxy_html <- function(options) {
   deprecate_glue_engine_prefix(options)
 
-  out <- if (isTRUE(options$eval) && is_htmlish_output()) {
+  out <- NULL
+  if (isTRUE(options$eval) && is_htmlish_output()) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
-    if (!is.null(options[["data"]])) {
-      assign("$", epoxy_data_subset, envir = glue_env)
-    }
-    code <- glue_data(
-      .x = options[["data"]],
+
+    out <- epoxy(
       code,
-      .envir = glue_env,
-      .open = options[[".open"]] %||% "{{",
-      .close = options[[".close"]] %||% "}}",
-      .na = options[[".na"]] %||% "",
-      .trim = options[[".trim"]] %||% FALSE,
-      .transformer = epoxy_options_get_transformer(options)
+      .data        = options[["data"]],
+      .style       = options[["epoxy_style"]],
+      .sep         = "",
+      .envir       = options[[".envir"]]   %||% knitr::knit_global(),
+      .open        = options[[".open"]]    %||% "{{",
+      .close       = options[[".close"]]   %||% "}}",
+      .na          = options[[".na"]]      %||% "",
+      .null        = options[[".null"]]    %||% "",
+      .trim        = options[[".trim"]]    %||% FALSE,
+      .comment     = options[[".comment"]] %||% "#",
+      .literal     = options[[".literal"]] %||% FALSE,
+      .transformer = options[[".transformer"]]
     )
-    code <- glue_collapse(code, sep = "\n")
+
+    out <- glue_collapse(out, sep = "\n")
+
     if (isTRUE(options$html_raw %||% TRUE)) {
       # use pandoc's raw html block by default, but this isn't always available
       # so it can be disabled with the html_raw chunk option.
-      code <- paste0('\n```{=html}\n', code, "\n```")
+      out <- paste0('\n```{=html}\n', out, "\n```")
     }
-    code
+
+    out
   }
   options$results <- "asis"
   options$echo <- options[[".echo"]] %||% FALSE
   knitr::engine_output(options, options$code, out)
 }
 
+#' @describeIn epoxy super `glue()` for LaTeX
+#' @export
+epoxy_latex <- function(
+  ...,
+  .data = NULL,
+  .style = NULL,
+  .sep = "",
+  .envir = parent.frame(),
+  .open = "<",
+  .close = ">",
+  .na = "",
+  .null = "",
+  .comment = "#",
+  .literal = FALSE,
+  .trim = FALSE,
+  .transformer = NULL
+) {
+  with_options(
+    list(epoxy.engine = "latex"),
+    epoxy(
+      ...,
+      .data = .data,
+      .style = .style,
+      .sep = .sep,
+      .envir = .envir,
+      .open = .open,
+      .close = .close,
+      .na = .na,
+      .null = .null,
+      .comment = .comment,
+      .literal = .literal,
+      .trim = .trim,
+      .transformer = .transformer
+    )
+  )
+}
+
 knitr_engine_epoxy_latex <- function(options) {
   deprecate_glue_engine_prefix(options)
 
-  out <- if (isTRUE(options$eval)) {
+  out <- NULL
+  if (isTRUE(options$eval)) {
     options <- deprecate_glue_data_chunk_option(options)
     code <- paste(options$code, collapse = "\n")
-    glue_env <- new.env(parent = options[[".envir"]] %||% knitr::knit_global())
-    if (!is.null(options[["data"]])) {
-      assign("$", epoxy_data_subset, envir = glue_env)
-    }
-    glue_data(
-      .x = options[["data"]],
+
+    out <- epoxy(
       code,
-      .envir = glue_env,
-      .open = options[[".open"]] %||% "<",
-      .close = options[[".close"]] %||% ">",
-      .na = options[[".na"]] %||% "",
-      .trim = options[[".trim"]] %||% FALSE,
-      .transformer = epoxy_options_get_transformer(options)
+      .data        = options[["data"]],
+      .style       = options[["epoxy_style"]],
+      .sep         = "",
+      .envir       = options[[".envir"]]   %||% knitr::knit_global(),
+      .open        = options[[".open"]]    %||% "<",
+      .close       = options[[".close"]]   %||% ">",
+      .na          = options[[".na"]]      %||% "",
+      .null        = options[[".null"]]    %||% "",
+      .trim        = options[[".trim"]]    %||% FALSE,
+      .comment     = options[[".comment"]] %||% "#",
+      .literal     = options[[".literal"]] %||% FALSE,
+      .transformer = options[[".transformer"]]
     )
   }
   options$results <- "asis"
