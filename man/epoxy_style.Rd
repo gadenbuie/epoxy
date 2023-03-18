@@ -121,6 +121,28 @@ used outside of this context, you can choose the desired syntax by setting
 the \code{syntax} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
 }
 
+\examples{
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
+glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
+
+# In an epoxy_html chunk...
+# Note that you don't have to set `syntax = "html"`, it just knows
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "html")
+)
+
+# Or in an epoxy_latex chunk...
+glue::glue(
+  "{letters[1:3]&}",
+  .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+)
+
+# Other Transfomers ----
+
+# Apply `format()` to all replacements
+
+}
 \seealso{
 Other epoxy-style glue transformers: 
 \code{\link{epoxy_style_format}()},
