@@ -202,8 +202,9 @@ epoxyHTML_transformer <- function(
 #' A Shiny output that uses [mustache templating](https://mustache.github.io/)
 #' to render HTML. Mustache is a powerful template language with minimal
 #' internal logic. The advantage of `epoxy_output_mustache()` is that all parts
-#' of the HTML can be templated, whereas [epoxyHTML()] is only able to do
-#' targeted updates of text elements within HTML.
+#' of the HTML can be templated -- including element attributes -- whereas
+#' [epoxyHTML()] requires that the dynamic template variables appear in the text
+#' portion of the UI.
 #'
 #' @example man/examples/epoxy_output_mustache.R
 #'

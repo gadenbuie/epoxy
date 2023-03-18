@@ -24,8 +24,9 @@ Returns a Shiny output UI element.
 A Shiny output that uses \href{https://mustache.github.io/}{mustache templating}
 to render HTML. Mustache is a powerful template language with minimal
 internal logic. The advantage of \code{epoxy_output_mustache()} is that all parts
-of the HTML can be templated, whereas \code{\link[=epoxyHTML]{epoxyHTML()}} is only able to do
-targeted updates of text elements within HTML.
+of the HTML can be templated -- including element attributes -- whereas
+\code{\link[=epoxyHTML]{epoxyHTML()}} requires that the dynamic template variables appear in the text
+portion of the UI.
 }
 \examples{
 if (interactive()) {
