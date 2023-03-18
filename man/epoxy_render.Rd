@@ -76,7 +76,6 @@ server <- function(input, output, session) {
 if (interactive()) {
   shiny::shinyApp(ui, server)
 }
-
 }
 \seealso{
 \code{\link[=epoxyHTML]{epoxyHTML()}}
