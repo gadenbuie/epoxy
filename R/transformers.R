@@ -19,7 +19,8 @@
 #'   used outside of this context, you can choose the desired syntax by setting
 #'   the `syntax` to one of `"markdown"`, `"html"` or `"latex"`.
 #'
-#' @examples
+#' @example man/examples/epoxy_style.R
+#'
 #' @param ... A list of style functions, e.g. `epoxy_style_bold` or the name of
 #'   a style function, e.g. `"bold"`, or a call to a style function, e.g.
 #'   `epoxy_style_bold()`. `epoxy_style()` chains the style functions together,
