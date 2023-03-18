@@ -209,7 +209,6 @@ glue::glue(
     url = utils::URLencode
   )
 )
-
 }
 \seealso{
 Other epoxy-style glue transformers: 
