@@ -106,13 +106,13 @@ The functions power the knitr chunk engines and are wrappers around
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy}: super \code{glue()}
+\item \code{epoxy()}: super \code{glue()}
 
-\item \code{epoxy_html}: super \code{glue()} for HTML
+\item \code{epoxy_html()}: super \code{glue()} for HTML
 
-\item \code{epoxy_latex}: super \code{glue()} for LaTeX
+\item \code{epoxy_latex()}: super \code{glue()} for LaTeX
+
 }}
-
 \examples{
 movie <- bechdel[1, ]
 movies <- bechdel[2:4, ]

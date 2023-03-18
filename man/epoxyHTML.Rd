@@ -153,5 +153,5 @@ if (interactive()) {
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-renderEpoxyHTML
+\code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, \code{\link[=renderEpoxyHTML]{renderEpoxyHTML()}}
 }

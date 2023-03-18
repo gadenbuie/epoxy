@@ -4,7 +4,13 @@
 \alias{renderEpoxyHTML}
 \title{Render Epoxy Output}
 \usage{
-renderEpoxyHTML(..., .list = NULL, env = parent.frame(), outputArgs = list())
+renderEpoxyHTML(
+  ...,
+  .list = NULL,
+  env = parent.frame(),
+  outputFunc = epoxyHTML,
+  outputArgs = list()
+)
 }
 \arguments{
 \item{...}{Named values corresponding to the template variables created with
