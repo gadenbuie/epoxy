@@ -1,8 +1,10 @@
 #' Epoxy HTML Output for Shiny
 #'
-#' Expermimental. An glue-like output for Shiny. `epoxyHTML()` lets you use
-#' placeholders in your HTML such as `"{{first_name}}"`, that are provided
-#' values from the server by giving `renderEpoxyHTML()` a `first_name` value.
+#' @description `r lifecycle::badge('experimental')`
+#'
+#' A glue-like output for Shiny. `epoxyHTML()` lets you use placeholders in your
+#' HTML such as `"{{first_name}}"`, that are provided values from the server by
+#' giving `epoxy_render()` a `first_name` value.
 #'
 #' @section HTML Markup: By default, placeholders are inserted into a `<span>`
 #' element in your UI, with the classes specified in `.class_item`.
@@ -68,7 +70,7 @@
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   output$test <- renderEpoxyHTML(
+#'   output$test <- epoxy_render(
 #'     thing = input$thing,
 #'     color = input$color,
 #'     height = input$height
@@ -95,7 +97,7 @@
 #' @param .close Closing template variable delimiter
 #' @inheritParams glue::glue
 #'
-#' @seealso [epoxy_output_mustache()], [renderEpoxyHTML()]
+#' @seealso [epoxy_output_mustache()], [epoxy_render()]
 #' @return An HTML object.
 #' @export
 epoxyHTML <- function(
@@ -217,7 +219,7 @@ epoxyHTML_transformer <- function(
 #'
 #' @return Returns a Shiny output UI element.
 #'
-#' @seealso [epoxyHTML()], [renderEpoxyHTML()]
+#' @seealso [epoxyHTML()], [epoxy_render()]
 #' @export
 epoxy_output_mustache <- function(
   id,
@@ -285,12 +287,12 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' Server-side render function used to provide values for template items. Use
 #' named values matching the template variable names in the associated
-#' `epoxyHTML()`. When the values are updated by the app, `renderEpoxyHTML()`
-#' will update the values shown in the app's UI.
+#' [epoxyHTML()] or [epoxy_output_mustache()]. When the values are updated by
+#' the app, `epoxy_render()` will update the values shown in the app's UI.
 #'
 #' @examples
 #' # This small app shows the current time using `epoxyHTML()`
-#' # to provide the HTML template and `renderEpoxyHTML()` to
+#' # to provide the HTML template and `epoxy_render()` to
 #' # update the current time every second.
 #'
 #' ui <- shiny::fluidPage(
@@ -307,7 +309,7 @@ epoxy_mustache_dependencies <- function() {
 #'     strftime(Sys.time(), "%F %T")
 #'   })
 #'
-#'   output$time <- renderEpoxyHTML(time = current_time())
+#'   output$time <- epoxy_render(time = current_time())
 #' }
 #'
 #' if (interactive()) {
@@ -321,11 +323,11 @@ epoxy_mustache_dependencies <- function() {
 #'   [epoxyHTML()] UI element.
 #' @param env The environment in which to evaluate the `...`
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
+#'   call to [epoxyHTML()] when `epoxy_render` is used in an interactive R
 #'   Markdown document.
 #' @param outputFunc Either [epoxyHTML()] or [epoxy_output_mustache()], i.e. the
 #'   UI function to be paired with this output. This is only used when calling
-#'   `renderEpoxyHTML()` in an Shiny runtime R Markdown document and when you
+#'   `epoxy_render()` in an Shiny runtime R Markdown document and when you
 #'   are only providing the output without an explicit, corresponding UI
 #'   element.
 #'
@@ -335,7 +337,7 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' @seealso [epoxyHTML()]
 #' @export
-renderEpoxyHTML <- function(
+epoxy_render <- function(
   ...,
   .list = NULL,
   env = parent.frame(),
@@ -373,6 +375,13 @@ renderEpoxyHTML <- function(
     outputFunc = outputFunc,
     outputArgs = outputArgs
   )
+}
+
+#' @describeIn epoxy_render Deprecated alias, please use `epoxy_render()`.
+#' @export
+renderEpoxyHTML <- function(..., env = parent.frame()) {
+  lifecycle::deprecate_soft("0.1.0", "renderEpoxyHTML()", "epoxy_render()")
+  epoxy_render(..., env = env)
 }
 
 format_tags <- function(x) {

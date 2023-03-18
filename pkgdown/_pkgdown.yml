@@ -26,7 +26,7 @@ reference:
   contents:
   - '`epoxyHTML`'
   - epoxy_output_mustache
-  - '`renderEpoxyHTML`'
+  - '`epoxy_render`'
 - title: Example Datasets
   description: |
     Interesting datasets that can help you explore, learn, and practice using epoxy.
