@@ -1,0 +1,21 @@
+{
+  "name": "epoxy",
+  "version": "1.0.0",
+  "description": "web dependencies for the {epoxy} R package",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "man": "man",
+    "test": "tests"
+  },
+  "scripts": {
+    "copy": "npm run copy:mustache",
+    "copy:mustache": "cpy 'mustache.min.js' ../../inst/lib/mustache --cwd node_modules/mustache/"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cpy-cli": "^4.2.0",
+    "mustache": "^4.2.0"
+  }
+}
