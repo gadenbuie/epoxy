@@ -1,8 +1,8 @@
 #' Epoxy HTML Output for Shiny
 #'
 #' Expermimental. An glue-like output for Shiny. `epoxyHTML()` lets you use
-#' placeholders in your HTML such as `"{{height}}"`, that are provided values
-#' from the server by giving `renderEpoxyHTML()` a `height` value.
+#' placeholders in your HTML such as `"{{first_name}}"`, that are provided
+#' values from the server by giving `renderEpoxyHTML()` a `first_name` value.
 #'
 #' @section HTML Markup: By default, placeholders are inserted into a `<span>`
 #' element in your UI, with the classes specified in `.class_item`.

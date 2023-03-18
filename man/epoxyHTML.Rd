@@ -70,8 +70,8 @@ An HTML object.
 }
 \description{
 Expermimental. An glue-like output for Shiny. \code{epoxyHTML()} lets you use
-placeholders in your HTML such as \code{"{{height}}"}, that are provided values
-from the server by giving \code{renderEpoxyHTML()} a \code{height} value.
+placeholders in your HTML such as \code{"{{first_name}}"}, that are provided
+values from the server by giving \code{renderEpoxyHTML()} a \code{first_name} value.
 }
 \section{HTML Markup}{
  By default, placeholders are inserted into a \verb{<span>}
