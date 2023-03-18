@@ -10,3 +10,6 @@
 ^pkgdown$
 ^\.covrignore$
 ^node_modules$
+^package\.json$
+^package-lock\.json$
+^docs$
