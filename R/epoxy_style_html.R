@@ -1,4 +1,3 @@
-
 #' Concise syntax for expressions inside HTML elements
 #'
 #' @description

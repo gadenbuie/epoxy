@@ -91,22 +91,22 @@ correct syntax for each.
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_style_wrap}: Wrap variables
+\item \code{epoxy_style_wrap()}: Wrap variables
 
-\item \code{epoxy_style_bold}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
+\item \code{epoxy_style_bold()}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
 in HTML, or \verb{\\textbf\{\}} in LaTeX
 
-\item \code{epoxy_style_italic}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
+\item \code{epoxy_style_italic()}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
 HTML, or \verb{\\emph\{\}} in LaTeX
 
-\item \code{epoxy_style_apply}: Apply a function to all replacement expressions
+\item \code{epoxy_style_apply()}: Apply a function to all replacement expressions
 
-\item \code{epoxy_style_code}: Code format variables using \verb{``} in markdown,
+\item \code{epoxy_style_code()}: Code format variables using \verb{``} in markdown,
 \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
 
-\item \code{epoxy_style_collapse}: Collapse vector variables
-}}
+\item \code{epoxy_style_collapse()}: Collapse vector variables
 
+}}
 \section{Output-specific styling}{
 
 The \code{epoxy_style_} functions will attempt to use the correct syntax for
@@ -121,28 +121,6 @@ used outside of this context, you can choose the desired syntax by setting
 the \code{syntax} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
 }
 
-\examples{
-glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
-glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
-
-# In an epoxy_html chunk...
-# Note that you don't have to set `syntax = "html"`, it just knows
-glue::glue(
-  "{letters[1:3]&}",
-  .transformer = epoxy_style("bold", "collapse", syntax = "html")
-)
-
-# Or in an epoxy_latex chunk...
-glue::glue(
-  "{letters[1:3]&}",
-  .transformer = epoxy_style("bold", "collapse", syntax = "latex")
-)
-
-# Other Transfomers ----
-
-# Apply `format()` to all replacements
-
-}
 \seealso{
 Other epoxy-style glue transformers: 
 \code{\link{epoxy_style_format}()},

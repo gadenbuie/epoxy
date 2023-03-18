@@ -181,7 +181,7 @@ for trees grown in several ozone conditions.
 I've copied the resulting data frame into this vignette to avoid taking extra dependencies for this vignette.
 
 ```{r}
-text_ready <- 
+text_ready <-
   data.frame(
     term = c("intercept", "hund_days", "ozone", "hund_days_ozone"),
     estimate = c("4.25", "0.34", "&minus;0.14", "&minus;0.04"),

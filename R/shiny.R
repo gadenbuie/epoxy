@@ -95,7 +95,7 @@
 #' @param .close Closing template variable delimiter
 #' @inheritParams glue::glue
 #'
-#' @seealso renderEpoxyHTML
+#' @seealso [epoxy_output_mustache()], [renderEpoxyHTML()]
 #' @return An HTML object.
 #' @export
 epoxyHTML <- function(
@@ -197,6 +197,90 @@ epoxyHTML_transformer <- function(
   }
 }
 
+#' Epoxy HTML Mustache Template
+#'
+#' A Shiny output that uses [mustache templating](https://mustache.github.io/)
+#' to render HTML. Mustache is a powerful template language with minimal
+#' internal logic. The advantage of `epoxy_output_mustache()` is that all parts
+#' of the HTML can be templated -- including element attributes -- whereas
+#' [epoxyHTML()] requires that the dynamic template variables appear in the text
+#' portion of the UI.
+#'
+#' @example man/examples/epoxy_output_mustache.R
+#'
+#' @param id The ID of the output.
+#' @param ... Character strings of HTML or [htmltools::tags]. All elements
+#'   should be unnamed.
+#' @param sep The separator used to concatenate elements in `...`.
+#' @param container A character tag name, e.g. `"div"` or `"span"`, or a
+#'   function that returns an [htmltools::tag()].
+#'
+#' @return Returns a Shiny output UI element.
+#'
+#' @seealso [epoxyHTML()], [renderEpoxyHTML()]
+#' @export
+epoxy_output_mustache <- function(
+  id,
+  ...,
+  sep = "",
+  container = "div"
+) {
+  rlang::check_dots_unnamed()
+
+  if (is.character(container)) {
+    tag_name <- container
+    container <- function(...) htmltools::tags[[tag_name]](...)
+  }
+
+  dots <- rlang::list2(...)
+  if (!length(dots)) return(NULL)
+
+  tags <- purrr::keep(dots, is_tag)
+  deps <- purrr::flatten(purrr::map(tags, htmltools::findDependencies))
+
+  dots <- purrr::map_if(dots, is_tag, format)
+  dots <- purrr::flatten_chr(dots)
+
+  if (!purrr::every(dots, is.character)) {
+    rlang::abort("All template elements in `...` must be characters or htmltools tags.")
+  }
+
+  out <- container(
+    id = id,
+    class = "epoxy-mustache",
+    `data-epoxy-template` = paste(dots, collapse = sep),
+    epoxy_mustache_dependencies()
+  )
+
+  if (!is.null(deps) && length(deps)) {
+    htmltools::attachDependencies(out, deps)
+  } else {
+    out
+  }
+}
+
+epoxy_mustache_dependencies <- function() {
+  htmltools::tagList(
+    htmltools::htmlDependency(
+      name = "mustache",
+      package = "epoxy",
+      version = "4.2.0",
+      src = "lib/mustache",
+      script = "mustache.min.js",
+      all_files = FALSE
+    ),
+    htmltools::htmlDependency(
+      name = "epoxy-mustache",
+      package = "epoxy",
+      version = "0.0.1",
+      src = "inst/srcjs",
+      script = "output-epoxy-mustache.js",
+      all_files = FALSE
+    )
+  )
+}
+
+
 #' Render Epoxy Output
 #'
 #' Server-side render function used to provide values for template items. Use
@@ -239,6 +323,11 @@ epoxyHTML_transformer <- function(
 #' @param outputArgs A list of arguments to be passed through to the implicit
 #'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
 #'   Markdown document.
+#' @param outputFunc Either [epoxyHTML()] or [epoxy_output_mustache()], i.e. the
+#'   UI function to be paired with this output. This is only used when calling
+#'   `renderEpoxyHTML()` in an Shiny runtime R Markdown document and when you
+#'   are only providing the output without an explicit, corresponding UI
+#'   element.
 #'
 #' @return A server-side Shiny render function that should be assigned to
 #'   Shiny's `output` object and named to match the `.id` of the corresponding
@@ -246,7 +335,13 @@ epoxyHTML_transformer <- function(
 #'
 #' @seealso [epoxyHTML()]
 #' @export
-renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs = list()) {
+renderEpoxyHTML <- function(
+  ...,
+  .list = NULL,
+  env = parent.frame(),
+  outputFunc = epoxyHTML,
+  outputArgs = list()
+) {
   rlang::check_installed("shiny")
 
   epoxyPrepare <- function(..., .list = NULL) {
@@ -269,14 +364,14 @@ renderEpoxyHTML <- function(..., .list = NULL, env = parent.frame(), outputArgs 
     expr = epoxyPrepare(..., .list = .list)
   )
   shiny::createRenderFunction(
-    epoxyPrepare,
-    function(value, session, name, ...) {
+    func = epoxyPrepare,
+    transform = function(value, session, name, ...) {
       value <- as.list(value)
       stopifnot(!is.null(names(value)))
       value
     },
-    epoxyHTML,
-    outputArgs
+    outputFunc = outputFunc,
+    outputArgs = outputArgs
   )
 }
 

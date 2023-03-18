@@ -42,7 +42,7 @@ note that this will most likely overwrite the \code{glue} engine provided by the
 }
 \section{Functions}{
 \itemize{
-\item \code{use_epoxy_glue_engine}: Use \pkg{epoxy}'s \code{epoxy} engine as
+\item \code{use_epoxy_glue_engine()}: Use \pkg{epoxy}'s \code{epoxy} engine as
 the \code{glue} engine.
-}}
 
+}}

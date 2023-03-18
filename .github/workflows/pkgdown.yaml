@@ -16,9 +16,16 @@ on:
       - 'vignettes/**'
   push:
     tags:
-      - 'v*'
+      - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags
+      - '!v[0-9]+.[0-9]+.[0-9]+.[0-9]+' # but not if version involves a dev component
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to deploy
+        required: true
+        default: ''
 
 name: pkgdown
 
@@ -68,11 +75,39 @@ jobs:
         run: |
           echo "subdir=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+      # If event is workflow_dispatch, set subdir to 'inputs.tag'
+      - name: '[dispatch] Set documentation subdirectory'
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "subdir=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+
       - name: Deploy pkgdown site
+        id: deploy
         shell: Rscript {0}
         run: |
           subdir <- "${{ env.subdir }}"
+          pkg <- pkgdown::as_pkgdown(".")
+
+          # Deploy pkgdown site to branch
           pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir))
+
+          # Report deployed site URL
+          deployed_url <- file.path(pkg$meta$url, subdir)
+          cat(sprintf('url=%s', deployed_url), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+
+      - name: Notify pkgdown deployment
+        if: github.event_name == 'pull_request'
+        uses: hasura/comment-progress@v2.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: pkgdown-deploy
+          append: false
+          message: >
+            :book: ${{ steps.deploy.outputs.url }}
+
+            Preview documentation for this PR (at commit ${{ github.event.pull_request.head.sha }})
 
   pkgdown-clean:
     if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
@@ -97,3 +132,14 @@ jobs:
           else
             echo 'No preview to remove'
           fi
+
+      - name: Notify pkgdown cleanup
+        uses: hasura/comment-progress@v2.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: pkgdown-deploy
+          message: |
+            _:closed_book: Preview documentation for this PR has been cleaned up._
+

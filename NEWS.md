@@ -71,6 +71,12 @@
 * The HTML element syntax used in `epoxyHTML()` is now available in
   `epoxy_style_html()` and is used by default in `epoxy_html()` (#46).
 
+* New `epoxy_output_mustache()` provides a dynamically rendered Shiny UI element
+  that uses the [mustache templating syntax](https://mustache.github.io/). The
+  advantage of mustache templating over `epoxyHTML()` is that you have dynamic
+  variables in the template can appear anywhere in the HTML, not just in the
+  text portion (#51).
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)
