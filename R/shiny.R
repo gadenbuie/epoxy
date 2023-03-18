@@ -322,6 +322,11 @@ epoxy_mustache_dependencies <- function() {
 #' @param outputArgs A list of arguments to be passed through to the implicit
 #'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
 #'   Markdown document.
+#' @param outputFunc Either [epoxyHTML()] or [epoxy_output_mustache()], i.e. the
+#'   UI function to be paired with this output. This is only used when calling
+#'   `renderEpoxyHTML()` in an Shiny runtime R Markdown document and when you
+#'   are only providing the output without an explicit, corresponding UI
+#'   element.
 #'
 #' @return A server-side Shiny render function that should be assigned to
 #'   Shiny's `output` object and named to match the `.id` of the corresponding

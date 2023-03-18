@@ -22,6 +22,12 @@ corresponding to the template variables created with the associated
 
 \item{env}{The environment in which to evaluate the \code{...}}
 
+\item{outputFunc}{Either \code{\link[=epoxyHTML]{epoxyHTML()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, i.e. the
+UI function to be paired with this output. This is only used when calling
+\code{renderEpoxyHTML()} in an Shiny runtime R Markdown document and when you
+are only providing the output without an explicit, corresponding UI
+element.}
+
 \item{outputArgs}{A list of arguments to be passed through to the implicit
 call to \code{\link[=epoxyHTML]{epoxyHTML()}} when \code{renderEpoxyHTML} is used in an interactive R
 Markdown document.}
