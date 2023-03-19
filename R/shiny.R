@@ -226,7 +226,7 @@ epoxyHTML_transformer <- function(
 #'         shiny::h2(class = "{{heading_class}}", "Hello, {{name}}!"),
 #'         "{{#fruits}}",
 #'         shiny::p("Your favorite fruits are..."),
-#'         shiny::tags$ul(HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
+#'         shiny::tags$ul(shiny::HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
 #'         "{{/fruits}}",
 #'         "{{^fruits}}<p>Do you have any favorite fruits?</p>{{/fruits}}"
 #'       )
