@@ -43,9 +43,6 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/epoxy_output_mustache.html</loc>
   </url>
   <url>
-    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/epoxy_render.html</loc>
-  </url>
-  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/epoxy_style.html</loc>
   </url>
   <url>
@@ -56,6 +53,9 @@
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/render_epoxy.html</loc>
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr56/reference/use_epoxy_knitr_engines.html</loc>
