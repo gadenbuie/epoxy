@@ -22,7 +22,7 @@
 #' note that this will most likely overwrite the `glue` engine provided by the
 #' \pkg{glue} package.
 #'
-#' @exaplesIf interactive()
+#' @examplesIf interactive()
 #' use_epoxy_knitr_engines()
 #'
 #' @param use_glue_engine If `TRUE` (default `FALSE`), uses \pkg{epoxy}'s `glue`
