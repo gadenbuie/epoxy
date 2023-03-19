@@ -1,6 +1,10 @@
 #' Style replacements with inline formatting
 #'
-#' @description
+#' @description `r lifecycle::badge('experimental')`
+#'
+#' _The design of this epoxy styler isn't quite settled yet. The API may evolve
+#' or change completely based on feedback and real-world usage._
+#'
 #' Makes available all of the `label_` functions from the \pkg{scales} package
 #' within an inline format function, `fmt()`. To apply formatting, wrap embraced
 #' expressions in `fmt(expr, label)`, where `label` is the name of a labeller
