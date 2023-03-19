@@ -180,8 +180,6 @@ epoxyHTML_transformer <- function(
   class = NULL,
   element = "span"
 ) {
-  class <- collapse_space(c("epoxy-item__placeholder", class))
-
   function(text, envir) {
     markup <- parse_html_markup(text)
     placeholder <- rlang::env_get(
@@ -192,13 +190,12 @@ epoxyHTML_transformer <- function(
     )
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element
-    if (!is.null(markup$class)) {
-      class <- collapse_space(class, markup$class)
-    }
     htmltools::tag(
       tag_name,
       list(
+        class = "epoxy-item__placeholder",
         class = class,
+        class = markup$class,
         id = markup$id,
         `data-epoxy-item` = markup$item,
         htmltools::HTML(placeholder)
