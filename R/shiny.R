@@ -116,8 +116,6 @@ ui_epoxy_html <- function(
   .literal = FALSE,
   .trim = FALSE
 ) {
-  rlang::check_installed("stringr")
-
   .container <- match.arg(.container, names(htmltools::tags))
   .container_item <- match.arg(.container_item, names(htmltools::tags))
 
