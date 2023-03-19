@@ -2,9 +2,12 @@
 % Please edit documentation in R/shiny.R
 \name{ui_epoxy_mustache}
 \alias{ui_epoxy_mustache}
+\alias{ui_epoxy_whisker}
 \title{Epoxy HTML Mustache Template}
 \usage{
 ui_epoxy_mustache(id, ..., sep = "", container = "div")
+
+ui_epoxy_whisker(id, ..., sep = "", container = "div")
 }
 \arguments{
 \item{id}{The ID of the output.}
@@ -28,6 +31,13 @@ of the HTML can be templated -- including element attributes -- whereas
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} requires that the dynamic template variables appear in the text
 portion of the UI.
 }
+\section{Functions}{
+\itemize{
+\item \code{ui_epoxy_whisker()}: An alias for \code{ui_epoxy_mustache()}, provided
+because R users are more familiar with this syntax via the \pkg{whisker}
+package.
+
+}}
 \examples{
 \dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ui <- shiny::fluidPage(
