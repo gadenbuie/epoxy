@@ -94,6 +94,11 @@ the current transformation. In nearly all cases, you can let
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+\emph{The design of this epoxy styler isn't quite settled yet. The API may evolve
+or change completely based on feedback and real-world usage.}
+
 Makes available all of the \code{label_} functions from the \pkg{scales} package
 within an inline format function, \code{fmt()}. To apply formatting, wrap embraced
 expressions in \code{fmt(expr, label)}, where \code{label} is the name of a labeller
