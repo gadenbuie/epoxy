@@ -339,7 +339,31 @@ epoxy_mustache_dependencies <- function() {
 #' [ui_epoxy_html()] or [ui_epoxy_mustache()]. When the values are updated by
 #' the app, `render_epoxy()` will update the values shown in the app's UI.
 #'
-#' @example man/examples/render_epoxy.R
+#' @examplesIf rlang::is_installed("shiny")
+#' # This small app shows the current time using `ui_epoxy_html()`
+#' # to provide the HTML template and `render_epoxy()` to
+#' # update the current time every second.
+#'
+#' ui <- shiny::fluidPage(
+#'   shiny::h2("Current Time"),
+#'   ui_epoxy_html(
+#'     "time",
+#'     shiny::p("The current time is {{strong time}}.")
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   current_time <- shiny::reactive({
+#'     shiny::invalidateLater(1000)
+#'     strftime(Sys.time(), "%F %T")
+#'   })
+#'
+#'   output$time <- render_epoxy(time = current_time())
+#' }
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(ui, server)
+#' }
 #'
 #' @param ... Named values corresponding to the template variables created with
 #'   the associated [ui_epoxy_html()] UI element.

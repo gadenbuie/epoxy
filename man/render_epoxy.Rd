@@ -52,6 +52,7 @@ the app, \code{render_epoxy()} will update the values shown in the app's UI.
 
 }}
 \examples{
+\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # This small app shows the current time using `ui_epoxy_html()`
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.
@@ -76,6 +77,7 @@ server <- function(input, output, session) {
 if (interactive()) {
   shiny::shinyApp(ui, server)
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}
