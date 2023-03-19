@@ -6,7 +6,7 @@
   `epoxy_latex` knitr engines, although they can still be used via their aliases
   `glue_html` and `glue_latex`. (#21)
 
-* `epoxyHTML()` will now render elements with IDs using the `#` syntax, e.g.
+* `ui_epoxy_html()` will now render elements with IDs using the `#` syntax, e.g.
   `{{h3#name.author full_name}}` will create an element that is (essentially)
   `<h3 id="name" class="author">{{ full_name }}</h3>` (#22).
 
@@ -68,12 +68,12 @@
 * `epoxy`, `epoxy_html()` and `epoxy_latex()` are now exported functions that
   power the knitr engines and use the same defaults (#46).
   
-* The HTML element syntax used in `epoxyHTML()` is now available in
+* The HTML element syntax used in `ui_epoxy_html()` is now available in
   `epoxy_style_html()` and is used by default in `epoxy_html()` (#46).
 
 * New `epoxy_output_mustache()` provides a dynamically rendered Shiny UI element
   that uses the [mustache templating syntax](https://mustache.github.io/). The
-  advantage of mustache templating over `epoxyHTML()` is that you have dynamic
+  advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
   variables in the template can appear anywhere in the HTML, not just in the
   text portion (#51).
 

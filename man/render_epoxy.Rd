@@ -9,7 +9,7 @@ render_epoxy(
   ...,
   .list = NULL,
   env = parent.frame(),
-  outputFunc = epoxyHTML,
+  outputFunc = ui_epoxy_html,
   outputArgs = list()
 )
 
@@ -17,33 +17,33 @@ renderEpoxyHTML(..., env = parent.frame())
 }
 \arguments{
 \item{...}{Named values corresponding to the template variables created with
-the associated \code{\link[=epoxyHTML]{epoxyHTML()}} UI element.}
+the associated \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} UI element.}
 
 \item{.list}{A named list or a \code{\link[shiny:reactiveValues]{shiny::reactiveValues()}} list with names
 corresponding to the template variables created with the associated
-\code{\link[=epoxyHTML]{epoxyHTML()}} UI element.}
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} UI element.}
 
 \item{env}{The environment in which to evaluate the \code{...}}
 
-\item{outputFunc}{Either \code{\link[=epoxyHTML]{epoxyHTML()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, i.e. the
+\item{outputFunc}{Either \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, i.e. the
 UI function to be paired with this output. This is only used when calling
 \code{render_epoxy()} in an Shiny runtime R Markdown document and when you
 are only providing the output without an explicit, corresponding UI
 element.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
-call to \code{\link[=epoxyHTML]{epoxyHTML()}} when \code{render_epoxy} is used in an interactive R
+call to \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} when \code{render_epoxy} is used in an interactive R
 Markdown document.}
 }
 \value{
 A server-side Shiny render function that should be assigned to
 Shiny's \code{output} object and named to match the \code{.id} of the corresponding
-\code{\link[=epoxyHTML]{epoxyHTML()}} call.
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} call.
 }
 \description{
 Server-side render function used to provide values for template items. Use
 named values matching the template variable names in the associated
-\code{\link[=epoxyHTML]{epoxyHTML()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}. When the values are updated by
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}. When the values are updated by
 the app, \code{render_epoxy()} will update the values shown in the app's UI.
 }
 \section{Functions}{
@@ -52,13 +52,13 @@ the app, \code{render_epoxy()} will update the values shown in the app's UI.
 
 }}
 \examples{
-# This small app shows the current time using `epoxyHTML()`
+# This small app shows the current time using `ui_epoxy_html()`
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.
 
 ui <- shiny::fluidPage(
   shiny::h2("Current Time"),
-  epoxyHTML(
+  ui_epoxy_html(
     "time",
     shiny::p("The current time is {{strong time}}.")
   )
@@ -78,5 +78,5 @@ if (interactive()) {
 }
 }
 \seealso{
-\code{\link[=epoxyHTML]{epoxyHTML()}}
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}}
 }

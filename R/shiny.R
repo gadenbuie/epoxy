@@ -2,14 +2,14 @@
 #'
 #' @description `r lifecycle::badge('experimental')`
 #'
-#' A glue-like output for Shiny. `epoxyHTML()` lets you use placeholders in your
+#' A glue-like output for Shiny. `ui_epoxy_html()` lets you use placeholders in your
 #' HTML such as `"{{first_name}}"`, that are provided values from the server by
 #' giving `render_epoxy()` a `first_name` value.
 #'
 #' @section HTML Markup: By default, placeholders are inserted into a `<span>`
 #' element in your UI, with the classes specified in `.class_item`.
 #'
-#' `epoxyHTML()` also supports an HTML markup syntax similar to
+#' `ui_epoxy_html()` also supports an HTML markup syntax similar to
 #' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). With the
 #' markup syntax, `"{{h3.example.basic%basic-three demo}}"` creates a `demo`
 #' placeholder inside an `<h3 id="basic-three" class="example basic"></h3>` tag.
@@ -22,8 +22,8 @@
 #'
 #' @examplesIf rlang::is_installed("shiny")
 #' ui <- shiny::fluidPage(
-#'   shiny::h2("epoxyHTML demo"),
-#'   epoxyHTML(
+#'   shiny::h2("ui_epoxy_html demo"),
+#'   ui_epoxy_html(
 #'     .id = 'test',
 #'     .class_item = "inner",
 #'     shiny::fluidRow(
@@ -100,7 +100,7 @@
 #' @seealso [epoxy_output_mustache()], [render_epoxy()]
 #' @return An HTML object.
 #' @export
-epoxyHTML <- function(
+ui_epoxy_html <- function(
   .id,
   ...,
   .class = NULL,
@@ -164,6 +164,16 @@ epoxyHTML <- function(
   }
 }
 
+#' @describeIn ui_epoxy_html Deprecated alias for `ui_epoxy_html()`.
+#' @export
+epoxyHTML <- function(.id, ...) {
+  lifecycle::deprecate_soft(
+    "0.1.0", "epoxyHTML()", "ui_epoxy_html()",
+    details = "`epoxyHTML()` was renamed. Please use the new name at your earliest convenience."
+  )
+  ui_epoxy_html(.id, ...)
+}
+
 transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
@@ -205,7 +215,7 @@ epoxyHTML_transformer <- function(
 #' to render HTML. Mustache is a powerful template language with minimal
 #' internal logic. The advantage of `epoxy_output_mustache()` is that all parts
 #' of the HTML can be templated -- including element attributes -- whereas
-#' [epoxyHTML()] requires that the dynamic template variables appear in the text
+#' [ui_epoxy_html()] requires that the dynamic template variables appear in the text
 #' portion of the UI.
 #'
 #' @example man/examples/epoxy_output_mustache.R
@@ -219,7 +229,7 @@ epoxyHTML_transformer <- function(
 #'
 #' @return Returns a Shiny output UI element.
 #'
-#' @seealso [epoxyHTML()], [render_epoxy()]
+#' @seealso [ui_epoxy_html()], [render_epoxy()]
 #' @export
 epoxy_output_mustache <- function(
   id,
@@ -287,21 +297,21 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' Server-side render function used to provide values for template items. Use
 #' named values matching the template variable names in the associated
-#' [epoxyHTML()] or [epoxy_output_mustache()]. When the values are updated by
+#' [ui_epoxy_html()] or [epoxy_output_mustache()]. When the values are updated by
 #' the app, `render_epoxy()` will update the values shown in the app's UI.
 #'
 #' @example man/examples/render_epoxy.R
 #'
 #' @param ... Named values corresponding to the template variables created with
-#'   the associated [epoxyHTML()] UI element.
+#'   the associated [ui_epoxy_html()] UI element.
 #' @param .list A named list or a [shiny::reactiveValues()] list with names
 #'   corresponding to the template variables created with the associated
-#'   [epoxyHTML()] UI element.
+#'   [ui_epoxy_html()] UI element.
 #' @param env The environment in which to evaluate the `...`
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [epoxyHTML()] when `render_epoxy` is used in an interactive R
+#'   call to [ui_epoxy_html()] when `render_epoxy` is used in an interactive R
 #'   Markdown document.
-#' @param outputFunc Either [epoxyHTML()] or [epoxy_output_mustache()], i.e. the
+#' @param outputFunc Either [ui_epoxy_html()] or [epoxy_output_mustache()], i.e. the
 #'   UI function to be paired with this output. This is only used when calling
 #'   `render_epoxy()` in an Shiny runtime R Markdown document and when you
 #'   are only providing the output without an explicit, corresponding UI
@@ -309,15 +319,15 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' @return A server-side Shiny render function that should be assigned to
 #'   Shiny's `output` object and named to match the `.id` of the corresponding
-#'   [epoxyHTML()] call.
+#'   [ui_epoxy_html()] call.
 #'
-#' @seealso [epoxyHTML()]
+#' @seealso [ui_epoxy_html()]
 #' @export
 render_epoxy <- function(
   ...,
   .list = NULL,
   env = parent.frame(),
-  outputFunc = epoxyHTML,
+  outputFunc = ui_epoxy_html,
   outputArgs = list()
 ) {
   rlang::check_installed("shiny")

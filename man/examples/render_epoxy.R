@@ -1,10 +1,10 @@
-# This small app shows the current time using `epoxyHTML()`
+# This small app shows the current time using `ui_epoxy_html()`
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.
 
 ui <- shiny::fluidPage(
   shiny::h2("Current Time"),
-  epoxyHTML(
+  ui_epoxy_html(
     "time",
     shiny::p("The current time is {{strong time}}.")
   )
