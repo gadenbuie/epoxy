@@ -76,6 +76,11 @@
   advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
   variables in the template can appear anywhere in the HTML, not just in the
   text portion (#51).
+  
+* `epoxyHTML()` and `renderEpoxyHTML()` were renamed `ui_epoxy_html()` and
+  `render_epoxy()` respectively. This better fits newer Shiny naming conventions
+  and reflects that `render_epoxy()` serves both `ui_epoxy_html()` and
+  `ui_epoxy_mustache()` (#56).
 
 # epoxy 0.0.2
 
