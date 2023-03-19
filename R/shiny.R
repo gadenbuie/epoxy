@@ -97,7 +97,7 @@
 #' @param .close Closing template variable delimiter
 #' @inheritParams glue::glue
 #'
-#' @seealso [epoxy_output_mustache()], [render_epoxy()]
+#' @seealso [ui_epoxy_mustache()], [render_epoxy()]
 #' @return An HTML object.
 #' @export
 ui_epoxy_html <- function(
@@ -213,12 +213,12 @@ epoxyHTML_transformer <- function(
 #'
 #' A Shiny output that uses [mustache templating](https://mustache.github.io/)
 #' to render HTML. Mustache is a powerful template language with minimal
-#' internal logic. The advantage of `epoxy_output_mustache()` is that all parts
+#' internal logic. The advantage of `ui_epoxy_mustache()` is that all parts
 #' of the HTML can be templated -- including element attributes -- whereas
 #' [ui_epoxy_html()] requires that the dynamic template variables appear in the text
 #' portion of the UI.
 #'
-#' @example man/examples/epoxy_output_mustache.R
+#' @example man/examples/ui_epoxy_mustache.R
 #'
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
@@ -231,7 +231,7 @@ epoxyHTML_transformer <- function(
 #'
 #' @seealso [ui_epoxy_html()], [render_epoxy()]
 #' @export
-epoxy_output_mustache <- function(
+ui_epoxy_mustache <- function(
   id,
   ...,
   sep = "",
@@ -297,7 +297,7 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' Server-side render function used to provide values for template items. Use
 #' named values matching the template variable names in the associated
-#' [ui_epoxy_html()] or [epoxy_output_mustache()]. When the values are updated by
+#' [ui_epoxy_html()] or [ui_epoxy_mustache()]. When the values are updated by
 #' the app, `render_epoxy()` will update the values shown in the app's UI.
 #'
 #' @example man/examples/render_epoxy.R
@@ -311,7 +311,7 @@ epoxy_mustache_dependencies <- function() {
 #' @param outputArgs A list of arguments to be passed through to the implicit
 #'   call to [ui_epoxy_html()] when `render_epoxy` is used in an interactive R
 #'   Markdown document.
-#' @param outputFunc Either [ui_epoxy_html()] or [epoxy_output_mustache()], i.e. the
+#' @param outputFunc Either [ui_epoxy_html()] or [ui_epoxy_mustache()], i.e. the
 #'   UI function to be paired with this output. This is only used when calling
 #'   `render_epoxy()` in an Shiny runtime R Markdown document and when you
 #'   are only providing the output without an explicit, corresponding UI

@@ -25,7 +25,7 @@ reference:
 - title: Templating for Shiny
   contents:
   - '`ui_epoxy_html`'
-  - epoxy_output_mustache
+  - ui_epoxy_mustache
   - '`render_epoxy`'
 - title: Example Datasets
   description: |

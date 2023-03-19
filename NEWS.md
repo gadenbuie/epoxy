@@ -71,7 +71,7 @@
 * The HTML element syntax used in `ui_epoxy_html()` is now available in
   `epoxy_style_html()` and is used by default in `epoxy_html()` (#46).
 
-* New `epoxy_output_mustache()` provides a dynamically rendered Shiny UI element
+* New `ui_epoxy_mustache()` provides a dynamically rendered Shiny UI element
   that uses the [mustache templating syntax](https://mustache.github.io/). The
   advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
   variables in the template can appear anywhere in the HTML, not just in the

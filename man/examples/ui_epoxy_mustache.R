@@ -6,7 +6,7 @@ if (interactive()) {
     shiny::fluidRow(
       shiny::column(
         width = 6,
-        epoxy_output_mustache(
+        ui_epoxy_mustache(
           id = "template",
           h2(class = "{{heading_class}}", "Hello, {{name}}!"),
           "{{#fruits}}",

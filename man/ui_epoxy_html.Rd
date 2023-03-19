@@ -163,5 +163,5 @@ if (interactive()) {
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
+\code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 }

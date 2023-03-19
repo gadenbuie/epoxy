@@ -25,7 +25,7 @@ corresponding to the template variables created with the associated
 
 \item{env}{The environment in which to evaluate the \code{...}}
 
-\item{outputFunc}{Either \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, i.e. the
+\item{outputFunc}{Either \code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, i.e. the
 UI function to be paired with this output. This is only used when calling
 \code{render_epoxy()} in an Shiny runtime R Markdown document and when you
 are only providing the output without an explicit, corresponding UI
@@ -43,7 +43,7 @@ Shiny's \code{output} object and named to match the \code{.id} of the correspond
 \description{
 Server-side render function used to provide values for template items. Use
 named values matching the template variable names in the associated
-\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}. When the values are updated by
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} or \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}. When the values are updated by
 the app, \code{render_epoxy()} will update the values shown in the app's UI.
 }
 \section{Functions}{
