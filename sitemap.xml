@@ -94,6 +94,15 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/renderEpoxyHTML.html</loc>
   </url>
   <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/render_epoxy.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/ui_epoxy_html.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/ui_epoxy_mustache.html</loc>
+  </url>
+  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/use_epoxy_knitr_engines.html</loc>
   </url>
 </urlset>
