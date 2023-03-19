@@ -77,6 +77,9 @@
   variables in the template can appear anywhere in the HTML, not just in the
   text portion (#51).
   
+  * `ui_epoxy_whisker()` is also provided as an alias for discoverability/user
+    comfort (#60).
+  
 * `epoxyHTML()` and `renderEpoxyHTML()` were renamed `ui_epoxy_html()` and
   `render_epoxy()` respectively. This better fits newer Shiny naming conventions
   and reflects that `render_epoxy()` serves both `ui_epoxy_html()` and
