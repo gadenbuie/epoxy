@@ -11,7 +11,7 @@
 #'
 #' `ui_epoxy_html()` also supports an HTML markup syntax similar to
 #' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). With the
-#' markup syntax, `"{{h3.example.basic%basic-three demo}}"` creates a `demo`
+#' markup syntax, `"{{h3.example.basic#basic-three demo}}"` creates a `demo`
 #' placeholder inside an `<h3 id="basic-three" class="example basic"></h3>` tag.
 #'
 #' The placeholder template string follows the pattern `{{<markup> <name>}}`.

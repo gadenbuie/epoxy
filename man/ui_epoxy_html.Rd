@@ -89,7 +89,7 @@ element in your UI, with the classes specified in \code{.class_item}.
 
 \code{ui_epoxy_html()} also supports an HTML markup syntax similar to
 \href{https://pughtml.com/what-is-pug-html}{pug} (an HTML preprocessor). With the
-markup syntax, \code{"{{h3.example.basic\%basic-three demo}}"} creates a \code{demo}
+markup syntax, \code{"{{h3.example.basic#basic-three demo}}"} creates a \code{demo}
 placeholder inside an \verb{<h3 id="basic-three" class="example basic"></h3>} tag.
 
 The placeholder template string follows the pattern \verb{\{\{<markup> <name>\}\}}.
