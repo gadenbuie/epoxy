@@ -218,7 +218,46 @@ epoxyHTML_transformer <- function(
 #' [ui_epoxy_html()] requires that the dynamic template variables appear in the text
 #' portion of the UI.
 #'
-#' @example man/examples/ui_epoxy_mustache.R
+#' @examplesIf rlang::is_installed("shiny")
+#' ui <- shiny::fluidPage(
+#'   shiny::fluidRow(
+#'     shiny::column(
+#'       width = 6,
+#'       ui_epoxy_mustache(
+#'         id = "template",
+#'         shiny::h2(class = "{{heading_class}}", "Hello, {{name}}!"),
+#'         "{{#fruits}}",
+#'         shiny::p("Your favorite fruits are..."),
+#'         shiny::tags$ul(HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
+#'         "{{/fruits}}",
+#'         "{{^fruits}}<p>Do you have any favorite fruits?</p>{{/fruits}}"
+#'       )
+#'     ),
+#'     shiny::column(
+#'       width = 6,
+#'       shiny::h2("Inputs"),
+#'       shiny::textInput("name", "Your name", "user"),
+#'       shiny::textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
+#'       shiny::helpText("Enter a comma-separated list of fruits.")
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   output$template <- render_epoxy(
+#'     name = input$name,
+#'     heading_class = if (nzchar(input$name) && input$name != "user") {
+#'       "text-success"
+#'     },
+#'     fruits = if (nzchar(input$fruits)) {
+#'       list(fruit = strsplit(input$fruits, "\\s*,\\s*")[[1]])
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(ui, server)
+#' }
 #'
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
