@@ -93,8 +93,7 @@
 #'   by default `"span"`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
-#' @param .open Opening template variable delimiter
-#' @param .close Closing template variable delimiter
+#' @inheritParams epoxy
 #' @inheritParams glue::glue
 #'
 #' @seealso [ui_epoxy_mustache()], [render_epoxy()]

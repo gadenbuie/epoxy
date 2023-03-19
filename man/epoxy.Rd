@@ -69,11 +69,13 @@ Named arguments are taken to be temporary variables available for substitution.}
 evaluated from left to right. If \code{.x} is an environment, the expressions are
 evaluated in that environment and \code{.envir} is ignored. If \code{NULL} is passed, it is equivalent to \code{\link[=emptyenv]{emptyenv()}}.}
 
-\item{.open}{[\code{character(1)}: \sQuote{\\\{}]\cr The opening delimiter. Doubling the
-full delimiter escapes it.}
+\item{.open}{[\code{character(1)}: \sQuote{\\\{}]\cr The opening delimiter around
+the template variable or expression. Doubling the full delimiter escapes
+it.}
 
-\item{.close}{[\code{character(1)}: \sQuote{\\\}}]\cr The closing delimiter. Doubling the
-full delimiter escapes it.}
+\item{.close}{[\code{character(1)}: \sQuote{\\\}}]\cr The closing delimiter
+around the template variable or expression. Doubling the full delimiter
+escapes it.}
 
 \item{.na}{[\code{character(1)}: \sQuote{NA}]\cr Value to replace \code{NA} values
 with. If \code{NULL} missing values are propagated, that is an \code{NA} result will

@@ -68,10 +68,12 @@ use_epoxy_glue_engine <- function() {
 #' @param .style For [epoxy_style()]
 #### Inlined from https://github.com/tidyverse/glue/blob/main/R/glue.R#L15-L18
 #### to avoid https://github.com/r-lib/roxygen2/issues/1355
-#' @param .open \[`character(1)`: \sQuote{\\\{}]\cr The opening delimiter. Doubling the
-#'   full delimiter escapes it.
-#' @param .close \[`character(1)`: \sQuote{\\\}}]\cr The closing delimiter. Doubling the
-#'   full delimiter escapes it.
+#' @param .open \[`character(1)`: \sQuote{\\\{}]\cr The opening delimiter around
+#'   the template variable or expression. Doubling the full delimiter escapes
+#'   it.
+#' @param .close \[`character(1)`: \sQuote{\\\}}]\cr The closing delimiter
+#'   around the template variable or expression. Doubling the full delimiter
+#'   escapes it.
 ####
 #' @inheritParams glue::glue
 #'
