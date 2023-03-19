@@ -48,7 +48,8 @@ the app, \code{render_epoxy()} will update the values shown in the app's UI.
 }
 \section{Functions}{
 \itemize{
-\item \code{renderEpoxyHTML()}: Deprecated alias, please use \code{render_epoxy()}.
+\item \code{renderEpoxyHTML()}: \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated alias,
+please use \code{render_epoxy()}.
 
 }}
 \examples{
