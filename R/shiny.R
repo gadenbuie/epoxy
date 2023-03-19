@@ -304,6 +304,12 @@ ui_epoxy_mustache <- function(
   }
 }
 
+#' @describeIn ui_epoxy_mustache An alias for `ui_epoxy_mustache()`, provided
+#'   because R users are more familiar with this syntax via the \pkg{whisker}
+#'   package.
+#' @export
+ui_epoxy_whisker <- ui_epoxy_mustache
+
 epoxy_mustache_dependencies <- function() {
   htmltools::tagList(
     htmltools::htmlDependency(
