@@ -144,7 +144,8 @@ ui_epoxy_html <- function(
 
   out <- htmltools::tags[[.container]](
     id = .id,
-    class = collapse_space(c("epoxy-html epoxy-init", .class)),
+    class = "epoxy-html epoxy-init",
+    class = .class,
     htmltools::HTML(res),
     htmltools::htmlDependency(
       name = "epoxy",
