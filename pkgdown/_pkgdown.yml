@@ -24,9 +24,9 @@ reference:
   - '`epoxy_style_html`'
 - title: Templating for Shiny
   contents:
-  - '`epoxyHTML`'
-  - epoxy_output_mustache
-  - '`renderEpoxyHTML`'
+  - '`ui_epoxy_html`'
+  - ui_epoxy_mustache
+  - '`render_epoxy`'
 - title: Example Datasets
   description: |
     Interesting datasets that can help you explore, learn, and practice using epoxy.

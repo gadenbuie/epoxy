@@ -1,15 +1,17 @@
 #' Epoxy HTML Output for Shiny
 #'
-#' Expermimental. An glue-like output for Shiny. `epoxyHTML()` lets you use
-#' placeholders in your HTML such as `"{{height}}"`, that are provided values
-#' from the server by giving `renderEpoxyHTML()` a `height` value.
+#' @description `r lifecycle::badge('experimental')`
+#'
+#' A glue-like output for Shiny. `ui_epoxy_html()` lets you use placeholders in your
+#' HTML such as `"{{first_name}}"`, that are provided values from the server by
+#' giving `render_epoxy()` a `first_name` value.
 #'
 #' @section HTML Markup: By default, placeholders are inserted into a `<span>`
 #' element in your UI, with the classes specified in `.class_item`.
 #'
-#' `epoxyHTML()` also supports an HTML markup syntax similar to
+#' `ui_epoxy_html()` also supports an HTML markup syntax similar to
 #' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). With the
-#' markup syntax, `"{{h3.example.basic%basic-three demo}}"` creates a `demo`
+#' markup syntax, `"{{h3.example.basic#basic-three demo}}"` creates a `demo`
 #' placeholder inside an `<h3 id="basic-three" class="example basic"></h3>` tag.
 #'
 #' The placeholder template string follows the pattern `{{<markup> <name>}}`.
@@ -20,8 +22,8 @@
 #'
 #' @examplesIf rlang::is_installed("shiny")
 #' ui <- shiny::fluidPage(
-#'   shiny::h2("epoxyHTML demo"),
-#'   epoxyHTML(
+#'   shiny::h2("ui_epoxy_html demo"),
+#'   ui_epoxy_html(
 #'     .id = 'test',
 #'     .class_item = "inner",
 #'     shiny::fluidRow(
@@ -62,13 +64,13 @@
 #'   ),
 #'   shiny::tags$style(shiny::HTML(
 #'     '.big { font-size: 1.5em; }
-#'     .inner:not(.epoxy-item__placeholder) { background-color: rgba(254, 233, 105, 0.5)}
-#'     .epoxy-item__placeholder { color: #999999; }'
+#'      .inner { background-color: rgba(254, 233, 105, 0.5);}
+#'      .epoxy-item__placeholder { color: #999999; background-color: unset; }'
 #'   ))
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   output$test <- renderEpoxyHTML(
+#'   output$test <- render_epoxy(
 #'     thing = input$thing,
 #'     color = input$color,
 #'     height = input$height
@@ -95,10 +97,10 @@
 #' @param .close Closing template variable delimiter
 #' @inheritParams glue::glue
 #'
-#' @seealso [epoxy_output_mustache()], [renderEpoxyHTML()]
+#' @seealso [ui_epoxy_mustache()], [render_epoxy()]
 #' @return An HTML object.
 #' @export
-epoxyHTML <- function(
+ui_epoxy_html <- function(
   .id,
   ...,
   .class = NULL,
@@ -114,8 +116,6 @@ epoxyHTML <- function(
   .literal = FALSE,
   .trim = FALSE
 ) {
-  rlang::check_installed("stringr")
-
   .container <- match.arg(.container, names(htmltools::tags))
   .container_item <- match.arg(.container_item, names(htmltools::tags))
 
@@ -144,7 +144,8 @@ epoxyHTML <- function(
 
   out <- htmltools::tags[[.container]](
     id = .id,
-    class = collapse_space(c("epoxy-html epoxy-init", .class)),
+    class = "epoxy-html epoxy-init",
+    class = .class,
     htmltools::HTML(res),
     htmltools::htmlDependency(
       name = "epoxy",
@@ -162,6 +163,16 @@ epoxyHTML <- function(
   }
 }
 
+#' @describeIn ui_epoxy_html Deprecated alias for `ui_epoxy_html()`.
+#' @export
+epoxyHTML <- function(.id, ...) {
+  lifecycle::deprecate_soft(
+    "0.1.0", "epoxyHTML()", "ui_epoxy_html()",
+    details = "`epoxyHTML()` was renamed. Please use the new name at your earliest convenience."
+  )
+  ui_epoxy_html(.id, ...)
+}
+
 transformer_js_literal <- function(text, envir) {
   paste0("${", text, "}")
 }
@@ -170,8 +181,6 @@ epoxyHTML_transformer <- function(
   class = NULL,
   element = "span"
 ) {
-  class <- collapse_space(c("epoxy-item__placeholder", class))
-
   function(text, envir) {
     markup <- parse_html_markup(text)
     placeholder <- rlang::env_get(
@@ -182,13 +191,12 @@ epoxyHTML_transformer <- function(
     )
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element
-    if (!is.null(markup$class)) {
-      class <- collapse_space(class, markup$class)
-    }
     htmltools::tag(
       tag_name,
       list(
+        class = "epoxy-item__placeholder",
         class = class,
+        class = markup$class,
         id = markup$id,
         `data-epoxy-item` = markup$item,
         htmltools::HTML(placeholder)
@@ -201,12 +209,51 @@ epoxyHTML_transformer <- function(
 #'
 #' A Shiny output that uses [mustache templating](https://mustache.github.io/)
 #' to render HTML. Mustache is a powerful template language with minimal
-#' internal logic. The advantage of `epoxy_output_mustache()` is that all parts
+#' internal logic. The advantage of `ui_epoxy_mustache()` is that all parts
 #' of the HTML can be templated -- including element attributes -- whereas
-#' [epoxyHTML()] requires that the dynamic template variables appear in the text
+#' [ui_epoxy_html()] requires that the dynamic template variables appear in the text
 #' portion of the UI.
 #'
-#' @example man/examples/epoxy_output_mustache.R
+#' @examplesIf rlang::is_installed("shiny")
+#' ui <- shiny::fluidPage(
+#'   shiny::fluidRow(
+#'     shiny::column(
+#'       width = 6,
+#'       ui_epoxy_mustache(
+#'         id = "template",
+#'         shiny::h2(class = "{{heading_class}}", "Hello, {{name}}!"),
+#'         "{{#fruits}}",
+#'         shiny::p("Your favorite fruits are..."),
+#'         shiny::tags$ul(shiny::HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
+#'         "{{/fruits}}",
+#'         "{{^fruits}}<p>Do you have any favorite fruits?</p>{{/fruits}}"
+#'       )
+#'     ),
+#'     shiny::column(
+#'       width = 6,
+#'       shiny::h2("Inputs"),
+#'       shiny::textInput("name", "Your name", "user"),
+#'       shiny::textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
+#'       shiny::helpText("Enter a comma-separated list of fruits.")
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   output$template <- render_epoxy(
+#'     name = input$name,
+#'     heading_class = if (nzchar(input$name) && input$name != "user") {
+#'       "text-success"
+#'     },
+#'     fruits = if (nzchar(input$fruits)) {
+#'       list(fruit = strsplit(input$fruits, "\\s*,\\s*")[[1]])
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(ui, server)
+#' }
 #'
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
@@ -217,9 +264,9 @@ epoxyHTML_transformer <- function(
 #'
 #' @return Returns a Shiny output UI element.
 #'
-#' @seealso [epoxyHTML()], [renderEpoxyHTML()]
+#' @seealso [ui_epoxy_html()], [render_epoxy()]
 #' @export
-epoxy_output_mustache <- function(
+ui_epoxy_mustache <- function(
   id,
   ...,
   sep = "",
@@ -285,17 +332,17 @@ epoxy_mustache_dependencies <- function() {
 #'
 #' Server-side render function used to provide values for template items. Use
 #' named values matching the template variable names in the associated
-#' `epoxyHTML()`. When the values are updated by the app, `renderEpoxyHTML()`
-#' will update the values shown in the app's UI.
+#' [ui_epoxy_html()] or [ui_epoxy_mustache()]. When the values are updated by
+#' the app, `render_epoxy()` will update the values shown in the app's UI.
 #'
-#' @examples
-#' # This small app shows the current time using `epoxyHTML()`
-#' # to provide the HTML template and `renderEpoxyHTML()` to
+#' @examplesIf rlang::is_installed("shiny")
+#' # This small app shows the current time using `ui_epoxy_html()`
+#' # to provide the HTML template and `render_epoxy()` to
 #' # update the current time every second.
 #'
 #' ui <- shiny::fluidPage(
 #'   shiny::h2("Current Time"),
-#'   epoxyHTML(
+#'   ui_epoxy_html(
 #'     "time",
 #'     shiny::p("The current time is {{strong time}}.")
 #'   )
@@ -307,7 +354,7 @@ epoxy_mustache_dependencies <- function() {
 #'     strftime(Sys.time(), "%F %T")
 #'   })
 #'
-#'   output$time <- renderEpoxyHTML(time = current_time())
+#'   output$time <- render_epoxy(time = current_time())
 #' }
 #'
 #' if (interactive()) {
@@ -315,31 +362,31 @@ epoxy_mustache_dependencies <- function() {
 #' }
 #'
 #' @param ... Named values corresponding to the template variables created with
-#'   the associated [epoxyHTML()] UI element.
+#'   the associated [ui_epoxy_html()] UI element.
 #' @param .list A named list or a [shiny::reactiveValues()] list with names
 #'   corresponding to the template variables created with the associated
-#'   [epoxyHTML()] UI element.
+#'   [ui_epoxy_html()] UI element.
 #' @param env The environment in which to evaluate the `...`
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [epoxyHTML()] when `renderEpoxyHTML` is used in an interactive R
+#'   call to [ui_epoxy_html()] when `render_epoxy` is used in an interactive R
 #'   Markdown document.
-#' @param outputFunc Either [epoxyHTML()] or [epoxy_output_mustache()], i.e. the
+#' @param outputFunc Either [ui_epoxy_html()] or [ui_epoxy_mustache()], i.e. the
 #'   UI function to be paired with this output. This is only used when calling
-#'   `renderEpoxyHTML()` in an Shiny runtime R Markdown document and when you
+#'   `render_epoxy()` in an Shiny runtime R Markdown document and when you
 #'   are only providing the output without an explicit, corresponding UI
 #'   element.
 #'
 #' @return A server-side Shiny render function that should be assigned to
 #'   Shiny's `output` object and named to match the `.id` of the corresponding
-#'   [epoxyHTML()] call.
+#'   [ui_epoxy_html()] call.
 #'
-#' @seealso [epoxyHTML()]
+#' @seealso [ui_epoxy_html()]
 #' @export
-renderEpoxyHTML <- function(
+render_epoxy <- function(
   ...,
   .list = NULL,
   env = parent.frame(),
-  outputFunc = epoxyHTML,
+  outputFunc = ui_epoxy_html,
   outputArgs = list()
 ) {
   rlang::check_installed("shiny")
@@ -373,6 +420,13 @@ renderEpoxyHTML <- function(
     outputFunc = outputFunc,
     outputArgs = outputArgs
   )
+}
+
+#' @describeIn render_epoxy Deprecated alias, please use `render_epoxy()`.
+#' @export
+renderEpoxyHTML <- function(..., env = parent.frame()) {
+  lifecycle::deprecate_soft("0.1.0", "renderEpoxyHTML()", "render_epoxy()")
+  render_epoxy(..., env = env)
 }
 
 format_tags <- function(x) {

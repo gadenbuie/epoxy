@@ -17,6 +17,7 @@ Imports:
     glue (>= 1.5.0),
     htmltools,
     knitr (>= 1.37),
+    lifecycle,
     purrr,
     rlang,
     rmarkdown,

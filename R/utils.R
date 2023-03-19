@@ -34,10 +34,6 @@ is_htmlish_output <- function(exclude = NULL) { # nocov start
   fmt %in% fmt_htmlish
 } # nocov end
 
-collapse_space <- function(...) {
-  paste(..., collapse = " ")
-}
-
 is_tag <- function(x) inherits(x, c("shiny.tag", "shiny.tag.list"))
 
 with_options <- function(opts, expr) {

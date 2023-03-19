@@ -60,4 +60,4 @@ $.extend(epoxyOutputBinding, {
     el.classList.remove('epoxy-error');
   }
 });
-Shiny.outputBindings.register(epoxyOutputBinding, 'shiny.epoxyHTML');
+Shiny.outputBindings.register(epoxyOutputBinding, 'shiny.ui_epoxy_html');

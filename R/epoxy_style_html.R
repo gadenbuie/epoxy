@@ -74,14 +74,11 @@ epoxy_style_html <- function(
 
     tag_name <- markup$element
     if (is.null(tag_name)) tag_name <- element
-    if (!is.null(markup$class)) {
-      class <- collapse_space(c(class, markup$class))
-    }
 
     html <- lapply(text, function(x) {
       htmltools::tag(
         tag_name,
-        list(class = class, id = markup$id, x),
+        list(class = class, class = markup$class, id = markup$id, x),
         .noWS = c("inside", "outside")
       )
     })
