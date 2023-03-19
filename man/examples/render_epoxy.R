@@ -1,5 +1,5 @@
 # This small app shows the current time using `epoxyHTML()`
-# to provide the HTML template and `epoxy_render()` to
+# to provide the HTML template and `render_epoxy()` to
 # update the current time every second.
 
 ui <- shiny::fluidPage(
@@ -16,7 +16,7 @@ server <- function(input, output, session) {
     strftime(Sys.time(), "%F %T")
   })
 
-  output$time <- epoxy_render(time = current_time())
+  output$time <- render_epoxy(time = current_time())
 }
 
 if (interactive()) {

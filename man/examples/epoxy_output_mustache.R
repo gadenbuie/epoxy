@@ -27,7 +27,7 @@ if (interactive()) {
   )
 
   server <- function(input, output, session) {
-    output$template <- epoxy_render(
+    output$template <- render_epoxy(
       name = input$name,
       heading_class = if (nzchar(input$name) && input$name != "user") {
         "text-success"

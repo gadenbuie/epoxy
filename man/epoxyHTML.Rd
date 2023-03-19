@@ -73,7 +73,7 @@ An HTML object.
 
 A glue-like output for Shiny. \code{epoxyHTML()} lets you use placeholders in your
 HTML such as \code{"{{first_name}}"}, that are provided values from the server by
-giving \code{epoxy_render()} a \code{first_name} value.
+giving \code{render_epoxy()} a \code{first_name} value.
 }
 \section{HTML Markup}{
  By default, placeholders are inserted into a \verb{<span>}
@@ -142,7 +142,7 @@ ui <- shiny::fluidPage(
 )
 
 server <- function(input, output, session) {
-  output$test <- epoxy_render(
+  output$test <- render_epoxy(
     thing = input$thing,
     color = input$color,
     height = input$height
@@ -155,5 +155,5 @@ if (interactive()) {
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, \code{\link[=epoxy_render]{epoxy_render()}}
+\code{\link[=epoxy_output_mustache]{epoxy_output_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 }
