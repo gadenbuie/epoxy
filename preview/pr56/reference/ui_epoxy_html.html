@@ -195,7 +195,7 @@ template with <code><a href="https://glue.tidyverse.org/reference/trim.html" cla
 element in your UI, with the classes specified in <code>.class_item</code>.</p>
 <p><code>ui_epoxy_html()</code> also supports an HTML markup syntax similar to
 <a href="https://pughtml.com/what-is-pug-html" class="external-link">pug</a> (an HTML preprocessor). With the
-markup syntax, <code>"{{h3.example.basic%basic-three demo}}"</code> creates a <code>demo</code>
+markup syntax, <code>"{{h3.example.basic#basic-three demo}}"</code> creates a <code>demo</code>
 placeholder inside an <code>&lt;h3 id="basic-three" class="example basic"&gt;&lt;/h3&gt;</code> tag.</p>
 <p>The placeholder template string follows the pattern <code>{{&lt;markup&gt; &lt;name&gt;}}</code>.
 The markup syntax comes first, separated from the placeholder name by a
@@ -253,8 +253,8 @@ and one ID, but many classes can be specified.</p>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu">shiny</span><span class="fu">::</span><span class="va"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">tags</a></span><span class="op">$</span><span class="fu">style</span><span class="op">(</span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/HTML.html" class="external-link">HTML</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">'.big { font-size: 1.5em; }</span></span></span>
-<span class="r-in"><span><span class="st">    .inner:not(.epoxy-item__placeholder) { background-color: rgba(254, 233, 105, 0.5)}</span></span></span>
-<span class="r-in"><span><span class="st">    .epoxy-item__placeholder { color: #999999; }'</span></span></span>
+<span class="r-in"><span><span class="st">     .inner { background-color: rgba(254, 233, 105, 0.5);}</span></span></span>
+<span class="r-in"><span><span class="st">     .epoxy-item__placeholder { color: #999999; background-color: unset; }'</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
