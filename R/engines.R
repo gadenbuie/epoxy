@@ -22,6 +22,9 @@
 #' note that this will most likely overwrite the `glue` engine provided by the
 #' \pkg{glue} package.
 #'
+#' @exaplesIf interactive()
+#' use_epoxy_knitr_engines()
+#'
 #' @param use_glue_engine If `TRUE` (default `FALSE`), uses \pkg{epoxy}'s `glue`
 #'   engine, most likely overwriting the `glue` engine provided by \pkg{glue}.
 #'
@@ -76,6 +79,9 @@ use_epoxy_glue_engine <- function() {
 #'   escapes it.
 ####
 #' @inheritParams glue::glue
+#'
+#' @return Returns a transformed string, using `glue::glue()` but with the
+#'   additional transformers provided to the `.style` argument of `epoxy()`.
 #'
 #' @describeIn epoxy super `glue()`
 #' @export
