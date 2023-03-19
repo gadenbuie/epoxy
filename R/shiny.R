@@ -160,7 +160,8 @@ ui_epoxy_html <- function(
   }
 }
 
-#' @describeIn ui_epoxy_html Deprecated alias for `ui_epoxy_html()`.
+#' @describeIn ui_epoxy_html `r lifecycle::badge('deprecated')` Deprecated
+#'   alias, please use `ui_epoxy_html()`.
 #' @export
 epoxyHTML <- function(.id, ...) {
   lifecycle::deprecate_soft(
@@ -419,7 +420,8 @@ render_epoxy <- function(
   )
 }
 
-#' @describeIn render_epoxy Deprecated alias, please use `render_epoxy()`.
+#' @describeIn render_epoxy `r lifecycle::badge('deprecated')` Deprecated alias,
+#'   please use `render_epoxy()`.
 #' @export
 renderEpoxyHTML <- function(..., env = parent.frame()) {
   lifecycle::deprecate_soft("0.1.0", "renderEpoxyHTML()", "render_epoxy()")
