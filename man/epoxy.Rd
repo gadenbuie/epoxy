@@ -102,6 +102,10 @@ template with \code{\link[glue:trim]{trim()}} or not.}
 \code{data} used to transform the output of each block before, during, or after
 evaluation. For example transformers see \code{vignette("transformers")}.}
 }
+\value{
+Returns a transformed string, using \code{glue::glue()} but with the
+additional transformers provided to the \code{.style} argument of \code{epoxy()}.
+}
 \description{
 The functions power the knitr chunk engines and are wrappers around
 \code{\link[glue:glue]{glue::glue()}}, with a few extra conveniences provided by \pkg{epoxy}.

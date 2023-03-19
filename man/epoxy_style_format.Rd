@@ -93,6 +93,10 @@ the current transformation. In nearly all cases, you can let
 \code{epoxy_style()} handle this for you. The chain ends when
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 }
+\value{
+A function of \code{text} and \code{envir} suitable for the \code{.transformer}
+argument of \code{\link[glue:glue]{glue::glue()}}.
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 

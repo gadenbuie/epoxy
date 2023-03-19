@@ -77,6 +77,9 @@ use_epoxy_glue_engine <- function() {
 ####
 #' @inheritParams glue::glue
 #'
+#' @return Returns a transformed string, using `glue::glue()` but with the
+#'   additional transformers provided to the `.style` argument of `epoxy()`.
+#'
 #' @describeIn epoxy super `glue()`
 #' @export
 epoxy <- function(
