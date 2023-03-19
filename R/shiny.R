@@ -1,7 +1,5 @@
 #' Epoxy HTML Output for Shiny
 #'
-#' @description `r lifecycle::badge('experimental')`
-#'
 #' A glue-like output for Shiny. `ui_epoxy_html()` lets you use placeholders in your
 #' HTML such as `"{{first_name}}"`, that are provided values from the server by
 #' giving `render_epoxy()` a `first_name` value.
