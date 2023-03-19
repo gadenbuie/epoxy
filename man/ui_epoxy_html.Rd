@@ -144,8 +144,8 @@ ui <- shiny::fluidPage(
   ),
   shiny::tags$style(shiny::HTML(
     '.big { font-size: 1.5em; }
-    .inner:not(.epoxy-item__placeholder) { background-color: rgba(254, 233, 105, 0.5)}
-    .epoxy-item__placeholder { color: #999999; }'
+     .inner { background-color: rgba(254, 233, 105, 0.5);}
+     .epoxy-item__placeholder { color: #999999; background-color: unset; }'
   ))
 )
 
