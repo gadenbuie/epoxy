@@ -16,7 +16,7 @@ epoxy(
   .close = "}",
   .na = "",
   .null = "",
-  .comment = "#",
+  .comment = character(),
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL

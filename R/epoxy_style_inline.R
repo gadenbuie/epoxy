@@ -1,0 +1,196 @@
+#' Epoxy Inline Style Transformer
+#'
+#' @description
+#' This epoxy style is heavily inspired by the inline formatters in the
+#' [cli package](https://cli.r-lib.org). The syntax is quite similar, but
+#' \pkg{epoxy}'s syntax is slightly different to accomodate reporting use cases.
+#'
+#' With the inline styles, you can include a keyword, prefixed with a dot (`.`)
+#' that is used to format the template variable in place.
+#'
+#' ```{r}
+#' epoxy("It cost {.dollar 123456}.", .style = "inline")
+#' ```
+#'
+#' The formatters, e.g. `dollar` in the example above, can be customized using
+#' the arguments of `epoxy_style_inline()`. Pass a customized
+#' [scales::label_dollar()] to `dollar` to achieve a different style.
+#'
+#' ```{r}
+#' dollars_nzd <- scales::label_dollar(suffix = " NZD")
+#'
+#' epoxy(
+#'   "It cost {.dollar 123456}.",
+#'   .style = epoxy_style_inline(dollar = dollars_nzd)
+#' )
+#' ```
+#'
+#' Note that, unlike
+#' [inline markup with cli](https://cli.r-lib.org/reference/inline-markup.html),
+#' the text within the template variable, other than the keyword, is treated as
+#' an R expression.
+#'
+#' ```{r}
+#' money <- 123456
+#' epoxy("It cost {.dollar money}.", .style = "inline")
+#' ```
+#'
+#' You can also nest inline markup expressions.
+#'
+#' ```{r}
+#' money <- c(123.456, 234.567)
+#' epoxy("It will cost either {.or {.dollar money}}.", .style = "inline")
+#' ```
+#'
+#' Finally, you can provide your own function that is applied to the evaluated
+#' expression.
+#'
+#' ```{r}
+#' set.seed(4242)
+#'
+#' epoxy(
+#'   "Here are three random percentages: {.and {.pct {.runif 3}}}.",
+#'   .style = epoxy_style_inline(
+#'     runif = function(n) sort(runif(n))
+#'   )
+#' )
+#' ```
+#'
+#' @param ... Additional named inline transformers. The evaluated expression
+#'   from the template expression is passed as the first argument to the
+#'   function.
+#' @inheritParams epoxy_style_format
+#' @inheritParams epoxy
+#'
+#' @export
+epoxy_style_inline <- function(
+  ...,
+  transformer = glue::identity_transformer,
+  bytes       = scales::bytes,
+  date        = scales::label_date(),
+  time        = scales::label_time(),
+  dttm        = function(text) strftime(text, "%F %T"),
+  dollar      = scales::label_dollar(prefix = default_for_engine("$", "$", "\\$")),
+  number      = scales::number,
+  comma       = scales::comma,
+  ordinal     = scales::ordinal,
+  math        = scales::math,
+  percent     = scales::label_percent(suffix = default_for_engine("%", "%", "\\%")),
+  pvalue      = scales::pvalue,
+  scientific  = scales::scientific,
+  uppercase   = toupper(text),
+  lowercase   = tolower(text),
+  titlecase   = tools::toTitleCase(text)
+) {
+  force(transformer)
+  comma_numeric <- comma
+  comma <- function(x) {
+    if (is.character(x)) return(paste(x, collapse = ", "))
+    comma_numeric(x)
+  }
+
+  dots <- rlang::dots_list(...)
+  if (!all(nzchar(rlang::names2(dots)))) {
+    rlang::abort("All functions provided in `...` must be named.")
+  }
+  dots <- purrr::keep(dots, rlang::is_function)
+
+  self <- function(text, envir) {
+    inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
+
+    if (!grepl(inline_regex, text, perl = TRUE)) {
+      return(transformer(text, envir))
+    }
+
+    text <- trimws(text)
+    class <- sub(inline_regex, "\\1", text, perl = TRUE)
+    text <- sub(inline_regex, "\\2", text, perl = TRUE)
+
+    text <- remove_outer_delims(text)
+
+    # if (isTRUE(attr(text, "is_inner_expr"))) {
+    #   attr(text, "is_inner_expr") <- NULL
+    text <- self(text, envir)
+    # }
+
+    maybe_custom_class <- function(text) {
+      if (class %in% rlang::names2(dots)) {
+        dots[[class]](text)
+      } else {
+        text
+      }
+    }
+
+    switch(
+      class,
+      and = and::and(text),
+      or = and::or(text),
+      bold = ,
+      strong     = epoxy_bold(text),
+      italic = ,
+      emph       = epoxy_italic(text),
+      code       = epoxy_code(text),
+      bytes      = bytes(text),
+      date       = date(text),
+      time       = time(text),
+      dttm       = dttm(text),
+      dollar     = dollar(text),
+      num = ,
+      number     = number(text),
+      comma      = comma(text),
+      ordinal    = ordinal(text),
+      math       = math(text),
+      pct = ,
+      percent    = percent(text),
+      pvalue     = pvalue(text),
+      scientific = scientific(text),
+      uc = ,
+      upper      = toupper(text),
+      lc = ,
+      lower      = tolower(text),
+      tc = ,
+      title      = tools::toTitleCase(text),
+      inc = sort(text),
+      dec = sort(text, decreasing = TRUE),
+      maybe_custom_class(text)
+    )
+  }
+
+  self
+}
+
+remove_outer_delims <- function(text) {
+  delims <- getOption("epoxy:::private", list())
+  open <- delims$.open %||% "{"
+  close <- delims$.close %||% "}"
+
+  if (!grepl(open, text, fixed = TRUE)) {
+    return(text)
+  }
+
+  text <- strsplit(text, open, fixed = TRUE)[[1]][-1]
+  text <- paste(text, collapse = open)
+  text <- strsplit(text, close, fixed = TRUE)[[1]]
+  # collapse removes the final closer for us
+  text <- paste(text, collapse = close)
+  attr(text, "is_inner_expr") <- TRUE
+  text
+}
+
+epoxy_bold <- function(text) {
+  before <- default_for_engine("**", "<strong>", "\\textbf{")
+  after <- default_for_engine("**", "</strong>", "}")
+  paste0(before, text, after)
+}
+
+epoxy_italic <- function(text) {
+  before <- default_for_engine("_", "<em>", "\\emph{")
+  after <- default_for_engine("_", "</em>", "}")
+  paste0(before, text, after)
+}
+
+epoxy_code <- function(text) {
+  before <- default_for_engine("`", "<code>", "\\texttt{")
+  after <- default_for_engine("`", "</code>", "}")
+  paste0(before, text, after)
+}

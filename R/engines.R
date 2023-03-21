@@ -95,7 +95,7 @@ epoxy <- function(
   .close = "}",
   .na = "",
   .null = "",
-  .comment = "#",
+  .comment = character(),
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL
@@ -111,6 +111,9 @@ epoxy <- function(
     epoxy_style = .style,
     .transformer = .transformer
   )
+
+  old_opts <- options("epoxy:::private" = list(.open = .open, .close = .close))
+  on.exit(old_opts, add = TRUE)
 
   glue_data(
     .x = .data,
