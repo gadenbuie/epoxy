@@ -45,8 +45,6 @@
 #'   Default is [scales::label_ordinal()].
 #' @param parse The function to apply to when `label` is `"parse"`. Default is
 #'   [scales::label_parse()].
-#' @param math The function to apply to when `label` is `"math"`. Default is
-#'   [scales::label_math()].
 #' @param percent The function to apply to when `label` is `"percent", "pct", or
 #'   "%"`. Default is [scales::label_percent()].
 #' @param pvalue The function to apply to when `label` is `"pvalue" or "p"`.
@@ -84,7 +82,6 @@ epoxy_style_format  <- function(
   number_auto = scales::label_number_auto(),
   ordinal     = scales::label_ordinal(),
   parse       = scales::label_parse(),
-  math        = scales::label_math(),
   percent     = scales::label_percent(),
   pvalue      = scales::label_pvalue(),
   scientific  = scales::label_scientific(),
