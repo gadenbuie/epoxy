@@ -7,7 +7,6 @@
 epoxy_style_format(
   bytes = scales::label_bytes(),
   date = scales::label_date(),
-  date_short = scales::label_date_short(),
   time = scales::label_time(),
   dollar = scales::label_dollar(),
   log = scales::label_log(),
@@ -34,8 +33,6 @@ epoxy_style_format(
 
 \item{date}{The function to apply to when \code{label} is \verb{"date" or "d"}. Default
 is \code{\link[scales:label_date]{scales::label_date()}}.}
-
-\item{date_short}{The function to apply to when \code{label} is \verb{"date_short" or "ds"}. Default is \code{\link[scales:label_date]{scales::label_date_short()}}.}
 
 \item{time}{The function to apply to when \code{label} is \verb{"time" or "dt"}.
 Default is \code{\link[scales:label_date]{scales::label_time()}}.}
@@ -172,7 +169,6 @@ at a rate of $185 per night.
    \code{label} \tab Applies formatting with \cr
    \code{"bytes"} \tab \code{\link[scales:label_bytes]{scales::label_bytes()}} \cr
    \code{"d"}, \code{"date"} \tab \code{\link[scales:label_date]{scales::label_date()}} \cr
-   \code{"ds"}, \code{"date_short"} \tab \code{\link[scales:label_date]{scales::label_date_short()}} \cr
    \code{"dt"}, \code{"time"} \tab \code{\link[scales:label_date]{scales::label_time()}} \cr
    \code{"$"}, \code{"dollar"} \tab \code{\link[scales:label_dollar]{scales::label_dollar()}} \cr
    \code{"log"} \tab \code{\link[scales:label_log]{scales::label_log()}} \cr

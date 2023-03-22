@@ -29,8 +29,6 @@
 #'   [scales::label_bytes()].
 #' @param date The function to apply to when `label` is `"date" or "d"`. Default
 #'   is [scales::label_date()].
-#' @param date_short The function to apply to when `label` is `"date_short" or
-#'   "ds"`. Default is [scales::label_date_short()].
 #' @param time The function to apply to when `label` is `"time" or "dt"`.
 #'   Default is [scales::label_time()].
 #' @param dollar The function to apply to when `label` is `"dollar" or "$"`.
@@ -78,7 +76,6 @@
 epoxy_style_format  <- function(
   bytes       = scales::label_bytes(),
   date        = scales::label_date(),
-  date_short  = scales::label_date_short(),
   time        = scales::label_time(),
   dollar      = scales::label_dollar(),
   log         = scales::label_log(),
@@ -140,7 +137,6 @@ labellers_extras <- function() {
     "#"    = "number",
     ","    = "comma",
     "d"    = "date",
-    "ds"   = "date_short",
     "dt"   = "time",
     "a"    = "number_auto",
     "auto" = "number_auto",
