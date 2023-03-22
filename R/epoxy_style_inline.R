@@ -59,28 +59,29 @@
 #' @param ... Additional named inline transformers. The evaluated expression
 #'   from the template expression is passed as the first argument to the
 #'   function.
-#' @inheritParams epoxy_style_format
 #' @inheritParams epoxy
+#' @eval roxy_inline_params()
 #'
+#' @inherit epoxy_style return
+#' @family epoxy-style glue transformers
 #' @export
 epoxy_style_inline <- function(
   ...,
   transformer = glue::identity_transformer,
-  bytes       = scales::bytes,
-  date        = scales::label_date(),
-  time        = scales::label_time(),
-  dttm        = function(text) strftime(text, "%F %T"),
+  bytes       = scales::label_bytes(),
+  date        = function(x) format(x, format = "%F"),
+  time        = function(x) format(x, format = "%T"),
+  datetime    = function(x) format(x, format = "%F %T"),
   dollar      = scales::label_dollar(prefix = default_for_engine("$", "$", "\\$")),
-  number      = scales::number,
-  comma       = scales::comma,
-  ordinal     = scales::ordinal,
-  math        = scales::math,
+  number      = scales::label_number(),
+  comma       = scales::label_comma(),
+  ordinal     = scales::label_ordinal(),
   percent     = scales::label_percent(suffix = default_for_engine("%", "%", "\\%")),
-  pvalue      = scales::pvalue,
-  scientific  = scales::scientific,
-  uppercase   = toupper(text),
-  lowercase   = tolower(text),
-  titlecase   = tools::toTitleCase(text)
+  pvalue      = scales::label_pvalue(),
+  scientific  = scales::label_scientific(),
+  uppercase   = toupper,
+  lowercase   = tolower,
+  titlecase   = tools::toTitleCase
 ) {
   force(transformer)
   comma_numeric <- comma
@@ -133,13 +134,13 @@ epoxy_style_inline <- function(
       bytes      = bytes(text),
       date       = date(text),
       time       = time(text),
-      dttm       = dttm(text),
+      dttm = ,
+      datetime   = datetime(text),
       dollar     = dollar(text),
       num = ,
       number     = number(text),
       comma      = comma(text),
       ordinal    = ordinal(text),
-      math       = math(text),
       pct = ,
       percent    = percent(text),
       pvalue     = pvalue(text),
@@ -194,3 +195,42 @@ epoxy_code <- function(text) {
   after <- default_for_engine("`", "</code>", "}")
   paste0(before, text, after)
 }
+
+# nocov start
+roxy_inline_params <- function() {
+  args <- rlang::fn_fmls(epoxy_style_inline)
+  args <- args[setdiff(names(args), c("...", "transformer"))]
+  args <- purrr::map(args, rlang::expr_text)
+  args <- purrr::map_chr(args, function(expr) {
+    expr <- sub("\\(.+\\)$", "()", expr)
+    if (grepl("\\(\\)$", expr)) {
+      return(expr)
+    }
+    paste0(expr, "()")
+  })
+
+  extras <- c(
+    bold   = "strong",
+    italic = "emph",
+    dttm   = "datetime",
+    num    = "number",
+    pct    = "percent",
+    uc     = "uppercase",
+    lo     = "lowercase",
+    tc     = "titlecase"
+  )
+
+  values <- purrr::map_chr(names(args), function(label) {
+    label <- c(label, names(extras[extras == label]))
+    knitr::combine_words(label, before = '`{.', after = " x}`", and = " or ")
+  })
+
+  glue(
+    "@param {param} The function to apply to `x` when the template is {values}. ",
+    "Default is [{fn}].",
+    param = names(args),
+    fn = unname(args),
+    values = values
+  )
+}
+# nocov end

@@ -7,21 +7,20 @@
 epoxy_style_inline(
   ...,
   transformer = glue::identity_transformer,
-  bytes = scales::bytes,
-  date = scales::label_date(),
-  time = scales::label_time(),
-  dttm = function(text) strftime(text, "\%F \%T"),
+  bytes = scales::label_bytes(),
+  date = function(x) format(x, format = "\%F"),
+  time = function(x) format(x, format = "\%T"),
+  datetime = function(x) format(x, format = "\%F \%T"),
   dollar = scales::label_dollar(prefix = default_for_engine("$", "$", "\\\\$")),
-  number = scales::number,
-  comma = scales::comma,
-  ordinal = scales::ordinal,
-  math = scales::math,
+  number = scales::label_number(),
+  comma = scales::label_comma(),
+  ordinal = scales::label_ordinal(),
   percent = scales::label_percent(suffix = default_for_engine("\%", "\%", "\\\\\%")),
-  pvalue = scales::pvalue,
-  scientific = scales::scientific,
-  uppercase = toupper(text),
-  lowercase = tolower(text),
-  titlecase = tools::toTitleCase(text)
+  pvalue = scales::label_pvalue(),
+  scientific = scales::label_scientific(),
+  uppercase = toupper,
+  lowercase = tolower,
+  titlecase = tools::toTitleCase
 )
 }
 \arguments{
@@ -29,49 +28,41 @@ epoxy_style_inline(
 from the template expression is passed as the first argument to the
 function.}
 
-\item{transformer}{The transformer to apply to the replacement string. This
-argument is used for chaining the transformer functions. By providing a
-function to this argument you can apply an additional transformation after
-the current transformation. In nearly all cases, you can let
-\code{epoxy_style()} handle this for you. The chain ends when
-\code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
+\item{transformer}{[\verb{function]}\cr A function taking three parameters \code{code}, \code{envir} and
+\code{data} used to transform the output of each block before, during, or after
+evaluation. For example transformers see \code{vignette("transformers")}.}
 
-\item{bytes}{The function to apply to when \code{label} is \code{"bytes"}. Default is
-\code{\link[scales:label_bytes]{scales::label_bytes()}}.}
+\item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is \code{\link[scales:label_bytes]{scales::label_bytes()}}.}
 
-\item{date}{The function to apply to when \code{label} is \verb{"date" or "d"}. Default
-is \code{\link[scales:label_date]{scales::label_date()}}.}
+\item{date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \code{\link[=function]{function()}}.}
 
-\item{time}{The function to apply to when \code{label} is \verb{"time" or "dt"}.
-Default is \code{\link[scales:label_date]{scales::label_time()}}.}
+\item{time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \code{\link[=function]{function()}}.}
 
-\item{dollar}{The function to apply to when \code{label} is \verb{"dollar" or "$"}.
-Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
+\item{datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \code{\link[=function]{function()}}.}
 
-\item{number}{The function to apply to when \code{label} is \verb{"number" or "#"}.
-Default is \code{\link[scales:label_number]{scales::label_number()}}.}
+\item{dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
 
-\item{comma}{The function to apply to when \code{label} is \verb{"comma" or ","}.
-Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
+\item{number}{The function to apply to \code{x} when the template is \verb{\{.number x\}} or \verb{\{.num x\}}. Default is \code{\link[scales:label_number]{scales::label_number()}}.}
 
-\item{ordinal}{The function to apply to when \code{label} is \verb{"ordinal" or "o"}.
-Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
+\item{comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
 
-\item{math}{The function to apply to when \code{label} is \code{"math"}. Default is
-\code{\link[scales:label_parse]{scales::label_math()}}.}
+\item{ordinal}{The function to apply to \code{x} when the template is \verb{\{.ordinal x\}}. Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
 
-\item{percent}{The function to apply to when \code{label} is \verb{"percent", "pct", or "\%"}. Default is \code{\link[scales:label_percent]{scales::label_percent()}}.}
+\item{percent}{The function to apply to \code{x} when the template is \verb{\{.percent x\}} or \verb{\{.pct x\}}. Default is \code{\link[scales:label_percent]{scales::label_percent()}}.}
 
-\item{pvalue}{The function to apply to when \code{label} is \verb{"pvalue" or "p"}.
-Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
+\item{pvalue}{The function to apply to \code{x} when the template is \verb{\{.pvalue x\}}. Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
 
-\item{scientific}{The function to apply to when \code{label} is \verb{"scientific" or "si"}. Default is \code{\link[scales:label_scientific]{scales::label_scientific()}}.}
+\item{scientific}{The function to apply to \code{x} when the template is \verb{\{.scientific x\}}. Default is \code{\link[scales:label_scientific]{scales::label_scientific()}}.}
 
-\item{uppercase}{The function to apply to when \code{label} is \verb{"uppercase" or "uc"}. Default is \code{\link[=toupper]{toupper()}}.}
+\item{uppercase}{The function to apply to \code{x} when the template is \verb{\{.uppercase x\}} or \verb{\{.uc x\}}. Default is \code{\link[=toupper]{toupper()}}.}
 
-\item{lowercase}{The function to apply to when \code{label} is \verb{"lowercase" or "lc"}. Default is \code{\link[=tolower]{tolower()}}.}
+\item{lowercase}{The function to apply to \code{x} when the template is \verb{\{.lowercase x\}} or \verb{\{.lo x\}}. Default is \code{\link[=tolower]{tolower()}}.}
 
-\item{titlecase}{The function to apply to when \code{label} is \verb{"titlecase" or "tc"}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+\item{titlecase}{The function to apply to \code{x} when the template is \verb{\{.titlecase x\}} or \verb{\{.tc x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+}
+\value{
+A function of \code{text} and \code{envir} suitable for the \code{.transformer}
+argument of \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
 This epoxy style is heavily inspired by the inline formatters in the
@@ -129,3 +120,10 @@ epoxy(
 #> Here are three random percentages: 23\%, 35\%, and 99\%.
 }\if{html}{\out{</div>}}
 }
+\seealso{
+Other epoxy-style glue transformers: 
+\code{\link{epoxy_style_format}()},
+\code{\link{epoxy_style_html}()},
+\code{\link{epoxy_style}()}
+}
+\concept{epoxy-style glue transformers}
