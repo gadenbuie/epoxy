@@ -20,6 +20,7 @@ reference:
 - title: epoxy Style Transformers
   contents:
   - '`epoxy_style`'
+  - '`epoxy_stle_inline`'
   - '`epoxy_style_format`'
   - '`epoxy_style_html`'
 - title: Templating for Shiny
