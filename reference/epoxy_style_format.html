@@ -66,9 +66,9 @@ fmt() labels for formatters
 
 labelApplies formatting with
 &quot;bytes&quot;scales::label_bytes()
-&quot;d&quot;, &quot;date&quot;scales::label_date()
-&quot;ds&quot;, &quot;date_short&quot;scales::label_date_short()
-&quot;dt&quot;, &quot;time&quot;scales::label_time()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
 &quot;$&quot;, &quot;dollar&quot;scales::label_dollar()
 &quot;log&quot;scales::label_log()
 &quot;#&quot;, &quot;number&quot;scales::label_number()
@@ -76,7 +76,6 @@ labelApplies formatting with
 &quot;a&quot;, &quot;auto&quot;, &quot;number_auto&quot;scales::label_number_auto()
 &quot;o&quot;, &quot;ordinal&quot;scales::label_ordinal()
 &quot;parse&quot;scales::label_parse()
-&quot;math&quot;scales::label_math()
 &quot;pct&quot;, &quot;%&quot;, &quot;percent&quot;scales::label_percent()
 &quot;p&quot;, &quot;pvalue&quot;scales::label_pvalue()
 &quot;si&quot;, &quot;scientific&quot;scales::label_scientific()
@@ -156,9 +155,9 @@ fmt() labels for formatters
 
 labelApplies formatting with
 &quot;bytes&quot;scales::label_bytes()
-&quot;d&quot;, &quot;date&quot;scales::label_date()
-&quot;ds&quot;, &quot;date_short&quot;scales::label_date_short()
-&quot;dt&quot;, &quot;time&quot;scales::label_time()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
+&quot;d&quot;, &quot;dt&quot;, &quot;dttm&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;function()
 &quot;$&quot;, &quot;dollar&quot;scales::label_dollar()
 &quot;log&quot;scales::label_log()
 &quot;#&quot;, &quot;number&quot;scales::label_number()
@@ -166,7 +165,6 @@ labelApplies formatting with
 &quot;a&quot;, &quot;auto&quot;, &quot;number_auto&quot;scales::label_number_auto()
 &quot;o&quot;, &quot;ordinal&quot;scales::label_ordinal()
 &quot;parse&quot;scales::label_parse()
-&quot;math&quot;scales::label_math()
 &quot;pct&quot;, &quot;%&quot;, &quot;percent&quot;scales::label_percent()
 &quot;p&quot;, &quot;pvalue&quot;scales::label_pvalue()
 &quot;si&quot;, &quot;scientific&quot;scales::label_scientific()
@@ -307,7 +305,7 @@ The average guest stays 4.3 nights
 at a rate of $185 per night.</p></li>
 </ul><div class="section">
 <h3 id="fmt-labels-for-formatters"><code>fmt()</code> labels for formatters<a class="anchor" aria-label="anchor" href="#fmt-labels-for-formatters"></a></h3>
-<table class="table table"><tr><td><code>label</code></td><td>Applies formatting with</td></tr><tr><td><code>"bytes"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">scales::label_bytes()</a></code></td></tr><tr><td><code>"d"</code>, <code>"date"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date()</a></code></td></tr><tr><td><code>"ds"</code>, <code>"date_short"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date_short()</a></code></td></tr><tr><td><code>"dt"</code>, <code>"time"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_time()</a></code></td></tr><tr><td><code>"$"</code>, <code>"dollar"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code></td></tr><tr><td><code>"log"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">scales::label_log()</a></code></td></tr><tr><td><code>"#"</code>, <code>"number"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_number()</a></code></td></tr><tr><td><code>","</code>, <code>"comma"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_comma()</a></code></td></tr><tr><td><code>"a"</code>, <code>"auto"</code>, <code>"number_auto"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number_auto.html" class="external-link">scales::label_number_auto()</a></code></td></tr><tr><td><code>"o"</code>, <code>"ordinal"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">scales::label_ordinal()</a></code></td></tr><tr><td><code>"parse"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_parse()</a></code></td></tr><tr><td><code>"math"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_math()</a></code></td></tr><tr><td><code>"pct"</code>, <code>"%"</code>, <code>"percent"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">scales::label_percent()</a></code></td></tr><tr><td><code>"p"</code>, <code>"pvalue"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">scales::label_pvalue()</a></code></td></tr><tr><td><code>"si"</code>, <code>"scientific"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">scales::label_scientific()</a></code></td></tr><tr><td><code>"wrap"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_wrap.html" class="external-link">scales::label_wrap()</a></code></td></tr><tr><td><code>"uc"</code>, <code>"uppercase"</code></td><td><code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code></td></tr><tr><td><code>"lc"</code>, <code>"lowercase"</code></td><td><code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code></td></tr><tr><td><code>"tc"</code>, <code>"titlecase"</code></td><td><code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code></td></tr></table></div>
+<table class="table table"><tr><td><code>label</code></td><td>Applies formatting with</td></tr><tr><td><code>"bytes"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">scales::label_bytes()</a></code></td></tr><tr><td><code>"d"</code>, <code>"dt"</code>, <code>"dttm"</code>, <code>"date"</code>, <code>"time"</code>, <code>"datetime"</code></td><td><code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code></td></tr><tr><td><code>"d"</code>, <code>"dt"</code>, <code>"dttm"</code>, <code>"date"</code>, <code>"time"</code>, <code>"datetime"</code></td><td><code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code></td></tr><tr><td><code>"d"</code>, <code>"dt"</code>, <code>"dttm"</code>, <code>"date"</code>, <code>"time"</code>, <code>"datetime"</code></td><td><code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code></td></tr><tr><td><code>"$"</code>, <code>"dollar"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code></td></tr><tr><td><code>"log"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">scales::label_log()</a></code></td></tr><tr><td><code>"#"</code>, <code>"number"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_number()</a></code></td></tr><tr><td><code>","</code>, <code>"comma"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_comma()</a></code></td></tr><tr><td><code>"a"</code>, <code>"auto"</code>, <code>"number_auto"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_number_auto.html" class="external-link">scales::label_number_auto()</a></code></td></tr><tr><td><code>"o"</code>, <code>"ordinal"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">scales::label_ordinal()</a></code></td></tr><tr><td><code>"parse"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_parse()</a></code></td></tr><tr><td><code>"pct"</code>, <code>"%"</code>, <code>"percent"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">scales::label_percent()</a></code></td></tr><tr><td><code>"p"</code>, <code>"pvalue"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">scales::label_pvalue()</a></code></td></tr><tr><td><code>"si"</code>, <code>"scientific"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">scales::label_scientific()</a></code></td></tr><tr><td><code>"wrap"</code></td><td><code><a href="https://scales.r-lib.org/reference/label_wrap.html" class="external-link">scales::label_wrap()</a></code></td></tr><tr><td><code>"uc"</code>, <code>"uppercase"</code></td><td><code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code></td></tr><tr><td><code>"lc"</code>, <code>"lowercase"</code></td><td><code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code></td></tr><tr><td><code>"tc"</code>, <code>"titlecase"</code></td><td><code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code></td></tr></table></div>
 
     </div>
 
@@ -315,9 +313,9 @@ at a rate of $185 per night.</p></li>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_style_format</span><span class="op">(</span></span>
 <span>  bytes <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">label_bytes</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  date <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">label_date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  date_short <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">label_date_short</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  time <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">label_time</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  date <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F"</span><span class="op">)</span>,</span>
+<span>  time <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%T"</span><span class="op">)</span>,</span>
+<span>  datetime <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F %T"</span><span class="op">)</span>,</span>
 <span>  dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  log <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">label_log</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  number <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_number</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -325,7 +323,6 @@ at a rate of $185 per night.</p></li>
 <span>  number_auto <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_auto.html" class="external-link">label_number_auto</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  ordinal <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">label_ordinal</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  parse <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">label_parse</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  math <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">label_math</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  pvalue <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">label_pvalue</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  scientific <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">label_scientific</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -341,42 +338,35 @@ at a rate of $185 per night.</p></li>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>bytes</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"bytes"</code>. Default is
-<code><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">scales::label_bytes()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"bytes"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">scales::label_bytes()</a></code>.</p></dd>
 
 
 <dt>date</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"date" or "d"</code>. Default
-is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date()</a></code>.</p></dd>
-
-
-<dt>date_short</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"date_short" or "ds"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_date_short()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"date" or "d"</code>. Default is <code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code>.</p></dd>
 
 
 <dt>time</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"time" or "dt"</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_date.html" class="external-link">scales::label_time()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"time" or "dt"</code>. Default is <code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code>.</p></dd>
+
+
+<dt>datetime</dt>
+<dd><p>The function to apply to when <code>label</code> is <code>"datetime" or "dttm"</code>. Default is <code><a href="https://rdrr.io/r/base/function.html" class="external-link">function()</a></code>.</p></dd>
 
 
 <dt>dollar</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"dollar" or "$"</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"dollar" or "$"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code>.</p></dd>
 
 
 <dt>log</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"log"</code>. Default is
-<code><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">scales::label_log()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"log"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_log.html" class="external-link">scales::label_log()</a></code>.</p></dd>
 
 
 <dt>number</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"number" or "#"</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_number()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"number" or "#"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_number()</a></code>.</p></dd>
 
 
 <dt>comma</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"comma" or ","</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_comma()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"comma" or ","</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">scales::label_comma()</a></code>.</p></dd>
 
 
 <dt>number_auto</dt>
@@ -384,18 +374,11 @@ Default is <code><a href="https://scales.r-lib.org/reference/label_number.html" 
 
 
 <dt>ordinal</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"ordinal" or "o"</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">scales::label_ordinal()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"ordinal" or "o"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">scales::label_ordinal()</a></code>.</p></dd>
 
 
 <dt>parse</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"parse"</code>. Default is
-<code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_parse()</a></code>.</p></dd>
-
-
-<dt>math</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"math"</code>. Default is
-<code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_math()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"parse"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_parse.html" class="external-link">scales::label_parse()</a></code>.</p></dd>
 
 
 <dt>percent</dt>
@@ -403,8 +386,7 @@ Default is <code><a href="https://scales.r-lib.org/reference/label_ordinal.html"
 
 
 <dt>pvalue</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"pvalue" or "p"</code>.
-Default is <code><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">scales::label_pvalue()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"pvalue" or "p"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">scales::label_pvalue()</a></code>.</p></dd>
 
 
 <dt>scientific</dt>
@@ -412,8 +394,7 @@ Default is <code><a href="https://scales.r-lib.org/reference/label_pvalue.html" 
 
 
 <dt>wrap</dt>
-<dd><p>The function to apply to when <code>label</code> is <code>"wrap"</code>. Default is
-<code><a href="https://scales.r-lib.org/reference/label_wrap.html" class="external-link">scales::label_wrap()</a></code>.</p></dd>
+<dd><p>The function to apply to when <code>label</code> is <code>"wrap"</code>. Default is <code><a href="https://scales.r-lib.org/reference/label_wrap.html" class="external-link">scales::label_wrap()</a></code>.</p></dd>
 
 
 <dt>uppercase</dt>
@@ -458,6 +439,7 @@ the current transformation. In nearly all cases, you can let
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other epoxy-style glue transformers: 
 <code><a href="epoxy_style_html.html">epoxy_style_html</a>()</code>,
+<code><a href="epoxy_style_inline.html">epoxy_style_inline</a>()</code>,
 <code><a href="epoxy_style.html">epoxy_style</a>()</code></p></div>
     </div>
 
