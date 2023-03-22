@@ -28,9 +28,11 @@
 #' @param bytes The function to apply to when `label` is `"bytes"`. Default is
 #'   [scales::label_bytes()].
 #' @param date The function to apply to when `label` is `"date" or "d"`. Default
-#'   is [scales::label_date()].
+#'   is `format(x, format = "%F")`.
 #' @param time The function to apply to when `label` is `"time" or "dt"`.
-#'   Default is [scales::label_time()].
+#'   Default is `format(x, format = "%T")`.
+#' @param datetime The function to apply to when `label` is `"datetime" or
+#'   "dttm"`. Default is `format(x, format = "%F %T")`.
 #' @param dollar The function to apply to when `label` is `"dollar" or "$"`.
 #'   Default is [scales::label_dollar()].
 #' @param log The function to apply to when `label` is `"log"`. Default is
@@ -73,8 +75,9 @@
 #' @export
 epoxy_style_format  <- function(
   bytes       = scales::label_bytes(),
-  date        = scales::label_date(),
-  time        = scales::label_time(),
+  date        = function(x) format(x, format = "%F"),
+  time        = function(x) format(x, format = "%T"),
+  datetime    = function(x) format(x, format = "%F %T"),
   dollar      = scales::label_dollar(),
   log         = scales::label_log(),
   number      = scales::label_number(),
@@ -135,6 +138,7 @@ labellers_extras <- function() {
     ","    = "comma",
     "d"    = "date",
     "dt"   = "time",
+    "dttm" = "datetime",
     "a"    = "number_auto",
     "auto" = "number_auto",
     "o"    = "ordinal",
