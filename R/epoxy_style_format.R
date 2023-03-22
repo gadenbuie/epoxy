@@ -25,42 +25,7 @@
 #'
 #' @example man/examples/epoxy_style_format.R
 #'
-#' @param bytes The function to apply to when `label` is `"bytes"`. Default is
-#'   [scales::label_bytes()].
-#' @param date The function to apply to when `label` is `"date" or "d"`. Default
-#'   is `format(x, format = "%F")`.
-#' @param time The function to apply to when `label` is `"time" or "dt"`.
-#'   Default is `format(x, format = "%T")`.
-#' @param datetime The function to apply to when `label` is `"datetime" or
-#'   "dttm"`. Default is `format(x, format = "%F %T")`.
-#' @param dollar The function to apply to when `label` is `"dollar" or "$"`.
-#'   Default is [scales::label_dollar()].
-#' @param log The function to apply to when `label` is `"log"`. Default is
-#'   [scales::label_log()].
-#' @param number The function to apply to when `label` is `"number" or "#"`.
-#'   Default is [scales::label_number()].
-#' @param comma The function to apply to when `label` is `"comma" or ","`.
-#'   Default is [scales::label_comma()].
-#' @param number_auto The function to apply to when `label` is `"number_auto",
-#'   "a", or "auto"`. Default is [scales::label_number_auto()].
-#' @param ordinal The function to apply to when `label` is `"ordinal" or "o"`.
-#'   Default is [scales::label_ordinal()].
-#' @param parse The function to apply to when `label` is `"parse"`. Default is
-#'   [scales::label_parse()].
-#' @param percent The function to apply to when `label` is `"percent", "pct", or
-#'   "%"`. Default is [scales::label_percent()].
-#' @param pvalue The function to apply to when `label` is `"pvalue" or "p"`.
-#'   Default is [scales::label_pvalue()].
-#' @param scientific The function to apply to when `label` is `"scientific" or
-#'   "si"`. Default is [scales::label_scientific()].
-#' @param wrap The function to apply to when `label` is `"wrap"`. Default is
-#'   [scales::label_wrap()].
-#' @param uppercase The function to apply to when `label` is `"uppercase" or
-#'   "uc"`. Default is [toupper()].
-#' @param lowercase The function to apply to when `label` is `"lowercase" or
-#'   "lc"`. Default is [tolower()].
-#' @param titlecase The function to apply to when `label` is `"titlecase" or
-#'   "tc"`. Default is [tools::toTitleCase()].
+#' @eval roxy_labellers_params()
 #' @param ... Additional formatting functions as named arguments. The name of
 #'   the argument in `...` determines the `label` value associated with the
 #'   formatter in `fmt()`.
@@ -229,7 +194,7 @@ labellers_summarize <- function() {
   labellers[fns[-seq_along(extras)], ]
 }
 
-labellers_params <- function() {
+roxy_labellers_params <- function() {
   args <- rlang::fn_fmls(epoxy_style_format)[labellers_names()]
   args <- purrr::map(args, rlang::expr_text)
   args <- purrr::map_chr(args, function(expr) {
@@ -248,7 +213,7 @@ labellers_params <- function() {
   })
 
   glue(
-    "#' @param {param} The function to apply to when `label` is `{values}`. Default is [{fn}].",
+    "@param {param} The function to apply to when `label` is `{values}`. Default is [{fn}].",
     param = names(args),
     fn = unname(args),
     values = values

@@ -6,8 +6,9 @@
 \usage{
 epoxy_style_format(
   bytes = scales::label_bytes(),
-  date = scales::label_date(),
-  time = scales::label_time(),
+  date = function(x) format(x, format = "\%F"),
+  time = function(x) format(x, format = "\%T"),
+  datetime = function(x) format(x, format = "\%F \%T"),
   dollar = scales::label_dollar(),
   log = scales::label_log(),
   number = scales::label_number(),
@@ -15,7 +16,6 @@ epoxy_style_format(
   number_auto = scales::label_number_auto(),
   ordinal = scales::label_ordinal(),
   parse = scales::label_parse(),
-  math = scales::label_math(),
   percent = scales::label_percent(),
   pvalue = scales::label_pvalue(),
   scientific = scales::label_scientific(),
@@ -28,47 +28,35 @@ epoxy_style_format(
 )
 }
 \arguments{
-\item{bytes}{The function to apply to when \code{label} is \code{"bytes"}. Default is
-\code{\link[scales:label_bytes]{scales::label_bytes()}}.}
+\item{bytes}{The function to apply to when \code{label} is \code{"bytes"}. Default is \code{\link[scales:label_bytes]{scales::label_bytes()}}.}
 
-\item{date}{The function to apply to when \code{label} is \verb{"date" or "d"}. Default
-is \code{\link[scales:label_date]{scales::label_date()}}.}
+\item{date}{The function to apply to when \code{label} is \verb{"date" or "d"}. Default is \code{\link[=function]{function()}}.}
 
-\item{time}{The function to apply to when \code{label} is \verb{"time" or "dt"}.
-Default is \code{\link[scales:label_date]{scales::label_time()}}.}
+\item{time}{The function to apply to when \code{label} is \verb{"time" or "dt"}. Default is \code{\link[=function]{function()}}.}
 
-\item{dollar}{The function to apply to when \code{label} is \verb{"dollar" or "$"}.
-Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
+\item{datetime}{The function to apply to when \code{label} is \verb{"datetime" or "dttm"}. Default is \code{\link[=function]{function()}}.}
 
-\item{log}{The function to apply to when \code{label} is \code{"log"}. Default is
-\code{\link[scales:label_log]{scales::label_log()}}.}
+\item{dollar}{The function to apply to when \code{label} is \verb{"dollar" or "$"}. Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
 
-\item{number}{The function to apply to when \code{label} is \verb{"number" or "#"}.
-Default is \code{\link[scales:label_number]{scales::label_number()}}.}
+\item{log}{The function to apply to when \code{label} is \code{"log"}. Default is \code{\link[scales:label_log]{scales::label_log()}}.}
 
-\item{comma}{The function to apply to when \code{label} is \verb{"comma" or ","}.
-Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
+\item{number}{The function to apply to when \code{label} is \verb{"number" or "#"}. Default is \code{\link[scales:label_number]{scales::label_number()}}.}
+
+\item{comma}{The function to apply to when \code{label} is \verb{"comma" or ","}. Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
 
 \item{number_auto}{The function to apply to when \code{label} is \verb{"number_auto", "a", or "auto"}. Default is \code{\link[scales:label_number_auto]{scales::label_number_auto()}}.}
 
-\item{ordinal}{The function to apply to when \code{label} is \verb{"ordinal" or "o"}.
-Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
+\item{ordinal}{The function to apply to when \code{label} is \verb{"ordinal" or "o"}. Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
 
-\item{parse}{The function to apply to when \code{label} is \code{"parse"}. Default is
-\code{\link[scales:label_parse]{scales::label_parse()}}.}
-
-\item{math}{The function to apply to when \code{label} is \code{"math"}. Default is
-\code{\link[scales:label_parse]{scales::label_math()}}.}
+\item{parse}{The function to apply to when \code{label} is \code{"parse"}. Default is \code{\link[scales:label_parse]{scales::label_parse()}}.}
 
 \item{percent}{The function to apply to when \code{label} is \verb{"percent", "pct", or "\%"}. Default is \code{\link[scales:label_percent]{scales::label_percent()}}.}
 
-\item{pvalue}{The function to apply to when \code{label} is \verb{"pvalue" or "p"}.
-Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
+\item{pvalue}{The function to apply to when \code{label} is \verb{"pvalue" or "p"}. Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
 
 \item{scientific}{The function to apply to when \code{label} is \verb{"scientific" or "si"}. Default is \code{\link[scales:label_scientific]{scales::label_scientific()}}.}
 
-\item{wrap}{The function to apply to when \code{label} is \code{"wrap"}. Default is
-\code{\link[scales:label_wrap]{scales::label_wrap()}}.}
+\item{wrap}{The function to apply to when \code{label} is \code{"wrap"}. Default is \code{\link[scales:label_wrap]{scales::label_wrap()}}.}
 
 \item{uppercase}{The function to apply to when \code{label} is \verb{"uppercase" or "uc"}. Default is \code{\link[=toupper]{toupper()}}.}
 
@@ -168,8 +156,9 @@ at a rate of $185 per night.
 \subsection{\code{fmt()} labels for formatters}{\tabular{ll}{
    \code{label} \tab Applies formatting with \cr
    \code{"bytes"} \tab \code{\link[scales:label_bytes]{scales::label_bytes()}} \cr
-   \code{"d"}, \code{"date"} \tab \code{\link[scales:label_date]{scales::label_date()}} \cr
-   \code{"dt"}, \code{"time"} \tab \code{\link[scales:label_date]{scales::label_time()}} \cr
+   \code{"d"}, \code{"dt"}, \code{"dttm"}, \code{"date"}, \code{"time"}, \code{"datetime"} \tab \code{\link[=function]{function()}} \cr
+   \code{"d"}, \code{"dt"}, \code{"dttm"}, \code{"date"}, \code{"time"}, \code{"datetime"} \tab \code{\link[=function]{function()}} \cr
+   \code{"d"}, \code{"dt"}, \code{"dttm"}, \code{"date"}, \code{"time"}, \code{"datetime"} \tab \code{\link[=function]{function()}} \cr
    \code{"$"}, \code{"dollar"} \tab \code{\link[scales:label_dollar]{scales::label_dollar()}} \cr
    \code{"log"} \tab \code{\link[scales:label_log]{scales::label_log()}} \cr
    \code{"#"}, \code{"number"} \tab \code{\link[scales:label_number]{scales::label_number()}} \cr
@@ -177,7 +166,6 @@ at a rate of $185 per night.
    \code{"a"}, \code{"auto"}, \code{"number_auto"} \tab \code{\link[scales:label_number_auto]{scales::label_number_auto()}} \cr
    \code{"o"}, \code{"ordinal"} \tab \code{\link[scales:label_ordinal]{scales::label_ordinal()}} \cr
    \code{"parse"} \tab \code{\link[scales:label_parse]{scales::label_parse()}} \cr
-   \code{"math"} \tab \code{\link[scales:label_parse]{scales::label_math()}} \cr
    \code{"pct"}, \code{"\%"}, \code{"percent"} \tab \code{\link[scales:label_percent]{scales::label_percent()}} \cr
    \code{"p"}, \code{"pvalue"} \tab \code{\link[scales:label_pvalue]{scales::label_pvalue()}} \cr
    \code{"si"}, \code{"scientific"} \tab \code{\link[scales:label_scientific]{scales::label_scientific()}} \cr
