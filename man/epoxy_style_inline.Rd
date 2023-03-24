@@ -77,9 +77,10 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer}
 argument of \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
-This epoxy style is heavily inspired by the inline formatters in the
-\href{https://cli.r-lib.org}{cli package}. The syntax is quite similar, but
-\pkg{epoxy}'s syntax is slightly different to accomodate reporting use cases.
+This epoxy style is heavily inspired by the inline formatters in
+the \href{https://cli.r-lib.org}{cli package}. The syntax is quite similar, but
+\pkg{epoxy}'s syntax is slightly different to accommodate reporting use
+cases.
 
 With the inline styles, you can include a keyword, prefixed with a dot (\code{.})
 that is used to format the template variable in place.

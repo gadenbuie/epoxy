@@ -1,9 +1,9 @@
 #' Epoxy Inline Style Transformer
 #'
-#' @description
-#' This epoxy style is heavily inspired by the inline formatters in the
-#' [cli package](https://cli.r-lib.org). The syntax is quite similar, but
-#' \pkg{epoxy}'s syntax is slightly different to accomodate reporting use cases.
+#' @description This epoxy style is heavily inspired by the inline formatters in
+#' the [cli package](https://cli.r-lib.org). The syntax is quite similar, but
+#' \pkg{epoxy}'s syntax is slightly different to accommodate reporting use
+#' cases.
 #'
 #' With the inline styles, you can include a keyword, prefixed with a dot (`.`)
 #' that is used to format the template variable in place.
