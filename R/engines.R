@@ -149,7 +149,7 @@ knitr_engine_epoxy <- function(options) {
       .na          = options[[".na"]]      %||% "",
       .null        = options[[".null"]]    %||% "",
       .trim        = options[[".trim"]]    %||% FALSE,
-      .comment     = options[[".comment"]] %||% "#",
+      .comment     = options[[".comment"]] %||% "",
       .literal     = options[[".literal"]] %||% FALSE,
       .transformer = options[[".transformer"]]
     )
@@ -218,7 +218,7 @@ knitr_engine_epoxy_html <- function(options) {
       .na          = options[[".na"]]      %||% "",
       .null        = options[[".null"]]    %||% "",
       .trim        = options[[".trim"]]    %||% FALSE,
-      .comment     = options[[".comment"]] %||% "#",
+      .comment     = options[[".comment"]] %||% "",
       .literal     = options[[".literal"]] %||% FALSE,
       .transformer = options[[".transformer"]]
     )
@@ -250,7 +250,7 @@ epoxy_latex <- function(
   .close = ">",
   .na = "",
   .null = "",
-  .comment = "#",
+  .comment = "",
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL
@@ -294,7 +294,7 @@ knitr_engine_epoxy_latex <- function(options) {
       .na          = options[[".na"]]      %||% "",
       .null        = options[[".null"]]    %||% "",
       .trim        = options[[".trim"]]    %||% FALSE,
-      .comment     = options[[".comment"]] %||% "#",
+      .comment     = options[[".comment"]] %||% "",
       .literal     = options[[".literal"]] %||% FALSE,
       .transformer = options[[".transformer"]]
     )
