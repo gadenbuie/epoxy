@@ -34,11 +34,11 @@ evaluation. For example transformers see \code{vignette("transformers")}.}
 
 \item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is \code{\link[scales:label_bytes]{scales::label_bytes()}}.}
 
-\item{date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \code{\link[=function]{function()}}.}
+\item{date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \link{function(x) format(x, format = "\%F")}.}
 
-\item{time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \code{\link[=function]{function()}}.}
+\item{time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \link{function(x) format(x, format = "\%T")}.}
 
-\item{datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \code{\link[=function]{function()}}.}
+\item{datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \link{function(x) format(x, format = "\%F \%T")}.}
 
 \item{dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
 

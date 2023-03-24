@@ -202,6 +202,9 @@ roxy_inline_params <- function() {
   args <- args[setdiff(names(args), c("...", "transformer"))]
   args <- purrr::map(args, rlang::expr_text)
   args <- purrr::map_chr(args, function(expr) {
+    if (grepl("^function", expr)) {
+      return(expr)
+    }
     expr <- sub("\\(.+\\)$", "()", expr)
     if (grepl("\\(\\)$", expr)) {
       return(expr)
