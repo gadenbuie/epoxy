@@ -7,6 +7,10 @@
 epoxy_style_inline(
   ...,
   transformer = glue::identity_transformer,
+  and = and::and,
+  or = and::or,
+  inc = sort,
+  dec = function(x) sort(x, decreasing = TRUE),
   bytes = scales::label_bytes(),
   date = function(x) format(x, format = "\%F"),
   time = function(x) format(x, format = "\%T"),
@@ -31,6 +35,14 @@ function.}
 \item{transformer}{[\verb{function]}\cr A function taking three parameters \code{code}, \code{envir} and
 \code{data} used to transform the output of each block before, during, or after
 evaluation. For example transformers see \code{vignette("transformers")}.}
+
+\item{and}{The function to apply to \code{x} when the template is \verb{\{.and x\}}. Default is \code{\link[and:and]{and::and()}}.}
+
+\item{or}{The function to apply to \code{x} when the template is \verb{\{.or x\}}. Default is \code{\link[and:and]{and::or()}}.}
+
+\item{inc}{The function to apply to \code{x} when the template is \verb{\{.inc x\}}. Default is \code{\link[=sort]{sort()}}.}
+
+\item{dec}{The function to apply to \code{x} when the template is \verb{\{.dec x\}}. Default is \link{function(x) sort(x, decreasing = TRUE)}.}
 
 \item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is \code{\link[scales:label_bytes]{scales::label_bytes()}}.}
 
@@ -117,7 +129,7 @@ epoxy(
     runif = function(n) sort(runif(n))
   )
 )
-#> Here are three random percentages: 23\%, 35\% and 99\%.
+#> Here are three random percentages: 23\%, 35\%, and 99\%.
 }\if{html}{\out{</div>}}
 }
 \seealso{

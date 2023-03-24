@@ -68,6 +68,10 @@
 epoxy_style_inline <- function(
   ...,
   transformer = glue::identity_transformer,
+  and         = and::and,
+  or          = and::or,
+  inc         = sort,
+  dec         = function(x) sort(x, decreasing = TRUE),
   bytes       = scales::label_bytes(),
   date        = function(x) format(x, format = "%F"),
   time        = function(x) format(x, format = "%T"),
@@ -124,8 +128,8 @@ epoxy_style_inline <- function(
 
     switch(
       class,
-      and = and::and(text),
-      or = and::or(text),
+      and = and(text),
+      or = or(text),
       bold = ,
       strong     = epoxy_bold(text),
       italic = ,
@@ -146,13 +150,13 @@ epoxy_style_inline <- function(
       pvalue     = pvalue(text),
       scientific = scientific(text),
       uc = ,
-      upper      = toupper(text),
+      uppercase  = uppercase(text),
       lc = ,
-      lower      = tolower(text),
+      lowercase  = lowercase(text),
       tc = ,
-      title      = tools::toTitleCase(text),
-      inc = sort(text),
-      dec = sort(text, decreasing = TRUE),
+      titlecase  = titlecase(text),
+      inc = inc(text),
+      dec = dec(text),
       maybe_custom_class(text)
     )
   }
