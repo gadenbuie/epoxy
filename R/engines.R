@@ -88,7 +88,7 @@ use_epoxy_glue_engine <- function() {
 epoxy <- function(
   ...,
   .data = NULL,
-  .style = NULL,
+  .style = "inline",
   .sep = "",
   .envir = parent.frame(),
   .open = "{",
@@ -165,7 +165,7 @@ knitr_engine_epoxy <- function(options) {
 epoxy_html <- function(
   ...,
   .data = NULL,
-  .style = c("collapse", "format", "html"),
+  .style = c("html", "inline"),
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
@@ -243,7 +243,7 @@ knitr_engine_epoxy_html <- function(options) {
 epoxy_latex <- function(
   ...,
   .data = NULL,
-  .style = NULL,
+  .style = "inline",
   .sep = "",
   .envir = parent.frame(),
   .open = "<",
