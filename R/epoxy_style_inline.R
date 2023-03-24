@@ -101,6 +101,7 @@ epoxy_style_inline <- function(
   dots <- purrr::keep(dots, rlang::is_function)
 
   self <- function(text, envir) {
+    # https://github.com/r-lib/cli/blob/8d8a211c/R/inline.R#L241
     inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
     if (!grepl(inline_regex, text, perl = TRUE)) {
