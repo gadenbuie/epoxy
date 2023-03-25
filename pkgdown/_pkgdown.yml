@@ -15,21 +15,22 @@ navbar:
 reference:
 - title: epoxy, super-glue wrappers
   contents:
-  - '`use_epoxy_knitr_engines`'
-  - '`epoxy`'
+  - use_epoxy_knitr_engines
+  - epoxy
 - title: epoxy Style Transformers
   contents:
-  - '`epoxy_style`'
-  - '`epoxy_style_inline`'
-  - '`epoxy_style_format`'
-  - '`epoxy_style_html`'
+  - epoxy_style
+  - epoxy_style_inline
+  - epoxy_style_format
+  - epoxy_style_html
+  - engine_pick
 - title: Templating for Shiny
   contents:
-  - '`ui_epoxy_html`'
+  - ui_epoxy_html
   - ui_epoxy_mustache
-  - '`render_epoxy`'
+  - render_epoxy
 - title: Example Datasets
   description: |
     Interesting datasets that can help you explore, learn, and practice using epoxy.
   contents:
-  - '`bechdel`'
+  - bechdel

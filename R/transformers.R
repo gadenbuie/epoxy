@@ -117,8 +117,8 @@ epoxy_style_wrap <- function(
 #' @export
 epoxy_style_bold <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
-    before = default_for_engine("**", "<strong>", "\\textbf{"),
-    after = default_for_engine("**", "</strong>", "}"),
+    before = engine_pick("**", "<strong>", "\\textbf{"),
+    after = engine_pick("**", "</strong>", "}"),
     syntax = syntax,
     transformer = transformer
   )
@@ -129,8 +129,8 @@ epoxy_style_bold <- function(syntax = NULL, transformer = glue::identity_transfo
 #' @export
 epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
-    before = default_for_engine("_", "<em>", "\\emph{"),
-    after = default_for_engine("_", "</em>", "}"),
+    before = engine_pick("_", "<em>", "\\emph{"),
+    after = engine_pick("_", "</em>", "}"),
     syntax = syntax,
     transformer = transformer
   )
@@ -156,14 +156,32 @@ epoxy_style_apply <- function(
 #' @export
 epoxy_style_code <- function(syntax = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
-    before = default_for_engine("`", "<code>", "\\texttt{"),
-    after = default_for_engine("`", "</code>", "}"),
+    before = engine_pick("`", "<code>", "\\texttt{"),
+    after = engine_pick("`", "</code>", "}"),
     syntax = syntax,
     transformer = transformer
   )
 }
 
-default_for_engine <- function(md, html, latex) {
+#' Pick an engine-specific value
+#'
+#' Set different values that will be used based on the current epoxy or knitr
+#' engine (one of `md`, `html`, or `latex`). The engine-specific value will be
+#' used inside epoxy knitr chunks or epoxy functions matching the source syntax:
+#' [epoxy()] (`md`), [epoxy_html()] (`html`), or [epoxy_latex()] (`latex`).
+#'
+#' @examples
+#' # Markdown and HTML are okay with bare `$` character,
+#' # but we need to escape it in LaTeX.
+#' engine_pick(md = "$", latex = "\\$")
+#'
+#' @param md,html,latex The value to use in a markdown, HTML, or LaTeX context.
+#'
+#' @return The value of `md`, `html` or `latex` depending on the epoxy or knitr
+#'   currently being evaluated.
+#'
+#' @export
+engine_pick <- function(md, html = md, latex = md) {
   engine <- getOption("epoxy.engine", NULL) %||%
     knitr::opts_current$get("engine")
 

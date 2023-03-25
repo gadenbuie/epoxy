@@ -76,11 +76,11 @@ epoxy_style_inline <- function(
   date        = function(x) format(x, format = "%F"),
   time        = function(x) format(x, format = "%T"),
   datetime    = function(x) format(x, format = "%F %T"),
-  dollar      = scales::label_dollar(prefix = default_for_engine("$", "$", "\\$")),
+  dollar      = scales::label_dollar(prefix = engine_pick("$", "$", "\\$")),
   number      = scales::label_number(),
   comma       = scales::label_comma(),
   ordinal     = scales::label_ordinal(),
-  percent     = scales::label_percent(suffix = default_for_engine("%", "%", "\\%")),
+  percent     = scales::label_percent(suffix = engine_pick("%", "%", "\\%")),
   pvalue      = scales::label_pvalue(),
   scientific  = scales::label_scientific(),
   uppercase   = toupper,
@@ -184,20 +184,20 @@ remove_outer_delims <- function(text) {
 }
 
 epoxy_bold <- function(text) {
-  before <- default_for_engine("**", "<strong>", "\\textbf{")
-  after <- default_for_engine("**", "</strong>", "}")
+  before <- engine_pick("**", "<strong>", "\\textbf{")
+  after <- engine_pick("**", "</strong>", "}")
   paste0(before, text, after)
 }
 
 epoxy_italic <- function(text) {
-  before <- default_for_engine("_", "<em>", "\\emph{")
-  after <- default_for_engine("_", "</em>", "}")
+  before <- engine_pick("_", "<em>", "\\emph{")
+  after <- engine_pick("_", "</em>", "}")
   paste0(before, text, after)
 }
 
 epoxy_code <- function(text) {
-  before <- default_for_engine("`", "<code>", "\\texttt{")
-  after <- default_for_engine("`", "</code>", "}")
+  before <- engine_pick("`", "<code>", "\\texttt{")
+  after <- engine_pick("`", "</code>", "}")
   paste0(before, text, after)
 }
 
