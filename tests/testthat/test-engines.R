@@ -150,3 +150,60 @@ describe("epoxy_html()", {
     )
   })
 })
+
+describe("epoxy_style_default()", {
+  it("sets the default for all styles", {
+    opts <- epoxy_style_default("bold")
+    on.exit(options(opts))
+
+    expect_equal(
+      epoxy("{1} and {2} is {3}"),
+      glue("**1** and **2** is **3**")
+    )
+
+    expect_equal(
+      epoxy("{1} and {2} is {3}"),
+      epoxy("{1} and {2} is {3}", .style = "bold")
+    )
+
+    expect_equal(
+      epoxy_html("{{1}} and {{2}} is {{3}}"),
+      html_chr(glue(
+        "<strong>1</strong> and <strong>2</strong> is <strong>3</strong>"
+      ))
+    )
+
+    expect_equal(
+      epoxy_latex("<1> and <2> is <3>"),
+      glue("\\textbf{{1}} and \\textbf{{2}} is \\textbf{{3}}")
+    )
+  })
+
+  it("sets the default for individual styles", {
+    opts_md <- epoxy_style_default("bold", syntax = "md")
+    on.exit(options(opts_md), add = TRUE)
+
+    opts_html <- epoxy_style_default("italic", syntax = "html")
+    on.exit(options(opts_html), add = TRUE)
+
+    opts_latex <- epoxy_style_default(epoxy_style_code, syntax = "latex")
+    on.exit(options(opts_latex), add = TRUE)
+
+    expect_equal(
+      epoxy("{1} and {2} is {3}"),
+      glue("**1** and **2** is **3**")
+    )
+
+    expect_equal(
+      epoxy_html("{{1}} and {{2}} is {{3}}"),
+      html_chr(glue(
+        "<em>1</em> and <em>2</em> is <em>3</em>"
+      ))
+    )
+
+    expect_equal(
+      epoxy_latex("<1> and <2> is <3>"),
+      glue("\\texttt{{1}} and \\texttt{{2}} is \\texttt{{3}}")
+    )
+  })
+})

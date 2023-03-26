@@ -369,6 +369,11 @@ epoxy_options_get_transformer <- function(options) {
   style %||%
     options[[".transformer"]] %||%
     engine_pick(
+      md = getOption("epoxy.epoxy_style_default.md", NULL),
+      html = getOption("epoxy.epoxy_style_default.html", NULL),
+      latex = getOption("epoxy.epoxy_style_default.latex", NULL)
+    ) %||%
+    engine_pick(
       md = epoxy_style("inline"),
       html = epoxy_style("inline", "html")
     )

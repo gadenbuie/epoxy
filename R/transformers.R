@@ -52,6 +52,10 @@
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style <- function(..., syntax = NULL) {
+  if (!is.null(syntax)) {
+    syntax <- engine_validate_alias(syntax)
+  }
+
   parent_env <- rlang::caller_env()
   dots <- rlang::enexprs(...)
 
@@ -66,6 +70,39 @@ epoxy_style <- function(..., syntax = NULL) {
       y(transformer = x)
     }, .init = NULL)
   )
+}
+
+epoxy_style_default <- function(..., syntax = NULL) {
+  if (!is.null(syntax)) {
+    syntax <- engine_validate_alias(syntax)
+  } else {
+    syntax <- c("md", "html", "latex")
+  }
+
+  if (identical(list(...), list(NULL))) {
+    # unset syntax options
+    opts_unset <- list()
+    syntax <- glue("epoxy.epoxy_style_default.{syntax}")
+    opts_unset[syntax] <- list(NULL)
+    return(invisible(options(opts_unset)))
+  }
+
+  if (length(list(...)) == 0) {
+    # get current option values
+    syntax <- rlang::set_names(
+      glue("epoxy.epoxy_style_default.{syntax}")
+    )
+    return(lapply(syntax, getOption, default = NULL))
+  }
+
+  opts_to_set <- list()
+  for (engine in syntax) {
+    opt_name <- glue("epoxy.epoxy_style_default.{engine}")
+    opts_to_set[[opt_name]] <- epoxy_style(..., syntax = engine)
+  }
+
+  old_opts <- options(opts_to_set)
+  invisible(old_opts)
 }
 
 pick_style <- function(style) {
@@ -108,6 +145,7 @@ epoxy_style_wrap <- function(
     )
   }
   function(text, envir) {
+    "!DEBUG wrap {before: `before`, text: `text`, after: `after`}"
     paste0(before, transformer(text, envir), after)
   }
 }
@@ -189,20 +227,43 @@ engine_pick <- function(md, html = md, latex = md) {
     return(md)
   }
 
+  engine <- engine_aliases[engine]
+
   switch(
     engine,
-    md = ,
-    markdown = ,
-    glue = ,
-    epoxy = md,
-    html = ,
-    glue_html = ,
-    epoxy_html = html,
-    latex = ,
-    glue_latex = ,
-    epoxy_latex = latex,
+    md = md,
+    html = html,
+    latex = latex,
     md
   )
+}
+
+engine_aliases <- c(
+  md = "md",
+  markdown = "md",
+  glue = "md",
+  epoxy = "md",
+  html = "html",
+  glue_html = "html",
+  epoxy_html = "html",
+  latex = "latex",
+  glue_latex = "latex",
+  epoxy_latex = "latex"
+)
+
+engine_validate_alias <- function(engine) {
+  for (eng in engine) {
+    if (!eng %in% names(engine_aliases)) {
+      rlang::abort(
+        epoxy(
+          "'{eng}' is not a valid engine name (language syntax). ",
+          "Valid choices include {.or {.code names(engine_aliases)}}.",
+          .style = epoxy_style_inline()
+        )
+      )
+    }
+  }
+  engine_aliases[engine]
 }
 
 #' @describeIn epoxy_style Collapse vector variables
