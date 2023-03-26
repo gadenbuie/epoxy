@@ -366,7 +366,7 @@ epoxy_options_get_transformer <- function(options) {
   if (is.vector(style) || is.list(style)) {
     return(epoxy_style(!!!style))
   }
-  style %||% options[[".transformer"]] %||% epoxy_style("collapse", "format")
+  style %||% options[[".transformer"]] %||% epoxy_style("inline")
 }
 
 deprecate_glue_data_chunk_option <- function(options) {
