@@ -24,6 +24,7 @@ Imports:
     tools,
     whisker
 Suggests:
+    debugme,
     scales (>= 1.1.0),
     shiny,
     testthat

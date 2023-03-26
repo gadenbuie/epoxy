@@ -8,5 +8,9 @@
     })
   }
 
+  if (requireNamespace("debugme", quietly = TRUE)) {
+    debugme::debugme()
+  }
+
   invisible()
 }

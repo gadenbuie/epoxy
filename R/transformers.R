@@ -284,6 +284,7 @@ epoxy_style_collapse <- function(
 ) {
   collapse <- function(regexp = "[*]$", sep = ", ", width = Inf, last = "") {
     function(text, envir) {
+      "!DEBUG collapse {sep: `sep`, last: `last`, text: `text`}"
       text <- sub(regexp, "", text)
       res <- transformer(text, envir)
       glue_collapse(res, sep = sep, width = width, last = last)
@@ -292,6 +293,7 @@ epoxy_style_collapse <- function(
 
   and_or <- function(and = "and") {
     function(text, envir) {
+      "!DEBUG and_or {and: `and`, text: `text`}"
       conjoin <- if (and == "and") {
         text <- sub("[&]$", "", text)
         and::and

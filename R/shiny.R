@@ -180,6 +180,7 @@ epoxyHTML_transformer <- function(
   element = "span"
 ) {
   function(text, envir) {
+    "!DEBUG epoxyHTML {text: `text`}"
     markup <- parse_html_markup(text)
     placeholder <- rlang::env_get(
       markup$item,
