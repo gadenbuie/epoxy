@@ -141,7 +141,7 @@ knitr_engine_epoxy <- function(options) {
     epoxy(
       code,
       .data        = options[["data"]],
-      .style       = options[["epoxy_style"]] %||% "inline",
+      .style       = options[["epoxy_style"]],
       .sep         = "",
       .envir       = options[[".envir"]]   %||% knitr::knit_global(),
       .open        = options[[".open"]]    %||% "{",
@@ -210,7 +210,7 @@ knitr_engine_epoxy_html <- function(options) {
     out <- epoxy(
       code,
       .data        = options[["data"]],
-      .style       = options[["epoxy_style"]] %||% c("inline", "html"),
+      .style       = options[["epoxy_style"]],
       .sep         = "",
       .envir       = options[[".envir"]]   %||% knitr::knit_global(),
       .open        = options[[".open"]]    %||% "{{",
@@ -286,7 +286,7 @@ knitr_engine_epoxy_latex <- function(options) {
     out <- epoxy(
       code,
       .data        = options[["data"]],
-      .style       = options[["epoxy_style"]] %||% "inline",
+      .style       = options[["epoxy_style"]],
       .sep         = "",
       .envir       = options[[".envir"]]   %||% knitr::knit_global(),
       .open        = options[[".open"]]    %||% "<",
@@ -366,7 +366,12 @@ epoxy_options_get_transformer <- function(options) {
   if (is.vector(style) || is.list(style)) {
     return(epoxy_style(!!!style))
   }
-  style %||% options[[".transformer"]] %||% epoxy_style("inline")
+  style %||%
+    options[[".transformer"]] %||%
+    engine_pick(
+      md = epoxy_style("inline"),
+      html = epoxy_style("inline", "html")
+    )
 }
 
 deprecate_glue_data_chunk_option <- function(options) {
