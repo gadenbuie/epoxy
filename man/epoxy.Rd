@@ -147,7 +147,7 @@ epoxy(
   .style = c("collapse", "bold")
 )
 
-epoxy("The budget for *{title}* was {fmt(budget, '$')}.", .data = movie)
+epoxy("The budget for *{title}* was {.dollar budget}.", .data = movie)
 
 epoxy_html(
   "I'd be happy to watch {{ title| }}.",
