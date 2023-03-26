@@ -101,6 +101,12 @@ epoxy_style_inline <- function(
   dots <- purrr::keep(dots, rlang::is_function)
 
   self <- function(text, envir) {
+    if (detect_wrapped_delims(text)) {
+      # we might need to remove one layer of evaluation
+      text <- remove_outer_delims(text)
+    }
+    text <- text_orig <- trimws(text)
+
     # https://github.com/r-lib/cli/blob/8d8a211c/R/inline.R#L241
     inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
@@ -108,7 +114,6 @@ epoxy_style_inline <- function(
       return(transformer(text, envir))
     }
 
-    text <- trimws(text)
     class <- sub(inline_regex, "\\1", text, perl = TRUE)
     text <- sub(inline_regex, "\\2", text, perl = TRUE)
 
@@ -123,7 +128,9 @@ epoxy_style_inline <- function(
       if (class %in% rlang::names2(dots)) {
         dots[[class]](text)
       } else {
-        text
+        # if this isn't a known inline class, then we pass the original template
+        # text to the next transformer, who might know what to do with it.
+        transformer(text_orig, envir)
       }
     }
 
@@ -163,6 +170,20 @@ epoxy_style_inline <- function(
   }
 
   self
+}
+
+detect_wrapped_delims <- function(text) {
+  delims <- getOption("epoxy:::private", list())
+  open <- delims$.open %||% "{"
+  close <- delims$.close %||% "}"
+  open <- gsub("([}{])", "\\\\\\1", open)
+  close <- gsub("([}{])", "\\\\\\1", close)
+
+  text <- trimws(text)
+
+  if (!grepl(paste0("^", open), text)) return(FALSE)
+  if (!grepl(paste0(close, "$"), text)) return(FALSE)
+  TRUE
 }
 
 remove_outer_delims <- function(text) {
