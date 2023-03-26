@@ -126,15 +126,27 @@ describe("epoxy_html()", {
     )
   })
 
-  it("uses html, collapse stylers by default", {
+  it("uses html, inline stylers by default", {
     expect_equal(
       epoxy_html("{{ span letters[1:3] }}"),
       html_chr(glue("<span>a</span><span>b</span><span>c</span>"))
     )
 
     expect_equal(
-      epoxy_html("{{ span letters[1:3] *}}"),
-      html_chr(glue("<span>a, b, c</span>"))
+      epoxy_html("{{ span {{ .and letters[1:3] }} }}"),
+      html_chr(glue("<span>{and::and(letters[1:3])}</span>"))
+    )
+
+    # need to escape one level to access inline formatter
+    expect_equal(
+      epoxy_html("{{ {{.and letters[1:3] }} }}"),
+      html_chr(glue(and::and(letters[1:3])))
+    )
+
+    # otherwise `.and` is interpreted as a class
+    expect_equal(
+      epoxy_html("{{.and letters[1] }}"),
+      html_chr(glue('<span class="and">a</span>'))
     )
   })
 })
