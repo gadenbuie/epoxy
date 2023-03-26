@@ -42,29 +42,29 @@ evaluation. For example transformers see \code{vignette("transformers")}.}
 
 \item{inc}{The function to apply to \code{x} when the template is \verb{\{.inc x\}}. Default is \code{\link[=sort]{sort()}}.}
 
-\item{dec}{The function to apply to \code{x} when the template is \verb{\{.dec x\}}. Default is \link{function(x) sort(x, decreasing = TRUE)}.}
+\item{dec}{The function to apply to \code{x} when the template is \verb{\{.dec x\}}. Default is \code{function(x) sort(x, decreasing = TRUE)}.}
 
-\item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is \code{\link[scales:label_bytes]{scales::label_bytes()}}.}
+\item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is scales::label_bytes().}
 
-\item{date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \link{function(x) format(x, format = "\%F")}.}
+\item{date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \code{function(x) format(x, format = "\%F")}.}
 
-\item{time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \link{function(x) format(x, format = "\%T")}.}
+\item{time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \code{function(x) format(x, format = "\%T")}.}
 
-\item{datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \link{function(x) format(x, format = "\%F \%T")}.}
+\item{datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \code{function(x) format(x, format = "\%F \%T")}.}
 
-\item{dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \code{\link[scales:label_dollar]{scales::label_dollar()}}.}
+\item{dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is scales::label_dollar().}
 
-\item{number}{The function to apply to \code{x} when the template is \verb{\{.number x\}} or \verb{\{.num x\}}. Default is \code{\link[scales:label_number]{scales::label_number()}}.}
+\item{number}{The function to apply to \code{x} when the template is \verb{\{.number x\}} or \verb{\{.num x\}}. Default is scales::label_number().}
 
-\item{comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
+\item{comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is scales::label_comma().}
 
-\item{ordinal}{The function to apply to \code{x} when the template is \verb{\{.ordinal x\}}. Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
+\item{ordinal}{The function to apply to \code{x} when the template is \verb{\{.ordinal x\}}. Default is scales::label_ordinal().}
 
-\item{percent}{The function to apply to \code{x} when the template is \verb{\{.percent x\}} or \verb{\{.pct x\}}. Default is \code{\link[scales:label_percent]{scales::label_percent()}}.}
+\item{percent}{The function to apply to \code{x} when the template is \verb{\{.percent x\}} or \verb{\{.pct x\}}. Default is scales::label_percent().}
 
-\item{pvalue}{The function to apply to \code{x} when the template is \verb{\{.pvalue x\}}. Default is \code{\link[scales:label_pvalue]{scales::label_pvalue()}}.}
+\item{pvalue}{The function to apply to \code{x} when the template is \verb{\{.pvalue x\}}. Default is scales::label_pvalue().}
 
-\item{scientific}{The function to apply to \code{x} when the template is \verb{\{.scientific x\}}. Default is \code{\link[scales:label_scientific]{scales::label_scientific()}}.}
+\item{scientific}{The function to apply to \code{x} when the template is \verb{\{.scientific x\}}. Default is scales::label_scientific().}
 
 \item{uppercase}{The function to apply to \code{x} when the template is \verb{\{.uppercase x\}} or \verb{\{.uc x\}}. Default is \code{\link[=toupper]{toupper()}}.}
 
@@ -130,7 +130,7 @@ epoxy(
     runif = function(n) sort(runif(n))
   )
 )
-#> Here are three random percentages: 23\%, 35\% and 99\%.
+#> Here are three random percentages: 23\%, 35\%, and 99\%.
 }\if{html}{\out{</div>}}
 }
 \seealso{

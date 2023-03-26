@@ -9,7 +9,7 @@
 epoxy(
   ...,
   .data = NULL,
-  .style = "inline",
+  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "{",
@@ -25,7 +25,7 @@ epoxy(
 epoxy_html(
   ...,
   .data = NULL,
-  .style = c("inline", "html"),
+  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
@@ -41,7 +41,7 @@ epoxy_html(
 epoxy_latex(
   ...,
   .data = NULL,
-  .style = "inline",
+  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "<",

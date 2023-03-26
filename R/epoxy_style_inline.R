@@ -231,13 +231,13 @@ roxy_inline_params <- function() {
   args <- purrr::map(args, rlang::expr_text)
   args <- purrr::map_chr(args, function(expr) {
     if (grepl("^function", expr)) {
-      return(expr)
+      return(paste0("`", expr, "`"))
     }
     expr <- sub("\\(.+\\)$", "()", expr)
     if (grepl("\\(\\)$", expr)) {
       return(expr)
     }
-    paste0(expr, "()")
+    paste0("[", expr, "()]")
   })
 
   extras <- c(
@@ -258,7 +258,7 @@ roxy_inline_params <- function() {
 
   glue(
     "@param {param} The function to apply to `x` when the template is {values}. ",
-    "Default is [{fn}].",
+    "Default is {fn}.",
     param = names(args),
     fn = unname(args),
     values = values
