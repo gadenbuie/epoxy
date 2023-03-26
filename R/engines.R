@@ -165,7 +165,7 @@ knitr_engine_epoxy <- function(options) {
 epoxy_html <- function(
   ...,
   .data = NULL,
-  .style = c("html", "inline"),
+  .style = c("inline", "html"),
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
@@ -210,7 +210,7 @@ knitr_engine_epoxy_html <- function(options) {
     out <- epoxy(
       code,
       .data        = options[["data"]],
-      .style       = options[["epoxy_style"]] %||% c("html", "inline"),
+      .style       = options[["epoxy_style"]] %||% c("inline", "html"),
       .sep         = "",
       .envir       = options[[".envir"]]   %||% knitr::knit_global(),
       .open        = options[[".open"]]    %||% "{{",
