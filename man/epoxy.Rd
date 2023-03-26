@@ -25,7 +25,7 @@ epoxy(
 epoxy_html(
   ...,
   .data = NULL,
-  .style = c("html", "inline"),
+  .style = c("inline", "html"),
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
