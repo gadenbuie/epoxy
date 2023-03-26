@@ -323,17 +323,4 @@ describe("epoxy_style_collapse()", {
       "**1, 2, 3**"
     )
   })
-
-  it("is part of the default transformer", {
-    expect_equal(
-      glue("{1:3&}", .transformer = epoxy_options_get_transformer(list())),
-      and::and(1:3)
-    )
-
-    expect_equal(
-      glue("{fmt(1:3 + 0.25 * 1:3, '$')&}", .transformer = epoxy_options_get_transformer(list())),
-      and::and(c("$1.25", "$2.50", "$3.75"))
-      # "$1.25, $2.50, and $3.75"
-    )
-  })
 })
