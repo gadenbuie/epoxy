@@ -1,9 +1,9 @@
 #' Style replacements with inline formatting
 #'
-#' @description `r lifecycle::badge('experimental')`
+#' @description `r lifecycle::badge('questioning')`
 #'
-#' _The design of this epoxy styler isn't quite settled yet. The API may evolve
-#' or change completely based on feedback and real-world usage._
+#' _This function was an experimental attempt at inline formatting, but is
+#' likely to be removed from \pkg{epoxy} in favor of [epoxy_style_inline()]._
 #'
 #' Makes available all of the `label_` functions from the \pkg{scales} package
 #' within an inline format function, `fmt()`. To apply formatting, wrap embraced

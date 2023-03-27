@@ -83,10 +83,10 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer}
 argument of \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}
 
-\emph{The design of this epoxy styler isn't quite settled yet. The API may evolve
-or change completely based on feedback and real-world usage.}
+\emph{This function was an experimental attempt at inline formatting, but is
+likely to be removed from \pkg{epoxy} in favor of \code{\link[=epoxy_style_inline]{epoxy_style_inline()}}.}
 
 Makes available all of the \code{label_} functions from the \pkg{scales} package
 within an inline format function, \code{fmt()}. To apply formatting, wrap embraced
