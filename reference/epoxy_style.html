@@ -4,12 +4,12 @@ strings. They are designed to be used with the .transformer chunk option of
 in epoxy chunks. You can use epoxy_style() to chain several transformers
 together. epoxy_style() and individual epoxy style functions can be
 used in epoxy, epoxy_html and epoxy_latex chunks and will choose the
-correct syntax for each."><title>epoxy Style Transformers — epoxy_style • epoxy</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.5/font.css" rel="stylesheet"><link href="../deps/Outfit-0.4.5/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="epoxy Style Transformers — epoxy_style"><meta property="og:description" content="These transformers provide additional automatic formatting for the template
+correct engine for each."><title>epoxy Style Transformers — epoxy_style • epoxy</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.5/font.css" rel="stylesheet"><link href="../deps/Outfit-0.4.5/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="epoxy Style Transformers — epoxy_style"><meta property="og:description" content="These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the .transformer chunk option of
 in epoxy chunks. You can use epoxy_style() to chain several transformers
 together. epoxy_style() and individual epoxy style functions can be
 used in epoxy, epoxy_html and epoxy_latex chunks and will choose the
-correct syntax for each."><meta property="og:image" content="http://pkg.garrickadenbuie.com/epoxy/logo.png"><meta name="twitter:card" content="summary"><meta name="twitter:creator" content="@grrrck"><meta name="twitter:site" content="@grrrck"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+correct engine for each."><meta property="og:image" content="http://pkg.garrickadenbuie.com/epoxy/logo.png"><meta name="twitter:card" content="summary"><meta name="twitter:creator" content="@grrrck"><meta name="twitter:site" content="@grrrck"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
@@ -86,27 +86,30 @@ strings. They are designed to be used with the <code>.transformer</code> chunk o
 in <code>epoxy</code> chunks. You can use <code>epoxy_style()</code> to chain several transformers
 together. <code>epoxy_style()</code> and individual <span class="pkg">epoxy</span> style functions can be
 used in <code>epoxy</code>, <code>epoxy_html</code> and <code>epoxy_latex</code> chunks and will choose the
-correct syntax for each.</p>
+correct engine for each.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_style</span><span class="op">(</span><span class="va">...</span>, syntax <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_style</span><span class="op">(</span><span class="va">...</span>, engine <span class="op">=</span> <span class="cn">NULL</span>, syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">epoxy_style_default</span><span class="op">(</span><span class="va">...</span>, engine <span class="op">=</span> <span class="cn">NULL</span>, syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">epoxy_style_wrap</span><span class="op">(</span></span>
 <span>  before <span class="op">=</span> <span class="st">"**"</span>,</span>
 <span>  after <span class="op">=</span> <span class="va">before</span>,</span>
-<span>  syntax <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span></span>
+<span>  engine <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
+<span>  syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">epoxy_style_bold</span><span class="op">(</span>syntax <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
+<span><span class="fu">epoxy_style_bold</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">epoxy_style_italic</span><span class="op">(</span>syntax <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
+<span><span class="fu">epoxy_style_italic</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">epoxy_style_apply</span><span class="op">(</span>.f <span class="op">=</span> <span class="va">identity</span>, <span class="va">...</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">epoxy_style_code</span><span class="op">(</span>syntax <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
+<span><span class="fu">epoxy_style_code</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">epoxy_style_collapse</span><span class="op">(</span></span>
 <span>  sep <span class="op">=</span> <span class="st">", "</span>,</span>
@@ -133,11 +136,15 @@ underlying function call.</p>
 <p>In <code>epoxy_style_collapse()</code>, the <code>...</code> are ignored.</p></dd>
 
 
-<dt>syntax</dt>
+<dt>engine</dt>
 <dd><p>One of <code>"markdown"</code> (or <code>"md"</code>), <code>"html"</code>, or <code>"latex"</code>. The
 default is chosen based on the engine of the chunk where the style function
 is called, or according to the option <code>epoxy.engine</code>. Caution: invalid
-options are silently ignored, falling back to markdown syntax.</p></dd>
+options are silently ignored, falling back to <code>"markdown"</code>.</p></dd>
+
+
+<dt>syntax</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>engine</code> instead.</p></dd>
 
 
 <dt>before, after</dt>
@@ -183,7 +190,11 @@ for the <code>language</code>. By default, will follow the system language. See
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>epoxy_style_wrap()</code>: Wrap variables</p></li>
+<ul><li><p><code>epoxy_style()</code>: Construct an epoxy styler, a.k.a. a glue transformer
+for use with <code><a href="epoxy.html">epoxy()</a></code> or <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>.</p></li>
+<li><p><code>epoxy_style_default()</code>: Set the default epoxy <code>.style</code> for all epoxy engines
+or for a subset of engines.</p></li>
+<li><p><code>epoxy_style_wrap()</code>: Wrap variables</p></li>
 <li><p><code>epoxy_style_bold()</code>: Embolden variables using <code>**</code> in markdown, <code>&lt;strong&gt;</code>
 in HTML, or <code>\textbf{}</code> in LaTeX</p></li>
 <li><p><code>epoxy_style_italic()</code>: Italicize variables using <code>_</code> in markdown, <code>&lt;em&gt;</code> in
@@ -197,15 +208,15 @@ HTML, or <code>\emph{}</code> in LaTeX</p></li>
     <h2 id="output-specific-styling">Output-specific styling<a class="anchor" aria-label="anchor" href="#output-specific-styling"></a></h2>
     
 
-<p>The <code>epoxy_style_</code> functions will attempt to use the correct syntax for
+<p>The <code>epoxy_style_</code> functions will attempt to use the correct engine for
 styling the replacement text for markdown, HTML and LaTeX. This choice is
 driven by the chunk engine where the styling function is used. The <code>epoxy</code>
 engine corresponds to markdown, <code>epoxy_html</code> to HTML, and <code>epoxy_latex</code> to
 LaTeX.</p>
-<p>Automatic syntax selection only works when the epoxy style functions are used
+<p>Automatic engine selection only works when the epoxy style functions are used
 with epoxy knitr engines and during the knitr rendering process. When
-used outside of this context, you can choose the desired syntax by setting
-the <code>syntax</code> to one of <code>"markdown"</code>, <code>"html"</code> or <code>"latex"</code>.</p>
+used outside of this context, you can choose the desired engine by setting
+the <code>engine</code> to one of <code>"markdown"</code>, <code>"html"</code> or <code>"latex"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -223,17 +234,17 @@ the <code>syntax</code> to one of <code>"markdown"</code>, <code>"html"</code> o
 <span class="r-out co"><span class="r-pr">#&gt;</span> **a, b and c**</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># In an epoxy_html chunk...</span></span></span>
-<span class="r-in"><span><span class="co"># Note that you don't have to set `syntax = "html"`, it just knows</span></span></span>
+<span class="r-in"><span><span class="co"># Note that you don't have to set `engine = "html"`, it just knows</span></span></span>
 <span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"{letters[1:3]&amp;}"</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style</span><span class="op">(</span><span class="st">"bold"</span>, <span class="st">"collapse"</span>, syntax <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style</span><span class="op">(</span><span class="st">"bold"</span>, <span class="st">"collapse"</span>, engine <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;strong&gt;a&lt;/strong&gt;, &lt;strong&gt;b&lt;/strong&gt; and &lt;strong&gt;c&lt;/strong&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or in an epoxy_latex chunk...</span></span></span>
 <span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"{letters[1:3]&amp;}"</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style</span><span class="op">(</span><span class="st">"bold"</span>, <span class="st">"collapse"</span>, syntax <span class="op">=</span> <span class="st">"latex"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style</span><span class="op">(</span><span class="st">"bold"</span>, <span class="st">"collapse"</span>, engine <span class="op">=</span> <span class="st">"latex"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \textbf{a}, \textbf{b} and \textbf{c}</span>
 <span class="r-in"><span></span></span>
