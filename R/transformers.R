@@ -49,6 +49,8 @@
 #' @return A function of `text` and `envir` suitable for the `.transformer`
 #'   argument of [glue::glue()].
 #'
+#' @describeIn epoxy_style Construct an epoxy styler, a.k.a. a glue transformer
+#'   for use with [epoxy()] or [glue::glue()].
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style <- function(..., syntax = NULL) {
@@ -72,6 +74,9 @@ epoxy_style <- function(..., syntax = NULL) {
   )
 }
 
+#' @describeIn epoxy_style Set the default epoxy `.style` for all epoxy engines
+#'   or for a subset of engines.
+#' @export
 epoxy_style_default <- function(..., syntax = NULL) {
   if (!is.null(syntax)) {
     syntax <- engine_validate_alias(syntax)
