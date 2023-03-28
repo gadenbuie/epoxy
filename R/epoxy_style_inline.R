@@ -116,9 +116,9 @@ epoxy_style_inline <- function(
     }
 
     class <- sub(inline_regex, "\\1", text, perl = TRUE)
-    text <- sub(inline_regex, "\\2", text, perl = TRUE)
+    text_sans_class <- sub(inline_regex, "\\2", text, perl = TRUE)
 
-    text <- remove_outer_delims(text)
+    text <- remove_outer_delims(text_sans_class)
 
     # if (isTRUE(attr(text, "is_inner_expr"))) {
     #   attr(text, "is_inner_expr") <- NULL
@@ -132,7 +132,20 @@ epoxy_style_inline <- function(
         # if this isn't a known inline class, then we pass the original template
         # text to the next transformer, who might know what to do with it.
         "!DEBUG inline was unmatched"
-        transformer(text_orig, envir)
+        tryCatch(
+          transformer(text_orig, envir),
+          error = function(err_og) {
+            tryCatch(
+              transformer(text_sans_class, envir),
+              error = function(err_sc) {
+                rlang::abort(
+                  glue("Could not evaluate text '{text_orig}`"),
+                  parent = err_og
+                )
+              }
+            )
+          }
+        )
       }
     }
 
