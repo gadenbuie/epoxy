@@ -1,4 +1,4 @@
-# epoxy 0.0.2.9000
+# epoxy (development version)
 
 * epoxy's knitr engine is now `epoxy` and not `glue`. This avoids a name clash
   with the [glue](https://glue.tidyverse.org) package, which provides a `glue`
@@ -44,30 +44,30 @@
   a list of functions, e.g. `epoxy_style = c("bold", "collapse")` (#31).
 
 * A new styler, `epoxy_style_apply()`, can be used to globally apply a
-  function to glue expressions. `epoxy_style_apply()` uses the same syntax as 
+  function to glue expressions. `epoxy_style_apply()` uses the same syntax as
   `purrr::map()` for defining the function, i.e. `tolower` or `~ tolower(.x)`
   (#37).
-  
+
 * `epoxy_style_format()` provides a small inline function, `fmt()` that can be
   used to apply specific formatting to an expression. It wraps all of the
   label functions from the scales package and provides shortcuts for many
   labellers. For example, `{fmt(x, "%")}` will format `x` as a percentage using
   `scales::label_percent()` and `{fmt(x, "$")}` will format `x` as a dollar
   figure. You can also provide your own functions (#39).
-  
-* By default, `epoxy_style_format()` (#44) and `epoxy_style_collapse()` (#45) 
+
+* By default, `epoxy_style_format()` (#44) and `epoxy_style_collapse()` (#45)
   are now available in all epoxy chunks. This means you won't need to specify
   the `epoxy_style` chunk option to use the inline `fmt()` function or the
   `*`, `&`, or `|` collapse syntax.
-  
+
 * `epoxy_style_collapse()` now uses the [and ackage](https://and.rossellhayes.com/),
   which provides language-aware conjoining of strings. As a result, the
   `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
   and are silently ignored if provided (#45).
-  
+
 * `epoxy`, `epoxy_html()` and `epoxy_latex()` are now exported functions that
   power the knitr engines and use the same defaults (#46).
-  
+
 * The HTML element syntax used in `ui_epoxy_html()` is now available in
   `epoxy_style_html()` and is used by default in `epoxy_html()` (#46).
 
@@ -76,14 +76,25 @@
   advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
   variables in the template can appear anywhere in the HTML, not just in the
   text portion (#51).
-  
+
   * `ui_epoxy_whisker()` is also provided as an alias for discoverability/user
     comfort (#60).
-  
+
 * `epoxyHTML()` and `renderEpoxyHTML()` were renamed `ui_epoxy_html()` and
   `render_epoxy()` respectively. This better fits newer Shiny naming conventions
   and reflects that `render_epoxy()` serves both `ui_epoxy_html()` and
   `ui_epoxy_mustache()` (#56).
+
+* epoxy now uses cli-style inline formatting powered by `epoxy_style_inline()`.
+  This styler is enabled by default in `epoxy()`, `epoxy_html()` and
+  `epoxy_latex()`.
+
+* Added `epoxy_style_default()` to enable setting the default `.style` option
+  for all chunks or epoxy functions. You can use this function to set the
+  epoxy style for all chunk engines or a subset of chunk engines.
+
+* Added `engine_pick()` for providing a set of options where the correct option
+  will be chosen based on the current chunk or epoxy engine.
 
 # epoxy 0.0.2
 

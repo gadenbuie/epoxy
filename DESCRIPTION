@@ -1,6 +1,6 @@
 Package: epoxy
 Title: String Interpolation for 'R Markdown' Documents
-Version: 0.0.2.9000
+Version: 0.0.3.9000
 Authors@R:
     person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7111-0077"))
@@ -10,7 +10,7 @@ Description: Extra strength 'glue' for data-driven templating. String
 License: MIT + file LICENSE
 URL: https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
-Depends: 
+Depends:
     R (>= 2.10)
 Imports:
     and,
@@ -28,7 +28,7 @@ Suggests:
     scales (>= 1.1.0),
     shiny,
     testthat
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Config/Needs/website: gadenbuie/grkgdown
 Config/testthat/edition: 3
