@@ -69,7 +69,7 @@ test_that("epoxy_style() throws an error for unknown styles", {
   )
 })
 
-test_that("epoxy_style_*() chooses syntax by epoxy.engine option", {
+test_that("epoxy_style_*() chooses engine by epoxy.engine option", {
   with_options(
     list(epoxy.engine = "epoxy"),
     expect_equal(
@@ -104,39 +104,39 @@ test_that("epoxy_style_*() chooses syntax by epoxy.engine option", {
   )
 })
 
-test_that("epoxy_style_*() functions choose syntax by argument", {
+test_that("epoxy_style_*() functions choose engine by argument", {
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style_bold(syntax = "md")),
+    glue("{'text'}", .transformer = epoxy_style_bold(engine = "md")),
     "**text**"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style_bold(syntax = "markdown")),
+    glue("{'text'}", .transformer = epoxy_style_bold(engine = "markdown")),
     "**text**"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style("bold", syntax = "markdown")),
+    glue("{'text'}", .transformer = epoxy_style("bold", engine = "markdown")),
     "**text**"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style_bold(syntax = "html")),
+    glue("{'text'}", .transformer = epoxy_style_bold(engine = "html")),
     "<strong>text</strong>"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style("bold", syntax = "html")),
+    glue("{'text'}", .transformer = epoxy_style("bold", engine = "html")),
     "<strong>text</strong>"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style_bold(syntax = "latex")),
+    glue("{'text'}", .transformer = epoxy_style_bold(engine = "latex")),
     "\\textbf{text}"
   )
 
   expect_equal(
-    glue("{'text'}", .transformer = epoxy_style("bold", syntax = "latex")),
+    glue("{'text'}", .transformer = epoxy_style("bold", engine = "latex")),
     "\\textbf{text}"
   )
 })

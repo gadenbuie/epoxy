@@ -2,6 +2,7 @@
 % Please edit documentation in R/transformers.R
 \name{epoxy_style}
 \alias{epoxy_style}
+\alias{epoxy_style_default}
 \alias{epoxy_style_wrap}
 \alias{epoxy_style_bold}
 \alias{epoxy_style_italic}
@@ -10,22 +11,25 @@
 \alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
 \usage{
-epoxy_style(..., syntax = NULL)
+epoxy_style(..., engine = NULL, syntax = lifecycle::deprecated())
+
+epoxy_style_default(..., engine = NULL, syntax = lifecycle::deprecated())
 
 epoxy_style_wrap(
   before = "**",
   after = before,
-  syntax = NULL,
-  transformer = glue::identity_transformer
+  engine = NULL,
+  transformer = glue::identity_transformer,
+  syntax = lifecycle::deprecated()
 )
 
-epoxy_style_bold(syntax = NULL, transformer = glue::identity_transformer)
+epoxy_style_bold(engine = NULL, transformer = glue::identity_transformer)
 
-epoxy_style_italic(syntax = NULL, transformer = glue::identity_transformer)
+epoxy_style_italic(engine = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_apply(.f = identity, ..., transformer = glue::identity_transformer)
 
-epoxy_style_code(syntax = NULL, transformer = glue::identity_transformer)
+epoxy_style_code(engine = NULL, transformer = glue::identity_transformer)
 
 epoxy_style_collapse(
   sep = ", ",
@@ -51,10 +55,12 @@ underlying function call.
 
 In \code{epoxy_style_collapse()}, the \code{...} are ignored.}
 
-\item{syntax}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
+\item{engine}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
 default is chosen based on the engine of the chunk where the style function
 is called, or according to the option \code{epoxy.engine}. Caution: invalid
-options are silently ignored, falling back to markdown syntax.}
+options are silently ignored, falling back to \code{"markdown"}.}
+
+\item{syntax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{engine} instead.}
 
 \item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
 before and after variables in the template string.}
@@ -87,10 +93,16 @@ strings. They are designed to be used with the \code{.transformer} chunk option 
 in \code{epoxy} chunks. You can use \code{epoxy_style()} to chain several transformers
 together. \code{epoxy_style()} and individual \pkg{epoxy} style functions can be
 used in \code{epoxy}, \code{epoxy_html} and \code{epoxy_latex} chunks and will choose the
-correct syntax for each.
+correct engine for each.
 }
 \section{Functions}{
 \itemize{
+\item \code{epoxy_style()}: Construct an epoxy styler, a.k.a. a glue transformer
+for use with \code{\link[=epoxy]{epoxy()}} or \code{\link[glue:glue]{glue::glue()}}.
+
+\item \code{epoxy_style_default()}: Set the default epoxy \code{.style} for all epoxy engines
+or for a subset of engines.
+
 \item \code{epoxy_style_wrap()}: Wrap variables
 
 \item \code{epoxy_style_bold()}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
@@ -109,16 +121,16 @@ HTML, or \verb{\\emph\{\}} in LaTeX
 }}
 \section{Output-specific styling}{
 
-The \code{epoxy_style_} functions will attempt to use the correct syntax for
+The \code{epoxy_style_} functions will attempt to use the correct engine for
 styling the replacement text for markdown, HTML and LaTeX. This choice is
 driven by the chunk engine where the styling function is used. The \code{epoxy}
 engine corresponds to markdown, \code{epoxy_html} to HTML, and \code{epoxy_latex} to
 LaTeX.
 
-Automatic syntax selection only works when the epoxy style functions are used
+Automatic engine selection only works when the epoxy style functions are used
 with epoxy knitr engines and during the knitr rendering process. When
-used outside of this context, you can choose the desired syntax by setting
-the \code{syntax} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
+used outside of this context, you can choose the desired engine by setting
+the \code{engine} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
 }
 
 \examples{
@@ -126,16 +138,16 @@ glue::glue("{letters[1:3]&}", .transformer = epoxy_style("bold", "collapse"))
 glue::glue("{letters[1:3]&}", .transformer = epoxy_style("collapse", "bold"))
 
 # In an epoxy_html chunk...
-# Note that you don't have to set `syntax = "html"`, it just knows
+# Note that you don't have to set `engine = "html"`, it just knows
 glue::glue(
   "{letters[1:3]&}",
-  .transformer = epoxy_style("bold", "collapse", syntax = "html")
+  .transformer = epoxy_style("bold", "collapse", engine = "html")
 )
 
 # Or in an epoxy_latex chunk...
 glue::glue(
   "{letters[1:3]&}",
-  .transformer = epoxy_style("bold", "collapse", syntax = "latex")
+  .transformer = epoxy_style("bold", "collapse", engine = "latex")
 )
 
 # Other Transfomers ----

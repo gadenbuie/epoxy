@@ -5,19 +5,19 @@
 #' in `epoxy` chunks. You can use `epoxy_style()` to chain several transformers
 #' together. `epoxy_style()` and individual \pkg{epoxy} style functions can be
 #' used in `epoxy`, `epoxy_html` and `epoxy_latex` chunks and will choose the
-#' correct syntax for each.
+#' correct engine for each.
 #'
 #' @section Output-specific styling:
-#'   The `epoxy_style_` functions will attempt to use the correct syntax for
+#'   The `epoxy_style_` functions will attempt to use the correct engine for
 #'   styling the replacement text for markdown, HTML and LaTeX. This choice is
 #'   driven by the chunk engine where the styling function is used. The `epoxy`
 #'   engine corresponds to markdown, `epoxy_html` to HTML, and `epoxy_latex` to
 #'   LaTeX.
 #'
-#'   Automatic syntax selection only works when the epoxy style functions are used
+#'   Automatic engine selection only works when the epoxy style functions are used
 #'   with epoxy knitr engines and during the knitr rendering process. When
-#'   used outside of this context, you can choose the desired syntax by setting
-#'   the `syntax` to one of `"markdown"`, `"html"` or `"latex"`.
+#'   used outside of this context, you can choose the desired engine by setting
+#'   the `engine` to one of `"markdown"`, `"html"` or `"latex"`.
 #'
 #' @example man/examples/epoxy_style.R
 #'
@@ -35,10 +35,11 @@
 #'   underlying function call.
 #'
 #'   In `epoxy_style_collapse()`, the `...` are ignored.
-#' @param syntax One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
+#' @param engine One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
 #'   default is chosen based on the engine of the chunk where the style function
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
-#'   options are silently ignored, falling back to markdown syntax.
+#'   options are silently ignored, falling back to `"markdown"`.
+#' @param syntax `r lifecycle::badge("deprecated")` Use `engine` instead.
 #' @param transformer The transformer to apply to the replacement string. This
 #'   argument is used for chaining the transformer functions. By providing a
 #'   function to this argument you can apply an additional transformation after
@@ -53,9 +54,18 @@
 #'   for use with [epoxy()] or [glue::glue()].
 #' @family epoxy-style glue transformers
 #' @export
-epoxy_style <- function(..., syntax = NULL) {
-  if (!is.null(syntax)) {
-    syntax <- engine_validate_alias(syntax)
+epoxy_style <- function(..., engine = NULL, syntax = lifecycle::deprecated()) {
+  if (lifecycle::is_present(syntax)) {
+    lifecycle::deprecate_warn(
+      "0.1.0",
+      "epoxy::epoxy_style(syntax = )",
+      "epoxy::epoxy_style(engine = )"
+    )
+    engine <- engine %||% syntax
+  }
+
+  if (!is.null(engine)) {
+    engine <- engine_validate_alias(engine)
   }
 
   parent_env <- rlang::caller_env()
@@ -66,7 +76,7 @@ epoxy_style <- function(..., syntax = NULL) {
   dots <- purrr::modify_if(dots, is.character, pick_style)
 
   with_options(
-    list(epoxy.engine = syntax),
+    list(epoxy.engine = engine),
     purrr::reduce(dots, function(x, y) {
       if (is.null(x)) return(y())
       y(transformer = x)
@@ -77,33 +87,46 @@ epoxy_style <- function(..., syntax = NULL) {
 #' @describeIn epoxy_style Set the default epoxy `.style` for all epoxy engines
 #'   or for a subset of engines.
 #' @export
-epoxy_style_default <- function(..., syntax = NULL) {
-  if (!is.null(syntax)) {
-    syntax <- engine_validate_alias(syntax)
+epoxy_style_default <- function(
+  ...,
+  engine = NULL,
+  syntax = lifecycle::deprecated()
+) {
+  if (lifecycle::is_present(syntax)) {
+    lifecycle::deprecate_warn(
+      "0.1.0",
+      "epoxy::epoxy_style_default(syntax = )",
+      "epoxy::epoxy_style_default(engine = )"
+    )
+    engine <- engine %||% syntax
+  }
+
+  if (!is.null(engine)) {
+    engine <- engine_validate_alias(engine)
   } else {
-    syntax <- c("md", "html", "latex")
+    engine <- c("md", "html", "latex")
   }
 
   if (identical(list(...), list(NULL))) {
-    # unset syntax options
+    # unset engine options
     opts_unset <- list()
-    syntax <- glue("epoxy.epoxy_style_default.{syntax}")
-    opts_unset[syntax] <- list(NULL)
+    engine <- glue("epoxy.epoxy_style_default.{engine}")
+    opts_unset[engine] <- list(NULL)
     return(invisible(options(opts_unset)))
   }
 
   if (length(list(...)) == 0) {
     # get current option values
-    syntax <- rlang::set_names(
-      glue("epoxy.epoxy_style_default.{syntax}")
+    engine <- rlang::set_names(
+      glue("epoxy.epoxy_style_default.{engine}")
     )
-    return(lapply(syntax, getOption, default = NULL))
+    return(lapply(engine, getOption, default = NULL))
   }
 
   opts_to_set <- list()
-  for (engine in syntax) {
+  for (engine in engine) {
     opt_name <- glue("epoxy.epoxy_style_default.{engine}")
-    opts_to_set[[opt_name]] <- epoxy_style(..., syntax = engine)
+    opts_to_set[[opt_name]] <- epoxy_style(..., engine = engine)
   }
 
   old_opts <- options(opts_to_set)
@@ -137,15 +160,25 @@ close_over_transformer <- function(expr, env) {
 epoxy_style_wrap <- function(
   before = "**",
   after = before,
-  syntax = NULL,
-  transformer = glue::identity_transformer
+  engine = NULL,
+  transformer = glue::identity_transformer,
+  syntax = lifecycle::deprecated()
 ) {
+  if (lifecycle::is_present(syntax)) {
+    lifecycle::deprecate_warn(
+      "0.1.0",
+      "epoxy::epoxy_style(syntax =)",
+      "epoxy::epoxy_style(engine = )"
+    )
+    engine <- engine %||% syntax
+  }
+
   if (!is.null(getOption("epoxy.engine", NULL))) {
     force(list(before, after))
   }
-  if (!is.null(syntax)) {
+  if (!is.null(engine)) {
     with_options(
-      list(epoxy.engine = syntax),
+      list(epoxy.engine = engine),
       list(before, after)
     )
   }
@@ -158,11 +191,11 @@ epoxy_style_wrap <- function(
 #' @describeIn epoxy_style Embolden variables using `**` in markdown, `<strong>`
 #'   in HTML, or `\textbf{}` in LaTeX
 #' @export
-epoxy_style_bold <- function(syntax = NULL, transformer = glue::identity_transformer) {
+epoxy_style_bold <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = engine_pick("**", "<strong>", "\\textbf{"),
     after = engine_pick("**", "</strong>", "}"),
-    syntax = syntax,
+    engine = engine,
     transformer = transformer
   )
 }
@@ -170,11 +203,11 @@ epoxy_style_bold <- function(syntax = NULL, transformer = glue::identity_transfo
 #' @describeIn epoxy_style Italicize variables using `_` in markdown, `<em>` in
 #'   HTML, or `\emph{}` in LaTeX
 #' @export
-epoxy_style_italic <- function(syntax = NULL, transformer = glue::identity_transformer) {
+epoxy_style_italic <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = engine_pick("_", "<em>", "\\emph{"),
     after = engine_pick("_", "</em>", "}"),
-    syntax = syntax,
+    engine = engine,
     transformer = transformer
   )
 }
@@ -197,11 +230,11 @@ epoxy_style_apply <- function(
 #' @describeIn epoxy_style Code format variables using ` `` ` in markdown,
 #'   `<code>` in HTML, or `\texttt{}` in LaTeX
 #' @export
-epoxy_style_code <- function(syntax = NULL, transformer = glue::identity_transformer) {
+epoxy_style_code <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
     before = engine_pick("`", "<code>", "\\texttt{"),
     after = engine_pick("`", "</code>", "}"),
-    syntax = syntax,
+    engine = engine,
     transformer = transformer
   )
 }

@@ -180,13 +180,13 @@ describe("epoxy_style_default()", {
   })
 
   it("sets the default for individual styles", {
-    opts_md <- epoxy_style_default("bold", syntax = "md")
+    opts_md <- epoxy_style_default("bold", engine = "md")
     on.exit(options(opts_md), add = TRUE)
 
-    opts_html <- epoxy_style_default("italic", syntax = "html")
+    opts_html <- epoxy_style_default("italic", engine = "html")
     on.exit(options(opts_html), add = TRUE)
 
-    opts_latex <- epoxy_style_default(epoxy_style_code, syntax = "latex")
+    opts_latex <- epoxy_style_default(epoxy_style_code, engine = "latex")
     on.exit(options(opts_latex), add = TRUE)
 
     expect_equal(
