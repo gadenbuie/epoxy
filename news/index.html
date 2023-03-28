@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.3.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.2.9000" id="epoxy-0029000">epoxy 0.0.2.9000<a class="anchor" aria-label="anchor" href="#epoxy-0029000"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="epoxy-development-version">epoxy (development version)<a class="anchor" aria-label="anchor" href="#epoxy-development-version"></a></h2>
 <ul><li><p>epoxy’s knitr engine is now <code>epoxy</code> and not <code>glue</code>. This avoids a name clash with the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package, which provides a <code>glue</code> knitr engine with similar functionality. epoxy also provides <code>epoxy_html</code> and <code>epoxy_latex</code> knitr engines, although they can still be used via their aliases <code>glue_html</code> and <code>glue_latex</code>. (<a href="https://github.com/gadenbuie/epoxy/issues/21" class="external-link">#21</a>)</p></li>
 <li><p><code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> will now render elements with IDs using the <code>#</code> syntax, e.g. <code>{{h3#name.author full_name}}</code> will create an element that is (essentially) <code>&lt;h3 id="name" class="author"&gt;{{ full_name }}&lt;/h3&gt;</code> (<a href="https://github.com/gadenbuie/epoxy/issues/22" class="external-link">#22</a>).</p></li>
 <li><p>epoxy requires glue &gt;= 1.5.0.</p></li>
@@ -92,6 +92,9 @@
 <code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_whisker()</a></code> is also provided as an alias for discoverability/user comfort (<a href="https://github.com/gadenbuie/epoxy/issues/60" class="external-link">#60</a>).</li>
 </ul></li>
 <li><p><code><a href="../reference/ui_epoxy_html.html">epoxyHTML()</a></code> and <code><a href="../reference/render_epoxy.html">renderEpoxyHTML()</a></code> were renamed <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> and <code><a href="../reference/render_epoxy.html">render_epoxy()</a></code> respectively. This better fits newer Shiny naming conventions and reflects that <code><a href="../reference/render_epoxy.html">render_epoxy()</a></code> serves both <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> and <code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> (<a href="https://github.com/gadenbuie/epoxy/issues/56" class="external-link">#56</a>).</p></li>
+<li><p>epoxy now uses cli-style inline formatting powered by <code><a href="../reference/epoxy_style_inline.html">epoxy_style_inline()</a></code>. This styler is enabled by default in <code><a href="../reference/epoxy.html">epoxy()</a></code>, <code><a href="../reference/epoxy.html">epoxy_html()</a></code> and <code><a href="../reference/epoxy.html">epoxy_latex()</a></code>.</p></li>
+<li><p>Added <code>epoxy_style_default()</code> to enable setting the default <code>.style</code> option for all chunks or epoxy functions. You can use this function to set the epoxy style for all chunk engines or a subset of chunk engines.</p></li>
+<li><p>Added <code><a href="../reference/engine_pick.html">engine_pick()</a></code> for providing a set of options where the correct option will be chosen based on the current chunk or epoxy engine.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2" id="epoxy-002">epoxy 0.0.2<a class="anchor" aria-label="anchor" href="#epoxy-002"></a></h2>
