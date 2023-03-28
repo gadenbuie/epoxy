@@ -106,7 +106,7 @@ epoxy_style_inline <- function(
       text <- remove_outer_delims(text)
     }
     text <- text_orig <- trimws(text)
-    "!DEBUG inline {text: `text`}"
+    '!DEBUG inline {text: "`text`"}'
 
     # https://github.com/r-lib/cli/blob/8d8a211c/R/inline.R#L241
     inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
@@ -133,10 +133,16 @@ epoxy_style_inline <- function(
         # text to the next transformer, who might know what to do with it.
         "!DEBUG inline was unmatched"
         tryCatch(
-          transformer(text_orig, envir),
+          {
+            '!DEBUG inline trying {text: "`text`"}'
+            transformer(text_orig, envir)
+          },
           error = function(err_og) {
             tryCatch(
-              transformer(text_sans_class, envir),
+              {
+                '!DEBUG inline trying {text: "`text_sans_class`"}'
+                transformer(text_sans_class, envir)
+              },
               error = function(err_sc) {
                 rlang::abort(
                   glue("Could not evaluate text '{text_orig}`"),

@@ -66,7 +66,7 @@ epoxy_style_format  <- function(
   fmt <- labeller_factory(labellers)
 
   function(text, envir) {
-    "!DEBUG format {text: `text`}"
+    '!DEBUG format {text: "`text`"}'
     fmt_envir <- rlang::new_environment(list(fmt = fmt), parent = envir)
     transformer(text, fmt_envir)
   }
