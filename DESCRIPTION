@@ -1,6 +1,6 @@
 Package: epoxy
 Title: String Interpolation for 'R Markdown' Documents
-Version: 0.0.3.9000
+Version: 0.0.4.9000
 Authors@R:
     person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7111-0077"))
