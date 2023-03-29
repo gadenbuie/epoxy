@@ -130,12 +130,11 @@ epoxy(
     runif = function(n) sort(runif(n))
   )
 )
-#> Here are three random percentages: 23\%, 35\% and 99\%.
+#> Here are three random percentages: 23\%, 35\%, and 99\%.
 }\if{html}{\out{</div>}}
 }
 \seealso{
 Other epoxy-style glue transformers: 
-\code{\link{epoxy_style_format}()},
 \code{\link{epoxy_style_html}()},
 \code{\link{epoxy_style}()}
 }

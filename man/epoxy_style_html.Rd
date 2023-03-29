@@ -78,7 +78,6 @@ epoxy_html(
 Used by default in \code{\link[=epoxy_html]{epoxy_html()}}
 
 Other epoxy-style glue transformers: 
-\code{\link{epoxy_style_format}()},
 \code{\link{epoxy_style_inline}()},
 \code{\link{epoxy_style}()}
 }
