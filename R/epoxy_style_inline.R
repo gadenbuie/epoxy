@@ -56,6 +56,8 @@
 #' )
 #' ```
 #'
+#' @example man/examples/epoxy_style_inline.R
+#'
 #' @param ... Additional named inline transformers. The evaluated expression
 #'   from the template expression is passed as the first argument to the
 #'   function.
@@ -63,6 +65,7 @@
 #' @eval roxy_inline_params()
 #'
 #' @inherit epoxy_style return
+#' @seealso [epoxy_style()], [epoxy_style_default()]
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style_inline <- function(

@@ -16,11 +16,11 @@ glue::glue(
 
 # Other Transfomers ----
 
-# Apply `format()` to all replacements
-number <- 1.234234234
+# Format numbers with an inline transformation
+amount <- 123.4234234
 glue::glue(
-  "{fmt(number, 'number')}",
-  .transformer = epoxy_style_format(
+  "{.number amount}",
+  .transformer = epoxy_style_inline(
     number = scales::label_number(accuracy = 0.01)
   )
 )
