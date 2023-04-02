@@ -53,6 +53,7 @@
 #' @param element `[character()`\cr The default HTML element tag name to be used
 #'   when an element isn't specified in the expression.
 #'
+#' @inheritParams epoxy_style_inline
 #' @inherit epoxy_style params return
 #'
 #' @seealso Used by default in [epoxy_html()]

@@ -32,9 +32,12 @@ epoxy_style_inline(
 from the template expression is passed as the first argument to the
 function.}
 
-\item{transformer}{[\verb{function]}\cr A function taking three parameters \code{code}, \code{envir} and
-\code{data} used to transform the output of each block before, during, or after
-evaluation. For example transformers see \code{vignette("transformers")}.}
+\item{transformer}{The transformer to apply to the replacement string. This
+argument is used for chaining the transformer functions. By providing a
+function to this argument you can apply an additional transformation after
+the current transformation. In nearly all cases, you can let
+\code{epoxy_style()} handle this for you. The chain ends when
+\code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 
 \item{and}{The function to apply to \code{x} when the template is \verb{\{.and x\}}. Default is \code{\link[and:and]{and::and()}}.}
 

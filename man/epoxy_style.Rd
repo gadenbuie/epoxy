@@ -34,13 +34,6 @@ is called, or according to the option \code{epoxy.engine}. Caution: invalid
 options are silently ignored, falling back to \code{"markdown"}.}
 
 \item{syntax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{engine} instead.}
-
-\item{transformer}{The transformer to apply to the replacement string. This
-argument is used for chaining the transformer functions. By providing a
-function to this argument you can apply an additional transformation after
-the current transformation. In nearly all cases, you can let
-\code{epoxy_style()} handle this for you. The chain ends when
-\code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of

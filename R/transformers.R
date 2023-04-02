@@ -40,12 +40,6 @@
 #'   is called, or according to the option `epoxy.engine`. Caution: invalid
 #'   options are silently ignored, falling back to `"markdown"`.
 #' @param syntax `r lifecycle::badge("deprecated")` Use `engine` instead.
-#' @param transformer The transformer to apply to the replacement string. This
-#'   argument is used for chaining the transformer functions. By providing a
-#'   function to this argument you can apply an additional transformation after
-#'   the current transformation. In nearly all cases, you can let
-#'   `epoxy_style()` handle this for you. The chain ends when
-#'   [glue::identity_transformer()] is used as the `transformer`.
 #'
 #' @return
 #' A function of `text` and `envir` suitable for the `.transformer` argument of
@@ -175,6 +169,7 @@ close_over_transformer <- function(expr, env) {
 #' every replacement in the template.
 #'
 #' @inheritParams epoxy_style
+#' @inheritParams epoxy_style_inline
 #' @inherit epoxy_style return
 #'
 #' @name epoxy_style_one_shot

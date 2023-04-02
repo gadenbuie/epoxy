@@ -61,6 +61,12 @@
 #' @param ... Additional named inline transformers. The evaluated expression
 #'   from the template expression is passed as the first argument to the
 #'   function.
+#' @param transformer The transformer to apply to the replacement string. This
+#'   argument is used for chaining the transformer functions. By providing a
+#'   function to this argument you can apply an additional transformation after
+#'   the current transformation. In nearly all cases, you can let
+#'   `epoxy_style()` handle this for you. The chain ends when
+#'   [glue::identity_transformer()] is used as the `transformer`.
 #' @inheritParams epoxy
 #' @eval roxy_inline_params()
 #'
