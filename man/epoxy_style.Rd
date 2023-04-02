@@ -4,12 +4,6 @@
 \alias{epoxy_style}
 \alias{epoxy_style_get}
 \alias{epoxy_style_set}
-\alias{epoxy_style_wrap}
-\alias{epoxy_style_bold}
-\alias{epoxy_style_italic}
-\alias{epoxy_style_apply}
-\alias{epoxy_style_code}
-\alias{epoxy_style_collapse}
 \title{epoxy Style Transformers}
 \usage{
 epoxy_style(..., engine = NULL, syntax = lifecycle::deprecated())
@@ -17,30 +11,6 @@ epoxy_style(..., engine = NULL, syntax = lifecycle::deprecated())
 epoxy_style_get(engine = c("md", "html", "latex"))
 
 epoxy_style_set(..., engine = NULL, syntax = lifecycle::deprecated())
-
-epoxy_style_wrap(
-  before = "**",
-  after = before,
-  engine = NULL,
-  transformer = glue::identity_transformer,
-  syntax = lifecycle::deprecated()
-)
-
-epoxy_style_bold(engine = NULL, transformer = glue::identity_transformer)
-
-epoxy_style_italic(engine = NULL, transformer = glue::identity_transformer)
-
-epoxy_style_apply(.f = identity, ..., transformer = glue::identity_transformer)
-
-epoxy_style_code(engine = NULL, transformer = glue::identity_transformer)
-
-epoxy_style_collapse(
-  sep = ", ",
-  last = sep,
-  language = NULL,
-  ...,
-  transformer = glue::identity_transformer
-)
 }
 \arguments{
 \item{...}{A list of style functions, e.g. \code{epoxy_style_bold} or the name of
@@ -65,26 +35,12 @@ options are silently ignored, falling back to \code{"markdown"}.}
 
 \item{syntax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{engine} instead.}
 
-\item{before, after}{In \code{epoxy_style_wrap()}, the characters to be added
-before and after variables in the template string.}
-
 \item{transformer}{The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
 function to this argument you can apply an additional transformation after
 the current transformation. In nearly all cases, you can let
 \code{epoxy_style()} handle this for you. The chain ends when
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
-
-\item{.f}{A function, function name or \code{\link[purrr:map]{purrr::map()}}-style inline function.}
-
-\item{sep, last}{The separator to use when joining the vector elements when
-the expression ends with a \code{*}. Elements are separated by \code{sep}, except for
-the last two elements, which use \code{last}.}
-
-\item{language}{In \code{epoxy_style_collapse()}, \code{language} is passed to
-\code{\link[and:and]{and::and()}} or \code{\link[and:and]{and::or()}} to choose the correct and/or phrase and spacing
-for the \code{language}. By default, will follow the system language. See
-\link[and:and_languages]{and::and_languages} for supported languages.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer}
@@ -108,21 +64,6 @@ epoxy engines or for a subset of engines.
 
 \item \code{epoxy_style_set()}: Set the default epoxy \code{.style} transformer for all
 epoxy engines or for a subset of engines.
-
-\item \code{epoxy_style_wrap()}: Wrap variables
-
-\item \code{epoxy_style_bold()}: Embolden variables using \verb{**} in markdown, \verb{<strong>}
-in HTML, or \verb{\\textbf\{\}} in LaTeX
-
-\item \code{epoxy_style_italic()}: Italicize variables using \verb{_} in markdown, \verb{<em>} in
-HTML, or \verb{\\emph\{\}} in LaTeX
-
-\item \code{epoxy_style_apply()}: Apply a function to all replacement expressions
-
-\item \code{epoxy_style_code()}: Code format variables using \verb{``} in markdown,
-\verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX
-
-\item \code{epoxy_style_collapse()}: Collapse vector variables
 
 }}
 \section{Output-specific styling}{

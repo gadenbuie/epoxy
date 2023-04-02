@@ -22,6 +22,7 @@ reference:
   - epoxy_style
   - epoxy_style_inline
   - epoxy_style_html
+  - epoxy_style_one_shot
   - engine_pick
 - title: Templating for Shiny
   contents:

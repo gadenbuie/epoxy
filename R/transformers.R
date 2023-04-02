@@ -167,7 +167,19 @@ close_over_transformer <- function(expr, env) {
   )
 }
 
-#' @describeIn epoxy_style Wrap variables
+
+#' One-shot epoxy style transformers
+#'
+#' These style transformers are useful for applying the same transformation to
+#' every replacement in the template.
+#'
+#' @inheritParams epoxy_style
+#' @inherit epoxy_style return
+#'
+#' @name epoxy_style_one_shot
+NULL
+
+#' @describeIn epoxy_style_one_shot Wrap variables with text before or after.
 #' @param before,after In `epoxy_style_wrap()`, the characters to be added
 #'   before and after variables in the template string.
 #' @export
@@ -202,8 +214,8 @@ epoxy_style_wrap <- function(
   }
 }
 
-#' @describeIn epoxy_style Embolden variables using `**` in markdown, `<strong>`
-#'   in HTML, or `\textbf{}` in LaTeX
+#' @describeIn epoxy_style_one_shot Embolden variables using `**` in markdown,
+#'   `<strong>` in HTML, or `\textbf{}` in LaTeX.
 #' @export
 epoxy_style_bold <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
@@ -214,8 +226,8 @@ epoxy_style_bold <- function(engine = NULL, transformer = glue::identity_transfo
   )
 }
 
-#' @describeIn epoxy_style Italicize variables using `_` in markdown, `<em>` in
-#'   HTML, or `\emph{}` in LaTeX
+#' @describeIn epoxy_style_one_shot Italicize variables using `_` in markdown,
+#'   `<em>` in HTML, or `\emph{}` in LaTeX.
 #' @export
 epoxy_style_italic <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
@@ -226,7 +238,8 @@ epoxy_style_italic <- function(engine = NULL, transformer = glue::identity_trans
   )
 }
 
-#' @describeIn epoxy_style Apply a function to all replacement expressions
+#' @describeIn epoxy_style_one_shot Apply a function to all replacement
+#'   expressions.
 #' @param .f A function, function name or [purrr::map()]-style inline function.
 #' @export
 epoxy_style_apply <- function(
@@ -241,8 +254,8 @@ epoxy_style_apply <- function(
   }
 }
 
-#' @describeIn epoxy_style Code format variables using ` `` ` in markdown,
-#'   `<code>` in HTML, or `\texttt{}` in LaTeX
+#' @describeIn epoxy_style_one_shot Code format variables using ` `` ` in
+#'   markdown, `<code>` in HTML, or `\texttt{}` in LaTeX.
 #' @export
 epoxy_style_code <- function(engine = NULL, transformer = glue::identity_transformer) {
   epoxy_style_wrap(
@@ -318,7 +331,8 @@ engine_validate_alias <- function(engine) {
   engine_aliases[engine]
 }
 
-#' @describeIn epoxy_style Collapse vector variables
+#' @describeIn epoxy_style_one_shot Collapse vector variables with a succinct
+#'   syntax (but see [epoxy_style_inline()] for a more readable option).
 #' @param sep,last The separator to use when joining the vector elements when
 #'   the expression ends with a `*`. Elements are separated by `sep`, except for
 #'   the last two elements, which use `last`.
