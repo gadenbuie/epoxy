@@ -98,7 +98,7 @@ epoxy(
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -324,12 +324,64 @@ evaluation. For example transformers see <code>vignette("transformers")</code>.<
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other epoxy-style glue transformers: 
-<code><a href="epoxy_style_format.html">epoxy_style_format</a>()</code>,
+    <div class="dont-index"><p><code><a href="epoxy_style.html">epoxy_style()</a></code>, <code><a href="epoxy_style.html">epoxy_style_default()</a></code></p>
+<p>Other epoxy-style glue transformers: 
 <code><a href="epoxy_style_html.html">epoxy_style_html</a>()</code>,
 <code><a href="epoxy_style.html">epoxy_style</a>()</code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">revenue</span> <span class="op">&lt;-</span> <span class="fl">0.2123</span></span></span>
+<span class="r-in"><span><span class="va">sales</span> <span class="op">&lt;-</span> <span class="fl">42000.134</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ---- Basic Example with Inline Formatting --------------------------------</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21% of revenue generates $42,000.13 in profits.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With standard {glue} (`epoxy_style_inline()` is a glue transformer)</span></span></span>
+<span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21% of revenue generates $42,000.13 in profits.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ---- Setting Inline Formatting Options ----------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># To set inline format options, provide `scales::label_*()` to the supporting</span></span></span>
+<span class="r-in"><span><span class="co"># epoxy_style_inline arguments.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
+<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ---- Custom Inline Formatting ------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># Add your own formatting functions</span></span></span>
+<span class="r-in"><span><span class="va">search</span> <span class="op">&lt;-</span> <span class="st">"why are cats scared of cucumbers"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"https://example.com?q={{ .url_encode search }}&gt;"</span>,</span></span>
+<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    url_encode <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> https://example.com?q=why%20are%20cats%20scared%20of%20cucumbers&gt;</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
