@@ -91,6 +91,10 @@ epoxy_style_inline <- function(
   titlecase   = tools::toTitleCase
 ) {
   force(transformer)
+
+  # for rcmdcheck
+  tools::toTitleCase("")
+
   comma_numeric <- comma
   comma <- function(x) {
     if (is.character(x)) return(paste(x, collapse = ", "))
