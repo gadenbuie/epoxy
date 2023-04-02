@@ -189,8 +189,8 @@ epoxy_style_inline <- function(
       lowercase  = lowercase(text),
       tc = ,
       titlecase  = titlecase(text),
-      incr       = inc(text),
-      decr       = dec(text),
+      incr       = incr(text),
+      decr       = decr(text),
       maybe_custom_class(text)
     )
   }
