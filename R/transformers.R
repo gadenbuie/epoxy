@@ -84,10 +84,24 @@ epoxy_style <- function(..., engine = NULL, syntax = lifecycle::deprecated()) {
   )
 }
 
-#' @describeIn epoxy_style Set the default epoxy `.style` for all epoxy engines
-#'   or for a subset of engines.
+#' @describeIn epoxy_style Get the default epoxy `.style` transformer for all
+#'   epoxy engines or for a subset of engines.
 #' @export
-epoxy_style_default <- function(
+epoxy_style_get <- function(engine = c("md", "html", "latex")) {
+  engine <- engine_validate_alias(engine)
+  ret <- lapply(engine, function(eng) {
+    with_options(
+      list(epoxy.engine = eng),
+      epoxy_options_get_transformer(list())
+    )
+  })
+  if (length(engine) == 1) ret[[engine]] else ret
+}
+
+#' @describeIn epoxy_style Set the default epoxy `.style` transformer for all
+#'   epoxy engines or for a subset of engines.
+#' @export
+epoxy_style_set <- function(
   ...,
   engine = NULL,
   syntax = lifecycle::deprecated()
@@ -95,8 +109,8 @@ epoxy_style_default <- function(
   if (lifecycle::is_present(syntax)) {
     lifecycle::deprecate_warn(
       "0.1.0",
-      "epoxy::epoxy_style_default(syntax = )",
-      "epoxy::epoxy_style_default(engine = )"
+      "epoxy::epoxy_style_set(syntax = )",
+      "epoxy::epoxy_style_set(engine = )"
     )
     engine <- engine %||% syntax
   }

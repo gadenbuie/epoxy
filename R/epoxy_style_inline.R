@@ -65,7 +65,7 @@
 #' @eval roxy_inline_params()
 #'
 #' @inherit epoxy_style return
-#' @seealso [epoxy_style()], [epoxy_style_default()]
+#' @seealso [epoxy_style()], [epoxy_style_set()]
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style_inline <- function(

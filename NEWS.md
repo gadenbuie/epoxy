@@ -77,9 +77,10 @@
   This styler is enabled by default in `epoxy()`, `epoxy_html()` and
   `epoxy_latex()`.
 
-* Added `epoxy_style_default()` to enable setting the default `.style` option
-  for all chunks or epoxy functions. You can use this function to set the
-  epoxy style for all chunk engines or a subset of chunk engines.
+* Added `epoxy_style_set()` to enable setting the default `.style` option for
+  all chunks or epoxy functions. You can use this function to set the epoxy
+  style for all chunk engines or a subset of chunk engines. Use
+  `epoxy_style_get()` to retrieve the epoxy transformer for a particular engine.
 
 * Added `engine_pick()` for providing a set of options where the correct option
   will be chosen based on the current chunk or epoxy engine.

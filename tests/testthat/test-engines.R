@@ -151,9 +151,9 @@ describe("epoxy_html()", {
   })
 })
 
-describe("epoxy_style_default()", {
+describe("epoxy_style_set()", {
   it("sets the default for all styles", {
-    opts <- epoxy_style_default("bold")
+    opts <- epoxy_style_set("bold")
     on.exit(options(opts))
 
     expect_equal(
@@ -180,13 +180,13 @@ describe("epoxy_style_default()", {
   })
 
   it("sets the default for individual styles", {
-    opts_md <- epoxy_style_default("bold", engine = "md")
+    opts_md <- epoxy_style_set("bold", engine = "md")
     on.exit(options(opts_md), add = TRUE)
 
-    opts_html <- epoxy_style_default("italic", engine = "html")
+    opts_html <- epoxy_style_set("italic", engine = "html")
     on.exit(options(opts_html), add = TRUE)
 
-    opts_latex <- epoxy_style_default(epoxy_style_code, engine = "latex")
+    opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
     on.exit(options(opts_latex), add = TRUE)
 
     expect_equal(
@@ -204,6 +204,37 @@ describe("epoxy_style_default()", {
     expect_equal(
       epoxy_latex("<1> and <2> is <3>"),
       glue("\\texttt{{1}} and \\texttt{{2}} is \\texttt{{3}}")
+    )
+  })
+})
+
+describe("epoxy_style_get()", {
+  it("gets the current style function", {
+    opts_md <- epoxy_style_set("bold", engine = "md")
+    on.exit(options(opts_md), add = TRUE)
+
+    opts_html <- epoxy_style_set("italic", engine = "html")
+    on.exit(options(opts_html), add = TRUE)
+
+    opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
+    on.exit(options(opts_latex), add = TRUE)
+
+    expect_equal(
+      epoxy_style_get("md"),
+      epoxy_style_bold(),
+      ignore_function_env = TRUE
+    )
+
+    expect_equal(
+      epoxy_style_get("html"),
+      epoxy_style_italic(),
+      ignore_function_env = TRUE
+    )
+
+    expect_equal(
+      epoxy_style_get("latex"),
+      epoxy_style_code(),
+      ignore_function_env = TRUE
     )
   })
 })

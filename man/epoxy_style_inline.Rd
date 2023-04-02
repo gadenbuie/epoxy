@@ -179,7 +179,7 @@ epoxy_html(
 )
 }
 \seealso{
-\code{\link[=epoxy_style]{epoxy_style()}}, \code{\link[=epoxy_style_default]{epoxy_style_default()}}
+\code{\link[=epoxy_style]{epoxy_style()}}, \code{\link[=epoxy_style_set]{epoxy_style_set()}}
 
 Other epoxy-style glue transformers: 
 \code{\link{epoxy_style_html}()},

@@ -2,7 +2,8 @@
 % Please edit documentation in R/transformers.R
 \name{epoxy_style}
 \alias{epoxy_style}
-\alias{epoxy_style_default}
+\alias{epoxy_style_get}
+\alias{epoxy_style_set}
 \alias{epoxy_style_wrap}
 \alias{epoxy_style_bold}
 \alias{epoxy_style_italic}
@@ -13,7 +14,9 @@
 \usage{
 epoxy_style(..., engine = NULL, syntax = lifecycle::deprecated())
 
-epoxy_style_default(..., engine = NULL, syntax = lifecycle::deprecated())
+epoxy_style_get(engine = c("md", "html", "latex"))
+
+epoxy_style_set(..., engine = NULL, syntax = lifecycle::deprecated())
 
 epoxy_style_wrap(
   before = "**",
@@ -100,8 +103,11 @@ correct engine for each.
 \item \code{epoxy_style()}: Construct an epoxy styler, a.k.a. a glue transformer
 for use with \code{\link[=epoxy]{epoxy()}} or \code{\link[glue:glue]{glue::glue()}}.
 
-\item \code{epoxy_style_default()}: Set the default epoxy \code{.style} for all epoxy engines
-or for a subset of engines.
+\item \code{epoxy_style_get()}: Get the default epoxy \code{.style} transformer for all
+epoxy engines or for a subset of engines.
+
+\item \code{epoxy_style_set()}: Set the default epoxy \code{.style} transformer for all
+epoxy engines or for a subset of engines.
 
 \item \code{epoxy_style_wrap()}: Wrap variables
 
