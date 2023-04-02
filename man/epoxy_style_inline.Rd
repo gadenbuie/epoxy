@@ -73,8 +73,8 @@ evaluation. For example transformers see \code{vignette("transformers")}.}
 \item{titlecase}{The function to apply to \code{x} when the template is \verb{\{.titlecase x\}} or \verb{\{.tc x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
 }
 \value{
-A function of \code{text} and \code{envir} suitable for the \code{.transformer}
-argument of \code{\link[glue:glue]{glue::glue()}}.
+A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of
+\code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
 This epoxy style is heavily inspired by the inline formatters in

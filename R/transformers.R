@@ -47,8 +47,9 @@
 #'   `epoxy_style()` handle this for you. The chain ends when
 #'   [glue::identity_transformer()] is used as the `transformer`.
 #'
-#' @return A function of `text` and `envir` suitable for the `.transformer`
-#'   argument of [glue::glue()].
+#' @return
+#' A function of `text` and `envir` suitable for the `.transformer` argument of
+#' [glue::glue()].
 #'
 #' @describeIn epoxy_style Construct an epoxy styler, a.k.a. a glue transformer
 #'   for use with [epoxy()] or [glue::glue()].

@@ -25,8 +25,8 @@ the current transformation. In nearly all cases, you can let
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 }
 \value{
-A function of \code{text} and \code{envir} suitable for the \code{.transformer}
-argument of \code{\link[glue:glue]{glue::glue()}}.
+A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of
+\code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
 \code{epoxy_style_html()} provides a \href{https://pughtml.com/what-is-pug-html}{pug}-

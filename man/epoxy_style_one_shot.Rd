@@ -79,8 +79,8 @@ for the \code{language}. By default, will follow the system language. See
 \link[and:and_languages]{and::and_languages} for supported languages.}
 }
 \value{
-A function of \code{text} and \code{envir} suitable for the \code{.transformer}
-argument of \code{\link[glue:glue]{glue::glue()}}.
+A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of
+\code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
 These style transformers are useful for applying the same transformation to
