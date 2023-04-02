@@ -208,8 +208,8 @@ expression.</p>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
 <span>  and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and</a></span>,</span>
 <span>  or <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">or</a></span>,</span>
-<span>  inc <span class="op">=</span> <span class="va">sort</span>,</span>
-<span>  dec <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  incr <span class="op">=</span> <span class="va">sort</span>,</span>
+<span>  decr <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  bytes <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">label_bytes</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  date <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F"</span><span class="op">)</span>,</span>
 <span>  time <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%T"</span><span class="op">)</span>,</span>
@@ -249,12 +249,12 @@ evaluation. For example transformers see <code>vignette("transformers")</code>.<
 <dd><p>The function to apply to <code>x</code> when the template is <code>{.or x}</code>. Default is <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::or()</a></code>.</p></dd>
 
 
-<dt>inc</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.inc x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
+<dt>incr</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.incr x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
 
 
-<dt>dec</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.dec x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
+<dt>decr</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.decr x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
 
 
 <dt>bytes</dt>
