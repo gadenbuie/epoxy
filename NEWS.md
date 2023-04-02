@@ -48,18 +48,6 @@
   `purrr::map()` for defining the function, i.e. `tolower` or `~ tolower(.x)`
   (#37).
 
-* `epoxy_style_format()` provides a small inline function, `fmt()` that can be
-  used to apply specific formatting to an expression. It wraps all of the
-  label functions from the scales package and provides shortcuts for many
-  labellers. For example, `{fmt(x, "%")}` will format `x` as a percentage using
-  `scales::label_percent()` and `{fmt(x, "$")}` will format `x` as a dollar
-  figure. You can also provide your own functions (#39).
-
-* By default, `epoxy_style_format()` (#44) and `epoxy_style_collapse()` (#45)
-  are now available in all epoxy chunks. This means you won't need to specify
-  the `epoxy_style` chunk option to use the inline `fmt()` function or the
-  `*`, `&`, or `|` collapse syntax.
-
 * `epoxy_style_collapse()` now uses the [and ackage](https://and.rossellhayes.com/),
   which provides language-aware conjoining of strings. As a result, the
   `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
@@ -95,6 +83,14 @@
 
 * Added `engine_pick()` for providing a set of options where the correct option
   will be chosen based on the current chunk or epoxy engine.
+
+* `epoxy_style_inline()` is the default `.style` for `epoxy()` and `epoxy_latex()`
+  and their related knitr engines. `epoxy_html()` now uses
+  `.style = c("inline", "html")`.
+
+* The development version of epoxy included, for some time, a different approach
+  to inline formatting -- `epoxy_style_format()` -- that has been removed in
+  favor of `epoxy_style_inline()` (#68).
 
 # epoxy 0.0.2
 
