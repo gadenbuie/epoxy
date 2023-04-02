@@ -127,10 +127,8 @@ epoxy_style_inline <- function(
 
     text <- remove_outer_delims(text_sans_class)
 
-    # if (isTRUE(attr(text, "is_inner_expr"))) {
-    #   attr(text, "is_inner_expr") <- NULL
+    # recurse into template before applying the current transformation
     text <- self(text, envir)
-    # }
 
     maybe_custom_class <- function(text) {
       if (class %in% rlang::names2(dots)) {
