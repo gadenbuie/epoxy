@@ -56,6 +56,8 @@
 #' )
 #' ```
 #'
+#' @example man/examples/epoxy_style_inline.R
+#'
 #' @param ... Additional named inline transformers. The evaluated expression
 #'   from the template expression is passed as the first argument to the
 #'   function.
@@ -63,6 +65,7 @@
 #' @eval roxy_inline_params()
 #'
 #' @inherit epoxy_style return
+#' @seealso [epoxy_style()], [epoxy_style_default()]
 #' @family epoxy-style glue transformers
 #' @export
 epoxy_style_inline <- function(
@@ -88,6 +91,10 @@ epoxy_style_inline <- function(
   titlecase   = tools::toTitleCase
 ) {
   force(transformer)
+
+  # for rcmdcheck
+  tools::toTitleCase("")
+
   comma_numeric <- comma
   comma <- function(x) {
     if (is.character(x)) return(paste(x, collapse = ", "))
@@ -120,10 +127,8 @@ epoxy_style_inline <- function(
 
     text <- remove_outer_delims(text_sans_class)
 
-    # if (isTRUE(attr(text, "is_inner_expr"))) {
-    #   attr(text, "is_inner_expr") <- NULL
+    # recurse into template before applying the current transformation
     text <- self(text, envir)
-    # }
 
     maybe_custom_class <- function(text) {
       if (class %in% rlang::names2(dots)) {

@@ -1,14 +1,15 @@
 Package: epoxy
-Title: String Interpolation for 'R Markdown' Documents
-Version: 0.0.3.9000
+Title: String Interpolation for Documents, Reports and Apps
+Version: 0.0.4.9000
 Authors@R:
     person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7111-0077"))
 Description: Extra strength 'glue' for data-driven templating. String
-    interpolation for 'R Markdown' documents and 'Shiny' apps, built on
-    the 'glue' and 'whisker' packages.
+    interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered
+    'Quarto' documents, built on the 'glue' and 'whisker' packages.
 License: MIT + file LICENSE
-URL: https://github.com/gadenbuie/epoxy
+URL: https://pkg.garrickadenbuie.com/epoxy,
+    https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
 Depends:
     R (>= 2.10)
