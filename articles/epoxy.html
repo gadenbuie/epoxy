@@ -250,11 +250,11 @@ Lloyd, Lea Thompson and Thomas F. Wilson.</p>
 <div class="section level3">
 <h3 id="style-replaced-values">Style replaced values<a class="anchor" aria-label="anchor" href="#style-replaced-values"></a>
 </h3>
-<p>You can use the <code><a href="../reference/epoxy_style.html">epoxy_style_wrap()</a></code> with the
+<p>You can use the <code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_wrap()</a></code> with the
 <code>epoxy_style</code> chunk option to wrap the evaluated R expression
 in formatting or templating text. Or you can use the pre-set
-<code><a href="../reference/epoxy_style.html">epoxy_style_bold()</a></code>, <code><a href="../reference/epoxy_style.html">epoxy_style_italic()</a></code>, or
-<code><a href="../reference/epoxy_style.html">epoxy_style_code()</a></code> style transformers or with
+<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_bold()</a></code>, <code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_italic()</a></code>, or
+<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_code()</a></code> style transformers or with
 <code><a href="../reference/epoxy_style.html">epoxy_style()</a></code>.</p>
 <pre><code>```{epoxy, epoxy_style = epoxy_style("bold")}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
@@ -279,7 +279,7 @@ This can be something to watch out for or it can be an advantage:</p>
 <li>“d” is for donut</li>
 </ol>
 <p>You can collapse fields automatically using the
-<code><a href="../reference/epoxy_style.html">epoxy_style_collapse()</a></code> transformer. You can then choose how
+<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_collapse()</a></code> transformer. You can then choose how
 vectors are collapsed by adding <code>*</code>, <code>&amp;</code> or
 <code>|</code> to the end of the expression.</p>
 <ul>
@@ -306,7 +306,7 @@ between the last two items.</li>
 <p>You can change the separator between entries and between the last
 entry using the <code>sep</code>, <code>last</code> and the
 <code>_and</code> and <code>_or</code> specific arguments of the
-<code><a href="../reference/epoxy_style.html">epoxy_style_collapse()</a></code> function.</p>
+<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_collapse()</a></code> function.</p>
 </div>
 <div class="section level3">
 <h3 id="templating-with-epoxy-chunks">Templating with epoxy chunks<a class="anchor" aria-label="anchor" href="#templating-with-epoxy-chunks"></a>

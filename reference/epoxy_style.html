@@ -93,31 +93,9 @@ correct engine for each.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_style</span><span class="op">(</span><span class="va">...</span>, engine <span class="op">=</span> <span class="cn">NULL</span>, syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">epoxy_style_default</span><span class="op">(</span><span class="va">...</span>, engine <span class="op">=</span> <span class="cn">NULL</span>, syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">epoxy_style_get</span><span class="op">(</span>engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"md"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">epoxy_style_wrap</span><span class="op">(</span></span>
-<span>  before <span class="op">=</span> <span class="st">"**"</span>,</span>
-<span>  after <span class="op">=</span> <span class="va">before</span>,</span>
-<span>  engine <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
-<span>  syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">epoxy_style_bold</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">epoxy_style_italic</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">epoxy_style_apply</span><span class="op">(</span>.f <span class="op">=</span> <span class="va">identity</span>, <span class="va">...</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">epoxy_style_code</span><span class="op">(</span>engine <span class="op">=</span> <span class="cn">NULL</span>, transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">epoxy_style_collapse</span><span class="op">(</span></span>
-<span>  sep <span class="op">=</span> <span class="st">", "</span>,</span>
-<span>  last <span class="op">=</span> <span class="va">sep</span>,</span>
-<span>  language <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">epoxy_style_set</span><span class="op">(</span><span class="va">...</span>, engine <span class="op">=</span> <span class="cn">NULL</span>, syntax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -125,15 +103,15 @@ correct engine for each.</p>
     <dl><dt>...</dt>
 <dd><p>A list of style functions, e.g. <code>epoxy_style_bold</code> or the name of
 a style function, e.g. <code>"bold"</code>, or a call to a style function, e.g.
-<code>epoxy_style_bold()</code>. <code>epoxy_style()</code> chains the style functions together,
+<code><a href="epoxy_style_one_shot.html">epoxy_style_bold()</a></code>. <code>epoxy_style()</code> chains the style functions together,
 applying the styles from left to right.</p>
 <p>For example, <code>epoxy_style("bold", "collapse")</code> results in replaced strings
 that are emboldened <em>and then</em> collapsed, e.g. <code>**a** and **b**</code>. On the
 other hand, <code>epoxy_style("collapse", "bold")</code>  will collapse the vector
 <em>and then</em> embolden the entire string.</p>
-<p>In <code>epoxy_style_apply()</code>, the <code>...</code> are passed to the underlying call the
+<p>In <code><a href="epoxy_style_one_shot.html">epoxy_style_apply()</a></code>, the <code>...</code> are passed to the underlying call the
 underlying function call.</p>
-<p>In <code>epoxy_style_collapse()</code>, the <code>...</code> are ignored.</p></dd>
+<p>In <code><a href="epoxy_style_one_shot.html">epoxy_style_collapse()</a></code>, the <code>...</code> are ignored.</p></dd>
 
 
 <dt>engine</dt>
@@ -147,11 +125,6 @@ options are silently ignored, falling back to <code>"markdown"</code>.</p></dd>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>engine</code> instead.</p></dd>
 
 
-<dt>before, after</dt>
-<dd><p>In <code>epoxy_style_wrap()</code>, the characters to be added
-before and after variables in the template string.</p></dd>
-
-
 <dt>transformer</dt>
 <dd><p>The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
@@ -159,23 +132,6 @@ function to this argument you can apply an additional transformation after
 the current transformation. In nearly all cases, you can let
 <code>epoxy_style()</code> handle this for you. The chain ends when
 <code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
-
-
-<dt>.f</dt>
-<dd><p>A function, function name or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>-style inline function.</p></dd>
-
-
-<dt>sep, last</dt>
-<dd><p>The separator to use when joining the vector elements when
-the expression ends with a <code>*</code>. Elements are separated by <code>sep</code>, except for
-the last two elements, which use <code>last</code>.</p></dd>
-
-
-<dt>language</dt>
-<dd><p>In <code>epoxy_style_collapse()</code>, <code>language</code> is passed to
-<code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::and()</a></code> or <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::or()</a></code> to choose the correct and/or phrase and spacing
-for the <code>language</code>. By default, will follow the system language. See
-<a href="https://and.rossellhayes.com/reference/and_languages.html" class="external-link">and::and_languages</a> for supported languages.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -192,17 +148,10 @@ for the <code>language</code>. By default, will follow the system language. See
     
 <ul><li><p><code>epoxy_style()</code>: Construct an epoxy styler, a.k.a. a glue transformer
 for use with <code><a href="epoxy.html">epoxy()</a></code> or <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>.</p></li>
-<li><p><code>epoxy_style_default()</code>: Set the default epoxy <code>.style</code> for all epoxy engines
-or for a subset of engines.</p></li>
-<li><p><code>epoxy_style_wrap()</code>: Wrap variables</p></li>
-<li><p><code>epoxy_style_bold()</code>: Embolden variables using <code>**</code> in markdown, <code>&lt;strong&gt;</code>
-in HTML, or <code>\textbf{}</code> in LaTeX</p></li>
-<li><p><code>epoxy_style_italic()</code>: Italicize variables using <code>_</code> in markdown, <code>&lt;em&gt;</code> in
-HTML, or <code>\emph{}</code> in LaTeX</p></li>
-<li><p><code>epoxy_style_apply()</code>: Apply a function to all replacement expressions</p></li>
-<li><p><code>epoxy_style_code()</code>: Code format variables using <code>``</code> in markdown,
-<code>&lt;code&gt;</code> in HTML, or <code>\texttt{}</code> in LaTeX</p></li>
-<li><p><code>epoxy_style_collapse()</code>: Collapse vector variables</p></li>
+<li><p><code>epoxy_style_get()</code>: Get the default epoxy <code>.style</code> transformer for all
+epoxy engines or for a subset of engines.</p></li>
+<li><p><code>epoxy_style_set()</code>: Set the default epoxy <code>.style</code> transformer for all
+epoxy engines or for a subset of engines.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="output-specific-styling">Output-specific styling<a class="anchor" aria-label="anchor" href="#output-specific-styling"></a></h2>
@@ -264,16 +213,16 @@ the <code>engine</code> to one of <code>"markdown"</code>, <code>"html"</code> o
 <span class="r-in"><span><span class="co"># Apply _any_ function to all replacements</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"{amount} is the same as {amount}"</span>,</span></span>
-<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style_apply</span><span class="op">(</span><span class="va">round</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu"><a href="epoxy_style_one_shot.html">epoxy_style_apply</a></span><span class="op">(</span><span class="va">round</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 123 is the same as 123</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"{amount} is the same as {amount}"</span>,</span></span>
 <span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu">epoxy_style_apply</span><span class="op">(</span><span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">epoxy_style_apply</span><span class="op">(</span><span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">epoxy_style_apply</span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="epoxy_style_one_shot.html">epoxy_style_apply</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="epoxy_style_one_shot.html">epoxy_style_apply</a></span><span class="op">(</span><span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="epoxy_style_one_shot.html">epoxy_style_apply</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12342.34% is the same as 12342.34%</span>
