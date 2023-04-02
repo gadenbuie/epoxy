@@ -73,8 +73,8 @@ epoxy_style_inline <- function(
   transformer = glue::identity_transformer,
   and         = and::and,
   or          = and::or,
-  inc         = sort,
-  dec         = function(x) sort(x, decreasing = TRUE),
+  incr        = sort,
+  decr        = function(x) sort(x, decreasing = TRUE),
   bytes       = scales::label_bytes(),
   date        = function(x) format(x, format = "%F"),
   time        = function(x) format(x, format = "%T"),
@@ -189,8 +189,8 @@ epoxy_style_inline <- function(
       lowercase  = lowercase(text),
       tc = ,
       titlecase  = titlecase(text),
-      inc = inc(text),
-      dec = dec(text),
+      incr       = inc(text),
+      decr       = dec(text),
       maybe_custom_class(text)
     )
   }

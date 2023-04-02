@@ -9,8 +9,8 @@ epoxy_style_inline(
   transformer = glue::identity_transformer,
   and = and::and,
   or = and::or,
-  inc = sort,
-  dec = function(x) sort(x, decreasing = TRUE),
+  incr = sort,
+  decr = function(x) sort(x, decreasing = TRUE),
   bytes = scales::label_bytes(),
   date = function(x) format(x, format = "\%F"),
   time = function(x) format(x, format = "\%T"),
@@ -40,9 +40,9 @@ evaluation. For example transformers see \code{vignette("transformers")}.}
 
 \item{or}{The function to apply to \code{x} when the template is \verb{\{.or x\}}. Default is \code{\link[and:and]{and::or()}}.}
 
-\item{inc}{The function to apply to \code{x} when the template is \verb{\{.inc x\}}. Default is \code{\link[=sort]{sort()}}.}
+\item{incr}{The function to apply to \code{x} when the template is \verb{\{.incr x\}}. Default is \code{\link[=sort]{sort()}}.}
 
-\item{dec}{The function to apply to \code{x} when the template is \verb{\{.dec x\}}. Default is \code{function(x) sort(x, decreasing = TRUE)}.}
+\item{decr}{The function to apply to \code{x} when the template is \verb{\{.decr x\}}. Default is \code{function(x) sort(x, decreasing = TRUE)}.}
 
 \item{bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is scales::label_bytes().}
 
