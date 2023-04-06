@@ -325,7 +325,7 @@ epoxy_mustache_dependencies <- function() {
       name = "epoxy-mustache",
       package = "epoxy",
       version = "0.0.1",
-      src = "inst/srcjs",
+      src = "srcjs",
       script = "output-epoxy-mustache.js",
       all_files = FALSE
     )
