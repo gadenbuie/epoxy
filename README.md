@@ -28,7 +28,7 @@ or from [gadenbuie.r-universe.dev](https://gadenbuie.r-universe.dev).
 ``` r
 options(repos = c(
   gadenbuie = "https://gadenbuie.r-universe.dev/",
-  getOptions("repos")
+  getOption("repos")
 ))
 
 install.packages("epoxy")
