@@ -22,11 +22,11 @@ Imports:
     purrr,
     rlang,
     rmarkdown,
+    scales (>= 1.1.0),
     tools,
     whisker
 Suggests:
     debugme,
-    scales (>= 1.1.0),
     shiny,
     testthat
 VignetteBuilder:
