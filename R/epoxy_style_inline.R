@@ -58,16 +58,15 @@
 #'
 #' @example man/examples/epoxy_style_inline.R
 #'
-#' @param ... Additional named inline transformers. The evaluated expression
-#'   from the template expression is passed as the first argument to the
-#'   function.
+#' @param ... Additional named inline transformers as functions taking at least
+#'   one argument. The evaluated expression from the template expression is
+#'   passed as the first argument to the function.
 #' @param transformer The transformer to apply to the replacement string. This
 #'   argument is used for chaining the transformer functions. By providing a
 #'   function to this argument you can apply an additional transformation after
 #'   the current transformation. In nearly all cases, you can let
 #'   `epoxy_style()` handle this for you. The chain ends when
 #'   [glue::identity_transformer()] is used as the `transformer`.
-#' @inheritParams epoxy
 #' @eval roxy_inline_params()
 #'
 #' @inherit epoxy_style return
@@ -94,7 +93,10 @@ epoxy_style_inline <- function(
   scientific  = scales::label_scientific(),
   uppercase   = toupper,
   lowercase   = tolower,
-  titlecase   = tools::toTitleCase
+  titlecase   = tools::toTitleCase,
+  strong      = NULL,
+  emph        = NULL,
+  code        = NULL
 ) {
   force(transformer)
 
@@ -106,6 +108,10 @@ epoxy_style_inline <- function(
     if (is.character(x)) return(paste(x, collapse = ", "))
     comma_numeric(x)
   }
+
+  strong <- strong %||% epoxy_bold
+  emph  <- emph %||% epoxy_italic
+  code <- code %||% epoxy_code
 
   dots <- rlang::dots_list(...)
   if (!all(nzchar(rlang::names2(dots)))) {
@@ -166,38 +172,55 @@ epoxy_style_inline <- function(
       }
     }
 
-    switch(
-      class,
-      and = and(text),
-      or = or(text),
-      bold = ,
-      strong     = epoxy_bold(text),
-      italic = ,
-      emph       = epoxy_italic(text),
-      code       = epoxy_code(text),
-      bytes      = bytes(text),
-      date       = date(text),
-      time       = time(text),
-      dttm = ,
-      datetime   = datetime(text),
-      dollar     = dollar(text),
-      num = ,
-      number     = number(text),
-      comma      = comma(text),
-      ordinal    = ordinal(text),
-      pct = ,
-      percent    = percent(text),
-      pvalue     = pvalue(text),
-      scientific = scientific(text),
-      uc = ,
-      uppercase  = uppercase(text),
-      lc = ,
-      lowercase  = lowercase(text),
-      tc = ,
-      titlecase  = titlecase(text),
-      incr       = incr(text),
-      decr       = decr(text),
-      maybe_custom_class(text)
+    class_switch <- class
+    if (class %in% names(dots)) {
+      # Use provided a transformer for a hidden class, make sure we hit that one
+      class_switch <- ""
+    }
+
+    text_fn <-
+      switch(
+        class_switch,
+        and = and,
+        or = or,
+        bold = ,
+        strong     = epoxy_bold,
+        italic = ,
+        emph       = epoxy_italic,
+        code       = epoxy_code,
+        bytes      = bytes,
+        date       = date,
+        time       = time,
+        dttm = ,
+        datetime   = datetime,
+        dollar     = dollar,
+        num = ,
+        number     = number,
+        comma      = comma,
+        ordinal    = ordinal,
+        pct = ,
+        percent    = percent,
+        pvalue     = pvalue,
+        scientific = scientific,
+        uc = ,
+        uppercase  = uppercase,
+        lc = ,
+        lowercase  = lowercase,
+        tc = ,
+        titlecase  = titlecase,
+        incr       = incr,
+        decr       = decr,
+        maybe_custom_class
+      )
+
+    withCallingHandlers(
+      text_fn(text),
+      error = function(cnd) {
+        rlang::abort(
+          glue('Could not transform the text "{text}" using `{class}`.'),
+          parent = cnd
+        )
+      }
     )
   }
 
@@ -260,6 +283,9 @@ roxy_inline_params <- function() {
   args <- args[setdiff(names(args), c("...", "transformer"))]
   args <- purrr::map(args, rlang::expr_text)
   args <- purrr::map_chr(args, function(expr) {
+    if (expr == "NULL") {
+      return("chosen internally based on the output format")
+    }
     if (grepl("^function", expr)) {
       return(paste0("`", expr, "`"))
     }

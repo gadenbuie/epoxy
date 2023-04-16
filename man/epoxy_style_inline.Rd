@@ -24,13 +24,16 @@ epoxy_style_inline(
   scientific = scales::label_scientific(),
   uppercase = toupper,
   lowercase = tolower,
-  titlecase = tools::toTitleCase
+  titlecase = tools::toTitleCase,
+  strong = NULL,
+  emph = NULL,
+  code = NULL
 )
 }
 \arguments{
-\item{...}{Additional named inline transformers. The evaluated expression
-from the template expression is passed as the first argument to the
-function.}
+\item{...}{Additional named inline transformers as functions taking at least
+one argument. The evaluated expression from the template expression is
+passed as the first argument to the function.}
 
 \item{transformer}{The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
@@ -74,6 +77,12 @@ the current transformation. In nearly all cases, you can let
 \item{lowercase}{The function to apply to \code{x} when the template is \verb{\{.lowercase x\}} or \verb{\{.lo x\}}. Default is \code{\link[=tolower]{tolower()}}.}
 
 \item{titlecase}{The function to apply to \code{x} when the template is \verb{\{.titlecase x\}} or \verb{\{.tc x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+
+\item{strong}{The function to apply to \code{x} when the template is \verb{\{.strong x\}} or \verb{\{.bold x\}}. Default is chosen internally based on the output format.}
+
+\item{emph}{The function to apply to \code{x} when the template is \verb{\{.emph x\}} or \verb{\{.italic x\}}. Default is chosen internally based on the output format.}
+
+\item{code}{The function to apply to \code{x} when the template is \verb{\{.code x\}}. Default is chosen internally based on the output format.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of
@@ -133,7 +142,7 @@ epoxy(
     runif = function(n) sort(runif(n))
   )
 )
-#> Here are three random percentages: 23\%, 35\% and 99\%.
+#> Here are three random percentages: 23\%, 35\%, and 99\%.
 }\if{html}{\out{</div>}}
 }
 \examples{
