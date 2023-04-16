@@ -34,8 +34,8 @@ implementation of the \href{https://mustache.github.io/}{mustache} templating
 language.
 }
 
-For historical reasons, alias for the HTML and LaTeX engines are aliased are
-also created: \code{glue_html} and \code{glue_latex}. You may opt into a third alias —
+For historical reasons, aliases for the HTML and LaTeX engines are also
+created: \code{glue_html} and \code{glue_latex}. You may opt into a third alias —
 \code{glue} for the \code{epoxy} engine — by calling \code{use_epoxy_glue_engine()}, but
 note that this will most likely overwrite the \code{glue} engine provided by the
 \pkg{glue} package.

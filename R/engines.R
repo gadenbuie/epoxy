@@ -16,8 +16,8 @@
 #'   implementation of the [mustache](https://mustache.github.io/) templating
 #'   language.
 #'
-#' For historical reasons, alias for the HTML and LaTeX engines are aliased are
-#' also created: `glue_html` and `glue_latex`. You may opt into a third alias —
+#' For historical reasons, aliases for the HTML and LaTeX engines are also
+#' created: `glue_html` and `glue_latex`. You may opt into a third alias —
 #' `glue` for the `epoxy` engine — by calling `use_epoxy_glue_engine()`, but
 #' note that this will most likely overwrite the `glue` engine provided by the
 #' \pkg{glue} package.
