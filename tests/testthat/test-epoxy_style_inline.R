@@ -46,6 +46,3 @@ describe("epoxy_style_inline()", {
     )
   })
 })
-
-
-
