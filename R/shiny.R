@@ -95,6 +95,23 @@
 #'   template item, by default `"span"`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
+#' @param .aria_live,.aria-atomic The
+#'   [aria-live](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live)
+#'   and [aria-atomic](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic)
+#'   attribute values for the entire template region. By default, with
+#'   `"polite"`, any updates within the region will be announced via screen
+#'   readers.
+#'
+#'   If your template includes changes in lots of disparate areas, it would be
+#'   better to set `"aria-live" = "polite"` and `"aria-atomic" = "true"`` on
+#'   specific regions that should be announced together. Otherwise, the default
+#'   is to announce the entire region within the `ui_epoxy_html()` whenever any
+#'   of the values within change. In other words, set `.aria_live = "off"` and
+#'   `.aria_atomic = NULL` on the `ui_epoxy_html()` parent item and then set
+#'   `"aria-live" = "polite"` and `"aria-atomic" = "true"` on the parent
+#'   containers of each region in the app that receives updates.
+#'   `ui_epoxy_html()` does targeted updates, changing only the parts of the
+#'   UI that have changed.
 #' @inheritParams epoxy
 #' @inheritParams glue::glue
 #'
@@ -115,10 +132,17 @@ ui_epoxy_html <- function(
   .na = "",
   .null = "",
   .literal = FALSE,
-  .trim = FALSE
+  .trim = FALSE,
+  .aria_live = c("polite", "off", "assertive"),
+  .aria_atomic = TRUE
 ) {
   .container <- match.arg(.container, names(htmltools::tags))
   .container_item <- match.arg(.container_item, names(htmltools::tags))
+
+  .aria_live <- rlang::arg_match(.aria_live)
+  .aria_atomic <- if (!is.null(.aria_atomic)) {
+    if (isTRUE(.aria_atomic)) "true" else "false"
+  }
 
   dots <- list(...)
   dots$.placeholder = .placeholder
@@ -147,6 +171,8 @@ ui_epoxy_html <- function(
     id = .id,
     class = "epoxy-html epoxy-init",
     class = .class,
+    "aria-atomic" = .aria_atomic,
+    "aria-live" = .aria_live,
     htmltools::HTML(res),
     htmltools::htmlDependency(
       name = "epoxy",
@@ -272,8 +298,8 @@ epoxyHTML_transformer <- function(
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
 #'   should be unnamed.
-#' @param sep The separator used to concatenate elements in `...`.
-#' @param container A character tag name, e.g. `"div"` or `"span"`, or a
+#' @param .sep The separator used to concatenate elements in `...`.
+#' @param .container A character tag name, e.g. `"div"` or `"span"`, or a
 #'   function that returns an [htmltools::tag()].
 #'
 #' @return Returns a Shiny output UI element.
@@ -283,14 +309,16 @@ epoxyHTML_transformer <- function(
 ui_epoxy_mustache <- function(
   id,
   ...,
-  sep = "",
-  container = "div"
+  .sep = "",
+  .container = "div"
 ) {
   rlang::check_dots_unnamed()
 
-  if (is.character(container)) {
-    tag_name <- container
-    container <- function(...) htmltools::tags[[tag_name]](...)
+  if (is.character(.container)) {
+    tag_name <- .container
+    .container <- function(...) {
+      htmltools::tags[[tag_name]](..., "aria-live" = "polite")
+    }
   }
 
   dots <- rlang::list2(...)
@@ -306,10 +334,10 @@ ui_epoxy_mustache <- function(
     rlang::abort("All template elements in `...` must be characters or htmltools tags.")
   }
 
-  out <- container(
+  out <- .container(
     id = id,
     class = "epoxy-mustache",
-    `data-epoxy-template` = paste(dots, collapse = sep),
+    `data-epoxy-template` = paste(dots, collapse = .sep),
     epoxy_mustache_dependencies()
   )
 

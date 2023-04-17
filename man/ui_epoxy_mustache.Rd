@@ -5,9 +5,9 @@
 \alias{ui_epoxy_whisker}
 \title{Epoxy HTML Mustache Template}
 \usage{
-ui_epoxy_mustache(id, ..., sep = "", container = "div")
+ui_epoxy_mustache(id, ..., .sep = "", .container = "div")
 
-ui_epoxy_whisker(id, ..., sep = "", container = "div")
+ui_epoxy_whisker(id, ..., .sep = "", .container = "div")
 }
 \arguments{
 \item{id}{The ID of the output.}
@@ -15,9 +15,9 @@ ui_epoxy_whisker(id, ..., sep = "", container = "div")
 \item{...}{Character strings of HTML or \link[htmltools:builder]{htmltools::tags}. All elements
 should be unnamed.}
 
-\item{sep}{The separator used to concatenate elements in \code{...}.}
+\item{.sep}{The separator used to concatenate elements in \code{...}.}
 
-\item{container}{A character tag name, e.g. \code{"div"} or \code{"span"}, or a
+\item{.container}{A character tag name, e.g. \code{"div"} or \code{"span"}, or a
 function that returns an \code{\link[htmltools:builder]{htmltools::tag()}}.}
 }
 \value{

@@ -15,6 +15,31 @@ $.extend(epoxyOutputBinding, {
     if (x instanceof Object && Object.keys(x).length) return false
     return true
   },
+  _deepEqual (x, y) {
+    if (x === y) {
+      return true
+    }
+
+    if (typeof x !== 'object' || typeof y !== 'object' || x === null || y === null) {
+      return false
+    }
+
+    const keysX = Object.keys(x)
+    const keysY = Object.keys(y)
+
+    if (keysX.length !== keysY.length) {
+      return false
+    }
+
+    for (const key of keysX) {
+      if (!keysY.includes(key) || !this._deepEqual(x[key], y[key])) {
+        return false
+      }
+    }
+
+    return true
+  },
+  _last: null,
   renderValue: function (el, data) {
     // remove copies of epoxyItem
     const elCopies = el.querySelectorAll('[data-epoxy-copy]')
@@ -26,12 +51,22 @@ $.extend(epoxyOutputBinding, {
       const itemName = item.dataset.epoxyItem
 
       let itemData = data[itemName]
+
+      if (
+        this._last &&
+        this._deepEqual(itemData, this._last[itemName])
+      ) {
+        // don't do anything, the value hasn't changed
+        return
+      }
+
       if (this._is_empty(itemData)) {
         item.style.display = 'none'
         return
       } else {
         item.style.removeProperty('display')
       }
+
       if (itemData instanceof Array) {
         let lastItem = item
         item.innerHTML = itemData[0]
@@ -49,6 +84,8 @@ $.extend(epoxyOutputBinding, {
         item.innerHTML = itemData
       }
     })
+
+    this._last = data
     el.classList.remove('epoxy-init')
   },
   renderError: function (el, err) {

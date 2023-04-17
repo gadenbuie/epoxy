@@ -93,6 +93,12 @@
   to inline formatting -- `epoxy_style_format()` -- that has been removed in
   favor of `epoxy_style_inline()` (#68).
 
+* `ui_epoxy_html()`, instead of updating the entire `ui_epoxy_html()` region,
+  now only updates the part of the UI that has actually changed. If the template
+  variables are only included in the text portion of the template, you should
+  prefer `ui_epoxy_html()` over `ui_epoxy_mustache()` for this reason --
+  `ui_epoxy_mustache()` re-renders the entire template with every update.
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)

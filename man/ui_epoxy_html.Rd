@@ -19,7 +19,9 @@ ui_epoxy_html(
   .na = "",
   .null = "",
   .literal = FALSE,
-  .trim = FALSE
+  .trim = FALSE,
+  .aria_live = c("polite", "off", "assertive"),
+  .aria_atomic = TRUE
 )
 
 epoxyHTML(.id, ...)
@@ -71,6 +73,17 @@ syntactic elements), when parsing the expression string. Setting \code{.literal 
 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{\link[glue:trim]{trim()}} or not.}
+
+\item{.aria_live, .aria-atomic}{The
+\href{https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live}{aria-live}
+and \href{https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic}{aria-atomic}
+attribute values for the entire template region. By default, with
+\code{"polite"}, any updates within the region will be announced via screen
+readers.
+
+If your template includes changes in lots of disparate areas, it would be
+better to set \code{"aria-live" = "polite"} and \verb{"aria-atomic" = "true"`` on specific regions that should be announced together. Otherwise, the default is to announce the entire region within the }ui_epoxy_html()\verb{whenever any of the values within change. In other words, set}.aria_live = "off"\code{and}.aria_atomic = NULL\verb{on the}ui_epoxy_html()\verb{parent item and then set}"aria-live" = "polite"\code{and}"aria-atomic" = "true"\verb{on the parent containers of each region in the app that receives updates.}ui_epoxy_html()` does targeted updates, changing only the parts of the
+UI that have changed.}
 }
 \value{
 An HTML object.
