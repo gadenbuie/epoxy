@@ -468,8 +468,9 @@ write_epoxy_example_app <- function(name) {
   tools::Rd2ex(rd_path, out = ex_path)
   ex <- readLines(ex_path, warn = FALSE)
   idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
-  idx_end <- max(grep("## Don't show", ex, fixed = TRUE))
-  writeLines(ex[(idx_start + 1):(idx_end - 1)], ex_path)
+  idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
+  if (is.infinite(idx_end)) return("")
+  writeLines(ex[idx_start:idx_end + 1], ex_path)
   c(
     "",
     "@examplesIf interactive()",

@@ -46,10 +46,3 @@ server <- function(input, output, session) {
 if (interactive()) {
   shiny::shinyApp(ui, server)
 }
-## Don't show: 
-}) # examplesIf
-## End(Don't show)
-## Don't show: 
-if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
-## End(Don't show)
-run_epoxy_example_app("ui_epoxy_mustache")
