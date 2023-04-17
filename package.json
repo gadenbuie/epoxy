@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "web dependencies for the {epoxy} R package",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "man": "man",
-    "test": "tests"
-  },
   "scripts": {
     "copy": "npm run copy:mustache",
     "copy:mustache": "cpy 'mustache.min.js' ../../inst/lib/mustache --cwd node_modules/mustache/",
@@ -15,8 +10,16 @@
     "lint:fix": "standard --fix inst/srcjs/*.js",
     "build": "npm run lint:fix && npm run copy"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gadenbuie/epoxy.git"
+  },
+  "author": "Garrick Aden-Buie",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gadenbuie/epoxy/issues"
+  },
+  "homepage": "https://pkg.garrickadenbuie.com/epoxy",
   "dependencies": {
     "mustache": "^4.2.0"
   },
