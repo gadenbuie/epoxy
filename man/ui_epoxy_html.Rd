@@ -38,8 +38,8 @@ variable.}
 \item{.container}{The name of the HTML element to be used for the output
 element, by default \code{"div"}.}
 
-\item{.container_item}{The name of the HTML element to be used for each template item,
-by default \code{"span"}.}
+\item{.container_item}{The name of the HTML element to be used for each
+template item, by default \code{"span"}.}
 
 \item{.placeholder}{Default placeholder if a template variable placeholder
 isn't provided.}
@@ -104,31 +104,33 @@ and one ID, but many classes can be specified.
 
 \examples{
 \dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-ui <- shiny::fluidPage(
-  shiny::h2("ui_epoxy_html demo"),
+library(shiny)
+
+ui <- fluidPage(
+  h2("ui_epoxy_html demo"),
   ui_epoxy_html(
-    .id = 'test',
+    .id = 'example',
     .class_item = "inner",
-    shiny::fluidRow(
-      shiny::tags$div(
+    fluidRow(
+      tags$div(
         class = "col-xs-4",
-        shiny::selectInput(
+        selectInput(
           inputId = "thing",
           label = "What is this {{color}} thing?",
           choices = c("apple", "banana", "coconut", "dolphin")
         )
       ),
-      shiny::tags$div(
+      tags$div(
         class = "col-xs-4",
-        shiny::selectInput(
+        selectInput(
           inputId = "color",
           label = "What color is the {{thing}}?",
           c("red", "blue", "black", "green", "yellow")
         )
       ),
-      shiny::tags$div(
+      tags$div(
         class = "col-xs-4",
-        shiny::sliderInput(
+        sliderInput(
           inputId = "height",
           label = "How tall is the {{color}} {{thing}}?",
           value = 5,
@@ -139,13 +141,13 @@ ui <- shiny::fluidPage(
         )
       )
     ),
-    shiny::tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
+    tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
     # Default values for placeholders above.
     thing = "THING",
     color = "COLOR",
     height = "HEIGHT"
   ),
-  shiny::tags$style(shiny::HTML(
+  tags$style(HTML(
     '.big { font-size: 1.5em; }
      .inner { background-color: rgba(254, 233, 105, 0.5);}
      .epoxy-item__placeholder { color: #999999; background-color: unset; }'
@@ -153,7 +155,7 @@ ui <- shiny::fluidPage(
 )
 
 server <- function(input, output, session) {
-  output$test <- render_epoxy(
+  output$example <- render_epoxy(
     thing = input$thing,
     color = input$color,
     height = input$height
@@ -161,7 +163,7 @@ server <- function(input, output, session) {
 }
 
 if (interactive()) {
-  shiny::shinyApp(ui, server)
+  shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
 }
