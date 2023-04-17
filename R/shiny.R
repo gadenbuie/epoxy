@@ -1,8 +1,10 @@
 #' Epoxy HTML Output for Shiny
 #'
-#' A glue-like output for Shiny. `ui_epoxy_html()` lets you use placeholders in your
-#' HTML such as `"{{first_name}}"`, that are provided values from the server by
-#' giving `render_epoxy()` a `first_name` value.
+#' A glue-like output for Shiny. `ui_epoxy_html()` lets you use placeholders in
+#' your HTML such as `"{{first_name}}"`, that are provided values from the
+#' server by giving `render_epoxy()` a `first_name` value. Unlike
+#' [ui_epoxy_mustache()], updates are highly targeted: only the regions where
+#' the server-side data have changed are updated in `ui_epoxy_html()`.
 #'
 #' @section HTML Markup: By default, placeholders are inserted into a `<span>`
 #' element in your UI, with the classes specified in `.class_item`.
@@ -238,10 +240,13 @@ epoxyHTML_transformer <- function(
 #'
 #' A Shiny output that uses [mustache templating](https://mustache.github.io/)
 #' to render HTML. Mustache is a powerful template language with minimal
-#' internal logic. The advantage of `ui_epoxy_mustache()` is that all parts
-#' of the HTML can be templated -- including element attributes -- whereas
-#' [ui_epoxy_html()] requires that the dynamic template variables appear in the text
-#' portion of the UI.
+#' internal logic. The advantage of `ui_epoxy_mustache()` is that all parts of
+#' the HTML can be templated -- including element attributes -- whereas
+#' [ui_epoxy_html()] requires that the dynamic template variables appear in the
+#' text portion of the UI. The downside is that the entire template is
+#' re-rendered (in the browser), each time that updated data is sent from the
+#' server -- unlike [ui_epoxy_html()], whose updates are specific to the parts
+#' of the data that have changed.
 #'
 #' @examplesIf rlang::is_installed("shiny")
 #' library(shiny)

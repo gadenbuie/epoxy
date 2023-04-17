@@ -89,9 +89,11 @@ UI that have changed.}
 An HTML object.
 }
 \description{
-A glue-like output for Shiny. \code{ui_epoxy_html()} lets you use placeholders in your
-HTML such as \code{"{{first_name}}"}, that are provided values from the server by
-giving \code{render_epoxy()} a \code{first_name} value.
+A glue-like output for Shiny. \code{ui_epoxy_html()} lets you use placeholders in
+your HTML such as \code{"{{first_name}}"}, that are provided values from the
+server by giving \code{render_epoxy()} a \code{first_name} value. Unlike
+\code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, updates are highly targeted: only the regions where
+the server-side data have changed are updated in \code{ui_epoxy_html()}.
 }
 \section{Functions}{
 \itemize{

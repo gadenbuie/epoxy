@@ -26,10 +26,13 @@ Returns a Shiny output UI element.
 \description{
 A Shiny output that uses \href{https://mustache.github.io/}{mustache templating}
 to render HTML. Mustache is a powerful template language with minimal
-internal logic. The advantage of \code{ui_epoxy_mustache()} is that all parts
-of the HTML can be templated -- including element attributes -- whereas
-\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} requires that the dynamic template variables appear in the text
-portion of the UI.
+internal logic. The advantage of \code{ui_epoxy_mustache()} is that all parts of
+the HTML can be templated -- including element attributes -- whereas
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}} requires that the dynamic template variables appear in the
+text portion of the UI. The downside is that the entire template is
+re-rendered (in the browser), each time that updated data is sent from the
+server -- unlike \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, whose updates are specific to the parts
+of the data that have changed.
 }
 \section{Functions}{
 \itemize{
