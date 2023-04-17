@@ -102,6 +102,7 @@ epoxy_style_inline <- function(
 
   # for rcmdcheck
   tools::toTitleCase("")
+  scales::percent(0.1)
 
   comma_numeric <- comma
   comma <- function(x) {
