@@ -1,0 +1,42 @@
+Say you're writing a report and you've calculated revenue and expenses for your company:
+
+````{verbatim}
+```{r}
+library(epoxy)
+
+revenue <- 1000000
+expenses <- 800000
+```
+````
+
+With **epoxy** you can fold these values into your prose,
+formatting them as you use the values.
+
+````{verbatim}
+```{epoxy}
+Acme Corp. had a revenue of {.dollar revenue}
+and expenses of {.dollar expenses},
+resulting in a profit of {.dollar profit <- revenue - expenses}
+and a gross margin of
+{.pct profit / revenue}
+```
+````
+
+The rendered output has the final values, formatted just right.
+
+```{r echo = FALSE}
+library(epoxy)
+
+revenue <- 1000000
+expenses <- 800000
+```
+
+<blockquote>
+```{epoxy echo = FALSE}
+Acme Corp. had a revenue of {.dollar revenue}
+and expenses of {.dollar expenses},
+resulting in a profit of {.dollar profit <- revenue - expenses}
+and a gross margin of
+{.pct profit / revenue}
+```
+</blockquote>
