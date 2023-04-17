@@ -10,12 +10,18 @@
   },
   "scripts": {
     "copy": "npm run copy:mustache",
-    "copy:mustache": "cpy 'mustache.min.js' ../../inst/lib/mustache --cwd node_modules/mustache/"
+    "copy:mustache": "cpy 'mustache.min.js' ../../inst/lib/mustache --cwd node_modules/mustache/",
+    "lint": "standard inst/srcjs/*.js",
+    "lint:fix": "standard --fix inst/srcjs/*.js",
+    "build": "npm run lint:fix && npm run copy"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "cpy-cli": "^4.2.0",
     "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "cpy-cli": "^4.2.0",
+    "standard": "^17.0.0"
   }
 }
