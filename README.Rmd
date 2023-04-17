@@ -11,6 +11,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+library(epoxy)
 ```
 
 # epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
@@ -23,6 +25,21 @@ knitr::opts_chunk$set(
 epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
 
 [glue]: https://glue.tidyverse.org
+
+## epoxy in R Markdown and Quarto documents
+
+In [R Markdown](https://rmarkdown.rstudio.com) and
+[Quarto](https://quarto.org) documents,
+**epoxy** gives you an `epoxy` chunk where you can write in markdown,
+blending prose and data using [glue]'s template syntax.
+
+```{r child = "man/fragments/movie-example.Rmd"}
+```
+
+Learn more about `epoxy` chunks --
+and its siblings `epoxy_html` and `epoxy_latex` --
+in [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html).
+Or read more about the epoxy's inline formatting in `?epoxy_style_inline`.
 
 ## Installation
 

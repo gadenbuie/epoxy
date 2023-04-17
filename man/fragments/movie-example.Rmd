@@ -1,0 +1,45 @@
+Here's an example using a small list containing data about a `movie`
+(expand the section below to see the full code for `movie`).
+We can use the inline styles to format the replacement text
+as we build up a description from this data.
+
+<details><summary>Movie data</summary>
+
+```{r}
+movie <- list(
+  year = 1989,
+  title = "Back to the Future Part II",
+  budget = 4e+07,
+  domgross = 118450002,
+  imdb_rating = 7.8,
+  actors = c(
+    "Michael J. Fox",
+    "Christopher Lloyd",
+    "Lea Thompson",
+    "Thomas F. Wilson"
+  ),
+  runtime = 108L
+)
+```
+
+</details>
+
+````{verbatim}
+```{epoxy echo = FALSE}
+The movie {.emph {.titlecase movie$title}}
+was released in {.strong movie$year}.
+It earned {.dollar movie$domgross}
+with a budget of {.dollar movie$budget},
+and it features movie stars
+{.and movie$actors}.
+```
+````
+
+```{epoxy inline-movie-first, echo = FALSE}
+The movie {.emph {.titlecase movie$title}}
+was released in {.strong movie$year}.
+It earned {.dollar movie$domgross}
+with a budget of {.dollar movie$budget},
+and it features movie stars
+{.and movie$actors}.
+```

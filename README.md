@@ -13,6 +13,63 @@ badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-unive
 epoxy makes templating with [glue](https://glue.tidyverse.org) easy in R
 Markdown documents and Shiny apps.
 
+## epoxy in R Markdown and Quarto documents
+
+In [R Markdown](https://rmarkdown.rstudio.com) and
+[Quarto](https://quarto.org) documents, **epoxy** gives you an `epoxy`
+chunk where you can write in markdown, blending prose and data using
+[glue](https://glue.tidyverse.org)’s template syntax.
+
+Here’s an example using a small list containing data about a `movie`
+(expand the section below to see the full code for `movie`). We can use
+the inline styles to format the replacement text as we build up a
+description from this data.
+
+<details>
+<summary>
+Movie data
+</summary>
+
+``` r
+movie <- list(
+  year = 1989,
+  title = "Back to the Future Part II",
+  budget = 4e+07,
+  domgross = 118450002,
+  imdb_rating = 7.8,
+  actors = c(
+    "Michael J. Fox",
+    "Christopher Lloyd",
+    "Lea Thompson",
+    "Thomas F. Wilson"
+  ),
+  runtime = 108L
+)
+```
+
+</details>
+
+```` default
+```{epoxy echo = FALSE}
+The movie {.emph {.titlecase movie$title}}
+was released in {.strong movie$year}.
+It earned {.dollar movie$domgross}
+with a budget of {.dollar movie$budget},
+and it features movie stars
+{.and movie$actors}.
+```
+````
+
+The movie *Back to the Future Part II* was released in **1989**. It
+earned \$118,450,002 with a budget of \$40,000,000, and it features
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+F. Wilson.
+
+Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
+`epoxy_latex` – in [Getting
+Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html). Or
+read more about the epoxy’s inline formatting in `?epoxy_style_inline`.
+
 ## Installation
 
 You can install the latest version of epoxy with
@@ -47,7 +104,7 @@ chunk types. Each type lets you intermix text with R code or data
 output context.
 
 | Engine        | Output Context       |                         Delimiter                         |
-| :------------ | :------------------- | :-------------------------------------------------------: |
+|:--------------|:---------------------|:---------------------------------------------------------:|
 | `epoxy`       | all-purpose markdown |                         `{expr}`                          |
 | `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
 | `epoxy_latex` | LaTeX                |                         `<expr>`                          |
@@ -92,17 +149,17 @@ But on average the distance traveled was only _{mean(cars$dist)} ft_.")
 ```
 
 One immediate advantage of using `epoxy` instead of `glue::glue()` is
-that RStudio’s autocompletion feature works inside `epoxy` chunks\!
+that RStudio’s autocompletion feature works inside `epoxy` chunks!
 Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\! Learn more:
+There’s a whole lot more that epoxy can do! Learn more:
 
-  - [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy)
+-   [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy)
 
-  - [Getting
+-   [Getting
     Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html)
 
-  - [Inline Reporting with
+-   [Inline Reporting with
     epoxy](https://pkg.garrickadenbuie.com/epoxy/articles/inline-reporting.html)

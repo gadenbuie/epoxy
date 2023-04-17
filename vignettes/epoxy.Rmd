@@ -36,46 +36,7 @@ knitr::opts_chunk$set(
 This styling is enabled by default in `epoxy()`, `epoxy_html()` and `epoxy_latex()`
 and their respective knitr chunk engines.
 
-Here's an example using a small list containing data about a movie.
-
-```{r}
-movie <- list(
-  year = 1989,
-  title = "Back to the Future Part II",
-  budget = 4e+07,
-  domgross = 118450002,
-  imdb_rating = 7.8,
-  actors = c(
-    "Michael J. Fox",
-    "Christopher Lloyd",
-    "Lea Thompson",
-    "Thomas F. Wilson"
-  ),
-  runtime = 108L
-)
-```
-
-We can use the inline styles to format the replacement text
-as we build up a description from this data.
-
-````{verbatim}
-```{epoxy echo = FALSE}
-The movie {.emph {.titlecase movie$title}}
-was released in {.strong movie$year}.
-It earned {.dollar movie$domgross}
-with a budget of {.dollar movie$budget},
-and it features movie stars
-{.and movie$actors}.
-```
-````
-
-```{epoxy inline-movie-first, echo = FALSE}
-The movie {.emph {.titlecase movie$title}}
-was released in {.strong movie$year}.
-It earned {.dollar movie$domgross}
-with a budget of {.dollar movie$budget},
-and it features movie stars
-{.and movie$actors}.
+```{r child = "man/fragments/movie-example.Rmd"}
 ```
 
 Read more about inline styles in `?epoxy_style_inline`.
