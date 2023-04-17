@@ -166,6 +166,9 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+run_epoxy_example_app("ui_epoxy_html")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}

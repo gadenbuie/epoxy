@@ -81,6 +81,8 @@
 #'   shinyApp(ui, server)
 #' }
 #'
+#' @eval write_epoxy_example_app("ui_epoxy_html")
+#'
 #' @param .id The output id
 #' @param ... UI elements or text (that will be treated as HTML), containing
 #'   template variables. Use named values to provide initial placeholder values.
@@ -265,6 +267,8 @@ epoxyHTML_transformer <- function(
 #'   shiny::shinyApp(ui, server)
 #' }
 #'
+#' @eval write_epoxy_example_app("ui_epoxy_mustache")
+#'
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
 #'   should be unnamed.
@@ -377,6 +381,8 @@ epoxy_mustache_dependencies <- function() {
 #'   shiny::shinyApp(ui, server)
 #' }
 #'
+#' @eval write_epoxy_example_app("render_epoxy")
+#'
 #' @param ... Named values corresponding to the template variables created with
 #'   the associated [ui_epoxy_html()] UI element.
 #' @param .list A named list or a [shiny::reactiveValues()] list with names
@@ -396,7 +402,7 @@ epoxy_mustache_dependencies <- function() {
 #'   Shiny's `output` object and named to match the `.id` of the corresponding
 #'   [ui_epoxy_html()] call.
 #'
-#' @seealso [ui_epoxy_html()]
+#' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()]
 #' @export
 render_epoxy <- function(
   ...,
@@ -451,4 +457,45 @@ format_tags <- function(x) {
     return(x)
   }
   format(x)
+}
+
+
+write_epoxy_example_app <- function(name) {
+  rd_path <- paste0(file.path("man", name), ".Rd")
+  ex_path <- file.path("inst", "examples", name, "app.R")
+  dir.create(dirname(ex_path), showWarnings = FALSE, recursive = TRUE)
+
+  tools::Rd2ex(rd_path, out = ex_path)
+  ex <- readLines(ex_path, warn = FALSE)
+  idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
+  idx_end <- max(grep("## Don't show", ex, fixed = TRUE))
+  writeLines(ex[(idx_start + 1):(idx_end - 1)], ex_path)
+  c(
+    "",
+    "@examplesIf interactive()",
+    sprintf("run_epoxy_example_app(\"%s\")", name),
+    ""
+  )
+}
+
+#' Example epoxy Shiny apps
+#'
+#' Run an example epoxy Shiny app showcasing the Shiny UI and server components
+#' provided by epoxy.
+#'
+#' @param name Name of the example, currently one of `"ui_epoxy_html"`,
+#'   `"ui_epoxy_mustache"`, or `"render_epoxy"`.
+#' @inheritParams shiny::runApp
+#' @inheritDotParams shiny::runApp -display.mode
+#'
+#' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()], [render_epoxy()]
+#' @export
+run_epoxy_example_app <- function(
+  name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
+  display.mode = "showcase"
+) {
+  rlang::check_installed("shiny")
+  name <- rlang::arg_match(name)
+  app_dir <- system.file("examples", name, package = "epoxy")
+  shiny::runApp(app_dir, display.mode = display.mode)
 }

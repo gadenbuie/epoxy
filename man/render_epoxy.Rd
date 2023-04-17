@@ -79,7 +79,10 @@ if (interactive()) {
   shiny::shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+run_epoxy_example_app("render_epoxy")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=ui_epoxy_html]{ui_epoxy_html()}}
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}
 }
