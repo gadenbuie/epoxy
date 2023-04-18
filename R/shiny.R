@@ -97,7 +97,7 @@
 #'   template item, by default `"span"`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
-#' @param .aria_live,.aria-atomic The
+#' @param .aria_live,.aria_atomic The
 #'   [aria-live](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live)
 #'   and [aria-atomic](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic)
 #'   attribute values for the entire template region. By default, with
