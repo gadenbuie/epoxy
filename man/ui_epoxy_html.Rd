@@ -74,7 +74,7 @@ syntactic elements), when parsing the expression string. Setting \code{.literal 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{\link[glue:trim]{trim()}} or not.}
 
-\item{.aria_live, .aria-atomic}{The
+\item{.aria_live, .aria_atomic}{The
 \href{https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live}{aria-live}
 and \href{https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic}{aria-atomic}
 attribute values for the entire template region. By default, with
