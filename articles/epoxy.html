@@ -215,8 +215,12 @@ markup</a>. This styling is enabled by default in <code><a href="../reference/ep
 <code><a href="../reference/epoxy.html">epoxy_html()</a></code> and <code><a href="../reference/epoxy.html">epoxy_latex()</a></code> and their
 respective knitr chunk engines.</p>
 <p>Here’s an example using a small list containing data about a
-movie.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code>movie</code> (expand the section below to see the full code for
+<code>movie</code>). We can use the inline styles to format the
+replacement text as we build up a description from this data.</p>
+<details><summary>
+Movie data
+</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  year <span class="op">=</span> <span class="fl">1989</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Back to the Future Part II"</span>,</span>
@@ -231,9 +235,7 @@ movie.</p>
 <span>  <span class="op">)</span>,</span>
 <span>  runtime <span class="op">=</span> <span class="fl">108L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>We can use the inline styles to format the replacement text as we
-build up a description from this data.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>```{epoxy echo = FALSE}</span>
+</details><div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>```{epoxy echo = FALSE}</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>The movie {.emph {.titlecase movie$title}}</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>was released in {.strong movie$year}.</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>It earned {.dollar movie$domgross}</span>
