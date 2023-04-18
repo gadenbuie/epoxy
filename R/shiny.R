@@ -531,5 +531,5 @@ run_epoxy_example_app <- function(
   rlang::check_installed("shiny")
   name <- rlang::arg_match(name)
   app_dir <- system.file("examples", name, package = "epoxy")
-  shiny::runApp(app_dir, display.mode = display.mode)
+  shiny::runApp(app_dir, display.mode = display.mode, ...)
 }
