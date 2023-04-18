@@ -6,7 +6,8 @@
 \usage{
 run_epoxy_example_app(
   name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
-  display.mode = "showcase"
+  display.mode = "showcase",
+  ...
 )
 }
 \arguments{
