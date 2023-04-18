@@ -526,7 +526,8 @@ write_epoxy_example_app <- function(name) {
 #' @export
 run_epoxy_example_app <- function(
   name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
-  display.mode = "showcase"
+  display.mode = "showcase",
+  ...
 ) {
   rlang::check_installed("shiny")
   name <- rlang::arg_match(name)
