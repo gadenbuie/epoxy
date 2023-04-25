@@ -50,7 +50,7 @@ movie <- list(
 </details>
 
 ```` default
-```{epoxy echo = FALSE}
+```{epoxy}
 The movie {.emph {.titlecase movie$title}}
 was released in {.strong movie$year}.
 It earned {.dollar movie$domgross}
@@ -70,7 +70,7 @@ F. Wilson.
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
 `epoxy_latex` – in [Getting
 Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html). Or
-read more about the epoxy’s inline formatting in `?epoxy_style_inline`.
+read more about epoxy’s inline formatting in `?epoxy_style_inline`.
 
 ## Installation
 
