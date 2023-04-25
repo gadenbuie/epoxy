@@ -33,7 +33,7 @@ In [R Markdown](https://rmarkdown.rstudio.com) and
 **epoxy** gives you an `epoxy` chunk where you can write in markdown,
 blending prose and data using [glue]'s template syntax.
 
-```{r child = "man/fragments/movie-example.Rmd"}
+```{r child = "man/fragments/example-movie.Rmd"}
 ```
 
 Learn more about `epoxy` chunks --

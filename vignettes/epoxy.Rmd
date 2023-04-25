@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 This styling is enabled by default in `epoxy()`, `epoxy_html()` and `epoxy_latex()`
 and their respective knitr chunk engines.
 
-```{r child = "../man/fragments/movie-example.Rmd"}
+```{r child = "../man/fragments/example-movie.Rmd"}
 ```
 
 Read more about inline styles in `?epoxy_style_inline`.

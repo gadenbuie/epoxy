@@ -35,6 +35,7 @@ and it features movie stars
 ```
 ````
 
+<blockquote>
 ```{epoxy inline-movie-first, echo = FALSE}
 The movie {.emph {.titlecase movie$title}}
 was released in {.strong movie$year}.
@@ -43,3 +44,4 @@ with a budget of {.dollar movie$budget},
 and it features movie stars
 {.and movie$actors}.
 ```
+</blockquote>
