@@ -156,7 +156,7 @@ knitr_engine_epoxy <- function(options) {
   }
 
   options$results <- "asis"
-  options$echo <- options[[".echo"]] %||% FALSE
+  options$echo <- knitr_chunk_option_echo(options)
   knitr::engine_output(options, options$code, out)
 }
 
@@ -234,7 +234,7 @@ knitr_engine_epoxy_html <- function(options) {
     out
   }
   options$results <- "asis"
-  options$echo <- options[[".echo"]] %||% FALSE
+  options$echo <- knitr_chunk_option_echo(options)
   knitr::engine_output(options, options$code, out)
 }
 
@@ -300,7 +300,7 @@ knitr_engine_epoxy_latex <- function(options) {
     )
   }
   options$results <- "asis"
-  options$echo <- options[[".echo"]] %||% FALSE
+  options$echo <- knitr_chunk_option_echo(options)
   knitr::engine_output(options, options$code, out)
 }
 
@@ -332,7 +332,7 @@ knitr_engine_whisker <- function(options) {
     code
   }
   options$results <- "asis"
-  options$echo <- options[[".echo"]] %||% FALSE
+  options$echo <- knitr_chunk_option_echo(options)
   knitr::engine_output(options, options$code, out)
 }
 
@@ -377,6 +377,13 @@ epoxy_options_get_transformer <- function(options) {
       md = epoxy_style("inline"),
       html = epoxy_style("inline", "html")
     )
+}
+
+knitr_chunk_option_echo <- function(options) {
+  # is echo set locally on the chunk?
+  chunk_opts <- attr(knitr::knit_code$get(options$label), "chunk_opts")
+  # if not, follow `.echo` or default to FALSE
+  chunk_opts[["echo"]] %||% options[[".echo"]] %||% FALSE
 }
 
 deprecate_glue_data_chunk_option <- function(options) {

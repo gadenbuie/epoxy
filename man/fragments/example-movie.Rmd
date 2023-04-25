@@ -25,7 +25,7 @@ movie <- list(
 </details>
 
 ````{verbatim}
-```{epoxy echo = FALSE}
+```{epoxy}
 The movie {.emph {.titlecase movie$title}}
 was released in {.strong movie$year}.
 It earned {.dollar movie$domgross}
@@ -36,7 +36,7 @@ and it features movie stars
 ````
 
 <blockquote>
-```{epoxy inline-movie-first, echo = FALSE}
+```{epoxy inline-movie-first}
 The movie {.emph {.titlecase movie$title}}
 was released in {.strong movie$year}.
 It earned {.dollar movie$domgross}
