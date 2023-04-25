@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+[glue]: https://glue.tidyverse.org
+
 ## Installation
 
 ```{r child = "../man/fragments/installation.Rmd"}
