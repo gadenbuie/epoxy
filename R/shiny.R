@@ -298,7 +298,6 @@ epoxyHTML_transformer <- function(
 #'   shiny::shinyApp(ui, server)
 #' }
 #'
-#'
 #' @eval write_epoxy_example_app("ui_epoxy_mustache")
 #'
 #' @param id The ID of the output.
