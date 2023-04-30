@@ -159,7 +159,8 @@ Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 There’s a whole lot more that epoxy can do\! Learn more:
 
-  - [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy/)
+  - [epoxy Package
+    Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
   - [Getting
     Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
