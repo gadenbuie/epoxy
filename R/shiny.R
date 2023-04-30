@@ -526,6 +526,8 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
 #' @inheritParams shiny::runApp
 #' @inheritDotParams shiny::runApp -display.mode
 #'
+#' @return Runs the Shiny example app interactively. Nothing is returned.
+#'
 #' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()], [render_epoxy()]
 #' @export
 run_epoxy_example_app <- function(
@@ -534,6 +536,12 @@ run_epoxy_example_app <- function(
   ...
 ) {
   rlang::check_installed("shiny")
+  if (is.null(name)) {
+    apps <- eval(rlang::fn_fmls()[["name"]])
+    names(apps) <- rep("*", length(apps))
+    rlang::inform(c("Example app options:", apps))
+    return(invisible(apps))
+  }
   name <- rlang::arg_match(name)
   app_dir <- system.file("examples", name, package = "epoxy")
   shiny::runApp(app_dir, display.mode = display.mode, ...)

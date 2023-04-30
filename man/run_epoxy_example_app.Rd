@@ -56,6 +56,9 @@ only used for recording or running automated tests. Defaults to the
 \code{shiny.testmode} option, or FALSE if the option is not set.}
   }}
 }
+\value{
+Runs the Shiny example app interactively. Nothing is returned.
+}
 \description{
 Run an example epoxy Shiny app showcasing the Shiny UI and server components
 provided by epoxy.
