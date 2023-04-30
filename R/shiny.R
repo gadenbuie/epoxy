@@ -259,11 +259,11 @@ epoxyHTML_transformer <- function(
 #'       ui_epoxy_mustache(
 #'         id = "template",
 #'         h2(class = "{{heading_class}}", "Hello, {{name}}!"),
-#'         "{{#fruits}}",
+#'         "{{#favorites}}",
 #'         p("Your favorite fruits are..."),
-#'         tags$ul(HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
-#'         "{{/fruits}}",
-#'         "{{^fruits}}<p>Do you have any favorite fruits?</p>{{/fruits}}"
+#'         tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
+#'         "{{/favorites}}",
+#'         "{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
 #'       )
 #'     ),
 #'     column(
@@ -282,21 +282,22 @@ epoxyHTML_transformer <- function(
 #'     input$name
 #'   })
 #'
-#'   fruits <- reactive({
+#'   favorites <- reactive({
 #'     if (!nzchar(input$fruits)) return(NULL)
-#'     list(fruit = strsplit(input$fruits, "\\s*,\\s*")[[1]])
+#'     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
 #'   })
 #'
 #'   output$template <- render_epoxy(
 #'     name = user_name(),
 #'     heading_class = if (user_name() != "user") "text-success",
-#'     fruits = fruits()
+#'     favorites = favorites()
 #'   )
 #' }
 #'
 #' if (interactive()) {
 #'   shiny::shinyApp(ui, server)
 #' }
+#'
 #'
 #' @eval write_epoxy_example_app("ui_epoxy_mustache")
 #'
@@ -493,7 +494,7 @@ format_tags <- function(x) {
 }
 
 
-write_epoxy_example_app <- function(name) {
+write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
   rd_path <- paste0(file.path("man", name), ".Rd")
   ex_path <- file.path("inst", "examples", name, "app.R")
   dir.create(dirname(ex_path), showWarnings = FALSE, recursive = TRUE)
@@ -503,7 +504,11 @@ write_epoxy_example_app <- function(name) {
   idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
   idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
   if (is.infinite(idx_end)) return("")
-  writeLines(ex[idx_start:idx_end + 1], ex_path)
+  app_lines <- c(
+    glue("# Generated from example in {fn_name}: do not edit by hand"),
+    ex[idx_start:idx_end + 1]
+  )
+  writeLines(app_lines, ex_path)
   c(
     "",
     "@examplesIf interactive()",

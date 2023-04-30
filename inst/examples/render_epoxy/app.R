@@ -1,3 +1,4 @@
+# Generated from example in render_epoxy(): do not edit by hand
 # This small app shows the current time using `ui_epoxy_html()`
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.

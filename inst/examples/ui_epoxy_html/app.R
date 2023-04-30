@@ -1,3 +1,4 @@
+# Generated from example in ui_epoxy_html(): do not edit by hand
 library(shiny)
 
 ui <- fluidPage(

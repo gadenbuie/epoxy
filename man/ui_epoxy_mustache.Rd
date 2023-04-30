@@ -53,11 +53,11 @@ ui <- fluidPage(
       ui_epoxy_mustache(
         id = "template",
         h2(class = "{{heading_class}}", "Hello, {{name}}!"),
-        "{{#fruits}}",
+        "{{#favorites}}",
         p("Your favorite fruits are..."),
-        tags$ul(HTML("{{#fruit}}<li>{{.}}</li>{{/fruit}}")),
-        "{{/fruits}}",
-        "{{^fruits}}<p>Do you have any favorite fruits?</p>{{/fruits}}"
+        tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
+        "{{/favorites}}",
+        "{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
       )
     ),
     column(
@@ -76,21 +76,22 @@ server <- function(input, output, session) {
     input$name
   })
 
-  fruits <- reactive({
+  favorites <- reactive({
     if (!nzchar(input$fruits)) return(NULL)
-    list(fruit = strsplit(input$fruits, "\\\\s*,\\\\s*")[[1]])
+    list(fruits = strsplit(input$fruits, "\\\\s*,\\\\s*")[[1]])
   })
 
   output$template <- render_epoxy(
     name = user_name(),
     heading_class = if (user_name() != "user") "text-success",
-    fruits = fruits()
+    favorites = favorites()
   )
 }
 
 if (interactive()) {
   shiny::shinyApp(ui, server)
 }
+
 \dontshow{\}) # examplesIf}
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_mustache")
