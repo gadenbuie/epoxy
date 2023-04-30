@@ -99,6 +99,9 @@
   prefer `ui_epoxy_html()` over `ui_epoxy_mustache()` for this reason --
   `ui_epoxy_mustache()` re-renders the entire template with every update.
 
+* `epoxy_style_html()` now returns a character vector rather than a collapsed
+  character string when a template expression is a vector.
+
 # epoxy 0.0.2
 
 * Added a `whisker` engine that uses the [whisker](https://github.com/edwindj/whisker)

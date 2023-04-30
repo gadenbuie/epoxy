@@ -65,6 +65,7 @@ epoxy_style_html <- function(
   transformer = glue::identity_transformer
 ) {
   function(text, envir) {
+    '!DEBUG html {text: "`text`"}'
     markup <- parse_html_markup(text)
 
     text <- transformer(markup$item, envir)
@@ -85,14 +86,7 @@ epoxy_style_html <- function(
       )
     })
 
-    out <-
-      if (length(html) == 1) {
-        html[[1]]
-      } else {
-        htmltools::tagList(html)
-      }
-
-    html_chr(out)
+    html_chr(vapply(html, format, character(1)))
   }
 }
 

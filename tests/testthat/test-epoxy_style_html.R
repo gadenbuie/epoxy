@@ -25,7 +25,7 @@ describe("epoxy_style_html()", {
     )
   })
 
-  it("returns a character string when given a length+1 vector", {
+  it("returns a character vector when given a length > 1 vector", {
     expect_equal(
       epoxy_style_html()("x", env),
       letters[1:3]
@@ -33,17 +33,29 @@ describe("epoxy_style_html()", {
 
     expect_equal(
       epoxy_style_html()("span x", env),
-      html_chr("<span>a</span><span>b</span><span>c</span>")
+      html_chr(c(
+        "<span>a</span>",
+        "<span>b</span>",
+        "<span>c</span>"
+      ))
     )
 
     expect_equal(
       epoxy_style_html()("span.test-class x", env),
-      html_chr('<span class="test-class">a</span><span class="test-class">b</span><span class="test-class">c</span>')
+      html_chr(c(
+        '<span class="test-class">a</span>',
+        '<span class="test-class">b</span>',
+        '<span class="test-class">c</span>'
+      ))
     )
 
     expect_equal(
       epoxy_style_html()("span.test-class#test-id x", env),
-      html_chr('<span class="test-class" id="test-id">a</span><span class="test-class" id="test-id">b</span><span class="test-class" id="test-id">c</span>')
+      html_chr(c(
+        '<span class="test-class" id="test-id">a</span>',
+        '<span class="test-class" id="test-id">b</span>',
+        '<span class="test-class" id="test-id">c</span>'
+      ))
     )
   })
 
