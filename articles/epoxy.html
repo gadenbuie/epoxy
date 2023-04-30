@@ -152,20 +152,28 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="epoxy-in-r-scripts">epoxy in R scripts<a class="anchor" aria-label="anchor" href="#epoxy-in-r-scripts"></a>
 </h2>
-<p>You can install the latest version of epoxy with <a href="https://remotes.r-lib.org" class="external-link">remotes</a></p>
+<p>epoxy isn’t just for reports and Shiny apps! You can use the
+<code><a href="../reference/epoxy.html">epoxy()</a></code> function just like an <code>epoxy</code> knitr
+chunk.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gadenbuie/epoxy"</span><span class="op">)</span></span></code></pre></div>
-<p>or from <a href="https://gadenbuie.r-universe.dev" class="external-link">gadenbuie.r-universe.dev</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  gadenbuie <span class="op">=</span> <span class="st">"https://gadenbuie.r-universe.dev/"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">1989</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Back to the Future Part II"</span>,</span>
+<span>  budget <span class="op">=</span> <span class="fl">4e+07</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"epoxy"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span></span>
+<span>  <span class="st">"The movie {.titlecase movie$title} "</span>, </span>
+<span>  <span class="st">"was released in {movie$year} "</span>,</span>
+<span>  <span class="st">"and was filmed with a budget of "</span>,</span>
+<span>  <span class="st">"{.dollar movie$budget}."</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; The movie Back to the Future Part II was released in 1989 and was filmed with a budget of $40,000,000.</span></span></code></pre></div>
+<p>For HTML and LaTeX contexts, check out <code><a href="../reference/epoxy.html">epoxy_html()</a></code> and
+<code><a href="../reference/epoxy.html">epoxy_latex()</a></code>. These work just like <code><a href="../reference/epoxy.html">epoxy()</a></code>,
+but use convenient defaults for HTML and LaTeX settings.</p>
 </div>
   </main>
 </div>

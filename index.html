@@ -143,7 +143,7 @@ Movie data
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>{.and movie$actors}.</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <blockquote>
-<p>The movie <em>Back to the Future Part II</em> was released in <strong>1989</strong>. It earned $118,450,002 with a budget of $40,000,000, and it features movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F. Wilson.</p>
+The movie <em>Back to the Future Part II</em> was released in <strong>1989</strong>. It earned $118,450,002 with a budget of $40,000,000, and it features movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas F. Wilson.
 </blockquote>
 <p>Learn more about <code>epoxy</code> chunks – and its siblings <code>epoxy_html</code> and <code>epoxy_latex</code> – in <a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html" class="external-link">Getting Started</a>. Or read more about epoxy’s inline formatting in <code><a href="reference/epoxy_style_inline.html">?epoxy_style_inline</a></code>.</p>
 </div>
@@ -164,74 +164,13 @@ Movie data
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"epoxy"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
-</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy" class="external-link">epoxy</a></span><span class="op">)</span></span></code></pre></div>
-<p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html" class="external-link">knitr engines</a>, or chunk types. Each type lets you intermix text with R code or data (<code>expr</code> in the table below), and each is geared toward a different output context.</p>
-<table class="table">
-<colgroup>
-<col width="14%">
-<col width="22%">
-<col width="63%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Engine</th>
-<th align="left">Output Context</th>
-<th align="center">Delimiter</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>epoxy</code></td>
-<td align="left">all-purpose markdown</td>
-<td align="center"><code>{expr}</code></td>
-</tr>
-<tr class="even">
-<td align="left"><code>epoxy_html</code></td>
-<td align="left">HTML</td>
-<td align="center"><code>{{expr}}</code></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>epoxy_latex</code></td>
-<td align="left">LaTeX</td>
-<td align="center"><code>&lt;expr&gt;</code></td>
-</tr>
-<tr class="even">
-<td align="left"><code>whisker</code></td>
-<td align="left">all-purpose</td>
-<td align="center"><a href="https://mustache.github.io/" class="external-link">mustache template language</a></td>
-</tr>
-</tbody>
-</table>
-<p>⚠️ <strong>Caution:</strong> Previously, epoxy provided a <code>glue</code> engine, but this conflicts with a similar chunk engine by the <a href="https://glue.tidyverse.org" class="external-link">glue</a> package. You can update existing documents to use the <code>epoxy</code> engine, or you can explicitly use epoxy’s <code>glue</code> chunk by including the following in your setup chunk.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/use_epoxy_knitr_engines.html">use_epoxy_glue_engine</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="use-epoxy">Use epoxy<a class="anchor" aria-label="anchor" href="#use-epoxy"></a>
-</h2>
-<p>To use epoxy in your R Markdown document, create a new chunk using the engine of your choice. In that chunk, write in markdown, HTML, or LaTeX as needed, wrapping R expressions inside the delimiters for the epoxy chunk.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>The average speed of the cars was **{mean(cars$speed)} mph.**</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>But on average the distance traveled was only _{mean(cars$dist)}_.</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<p>The average speed of the cars was <strong>15.4 mph</strong>. But on average the distance traveled was only <em>42.98 ft</em>.</p>
-<p><code>epoxy</code> is built around <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, which evaluates the R expressions in the <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code> and inserts the results into the string. The chunk above is equivalent to this call to <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"The average speed of the cars was **{mean(cars$speed)} mph**.</span></span>
-<span><span class="st">But on average the distance traveled was only _{mean(cars$dist)} ft_."</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The average speed of the cars was **15.4 mph**.</span></span>
-<span><span class="co">#&gt; But on average the distance traveled was only _42.98 ft_.</span></span></code></pre></div>
-<p>One immediate advantage of using <code>epoxy</code> instead of <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code> is that RStudio’s autocompletion feature works inside <code>epoxy</code> chunks! Typing <code>cars$</code> in the chunk will suggest the columns of <code>cars</code>.</p>
-</div>
-<div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
 <p>There’s a whole lot more that epoxy can do! Learn more:</p>
 <ul>
-<li><p><a href="https://pkg.garrickadenbuie.com/epoxy" class="external-link">epoxy Package Documentation</a></p></li>
-<li><p><a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html" class="external-link">Getting Started</a></p></li>
-<li><p><a href="https://pkg.garrickadenbuie.com/epoxy/articles/inline-reporting.html" class="external-link">Inline Reporting with epoxy</a></p></li>
+<li><p><a href="articles/epoxy.html">Getting Started with epoxy in reports or Shiny apps</a></p></li>
+<li><p><a href="articles/inline-reporting.html">Inline Reporting with epoxy</a></p></li>
+<li><p><a href="reference/index.html">epoxy Package Documentation</a></p></li>
 </ul>
 </div>
 </div>
