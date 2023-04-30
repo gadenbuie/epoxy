@@ -106,3 +106,16 @@ markdown, \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX.
 syntax (but see \code{\link[=epoxy_style_inline]{epoxy_style_inline()}} for a more readable option).
 
 }}
+\examples{
+abc <- c("a", "b", "c")
+
+epoxy("{abc}", .style = epoxy_style_wrap("'"))
+
+epoxy("{abc}", .style = epoxy_style_bold())
+
+epoxy("{abc}", .style = epoxy_style_italic())
+
+epoxy("{abc}", .style = epoxy_style_code())
+
+epoxy("{abc}", .style = epoxy_style_apply(toupper))
+}

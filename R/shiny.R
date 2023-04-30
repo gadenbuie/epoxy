@@ -521,6 +521,10 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
 #' Run an example epoxy Shiny app showcasing the Shiny UI and server components
 #' provided by epoxy.
 #'
+#' @examples
+#' # List examples by passing `name = NULL`
+#' run_epoxy_example_app(name = NULL)
+#'
 #' @param name Name of the example, currently one of `"ui_epoxy_html"`,
 #'   `"ui_epoxy_mustache"`, or `"render_epoxy"`.
 #' @inheritParams shiny::runApp

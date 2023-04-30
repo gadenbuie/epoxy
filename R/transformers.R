@@ -168,6 +168,8 @@ close_over_transformer <- function(expr, env) {
 #' These style transformers are useful for applying the same transformation to
 #' every replacement in the template.
 #'
+#' @example man/examples/epoxy_style_one_shot.R
+#'
 #' @inheritParams epoxy_style
 #' @inheritParams epoxy_style_inline
 #' @inherit epoxy_style return

@@ -63,6 +63,11 @@ Runs the Shiny example app interactively. Nothing is returned.
 Run an example epoxy Shiny app showcasing the Shiny UI and server components
 provided by epoxy.
 }
+\examples{
+# List examples by passing `name = NULL`
+run_epoxy_example_app(name = NULL)
+
+}
 \seealso{
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 }
