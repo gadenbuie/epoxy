@@ -1,0 +1,28 @@
+---
+title: "epoxy in Shiny"
+output: 
+  cleanrmd::html_document_clean:
+    theme: new.css
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{epoxy in Shiny}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Sorry! I'm still working on this article.
+In the mean time,
+check out the packaged Shiny app examples using `run_epoxy_example_app()`.
+Or read about the related Shiny UI and server functions:
+
+* `ui_epoxy_html()`
+* `ui_epoxy_mustache()`
+* `render_epoxy()`

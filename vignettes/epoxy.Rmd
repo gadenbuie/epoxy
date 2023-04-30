@@ -1,10 +1,9 @@
 ---
 title: "epoxy"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{epoxy}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: 
+  cleanrmd::html_document_clean:
+    theme: holiday
+toc: false
 ---
 
 ```{r, include = FALSE}
@@ -14,202 +13,52 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{css echo=FALSE}
+.row > main {
+  width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card h3.card-title {
+  margin-top: 0;
+}
+```
+
 [glue]: https://glue.tidyverse.org
+
+## Use epoxy
+
+```{=html}
+<div class="row">
+  <div class="col-sm-6 mb-4 mb-sm-0 px-5 px-sm-2">
+    <div class="card shadow">
+      <a href="epoxy-report.html">
+        <img src="images/mel-poole-gT-Sob4njj8-unsplash.jpg" class="card-img-top" alt="small cut paper">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title">Reporting</h3>
+        <p class="card-text">Use epoxy to blend data and prose with inline templating and formatting.</p>
+        <a href="epoxy-report.html" class="btn btn-primary float-end">epoxy in Reports</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 px-5 px-sm-2">
+    <div class="card shadow">
+      <a href="epoxy-shiny.html">
+        <img src="images/hal-gatewood-tZc3vjPCk-Q-unsplash.jpg" class="card-img-top" alt="colorful water-color dashboard">
+      </a>
+      <div class="card-body">
+        <h3 class="card-title">Shiny</h3>
+        <p class="card-text">Use epoxy for reactive templating and targeted updates in Shiny apps.</p>
+        <a href="epoxy-shiny.html" class="btn btn-primary float-end">epoxy in Shiny Apps</a>
+      </div>
+    </div>
+  </div>
+</div>
+```
 
 ## Installation
 
 ```{r child = "../man/fragments/installation.Rmd"}
 ```
 
-## Setup
-
-```{r child = "../man/fragments/setup.Rmd"}
-```
-
-## Use epoxy
-
-```{r child = "../man/fragments/first-example.Rmd"}
-```
-
-## Inline styles
-
-**epoxy** provides inline styling inspired by
-[cli's inline markup](https://cli.r-lib.org/reference/inline-markup.html).
-This styling is enabled by default in `epoxy()`, `epoxy_html()` and `epoxy_latex()`
-and their respective knitr chunk engines.
-
-```{r child = "../man/fragments/example-movie.Rmd"}
-```
-
-Read more about inline styles in `?epoxy_style_inline`.
-
-### Style replaced values
-
-You can use the `epoxy_style_wrap()` with the `epoxy_style` chunk option
-to wrap the evaluated R expression in formatting or templating text.
-Or you can use the pre-set
-`epoxy_style_bold()`, `epoxy_style_italic()`, or `epoxy_style_code()`
-style transformers or with `epoxy_style()`.
-
-````
-```{epoxy, epoxy_style = epoxy_style("bold")}`r ''`
-All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
-from a starting speed of {min(cars$speed)}---{max(cars$speed)}
-```
-````
-
-```{epoxy, epoxy_style = epoxy_style("bold")}
-All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
-from a starting speed of {min(cars$speed)}---{max(cars$dist)} mph.
-```
-
-### epoxy chunks are vectorized
-
-Unlike inline R code, the `epoxy` chunks are vectorized.
-This can be something to watch out for or it can be an advantage:
-
-````
-```{epoxy}`r ''`
-{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
-```
-````
-
-```{epoxy}
-{1:4}. "{letters[1:4]}" is for {c("apple", "banana", "coconut", "donut")}
-```
-
-You can collapse fields automatically using the `epoxy_style_collapse()` transformer.
-You can then choose how vectors are collapsed by adding `*`, `&` or `|`
-to the end of the expression.
-
-- `*` collapses with commas, e.g. `{letters[1:3]*}`.
-- `&` collapses with commas and adds `" and "` between the last two items
-- `|` collapses with commas and adds `" or "` between the last two items.
-
-````
-```{epoxy, epoxy_style = epoxy_style("collapse")}`r ''`
-- The first three letters are {letters[1:3]*}.
-- When capitalized, they are {LETTERS[1:3]&}.
-- They're indexed by {1:3|}.
-```
-````
-
-```{epoxy, epoxy_style = epoxy_style("collapse")}
-- The first three letters are {letters[1:3]*}.
-- When capitalized, they are {LETTERS[1:3]&}.
-- They're indexed by {1:3|}.
-```
-
-You can change the separator between entries and between the last entry
-using the `sep`, `last` and the `_and` and `_or` specific arguments
-of the `epoxy_style_collapse()` function.
-
-### Templating with epoxy chunks
-
-It's also possible to create a reusable template.
-Use the `ref.label` chunk option to reuse a template
-using the values in the `data` chunk option,
-which can be a list or data frame.
-
-```{r}
-mpg <- data.frame(
-  manufacturer = c("Chevrolet", "Dodge", "Ford"),
-  model = c("Malibu", "Caravan", "Expedition"),
-  cty = c(19, 7, 11),
-  hwy = c(27, 24, 17)
-)
-```
-
-````
-```{epoxy car-name, eval=FALSE}`r ''`
-- A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
-```
-
-```{epoxy ref.label="car-name", data = mpg}`r ''`
-```
-````
-
-```{epoxy car-name, eval=FALSE}
-- A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
-```
-
-```{epoxy ref.label="car-name", data = mpg}
-```
-
-## Whisker Engine
-
-Sometimes the `epoxy` engine doesn't quite deliver the template power you need.
-In these cases, you can use the `whisker` engine instead.
-
-````
-```{r}`r ''`
-contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
-```
-
-```{whisker data = contestant, echo=FALSE}`r ''`
-Hello {{name}}:
-You have just won ${{value}}!
-{{#in_ca}}
-Well, ${{taxed}}, after taxes.
-{{/in_ca}}
-```
-````
-
-```{r}
-contestant <- list(name = "R User", value = 1000, taxed = 600, in_ca = TRUE)
-```
-
-```{whisker data = contestant, echo=FALSE}
-Hello {{name}}:
-You have just won ${{value}}!
-{{#in_ca}}
-Well, ${{taxed}}, after taxes.
-{{/in_ca}}
-```
-
-## Raw Blocks
-
-### HTML Blocks
-
-Use the `epoxy_html` block to epoxy (glue) R and HTML together.
-The output is [raw HTML](https://pandoc.org/MANUAL.html#raw-htmltex).
-By default, expressions in these types of blocks are wrapped in `{{` and `}}`,
-like whisker templates above.
-
-````
-<ul>
-```{epoxy_html, data = mpg}`r ''`
-  <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
-```
-</ul>
-````
-
-<ul>
-```{epoxy_html, data = mpg}
-  <li><strong>{{manufacturer}}</strong> <em>{{model}}</em></li>
-```
-</ul>
-
-### LaTeX Blocks
-
-Similarly, you can also use `epoxy_latex` blocks to epoxy R and LaTeX together.
-By default, expressions in these types of blocks are wrapped in `<` and `>`.
-
-````
-\begin{itemize}
-```{epoxy_latex, data = mpg}`r ''`
-\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
-```
-\end{itemize}
-````
-
-In R Markdown knitting into a LaTeX output,
-this renders as:
-
-````
-\begin{itemize}
-```{epoxy, data = mpg, .open = "<", .close = ">"}
-\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
-```
-\end{itemize}
-````

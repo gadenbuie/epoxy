@@ -13,3 +13,4 @@
 ^package\.json$
 ^package-lock\.json$
 ^docs$
+^vignettes/epoxy\.Rmd$

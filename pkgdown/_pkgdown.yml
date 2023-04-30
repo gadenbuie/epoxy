@@ -12,6 +12,19 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/gadenbuie/epoxy
 
+articles:
+- title: Get Started
+  desc: ~
+  contents:
+  - '`epoxy`'
+  - '`epoxy-report`'
+  - '`epoxy-shiny`'
+- title: Articles
+  desc: ~
+  navbar: ~
+  contents:
+  - '`inline-reporting`'
+
 reference:
 - title: epoxy, super-glue wrappers
   contents:
