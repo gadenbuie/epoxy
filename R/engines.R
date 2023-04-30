@@ -296,7 +296,15 @@ knitr_engine_epoxy_latex <- function(options) {
       .literal     = options[[".literal"]] %||% FALSE,
       .transformer = options[[".transformer"]]
     )
+
+    out <- glue_collapse(out, sep = "\n")
+
+    if (isTRUE(options$latex_raw %||% TRUE)) {
+      # use pandoc's raw latex block by default, but allow it to be disabled
+      out <- paste0('```{=latex}\n', out, "\n```")
+    }
   }
+
   options$results <- "asis"
   options$echo <- knitr_chunk_option_echo(options)
   knitr::engine_output(options, options$code, out)
