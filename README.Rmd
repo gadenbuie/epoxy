@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 library(epoxy)
 ```
 
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![epoxy r-universe badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
@@ -38,7 +38,7 @@ blending prose and data using [glue]'s template syntax.
 
 Learn more about `epoxy` chunks --
 and its siblings `epoxy_html` and `epoxy_latex` --
-in [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html).
+in [Getting Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html).
 Or read more about epoxy's inline formatting in `?epoxy_style_inline`.
 
 ## Installation
@@ -61,8 +61,8 @@ Or read more about epoxy's inline formatting in `?epoxy_style_inline`.
 There's a whole lot more that epoxy can do!
 Learn more:
 
-- [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy)
+- [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
-- [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html)
+- [Getting Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
-- [Inline Reporting with epoxy](https://pkg.garrickadenbuie.com/epoxy/articles/inline-reporting.html)
+- [Inline Reporting with epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)

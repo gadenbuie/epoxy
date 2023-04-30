@@ -8,7 +8,7 @@ Description: Extra strength 'glue' for data-driven templating. String
     interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered
     'Quarto' documents, built on the 'glue' and 'whisker' packages.
 License: MIT + file LICENSE
-URL: https://pkg.garrickadenbuie.com/epoxy,
+URL: https://pkg.garrickadenbuie.com/epoxy/,
     https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
 Depends:

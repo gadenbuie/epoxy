@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -70,7 +70,7 @@ Wilson.
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
 `epoxy_latex` – in [Getting
-Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html). Or
+Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html). Or
 read more about epoxy’s inline formatting in `?epoxy_style_inline`.
 
 ## Installation
@@ -159,10 +159,10 @@ Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 There’s a whole lot more that epoxy can do\! Learn more:
 
-  - [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy)
+  - [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
   - [Getting
-    Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html)
+    Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
   - [Inline Reporting with
-    epoxy](https://pkg.garrickadenbuie.com/epoxy/articles/inline-reporting.html)
+    epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)

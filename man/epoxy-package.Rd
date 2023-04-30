@@ -12,7 +12,7 @@ Extra strength 'glue' for data-driven templating. String interpolation for 'Shin
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://pkg.garrickadenbuie.com/epoxy}
+  \item \url{https://pkg.garrickadenbuie.com/epoxy/}
   \item \url{https://github.com/gadenbuie/epoxy}
   \item Report bugs at \url{https://github.com/gadenbuie/epoxy/issues}
 }
