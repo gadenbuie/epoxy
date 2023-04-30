@@ -71,7 +71,7 @@ movie <- list(
 )
 
 epoxy(
-  "The movie {.titlecase movie$title} ", 
+  "The movie {.titlecase movie$title} ",
   "was released in {movie$year} ",
   "and was filmed with a budget of ",
   "{.dollar movie$budget}."
