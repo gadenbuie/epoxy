@@ -228,10 +228,8 @@ knitr_engine_epoxy_html <- function(options) {
     if (isTRUE(options$html_raw %||% TRUE)) {
       # use pandoc's raw html block by default, but this isn't always available
       # so it can be disabled with the html_raw chunk option.
-      out <- paste0('\n```{=html}\n', out, "\n```")
+      out <- paste0('```{=html}\n', out, "\n```")
     }
-
-    out
   }
   options$results <- "asis"
   options$echo <- knitr_chunk_option_echo(options)
