@@ -132,6 +132,7 @@ epoxy_style_inline <- function(
     inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
     if (!grepl(inline_regex, text, perl = TRUE)) {
+      "!DEBUG inline regex unmatched"
       return(transformer(text, envir))
     }
 
