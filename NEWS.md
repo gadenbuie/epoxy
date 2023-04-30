@@ -1,4 +1,9 @@
-# epoxy (development version)
+# epoxy 0.1.0
+
+This is epoxy's first release on CRAN! This NEWS file collects changes from
+versions that were available on GitHub prior to the CRAN release.
+
+## Breaking Changes
 
 * epoxy's knitr engine is now `epoxy` and not `glue`. This avoids a name clash
   with the [glue](https://glue.tidyverse.org) package, which provides a `glue`
@@ -6,11 +11,14 @@
   `epoxy_latex` knitr engines, although they can still be used via their aliases
   `glue_html` and `glue_latex`. (#21)
 
-* `ui_epoxy_html()` will now render elements with IDs using the `#` syntax, e.g.
-  `{{h3#name.author full_name}}` will create an element that is (essentially)
-  `<h3 id="name" class="author">{{ full_name }}</h3>` (#22).
+* The development version of epoxy included, for some time, a different approach
+  to inline formatting -- `epoxy_style_format()` -- that has been removed in
+  favor of `epoxy_style_inline()` (#68).
 
-* epoxy requires glue >= 1.5.0.
+* `epoxy_style_html()` now returns a character vector rather than a collapsed
+  character string when a template expression is a vector.
+
+## New Features
 
 * Added a new internal dataset, `bechdel`, containing details for a random
   sample of ten movies that received a score of **3** on the
@@ -23,35 +31,10 @@
   object directly, e.g. `epoxy_style_collapse`, or a call to a style function,
   e.g. `epoxy_style_collapse()` (#26).
 
-* Added a new `vignette("inline-reporting")` with thanks to @tjmahr for the
-  [inspiration](https://www.tjmahr.com/lists-knitr-secret-weapon/) (#25).
-
-* The epoxy style transformers for bold, italic and code styles now choose the
-  correct syntax for the `epoxy` (markdown), `epoxy_html` and `epoxy_latex`
-  engines. Alternatively, you can force the desired syntax by setting the
-  `syntax` option (#28).
-
-* epoxy's knitr engines can now be set manually via the newly exported (and
-  renamed) `use_epoxy_knitr_engines()`. This function is called when epoxy is
-  loaded, so you most likely do not need to call it directly. In general, you
-  can instead simply `library(epoxy)`. epoxy previously provided a `glue` chunk
-  rather than an `epoxy` chunk and you can restore this behavior by calling
-  `use_epoxy_glue_engine()` (#30).
-
 * Added a new chunk option, `epoxy_style`, that takes precedence over the
   `.transformer` chunk option. The new chunk option is best paired with
   `epoxy_style()`, and for convenience you can prove a vector of style names or
   a list of functions, e.g. `epoxy_style = c("bold", "collapse")` (#31).
-
-* A new styler, `epoxy_style_apply()`, can be used to globally apply a
-  function to glue expressions. `epoxy_style_apply()` uses the same syntax as
-  `purrr::map()` for defining the function, i.e. `tolower` or `~ tolower(.x)`
-  (#37).
-
-* `epoxy_style_collapse()` now uses the [and ackage](https://and.rossellhayes.com/),
-  which provides language-aware conjoining of strings. As a result, the
-  `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
-  and are silently ignored if provided (#45).
 
 * `epoxy`, `epoxy_html()` and `epoxy_latex()` are now exported functions that
   power the knitr engines and use the same defaults (#46).
@@ -82,16 +65,20 @@
   style for all chunk engines or a subset of chunk engines. Use
   `epoxy_style_get()` to retrieve the epoxy transformer for a particular engine.
 
-* Added `engine_pick()` for providing a set of options where the correct option
-  will be chosen based on the current chunk or epoxy engine.
-
 * `epoxy_style_inline()` is the default `.style` for `epoxy()` and `epoxy_latex()`
   and their related knitr engines. `epoxy_html()` now uses
   `.style = c("inline", "html")`.
 
-* The development version of epoxy included, for some time, a different approach
-  to inline formatting -- `epoxy_style_format()` -- that has been removed in
-  favor of `epoxy_style_inline()` (#68).
+## Improvements and Bug Fixes
+
+* Added a new `vignette("inline-reporting")` with thanks to @tjmahr for the
+  [inspiration](https://www.tjmahr.com/lists-knitr-secret-weapon/) (#25).
+
+* epoxy requires glue >= 1.5.0.
+
+* `ui_epoxy_html()` will now render elements with IDs using the `#` syntax, e.g.
+  `{{h3#name.author full_name}}` will create an element that is (essentially)
+  `<h3 id="name" class="author">{{ full_name }}</h3>` (#22).
 
 * `ui_epoxy_html()`, instead of updating the entire `ui_epoxy_html()` region,
   now only updates the part of the UI that has actually changed. If the template
@@ -99,8 +86,31 @@
   prefer `ui_epoxy_html()` over `ui_epoxy_mustache()` for this reason --
   `ui_epoxy_mustache()` re-renders the entire template with every update.
 
-* `epoxy_style_html()` now returns a character vector rather than a collapsed
-  character string when a template expression is a vector.
+* The epoxy style transformers for bold, italic and code styles now choose the
+  correct syntax for the `epoxy` (markdown), `epoxy_html` and `epoxy_latex`
+  engines. Alternatively, you can force the desired syntax by setting the
+  `syntax` option (#28).
+
+* epoxy's knitr engines can now be set manually via the newly exported (and
+  renamed) `use_epoxy_knitr_engines()`. This function is called when epoxy is
+  loaded, so you most likely do not need to call it directly. In general, you
+  can instead simply `library(epoxy)`. epoxy previously provided a `glue` chunk
+  rather than an `epoxy` chunk and you can restore this behavior by calling
+  `use_epoxy_glue_engine()` (#30).
+
+* A new styler, `epoxy_style_apply()`, can be used to globally apply a
+  function to glue expressions. `epoxy_style_apply()` uses the same syntax as
+  `purrr::map()` for defining the function, i.e. `tolower` or `~ tolower(.x)`
+  (#37).
+
+* `epoxy_style_collapse()` now uses the [and package](https://and.rossellhayes.com/),
+  which provides language-aware conjoining of strings. As a result, the
+  `sep_and` and `sep_or` arguments of `epoxy_style_collapse()` are deprecated
+  and are silently ignored if provided (#45).
+
+* Added `engine_pick()` for providing a set of options where the correct option
+  will be chosen based on the current chunk or epoxy engine.
+
 
 # epoxy 0.0.2
 
