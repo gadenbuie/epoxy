@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(epoxy)
 ```
 
 ```{css echo=FALSE}
@@ -57,8 +58,26 @@ knitr::opts_chunk$set(
 </div>
 ```
 
-## Installation
+## epoxy in R scripts
 
-```{r child = "../man/fragments/installation.Rmd"}
+epoxy isn't just for reports and Shiny apps!
+You can use the `epoxy()` function just like an `epoxy` knitr chunk.
+
+```{r}
+movie <- list(
+  year = 1989,
+  title = "Back to the Future Part II",
+  budget = 4e+07
+)
+
+epoxy(
+  "The movie {.titlecase movie$title} ", 
+  "was released in {movie$year} ",
+  "and was filmed with a budget of ",
+  "{.dollar movie$budget}."
+)
 ```
 
+For HTML and LaTeX contexts, check out `epoxy_html()` and `epoxy_latex()`.
+These work just like `epoxy()`,
+but use convenient defaults for HTML and LaTeX settings.

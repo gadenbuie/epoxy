@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+
+library(epoxy)
+```
+
+# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
+
+<!-- badges: start -->
+[![epoxy r-universe badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
+[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
+<!-- badges: end -->
+
+epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
+
+[glue]: https://glue.tidyverse.org
+
+## epoxy in R Markdown and Quarto documents
+
+In [R Markdown](https://rmarkdown.rstudio.com) and
+[Quarto](https://quarto.org) documents,
+**epoxy** gives you an `epoxy` chunk where you can write in markdown,
+blending prose and data using [glue]'s template syntax.
+
+```{r child = "../man/fragments/example-movie.Rmd"}
+```
+
+Learn more about `epoxy` chunks --
+and its siblings `epoxy_html` and `epoxy_latex` --
+in [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html).
+Or read more about epoxy's inline formatting in `?epoxy_style_inline`.
+
+## Installation
+
+```{r child = "../man/fragments/installation.Rmd"}
+```
+
+## Learn more
+
+There's a whole lot more that epoxy can do!
+Learn more:
+
+- [Getting Started with epoxy in reports or Shiny apps](articles/epoxy.html)
+
+- [Inline Reporting with epoxy](articles/inline-reporting.html)
+
+- [epoxy Package Documentation](reference/index.html)
