@@ -226,6 +226,8 @@ expression.</p>
 <span>  uppercase <span class="op">=</span> <span class="va">toupper</span>,</span>
 <span>  lowercase <span class="op">=</span> <span class="va">tolower</span>,</span>
 <span>  titlecase <span class="op">=</span> <span class="fu">tools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span>,</span>
+<span>  squote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">sQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  dquote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  strong <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  emph <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  code <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -319,6 +321,14 @@ the current transformation. In nearly all cases, you can let
 
 <dt>titlecase</dt>
 <dd><p>The function to apply to <code>x</code> when the template is <code>{.titlecase x}</code> or <code>{.tc x}</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
+
+
+<dt>squote</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.squote x}</code>. Default is <code>function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
+
+
+<dt>dquote</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.dquote x}</code>. Default is <code>function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
 
 
 <dt>strong</dt>
