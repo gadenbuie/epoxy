@@ -24,63 +24,63 @@
 #' library(shiny)
 #'
 #' ui <- fluidPage(
-#'   h2("ui_epoxy_html demo"),
-#'   ui_epoxy_html(
-#'     .id = 'example',
-#'     .class_item = "inner",
-#'     fluidRow(
-#'       tags$div(
-#'         class = "col-xs-4",
-#'         selectInput(
-#'           inputId = "thing",
-#'           label = "What is this {{color}} thing?",
-#'           choices = c("apple", "banana", "coconut", "dolphin")
-#'         )
-#'       ),
-#'       tags$div(
-#'         class = "col-xs-4",
-#'         selectInput(
-#'           inputId = "color",
-#'           label = "What color is the {{thing}}?",
-#'           c("red", "blue", "black", "green", "yellow")
-#'         )
-#'       ),
-#'       tags$div(
-#'         class = "col-xs-4",
-#'         sliderInput(
-#'           inputId = "height",
-#'           label = "How tall is the {{color}} {{thing}}?",
-#'           value = 5,
-#'           min = 0,
-#'           max = 10,
-#'           step = 0.1,
-#'           post = "ft"
-#'         )
-#'       )
-#'     ),
-#'     tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
-#'     # Default values for placeholders above.
-#'     thing = "THING",
-#'     color = "COLOR",
-#'     height = "HEIGHT"
-#'   ),
-#'   tags$style(HTML(
-#'     '.big { font-size: 1.5em; }
+#' 	h2("ui_epoxy_html demo"),
+#' 	ui_epoxy_html(
+#' 		.id = 'example',
+#' 		.class_item = "inner",
+#' 		fluidRow(
+#' 			tags$div(
+#' 				class = "col-xs-4",
+#' 				selectInput(
+#' 					inputId = "thing",
+#' 					label = "What is this {{color}} thing?",
+#' 					choices = c("apple", "banana", "coconut", "dolphin")
+#' 				)
+#' 			),
+#' 			tags$div(
+#' 				class = "col-xs-4",
+#' 				selectInput(
+#' 					inputId = "color",
+#' 					label = "What color is the {{thing}}?",
+#' 					c("red", "blue", "black", "green", "yellow")
+#' 				)
+#' 			),
+#' 			tags$div(
+#' 				class = "col-xs-4",
+#' 				sliderInput(
+#' 					inputId = "height",
+#' 					label = "How tall is the {{color}} {{thing}}?",
+#' 					value = 5,
+#' 					min = 0,
+#' 					max = 10,
+#' 					step = 0.1,
+#' 					post = "ft"
+#' 				)
+#' 			)
+#' 		),
+#' 		tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
+#' 		# Default values for placeholders above.
+#' 		thing = "THING",
+#' 		color = "COLOR",
+#' 		height = "HEIGHT"
+#' 	),
+#' 	tags$style(HTML(
+#' 		'.big { font-size: 1.5em; }
 #'      .inner { background-color: rgba(254, 233, 105, 0.5);}
 #'      .epoxy-item__placeholder { color: #999999; background-color: unset; }'
-#'   ))
+#' 	))
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   output$example <- render_epoxy(
-#'     thing = input$thing,
-#'     color = input$color,
-#'     height = input$height
-#'   )
+#' 	output$example <- render_epoxy(
+#' 		thing = input$thing,
+#' 		color = input$color,
+#' 		height = input$height
+#' 	)
 #' }
 #'
 #' if (interactive()) {
-#'   shinyApp(ui, server)
+#' 	shinyApp(ui, server)
 #' }
 #'
 #' @eval write_epoxy_example_app("ui_epoxy_html")
@@ -121,119 +121,119 @@
 #' @return An HTML object.
 #' @export
 ui_epoxy_html <- function(
-  .id,
-  ...,
-  .class = NULL,
-  .class_item = NULL,
-  .container = "div",
-  .container_item = "span",
-  .placeholder = "",
-  .sep = "",
-  .open = "{{",
-  .close = "}}",
-  .na = "",
-  .null = "",
-  .literal = FALSE,
-  .trim = FALSE,
-  .aria_live = c("polite", "off", "assertive"),
-  .aria_atomic = TRUE
+	.id,
+	...,
+	.class = NULL,
+	.class_item = NULL,
+	.container = "div",
+	.container_item = "span",
+	.placeholder = "",
+	.sep = "",
+	.open = "{{",
+	.close = "}}",
+	.na = "",
+	.null = "",
+	.literal = FALSE,
+	.trim = FALSE,
+	.aria_live = c("polite", "off", "assertive"),
+	.aria_atomic = TRUE
 ) {
-  .container <- match.arg(.container, names(htmltools::tags))
-  .container_item <- match.arg(.container_item, names(htmltools::tags))
+	.container <- match.arg(.container, names(htmltools::tags))
+	.container_item <- match.arg(.container_item, names(htmltools::tags))
 
-  .aria_live <- rlang::arg_match(.aria_live)
-  .aria_atomic <- if (!is.null(.aria_atomic)) {
-    if (isTRUE(.aria_atomic)) "true" else "false"
-  }
+	.aria_live <- rlang::arg_match(.aria_live)
+	.aria_atomic <- if (!is.null(.aria_atomic)) {
+		if (isTRUE(.aria_atomic)) "true" else "false"
+	}
 
-  dots <- list(...)
-  dots$.placeholder = .placeholder
-  dots$.transformer = epoxyHTML_transformer(.class_item, .container_item)
-  dots$.na = .na
-  dots$.sep = .sep
-  dots$.null = .null
-  dots$.trim = .trim
-  dots$.open = .open %||% "{{"
-  dots$.close = .close %||% "}}"
-  # disable # as comment so we can use it for id syntax (requires glue >= 1.5)
-  dots$.comment <- character()
-  dots$.literal = .literal
-  dots$.envir = new.env(parent = emptyenv())
+	dots <- list(...)
+	dots$.placeholder = .placeholder
+	dots$.transformer = epoxyHTML_transformer(.class_item, .container_item)
+	dots$.na = .na
+	dots$.sep = .sep
+	dots$.null = .null
+	dots$.trim = .trim
+	dots$.open = .open %||% "{{"
+	dots$.close = .close %||% "}}"
+	# disable # as comment so we can use it for id syntax (requires glue >= 1.5)
+	dots$.comment <- character()
+	dots$.literal = .literal
+	dots$.envir = new.env(parent = emptyenv())
 
-  tags <- purrr::keep(dots, is_tag)
-  deps <- if (length(tags)) {
-    purrr::flatten(purrr::map(tags, htmltools::findDependencies))
-  }
+	tags <- purrr::keep(dots, is_tag)
+	deps <- if (length(tags)) {
+		purrr::flatten(purrr::map(tags, htmltools::findDependencies))
+	}
 
-  dots <- purrr::map_if(dots, ~ inherits(.x, "shiny.tag"), format)
+	dots <- purrr::map_if(dots, ~ inherits(.x, "shiny.tag"), format)
 
-  res <- rlang::eval_bare(rlang::call2(glue::glue, !!!dots))
+	res <- rlang::eval_bare(rlang::call2(glue::glue, !!!dots))
 
-  out <- htmltools::tags[[.container]](
-    id = .id,
-    class = "epoxy-html epoxy-init",
-    class = .class,
-    "aria-atomic" = .aria_atomic,
-    "aria-live" = .aria_live,
-    htmltools::HTML(res),
-    htmltools::htmlDependency(
-      name = "epoxy",
-      version = "0.0.1",
-      package = "epoxy",
-      src = "srcjs",
-      script = "output-epoxy.js",
-      all_files = FALSE
-    )
-  )
-  if (!is.null(deps) && length(deps)) {
-    htmltools::attachDependencies(out, deps)
-  } else {
-    out
-  }
+	out <- htmltools::tags[[.container]](
+		id = .id,
+		class = "epoxy-html epoxy-init",
+		class = .class,
+		"aria-atomic" = .aria_atomic,
+		"aria-live" = .aria_live,
+		htmltools::HTML(res),
+		htmltools::htmlDependency(
+			name = "epoxy",
+			version = "0.0.1",
+			package = "epoxy",
+			src = "srcjs",
+			script = "output-epoxy.js",
+			all_files = FALSE
+		)
+	)
+	if (!is.null(deps) && length(deps)) {
+		htmltools::attachDependencies(out, deps)
+	} else {
+		out
+	}
 }
 
 #' @describeIn ui_epoxy_html `r lifecycle::badge('deprecated')` Deprecated
 #'   alias, please use `ui_epoxy_html()`.
 #' @export
 epoxyHTML <- function(.id, ...) {
-  lifecycle::deprecate_soft(
-    "0.1.0", "epoxyHTML()", "ui_epoxy_html()",
-    details = "`epoxyHTML()` was renamed. Please use the new name at your earliest convenience."
-  )
-  ui_epoxy_html(.id, ...)
+	lifecycle::deprecate_soft(
+		"0.1.0", "epoxyHTML()", "ui_epoxy_html()",
+		details = "`epoxyHTML()` was renamed. Please use the new name at your earliest convenience."
+	)
+	ui_epoxy_html(.id, ...)
 }
 
 transformer_js_literal <- function(text, envir) {
-  paste0("${", text, "}")
+	paste0("${", text, "}")
 }
 
 epoxyHTML_transformer <- function(
-  class = NULL,
-  element = "span"
+	class = NULL,
+	element = "span"
 ) {
-  function(text, envir) {
-    '!DEBUG epoxyHTML {text: "`text`"}'
-    markup <- parse_html_markup(text)
-    placeholder <- rlang::env_get(
-      markup$item,
-      env = envir,
-      inherit = TRUE,
-      default = get(".placeholder", envir = envir, inherits = FALSE)
-    )
-    tag_name <- markup$element
-    if (is.null(tag_name)) tag_name <- element
-    htmltools::tag(
-      tag_name,
-      list(
-        class = "epoxy-item__placeholder",
-        class = class,
-        class = markup$class,
-        id = markup$id,
-        `data-epoxy-item` = markup$item,
-        htmltools::HTML(placeholder)
-      )
-    )
-  }
+	function(text, envir) {
+		'!DEBUG epoxyHTML {text: "`text`"}'
+		markup <- parse_html_markup(text)
+		placeholder <- rlang::env_get(
+			markup$item,
+			env = envir,
+			inherit = TRUE,
+			default = get(".placeholder", envir = envir, inherits = FALSE)
+		)
+		tag_name <- markup$element
+		if (is.null(tag_name)) tag_name <- element
+		htmltools::tag(
+			tag_name,
+			list(
+				class = "epoxy-item__placeholder",
+				class = class,
+				class = markup$class,
+				id = markup$id,
+				`data-epoxy-item` = markup$item,
+				htmltools::HTML(placeholder)
+			)
+		)
+	}
 }
 
 #' Epoxy HTML Mustache Template
@@ -252,50 +252,50 @@ epoxyHTML_transformer <- function(
 #' library(shiny)
 #'
 #' ui <- fluidPage(
-#'   fluidRow(
-#'     style = "max-width: 600px; margin: 0 auto",
-#'     column(
-#'       width = 6,
-#'       ui_epoxy_mustache(
-#'         id = "template",
-#'         h2(class = "{{heading_class}}", "Hello, {{name}}!"),
-#'         "{{#favorites}}",
-#'         p("Your favorite fruits are..."),
-#'         tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
-#'         "{{/favorites}}",
-#'         "{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
-#'       )
-#'     ),
-#'     column(
-#'       width = 6,
-#'       h2("Inputs"),
-#'       textInput("name", "Your name"),
-#'       textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
-#'       helpText("Enter a comma-separated list of fruits.")
-#'     )
-#'   )
+#' 	fluidRow(
+#' 		style = "max-width: 600px; margin: 0 auto",
+#' 		column(
+#' 			width = 6,
+#' 			ui_epoxy_mustache(
+#' 				id = "template",
+#' 				h2(class = "{{heading_class}}", "Hello, {{name}}!"),
+#' 				"{{#favorites}}",
+#' 				p("Your favorite fruits are..."),
+#' 				tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
+#' 				"{{/favorites}}",
+#' 				"{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
+#' 			)
+#' 		),
+#' 		column(
+#' 			width = 6,
+#' 			h2("Inputs"),
+#' 			textInput("name", "Your name"),
+#' 			textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
+#' 			helpText("Enter a comma-separated list of fruits.")
+#' 		)
+#' 	)
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   user_name <- reactive({
-#'     if (!nzchar(input$name)) return("user")
-#'     input$name
-#'   })
+#' 	user_name <- reactive({
+#' 		if (!nzchar(input$name)) return("user")
+#' 		input$name
+#' 	})
 #'
-#'   favorites <- reactive({
-#'     if (!nzchar(input$fruits)) return(NULL)
-#'     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
-#'   })
+#' 	favorites <- reactive({
+#' 		if (!nzchar(input$fruits)) return(NULL)
+#' 		list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
+#' 	})
 #'
-#'   output$template <- render_epoxy(
-#'     name = user_name(),
-#'     heading_class = if (user_name() != "user") "text-success",
-#'     favorites = favorites()
-#'   )
+#' 	output$template <- render_epoxy(
+#' 		name = user_name(),
+#' 		heading_class = if (user_name() != "user") "text-success",
+#' 		favorites = favorites()
+#' 	)
 #' }
 #'
 #' if (interactive()) {
-#'   shiny::shinyApp(ui, server)
+#' 	shiny::shinyApp(ui, server)
 #' }
 #'
 #' @eval write_epoxy_example_app("ui_epoxy_mustache")
@@ -312,45 +312,45 @@ epoxyHTML_transformer <- function(
 #' @seealso [ui_epoxy_html()], [render_epoxy()]
 #' @export
 ui_epoxy_mustache <- function(
-  id,
-  ...,
-  .sep = "",
-  .container = "div"
+	id,
+	...,
+	.sep = "",
+	.container = "div"
 ) {
-  rlang::check_dots_unnamed()
+	rlang::check_dots_unnamed()
 
-  if (is.character(.container)) {
-    tag_name <- .container
-    .container <- function(...) {
-      htmltools::tags[[tag_name]](..., "aria-live" = "polite")
-    }
-  }
+	if (is.character(.container)) {
+		tag_name <- .container
+		.container <- function(...) {
+			htmltools::tags[[tag_name]](..., "aria-live" = "polite")
+		}
+	}
 
-  dots <- rlang::list2(...)
-  if (!length(dots)) return(NULL)
+	dots <- rlang::list2(...)
+	if (!length(dots)) return(NULL)
 
-  tags <- purrr::keep(dots, is_tag)
-  deps <- purrr::flatten(purrr::map(tags, htmltools::findDependencies))
+	tags <- purrr::keep(dots, is_tag)
+	deps <- purrr::flatten(purrr::map(tags, htmltools::findDependencies))
 
-  dots <- purrr::map_if(dots, is_tag, format)
-  dots <- purrr::flatten_chr(dots)
+	dots <- purrr::map_if(dots, is_tag, format)
+	dots <- purrr::flatten_chr(dots)
 
-  if (!purrr::every(dots, is.character)) {
-    rlang::abort("All template elements in `...` must be characters or htmltools tags.")
-  }
+	if (!purrr::every(dots, is.character)) {
+		rlang::abort("All template elements in `...` must be characters or htmltools tags.")
+	}
 
-  out <- .container(
-    id = id,
-    class = "epoxy-mustache",
-    `data-epoxy-template` = paste(dots, collapse = .sep),
-    epoxy_mustache_dependencies()
-  )
+	out <- .container(
+		id = id,
+		class = "epoxy-mustache",
+		`data-epoxy-template` = paste(dots, collapse = .sep),
+		epoxy_mustache_dependencies()
+	)
 
-  if (!is.null(deps) && length(deps)) {
-    htmltools::attachDependencies(out, deps)
-  } else {
-    out
-  }
+	if (!is.null(deps) && length(deps)) {
+		htmltools::attachDependencies(out, deps)
+	} else {
+		out
+	}
 }
 
 #' @describeIn ui_epoxy_mustache An alias for `ui_epoxy_mustache()`, provided
@@ -360,24 +360,24 @@ ui_epoxy_mustache <- function(
 ui_epoxy_whisker <- ui_epoxy_mustache
 
 epoxy_mustache_dependencies <- function() {
-  htmltools::tagList(
-    htmltools::htmlDependency(
-      name = "mustache",
-      package = "epoxy",
-      version = "4.2.0",
-      src = "lib/mustache",
-      script = "mustache.min.js",
-      all_files = FALSE
-    ),
-    htmltools::htmlDependency(
-      name = "epoxy-mustache",
-      package = "epoxy",
-      version = "0.0.1",
-      src = "srcjs",
-      script = "output-epoxy-mustache.js",
-      all_files = FALSE
-    )
-  )
+	htmltools::tagList(
+		htmltools::htmlDependency(
+			name = "mustache",
+			package = "epoxy",
+			version = "4.2.0",
+			src = "lib/mustache",
+			script = "mustache.min.js",
+			all_files = FALSE
+		),
+		htmltools::htmlDependency(
+			name = "epoxy-mustache",
+			package = "epoxy",
+			version = "0.0.1",
+			src = "srcjs",
+			script = "output-epoxy-mustache.js",
+			all_files = FALSE
+		)
+	)
 }
 
 
@@ -394,24 +394,24 @@ epoxy_mustache_dependencies <- function() {
 #' # update the current time every second.
 #'
 #' ui <- shiny::fluidPage(
-#'   shiny::h2("Current Time"),
-#'   ui_epoxy_html(
-#'     "time",
-#'     shiny::p("The current time is {{strong time}}.")
-#'   )
+#' 	shiny::h2("Current Time"),
+#' 	ui_epoxy_html(
+#' 		"time",
+#' 		shiny::p("The current time is {{strong time}}.")
+#' 	)
 #' )
 #'
 #' server <- function(input, output, session) {
-#'   current_time <- shiny::reactive({
-#'     shiny::invalidateLater(1000)
-#'     strftime(Sys.time(), "%F %T")
-#'   })
+#' 	current_time <- shiny::reactive({
+#' 		shiny::invalidateLater(1000)
+#' 		strftime(Sys.time(), "%F %T")
+#' 	})
 #'
-#'   output$time <- render_epoxy(time = current_time())
+#' 	output$time <- render_epoxy(time = current_time())
 #' }
 #'
 #' if (interactive()) {
-#'   shiny::shinyApp(ui, server)
+#' 	shiny::shinyApp(ui, server)
 #' }
 #'
 #' @eval write_epoxy_example_app("render_epoxy")
@@ -438,82 +438,82 @@ epoxy_mustache_dependencies <- function() {
 #' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()]
 #' @export
 render_epoxy <- function(
-  ...,
-  .list = NULL,
-  env = parent.frame(),
-  outputFunc = ui_epoxy_html,
-  outputArgs = list()
+	...,
+	.list = NULL,
+	env = parent.frame(),
+	outputFunc = ui_epoxy_html,
+	outputArgs = list()
 ) {
-  rlang::check_installed("shiny")
+	rlang::check_installed("shiny")
 
-  epoxyPrepare <- function(..., .list = NULL) {
-    if (!is.null(.list)) {
-      if (inherits(.list, "reactivevalues")) {
-        .list <- shiny::reactiveValuesToList(.list)
-      }
-      if (!is.list(.list)) {
-        stop("`.list` must be a list", call. = FALSE)
-      }
-      if (is.null(names(.list))) {
-        stop("`.list` must be a named list", call. = FALSE)
-      }
-    }
-    lapply(c(list(...), .list), format_tags)
-  }
-  shiny::installExprFunction(
-    name = "epoxyPrepare",
-    quoted = FALSE,
-    expr = epoxyPrepare(..., .list = .list)
-  )
-  shiny::createRenderFunction(
-    func = epoxyPrepare,
-    transform = function(value, session, name, ...) {
-      value <- as.list(value)
-      stopifnot(!is.null(names(value)))
-      value
-    },
-    outputFunc = outputFunc,
-    outputArgs = outputArgs
-  )
+	epoxyPrepare <- function(..., .list = NULL) {
+		if (!is.null(.list)) {
+			if (inherits(.list, "reactivevalues")) {
+				.list <- shiny::reactiveValuesToList(.list)
+			}
+			if (!is.list(.list)) {
+				stop("`.list` must be a list", call. = FALSE)
+			}
+			if (is.null(names(.list))) {
+				stop("`.list` must be a named list", call. = FALSE)
+			}
+		}
+		lapply(c(list(...), .list), format_tags)
+	}
+	shiny::installExprFunction(
+		name = "epoxyPrepare",
+		quoted = FALSE,
+		expr = epoxyPrepare(..., .list = .list)
+	)
+	shiny::createRenderFunction(
+		func = epoxyPrepare,
+		transform = function(value, session, name, ...) {
+			value <- as.list(value)
+			stopifnot(!is.null(names(value)))
+			value
+		},
+		outputFunc = outputFunc,
+		outputArgs = outputArgs
+	)
 }
 
 #' @describeIn render_epoxy `r lifecycle::badge('deprecated')` Deprecated alias,
 #'   please use `render_epoxy()`.
 #' @export
 renderEpoxyHTML <- function(..., env = parent.frame()) {
-  lifecycle::deprecate_soft("0.1.0", "renderEpoxyHTML()", "render_epoxy()")
-  render_epoxy(..., env = env)
+	lifecycle::deprecate_soft("0.1.0", "renderEpoxyHTML()", "render_epoxy()")
+	render_epoxy(..., env = env)
 }
 
 format_tags <- function(x) {
-  if (!inherits(x, c("shiny.tag", "shiny.tag.list"))) {
-    return(x)
-  }
-  format(x)
+	if (!inherits(x, c("shiny.tag", "shiny.tag.list"))) {
+		return(x)
+	}
+	format(x)
 }
 
 
 write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
-  rd_path <- paste0(file.path("man", name), ".Rd")
-  ex_path <- file.path("inst", "examples", name, "app.R")
-  dir.create(dirname(ex_path), showWarnings = FALSE, recursive = TRUE)
+	rd_path <- paste0(file.path("man", name), ".Rd")
+	ex_path <- file.path("inst", "examples", name, "app.R")
+	dir.create(dirname(ex_path), showWarnings = FALSE, recursive = TRUE)
 
-  tools::Rd2ex(rd_path, out = ex_path)
-  ex <- readLines(ex_path, warn = FALSE)
-  idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
-  idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
-  if (is.infinite(idx_end)) return("")
-  app_lines <- c(
-    glue("# Generated from example in {fn_name}: do not edit by hand"),
-    ex[idx_start:idx_end + 1]
-  )
-  writeLines(app_lines, ex_path)
-  c(
-    "",
-    "@examplesIf interactive()",
-    sprintf("run_epoxy_example_app(\"%s\")", name),
-    ""
-  )
+	tools::Rd2ex(rd_path, out = ex_path)
+	ex <- readLines(ex_path, warn = FALSE)
+	idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
+	idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
+	if (is.infinite(idx_end)) return("")
+	app_lines <- c(
+		glue("# Generated from example in {fn_name}: do not edit by hand"),
+		ex[idx_start:idx_end + 1]
+	)
+	writeLines(app_lines, ex_path)
+	c(
+		"",
+		"@examplesIf interactive()",
+		sprintf("run_epoxy_example_app(\"%s\")", name),
+		""
+	)
 }
 
 #' Example epoxy Shiny apps
@@ -535,18 +535,18 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
 #' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()], [render_epoxy()]
 #' @export
 run_epoxy_example_app <- function(
-  name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
-  display.mode = "showcase",
-  ...
+	name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
+	display.mode = "showcase",
+	...
 ) {
-  rlang::check_installed("shiny")
-  if (is.null(name)) {
-    apps <- eval(rlang::fn_fmls()[["name"]])
-    names(apps) <- rep("*", length(apps))
-    rlang::inform(c("Example app options:", apps))
-    return(invisible(apps))
-  }
-  name <- rlang::arg_match(name)
-  app_dir <- system.file("examples", name, package = "epoxy")
-  shiny::runApp(app_dir, display.mode = display.mode, ...)
+	rlang::check_installed("shiny")
+	if (is.null(name)) {
+		apps <- eval(rlang::fn_fmls()[["name"]])
+		names(apps) <- rep("*", length(apps))
+		rlang::inform(c("Example app options:", apps))
+		return(invisible(apps))
+	}
+	name <- rlang::arg_match(name)
+	app_dir <- system.file("examples", name, package = "epoxy")
+	shiny::runApp(app_dir, display.mode = display.mode, ...)
 }

@@ -69,8 +69,8 @@ epoxy_html("<ul>{{ li#my-letter letters[7] }}</ul>")
 epoxy_html("My name starts with {{ .name-letter letters[7] }}")
 
 epoxy_html(
-  "{{ h3#title title }}",
-  title = "Epoxy Style for HTML"
+	"{{ h3#title title }}",
+	title = "Epoxy Style for HTML"
 )
 
 }
