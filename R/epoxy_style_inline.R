@@ -94,6 +94,8 @@ epoxy_style_inline <- function(
   uppercase   = toupper,
   lowercase   = tolower,
   titlecase   = tools::toTitleCase,
+  squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
+  dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
   strong      = NULL,
   emph        = NULL,
   code        = NULL
@@ -212,6 +214,8 @@ epoxy_style_inline <- function(
         titlecase  = titlecase,
         incr       = incr,
         decr       = decr,
+        squote     = squote,
+        dquote     = dquote,
         maybe_custom_class
       )
 

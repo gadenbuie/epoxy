@@ -25,6 +25,8 @@ epoxy_style_inline(
   uppercase = toupper,
   lowercase = tolower,
   titlecase = tools::toTitleCase,
+  squote = epoxy_style_wrap(before = "'"),
+  dquote = epoxy_style_wrap(before = "\\""),
   strong = NULL,
   emph = NULL,
   code = NULL
@@ -77,6 +79,10 @@ the current transformation. In nearly all cases, you can let
 \item{lowercase}{The function to apply to \code{x} when the template is \verb{\{.lowercase x\}} or \verb{\{.lo x\}}. Default is \code{\link[=tolower]{tolower()}}.}
 
 \item{titlecase}{The function to apply to \code{x} when the template is \verb{\{.titlecase x\}} or \verb{\{.tc x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+
+\item{squote}{The function to apply to \code{x} when the template is \verb{\{.squote x\}}. Default is epoxy_style_wrap().}
+
+\item{dquote}{The function to apply to \code{x} when the template is \verb{\{.dquote x\}}. Default is epoxy_style_wrap().}
 
 \item{strong}{The function to apply to \code{x} when the template is \verb{\{.strong x\}} or \verb{\{.bold x\}}. Default is chosen internally based on the output format.}
 

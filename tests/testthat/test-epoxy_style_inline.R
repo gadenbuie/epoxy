@@ -45,4 +45,30 @@ describe("epoxy_style_inline()", {
       "**a**"
     )
   })
+
+  it("applies squote and dquote", {
+    expect_equal(
+      epoxy("{.squote letters[1]}", .style = "inline"),
+      "'a'"
+    )
+
+    expect_equal(
+      epoxy("{.dquote letters[1]}", .style = "inline"),
+      '"a"'
+    )
+
+    # from ?sQuote
+    opts <- options(epoxy.fancy_quotes = c("\xc2\xab", "\xc2\xbb", "\xc2\xbf", "?"))
+    on.exit(options(opts))
+
+    expect_equal(
+      epoxy("{.squote letters[1]}", .style = "inline"),
+      "\xc2\xaba\xc2\xbb"
+    )
+
+    expect_equal(
+      epoxy("{.dquote letters[1]}", .style = "inline"),
+      '\xc2\xbfa?'
+    )
+  })
 })
