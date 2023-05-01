@@ -13,8 +13,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+	collapse = TRUE,
+	comment = "#>"
 )
 ```
 
@@ -112,10 +112,10 @@ which can be a list or data frame.
 
 ```{r}
 mpg <- data.frame(
-  manufacturer = c("Chevrolet", "Dodge", "Ford"),
-  model = c("Malibu", "Caravan", "Expedition"),
-  cty = c(19, 7, 11),
-  hwy = c(27, 24, 17)
+	manufacturer = c("Chevrolet", "Dodge", "Ford"),
+	model = c("Malibu", "Caravan", "Expedition"),
+	cty = c(19, 7, 11),
+	hwy = c(27, 24, 17)
 )
 ```
 
