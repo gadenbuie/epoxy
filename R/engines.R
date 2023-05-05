@@ -367,7 +367,7 @@ epoxy_data_subset <- function(x, y) {
 }
 
 epoxy_options_get_transformer <- function(options) {
-	# FIXME
+	# FIXME: style
 	style <- options[["epoxy_transform"]]
 	if (is.vector(style) || is.list(style)) {
 		return(epoxy_transform(!!!style))

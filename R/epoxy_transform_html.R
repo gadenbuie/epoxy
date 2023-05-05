@@ -45,7 +45,7 @@
 #'
 #' epoxy_html(
 #' 	"{{ h3#title title }}",
-#' 	title = "Epoxy Style for HTML"
+#' 	title = "Epoxy for HTML"
 #' )
 #'
 #' @param class `[character()]`\cr Additional classes to be added to the inline
@@ -57,7 +57,7 @@
 #' @inherit epoxy_transform params return
 #'
 #' @seealso Used by default in [epoxy_html()]
-#' @family epoxy-style glue transformers
+#' @family epoxy's \pkg{glue} transformers
 #' @export
 epoxy_transform_html <- function(
 	class = NULL,

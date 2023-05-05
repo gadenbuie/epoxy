@@ -30,25 +30,25 @@ knitr::opts_chunk$set(
 ```{r child = "../man/fragments/first-example.Rmd"}
 ```
 
-## Inline styles
+## Inline transformers
 
-**epoxy** provides inline styling inspired by
+**epoxy** provides inline transformations inspired by
 [cli's inline markup](https://cli.r-lib.org/reference/inline-markup.html).
-This styling is enabled by default in `epoxy()`, `epoxy_html()` and `epoxy_latex()`
+This transformer is enabled by default in `epoxy()`, `epoxy_html()` and `epoxy_latex()`
 and their respective knitr chunk engines.
 
 ```{r child = "../man/fragments/example-movie.Rmd"}
 ```
 
-Read more about inline styles in `?epoxy_transform_inline`.
+Read more about inline transformations in `?epoxy_transform_inline`.
 
-### Style replaced values
+### Transform replaced values
 
 You can use the `epoxy_transform_wrap()` with the `epoxy_transform` chunk option
 to wrap the evaluated R expression in formatting or templating text.
 Or you can use the pre-set
 `epoxy_transform_bold()`, `epoxy_transform_italic()`, or `epoxy_transform_code()`
-style transformers or with `epoxy_transform()`.
+transformers or with `epoxy_transform()`.
 
 <!-- FIXME -->
 ````
@@ -248,7 +248,7 @@ you can set the chunk option `html_raw = FALSE`.
 
 `epoxy_html` uses two custom transformers,
 `epoxy_transform_inline()` and `epoxy_transform_html()`,
-applying the html style before the inline formatting style.
+applying the html transformer before the inline transformer.
 With `epoxy_transform_html()` you can use `element.class#id` syntax
 to wrap expressions in HTML elements (all parts are optional).
 Let's use this syntax to place manufacturer and model in
@@ -279,7 +279,7 @@ each with a custom class.
 
 Because `epoxy_transform_html()` is applied first,
 `{{.uppercase manufacturer}}` is assumed to be a CSS class
-and not an inline style class.
+and not an inline transformer class.
 
 ````{verbatim}
 ```{epoxy_html data = mpg[1,]}

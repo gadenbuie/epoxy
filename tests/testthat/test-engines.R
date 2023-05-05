@@ -126,7 +126,7 @@ describe("epoxy_html()", {
 		)
 	})
 
-	it("uses html, inline stylers by default", {
+	it("uses html, inline transformers by default", {
 		expect_equal(
 			epoxy_html("{{ span letters[1:3] }}"),
 			html_chr(glue("<span>{x}</span>", x = letters[1:3]))
@@ -152,7 +152,7 @@ describe("epoxy_html()", {
 })
 
 describe("epoxy_transform_set()", {
-	it("sets the default for all styles", {
+	it("sets the default epoxy_transform for all engines", {
 		opts <- epoxy_transform_set("bold")
 		on.exit(options(opts))
 
@@ -179,7 +179,7 @@ describe("epoxy_transform_set()", {
 		)
 	})
 
-	it("sets the default for individual styles", {
+	it("sets the default for engine-specific epoxy_transform defaults", {
 		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 
@@ -209,7 +209,7 @@ describe("epoxy_transform_set()", {
 })
 
 describe("epoxy_transform_get()", {
-	it("gets the current style function", {
+	it("gets the current transform function", {
 		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 

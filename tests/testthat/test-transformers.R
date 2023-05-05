@@ -62,7 +62,7 @@ test_that("epoxy_transform() works", {
 	)
 })
 
-test_that("epoxy_transform() throws an error for unknown styles", {
+test_that("epoxy_transform() throws an error for unknown transformers", {
 	expect_error(
 		epoxy_transform("bold", "foo"),
 		"doesn't exist"

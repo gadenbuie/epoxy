@@ -1,8 +1,7 @@
 epoxy("{.strong {.and letters[1:3]}}")
 epoxy("{.and {.strong letters[1:3]}}")
 
-# You can also use the static stylers to apply these transformations
-# to every replacement. (This is slightly older syntax.)
+# If you used the development version of epoxy, the above is equivalent to:
 epoxy("{letters[1:3]&}", .transformer = epoxy_transform("bold", "collapse"))
 epoxy("{letters[1:3]&}", .transformer = epoxy_transform("collapse", "bold"))
 
@@ -12,7 +11,7 @@ epoxy_html("{{.strong {{.or letters[1:3] }} }}")
 # Or in an epoxy_latex chunk...
 epoxy_latex("<.and <.strong letters[1:3] >>")
 
-# ---- Other Transfomers ----
+# ---- Other Transformers ----
 
 # Format numbers with an inline transformation
 amount <- 123.4234234

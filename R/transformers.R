@@ -1,31 +1,31 @@
-#' epoxy Style Transformers
+#' epoxy Transformers
 #'
 #' These transformers provide additional automatic formatting for the template
 #' strings. They are designed to be used with the `.transformer` chunk option of
 #' in `epoxy` chunks. You can use `epoxy_transform()` to chain several
-#' transformers together. `epoxy_transform()` and individual \pkg{epoxy} style
-#' functions can be used in `epoxy`, `epoxy_html` and `epoxy_latex` chunks and
-#' will choose the correct engine for each.
+#' transformers together. `epoxy_transform()` and individual \pkg{epoxy}
+#' transform functions can be used in `epoxy`, `epoxy_html` and `epoxy_latex`
+#' chunks and will choose the correct engine for each.
 #'
-#' @section Output-specific styling:
+#' @section Output-specific transformations:
 #'   The `epoxy_transform_` functions will attempt to use the correct engine for
-#'   styling the replacement text for markdown, HTML and LaTeX. This choice is
-#'   driven by the chunk engine where the styling function is used. The `epoxy`
-#'   engine corresponds to markdown, `epoxy_html` to HTML, and `epoxy_latex` to
-#'   LaTeX.
+#'   transforming the replacement text for markdown, HTML and LaTeX. This choice
+#'   is driven by the chunk engine where the transformer function is used. The
+#'   `epoxy` engine corresponds to markdown, `epoxy_html` to HTML, and
+#'   `epoxy_latex` to LaTeX.
 #'
-#'   Automatic engine selection only works when the epoxy style functions are used
-#'   with epoxy knitr engines and during the knitr rendering process. When
-#'   used outside of this context, you can choose the desired engine by setting
-#'   the `engine` to one of `"markdown"`, `"html"` or `"latex"`.
+#'   Automatic engine selection only works when the epoxy transform functions
+#'   are used with epoxy knitr engines and during the knitr rendering process.
+#'   When used outside of this context, you can choose the desired engine by
+#'   setting the `engine` to one of `"markdown"`, `"html"` or `"latex"`.
 #'
 #' @example man/examples/epoxy_transform.R
 #'
 #' @param ... Transformer functions, e.g.
-#'   [epoxy_transform_bold][epoxy_transform_bold] or the name of a style
-#'   function, e.g. `"bold"`, or a call to a style function, e.g.
-#'   [epoxy_transform_bold()]. `epoxy_transform()` chains the style functions
-#'   together, applying the styles from left to right.
+#'   [epoxy_transform_bold][epoxy_transform_bold] or the name of an \pkg{epoxy}
+#'   transform function, e.g. `"bold"`, or a call to a transform function, e.g.
+#'   [epoxy_transform_bold()]. `epoxy_transform()` chains the transformer
+#'   functions together, applying the transformers in order from first to last.
 #'
 #'   For example, `epoxy_transform("bold", "collapse")` results in replaced
 #'   strings that are emboldened _and then_ collapsed, e.g. `**a** and **b**`.
@@ -37,18 +37,19 @@
 #'
 #'   In `epoxy_transform_collapse()`, the `...` are ignored.
 #' @param engine One of `"markdown"` (or `"md"`), `"html"`, or `"latex"`. The
-#'   default is chosen based on the engine of the chunk where the style function
-#'   is called, or according to the option `epoxy.engine`. Caution: invalid
-#'   options are silently ignored, falling back to `"markdown"`.
+#'   default is chosen based on the engine of the chunk where the transform
+#'   function is called, or according to the option `epoxy.engine`. Caution:
+#'   invalid options are silently ignored, falling back to `"markdown"`.
 #' @param syntax `r lifecycle::badge("deprecated")` Use `engine` instead.
 #'
 #' @return
 #' A function of `text` and `envir` suitable for the `.transformer` argument of
 #' [glue::glue()].
 #'
-#' @describeIn epoxy_transform Construct an epoxy styler, a.k.a. a glue transformer
-#'   for use with [epoxy()] or [glue::glue()].
-#' @family epoxy-style glue transformers
+#' @describeIn epoxy_transform Construct a chained transformer using \pkg{epoxy}
+#'   transformers for use as a glue transformer. The resulting transformers can
+#'   be passed to the `.transformer` argument of [epoxy()] or [glue::glue()].
+#' @family epoxy's \pkg{glue} transformers
 #' @export
 epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()) {
 	if (lifecycle::is_present(syntax)) {
@@ -143,6 +144,7 @@ epoxy_transform_set <- function(
 	invisible(old_opts)
 }
 
+# FIXME: style -> transform
 pick_style <- function(style) {
 	fn_name <- glue("epoxy_transform_{style}")
 	tryCatch(
@@ -164,10 +166,10 @@ close_over_transformer <- function(expr, env) {
 }
 
 
-#' One-shot epoxy style transformers
+#' One-shot epoxy transformers
 #'
-#' These style transformers are useful for applying the same transformation to
-#' every replacement in the template.
+#' These transformers are useful for applying the same transformation to every
+#' replacement in the template.
 #'
 #' @example man/examples/epoxy_transform_one_shot.R
 #'
@@ -178,7 +180,8 @@ close_over_transformer <- function(expr, env) {
 #' @name epoxy_transform_one_shot
 NULL
 
-#' @describeIn epoxy_transform_one_shot Wrap variables with text before or after.
+#' @describeIn epoxy_transform_one_shot Wrap variables with text added before or
+#'   after the inline expression.
 #' @param before,after In `epoxy_transform_wrap()`, the characters to be added
 #'   before and after variables in the template string.
 #' @export
@@ -213,8 +216,8 @@ epoxy_transform_wrap <- function(
 	}
 }
 
-#' @describeIn epoxy_transform_one_shot Embolden variables using `**` in markdown,
-#'   `<strong>` in HTML, or `\textbf{}` in LaTeX.
+#' @describeIn epoxy_transform_one_shot Embolden variables using `**` in
+#'   markdown, `<strong>` in HTML, or `\textbf{}` in LaTeX.
 #' @export
 epoxy_transform_bold <- function(engine = NULL, transformer = glue::identity_transformer) {
 	epoxy_transform_wrap(
@@ -225,8 +228,8 @@ epoxy_transform_bold <- function(engine = NULL, transformer = glue::identity_tra
 	)
 }
 
-#' @describeIn epoxy_transform_one_shot Italicize variables using `_` in markdown,
-#'   `<em>` in HTML, or `\emph{}` in LaTeX.
+#' @describeIn epoxy_transform_one_shot Italicize variables using `_` in
+#'   markdown, `<em>` in HTML, or `\emph{}` in LaTeX.
 #' @export
 epoxy_transform_italic <- function(engine = NULL, transformer = glue::identity_transformer) {
 	epoxy_transform_wrap(
@@ -330,8 +333,9 @@ engine_validate_alias <- function(engine) {
 	engine_aliases[engine]
 }
 
-#' @describeIn epoxy_transform_one_shot Collapse vector variables with a succinct
-#'   syntax (but see [epoxy_transform_inline()] for a more readable option).
+#' @describeIn epoxy_transform_one_shot Collapse vector variables with a
+#'   succinct syntax (but see [epoxy_transform_inline()] for a more readable
+#'   option).
 #' @param sep,last The separator to use when joining the vector elements when
 #'   the expression ends with a `*`. Elements are separated by `sep`, except for
 #'   the last two elements, which use `last`.
