@@ -18,7 +18,8 @@ epoxy(
   .comment = character(),
   .literal = FALSE,
   .trim = FALSE,
-  .transformer = NULL
+  .transformer = NULL,
+  .style = lifecycle::deprecated()
 )
 
 epoxy_html(
@@ -93,7 +94,17 @@ syntactic elements), when parsing the expression string. Setting \code{.literal 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{\link[glue:trim]{trim()}} or not.}
 
-\item{.transformer}{For \code{\link[=epoxy_transform]{epoxy_transform()}}}
+\item{.transformer}{A transformer function or transformer chain created with
+\code{\link[=epoxy_transform]{epoxy_transform()}}. Alternatively, a character vector of epoxy transformer
+names, e.g. \code{c("bold", "collapse")} or a list of epoxy transformers, e.g.
+\code{list(epoxy_transform_bold(), epoxy_transform_collapse())}.
+
+In \pkg{epoxy}, you'll most likely want to use the defaults or consult
+\code{\link[=epoxy_transform]{epoxy_transform()}} for more information. See also \code{\link[glue:glue]{glue::glue()}} for more
+information on transformers.}
+
+\item{.style}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.transformer}
+instead.}
 }
 \value{
 Returns a transformed string, using \code{glue::glue()} but with the

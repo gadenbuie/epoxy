@@ -70,15 +70,15 @@ epoxy_html("My name starts with {{ .name-letter letters[7] }}")
 
 epoxy_html(
 	"{{ h3#title title }}",
-	title = "Epoxy Style for HTML"
+	title = "Epoxy for HTML"
 )
 
 }
 \seealso{
 Used by default in \code{\link[=epoxy_html]{epoxy_html()}}
 
-Other epoxy-style glue transformers: 
+Other epoxy's \pkg{glue} transformers: 
 \code{\link{epoxy_transform_inline}()},
 \code{\link{epoxy_transform}()}
 }
-\concept{epoxy-style glue transformers}
+\concept{epoxy's \pkg{glue} transformers}

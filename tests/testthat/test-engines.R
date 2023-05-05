@@ -238,3 +238,35 @@ describe("epoxy_transform_get()", {
 		)
 	})
 })
+
+describe("chunk engine deprecations", {
+	it ("warns about `epoxy_style` deprecation", {
+		lifecycle::expect_deprecated(
+			deprecate_epoxy_style_chunk_option(list(epoxy_style = "bold"))
+		)
+	})
+
+	it ("warns about `glue_data` chunk option deprecation", {
+		lifecycle::expect_defunct(
+			deprecate_glue_data_chunk_option(list(glue_data = list()))
+		)
+	})
+
+	it ("warns about `glue` chunk engine usage", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue"))
+		)
+	})
+
+	it ("warns about `glue` chunk engine prefix", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_html")),
+			"epoxy_html"
+		)
+
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_latex")),
+			"epoxy_latex"
+		)
+	})
+})

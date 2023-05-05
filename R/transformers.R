@@ -121,7 +121,7 @@ epoxy_transform_set <- function(
 	if (identical(list(...), list(NULL))) {
 		# unset engine options
 		opts_unset <- list()
-		engine <- glue("epoxy.epoxy_transform_default.{engine}")
+		engine <- glue("epoxy.transformer_default.{engine}")
 		opts_unset[engine] <- list(NULL)
 		return(invisible(options(opts_unset)))
 	}
@@ -129,14 +129,14 @@ epoxy_transform_set <- function(
 	if (length(list(...)) == 0) {
 		# get current option values
 		engine <- rlang::set_names(
-			glue("epoxy.epoxy_transform_default.{engine}")
+			glue("epoxy.transformer_default.{engine}")
 		)
 		return(lapply(engine, getOption, default = NULL))
 	}
 
 	opts_to_set <- list()
 	for (engine in engine) {
-		opt_name <- glue("epoxy.epoxy_transform_default.{engine}")
+		opt_name <- glue("epoxy.transformer_default.{engine}")
 		opts_to_set[[opt_name]] <- epoxy_transform(..., engine = engine)
 	}
 

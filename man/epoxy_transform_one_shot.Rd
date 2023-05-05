@@ -8,7 +8,7 @@
 \alias{epoxy_transform_apply}
 \alias{epoxy_transform_code}
 \alias{epoxy_transform_collapse}
-\title{One-shot epoxy style transformers}
+\title{One-shot epoxy transformers}
 \usage{
 epoxy_transform_wrap(
   before = "**",
@@ -43,9 +43,9 @@ epoxy_transform_collapse(
 before and after variables in the template string.}
 
 \item{engine}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
-default is chosen based on the engine of the chunk where the style function
-is called, or according to the option \code{epoxy.engine}. Caution: invalid
-options are silently ignored, falling back to \code{"markdown"}.}
+default is chosen based on the engine of the chunk where the transform
+function is called, or according to the option \code{epoxy.engine}. Caution:
+invalid options are silently ignored, falling back to \code{"markdown"}.}
 
 \item{transformer}{The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
@@ -59,10 +59,10 @@ the current transformation. In nearly all cases, you can let
 \item{.f}{A function, function name or \code{\link[purrr:map]{purrr::map()}}-style inline function.}
 
 \item{...}{Transformer functions, e.g.
-\link{epoxy_transform_bold} or the name of a style
-function, e.g. \code{"bold"}, or a call to a style function, e.g.
-\code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}. \code{epoxy_transform()} chains the style functions
-together, applying the styles from left to right.
+\link{epoxy_transform_bold} or the name of an \pkg{epoxy}
+transform function, e.g. \code{"bold"}, or a call to a transform function, e.g.
+\code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}. \code{epoxy_transform()} chains the transformer
+functions together, applying the transformers in order from first to last.
 
 For example, \code{epoxy_transform("bold", "collapse")} results in replaced
 strings that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}.
@@ -88,18 +88,19 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer} 
 \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
-These style transformers are useful for applying the same transformation to
-every replacement in the template.
+These transformers are useful for applying the same transformation to every
+replacement in the template.
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_transform_wrap()}: Wrap variables with text before or after.
+\item \code{epoxy_transform_wrap()}: Wrap variables with text added before or
+after the inline expression.
 
-\item \code{epoxy_transform_bold()}: Embolden variables using \verb{**} in markdown,
-\verb{<strong>} in HTML, or \verb{\\textbf\{\}} in LaTeX.
+\item \code{epoxy_transform_bold()}: Embolden variables using \verb{**} in
+markdown, \verb{<strong>} in HTML, or \verb{\\textbf\{\}} in LaTeX.
 
-\item \code{epoxy_transform_italic()}: Italicize variables using \verb{_} in markdown,
-\verb{<em>} in HTML, or \verb{\\emph\{\}} in LaTeX.
+\item \code{epoxy_transform_italic()}: Italicize variables using \verb{_} in
+markdown, \verb{<em>} in HTML, or \verb{\\emph\{\}} in LaTeX.
 
 \item \code{epoxy_transform_apply()}: Apply a function to all replacement
 expressions.
@@ -107,8 +108,9 @@ expressions.
 \item \code{epoxy_transform_code()}: Code format variables using \verb{``} in
 markdown, \verb{<code>} in HTML, or \verb{\\texttt\{\}} in LaTeX.
 
-\item \code{epoxy_transform_collapse()}: Collapse vector variables with a succinct
-syntax (but see \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}} for a more readable option).
+\item \code{epoxy_transform_collapse()}: Collapse vector variables with a
+succinct syntax (but see \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}} for a more readable
+option).
 
 }}
 \examples{

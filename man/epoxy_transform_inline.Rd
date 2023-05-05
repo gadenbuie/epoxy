@@ -199,8 +199,8 @@ epoxy_html(
 \seealso{
 \code{\link[=epoxy_transform]{epoxy_transform()}}, \code{\link[=epoxy_transform_set]{epoxy_transform_set()}}
 
-Other epoxy-style glue transformers: 
+Other epoxy's \pkg{glue} transformers: 
 \code{\link{epoxy_transform_html}()},
 \code{\link{epoxy_transform}()}
 }
-\concept{epoxy-style glue transformers}
+\concept{epoxy's \pkg{glue} transformers}

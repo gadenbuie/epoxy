@@ -57,6 +57,7 @@ use_epoxy_knitr_engines <- function(use_glue_engine = FALSE) {
 use_epoxy_glue_engine <- function() {
 	old <- knitr::knit_engines$get()
 	knitr::knit_engines$set(glue = knitr_engine_epoxy)
+	.globals$use_epoxy_glue_engine <- TRUE
 	invisible(old)
 }
 
@@ -68,7 +69,16 @@ use_epoxy_glue_engine <- function() {
 #' @example man/examples/epoxy.R
 #'
 #' @param .data A data set
-#' @param .transformer For [epoxy_transform()]
+#' @param .transformer A transformer function or transformer chain created with
+#'   [epoxy_transform()]. Alternatively, a character vector of epoxy transformer
+#'   names, e.g. `c("bold", "collapse")` or a list of epoxy transformers, e.g.
+#'   `list(epoxy_transform_bold(), epoxy_transform_collapse())`.
+#'
+#'   In \pkg{epoxy}, you'll most likely want to use the defaults or consult
+#'   [epoxy_transform()] for more information. See also [glue::glue()] for more
+#'   information on transformers.
+#' @param .style `r lifecycle::badge("deprecated")` Please use `.transformer`
+#'   instead.
 #### Inlined from https://github.com/tidyverse/glue/blob/main/R/glue.R#L15-L18
 #### to avoid https://github.com/r-lib/roxygen2/issues/1355
 #' @param .open \[`character(1)`: \sQuote{\\\{}]\cr The opening delimiter around
@@ -97,8 +107,19 @@ epoxy <- function(
 	.comment = character(),
 	.literal = FALSE,
 	.trim = FALSE,
-	.transformer = NULL
+	.transformer = NULL,
+	.style = lifecycle::deprecated()
 ) {
+
+	if (lifecycle::is_present(.style)) {
+		lifecycle::deprecate_soft(
+			when = "0.1.0",
+			what = "epoxy(.style = )",
+			with = "epoxy(.transformer = )"
+		)
+	} else if (identical(.style, quote(expr = )))  {# rlang::is_missing()
+		.style <- NULL
+	}
 
 	glue_env <- .envir
 	if (!is.null(.data)) {
@@ -107,9 +128,9 @@ epoxy <- function(
 	}
 
 	opts_transformer <- list(
-		# FIXME
-		epoxy_transform = .transformer,
-		.transformer = .transformer
+		.transformer = .transformer,
+		# FIXME(lifecycle): .style was deprecated 2023-05
+		epoxy_style = .style
 	)
 
 	old_opts <- options("epoxy:::private" = list(.open = .open, .close = .close))
@@ -133,6 +154,7 @@ epoxy <- function(
 
 knitr_engine_epoxy <- function(options) {
 	deprecate_glue_engine_prefix(options)
+	deprecate_epoxy_style_chunk_option(options)
 
 	out <- if (isTRUE(options$eval)) {
 		options <- deprecate_glue_data_chunk_option(options)
@@ -141,8 +163,6 @@ knitr_engine_epoxy <- function(options) {
 		epoxy(
 			code,
 			.data        = options[["data"]],
-			# FIXME
-			# .transformer       = options[["epoxy_transform"]],
 			.sep         = "",
 			.envir       = options[[".envir"]]   %||% knitr::knit_global(),
 			.open        = options[[".open"]]    %||% "{",
@@ -152,7 +172,7 @@ knitr_engine_epoxy <- function(options) {
 			.trim        = options[[".trim"]]    %||% FALSE,
 			.comment     = options[[".comment"]] %||% "",
 			.literal     = options[[".literal"]] %||% FALSE,
-			.transformer = options[[".transformer"]]
+			.transformer = epoxy_options_get_transformer(options)
 		)
 	}
 
@@ -200,6 +220,7 @@ epoxy_html <- function(
 
 knitr_engine_epoxy_html <- function(options) {
 	deprecate_glue_engine_prefix(options)
+	deprecate_epoxy_style_chunk_option(options)
 
 	out <- NULL
 	if (isTRUE(options$eval) && is_htmlish_output()) {
@@ -220,7 +241,7 @@ knitr_engine_epoxy_html <- function(options) {
 			.trim        = options[[".trim"]]    %||% FALSE,
 			.comment     = options[[".comment"]] %||% "",
 			.literal     = options[[".literal"]] %||% FALSE,
-			.transformer = options[[".transformer"]]
+			.transformer = epoxy_options_get_transformer(options)
 		)
 
 		out <- glue_collapse(out, sep = "\n")
@@ -273,6 +294,7 @@ epoxy_latex <- function(
 
 knitr_engine_epoxy_latex <- function(options) {
 	deprecate_glue_engine_prefix(options)
+	deprecate_epoxy_style_chunk_option(options)
 
 	out <- NULL
 	if (isTRUE(options$eval)) {
@@ -282,8 +304,6 @@ knitr_engine_epoxy_latex <- function(options) {
 		out <- epoxy(
 			code,
 			.data        = options[["data"]],
-			# FIXME
-			# .transformer       = options[["epoxy_transform"]],
 			.sep         = "",
 			.envir       = options[[".envir"]]   %||% knitr::knit_global(),
 			.open        = options[[".open"]]    %||% "<",
@@ -293,7 +313,7 @@ knitr_engine_epoxy_latex <- function(options) {
 			.trim        = options[[".trim"]]    %||% FALSE,
 			.comment     = options[[".comment"]] %||% "",
 			.literal     = options[[".literal"]] %||% FALSE,
-			.transformer = options[[".transformer"]]
+			.transformer = epoxy_options_get_transformer(options)
 		)
 
 		out <- glue_collapse(out, sep = "\n")
@@ -367,18 +387,31 @@ epoxy_data_subset <- function(x, y) {
 }
 
 epoxy_options_get_transformer <- function(options) {
-	# FIXME: style
-	style <- options[["epoxy_transform"]]
-	if (is.vector(style) || is.list(style)) {
-		return(epoxy_transform(!!!style))
+	transformer <- options[[".transformer"]] %||%
+	  # for backwards compatibility continue to check `epoxy_style` chunk option
+		options[["epoxy_style"]]
+
+	if (is.null(transformer)) {
+		return(epoxy_default_transformer())
 	}
-	style %||%
-		options[[".transformer"]] %||%
-		engine_pick(
-			md = getOption("epoxy.epoxy_transform_default.md", NULL),
-			html = getOption("epoxy.epoxy_transform_default.html", NULL),
-			latex = getOption("epoxy.epoxy_transform_default.latex", NULL)
-		) %||%
+
+	if (rlang::is_function(transformer)) {
+		return(transformer)
+	}
+
+	if (rlang::is_vector(transformer) || rlang::is_list(transformer)) {
+		return(epoxy_transform(!!!transformer))
+	}
+
+	epoxy_default_transformer()
+}
+
+epoxy_default_transformer <- function() {
+	engine_pick(
+		md = getOption("epoxy.transformer_default.md", NULL),
+		html = getOption("epoxy.transformer_default.html", NULL),
+		latex = getOption("epoxy.transformer_default.latex", NULL)
+	) %||%
 		engine_pick(
 			md = epoxy_transform("inline"),
 			html = epoxy_transform("inline", "html")
@@ -393,35 +426,50 @@ knitr_chunk_option_echo <- function(options) {
 }
 
 deprecate_glue_data_chunk_option <- function(options) {
-	# FIXME: remove eventually!
 	if ("glue_data" %in% names(options)) {
-		if (!"data" %in% names(options)) {
-			options$data <- options$glue_data
-		}
-		warning(
-			"The `glue_data` chunk option has been deprecated. ",
-			"Please use the `data` chunk option instead.",
-			call. = FALSE,
-			immediate. = TRUE
+		lifecycle::deprecate_stop(
+			when = "0.0.2",
+			what = I("The `glue_data` chunk option"),
+			with = I("the `data` chunk option")
 		)
 	}
 	options
 }
 
-deprecate_glue_engine_prefix <- local({
-	has_warned <- list()
-	function(options) {
-		if (options$engine == "glue" || grepl("glue_", options$engine)) {
-			if (isTRUE(has_warned[[options$engine]])) {
-				return(invisible())
-			} else {
-				has_warned[[options$engine]] <<- TRUE
-			}
-			suggested <- sub("glue_?", "epoxy", options$engine)
-			rlang::warn(c(
-				sprintf("The `%s` engine from epoxy is deprecated. ", options$engine),
-				"i" = sprintf("Please use the `%s` engine instead.", suggested)
-			))
-		}
+deprecate_epoxy_style_chunk_option <- function(options) {
+	if (is.null(options[["epoxy_style"]])) return()
+
+	lifecycle::deprecate_soft(
+		when = "0.1.0",
+		what = "epoxy(.style =)",
+		details = c(
+			"The corresponding `epoxy_style` chunk option is also deprecated.",
+			"i" = "Please rename the chunk option to use `.transformer` instead."
+		)
+	)
+}
+
+deprecate_glue_engine_prefix <- function(options) {
+	requested_glue_engine <- isTRUE(.globals$use_epoxy_glue_engine)
+
+	if (!requested_glue_engine && identical(options$engine, "glue")) {
+		lifecycle::deprecate_soft(
+			when = "0.0.3",
+			what = I("The epoxy-provided `glue` engine"),
+			with = I("the `epoxy` engine"),
+			details = c(
+				i = "The `glue` engine is now provided by the {glue} package."
+			)
+		)
 	}
-})
+
+	if (options$engine %in% c("glue_latex", "glue_html")) {
+		engine <- options$engine
+		suggested <- sub("^glue", "epoxy", engine)
+		lifecycle::deprecate_soft(
+			when = "0.0.3",
+			what = I(glue("The `{engine}` knitr engine")),
+			with = I(glue("the `{suggested}` engine"))
+		)
+	}
+}

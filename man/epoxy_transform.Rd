@@ -4,7 +4,7 @@
 \alias{epoxy_transform}
 \alias{epoxy_transform_get}
 \alias{epoxy_transform_set}
-\title{epoxy Style Transformers}
+\title{epoxy Transformers}
 \usage{
 epoxy_transform(..., engine = NULL, syntax = lifecycle::deprecated())
 
@@ -14,10 +14,10 @@ epoxy_transform_set(..., engine = NULL, syntax = lifecycle::deprecated())
 }
 \arguments{
 \item{...}{Transformer functions, e.g.
-\link{epoxy_transform_bold} or the name of a style
-function, e.g. \code{"bold"}, or a call to a style function, e.g.
-\code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}. \code{epoxy_transform()} chains the style functions
-together, applying the styles from left to right.
+\link{epoxy_transform_bold} or the name of an \pkg{epoxy}
+transform function, e.g. \code{"bold"}, or a call to a transform function, e.g.
+\code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}. \code{epoxy_transform()} chains the transformer
+functions together, applying the transformers in order from first to last.
 
 For example, \code{epoxy_transform("bold", "collapse")} results in replaced
 strings that are emboldened \emph{and then} collapsed, e.g. \verb{**a** and **b**}.
@@ -30,9 +30,9 @@ the underlying function call.
 In \code{epoxy_transform_collapse()}, the \code{...} are ignored.}
 
 \item{engine}{One of \code{"markdown"} (or \code{"md"}), \code{"html"}, or \code{"latex"}. The
-default is chosen based on the engine of the chunk where the style function
-is called, or according to the option \code{epoxy.engine}. Caution: invalid
-options are silently ignored, falling back to \code{"markdown"}.}
+default is chosen based on the engine of the chunk where the transform
+function is called, or according to the option \code{epoxy.engine}. Caution:
+invalid options are silently ignored, falling back to \code{"markdown"}.}
 
 \item{syntax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{engine} instead.}
 }
@@ -44,14 +44,15 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer} 
 These transformers provide additional automatic formatting for the template
 strings. They are designed to be used with the \code{.transformer} chunk option of
 in \code{epoxy} chunks. You can use \code{epoxy_transform()} to chain several
-transformers together. \code{epoxy_transform()} and individual \pkg{epoxy} style
-functions can be used in \code{epoxy}, \code{epoxy_html} and \code{epoxy_latex} chunks and
-will choose the correct engine for each.
+transformers together. \code{epoxy_transform()} and individual \pkg{epoxy}
+transform functions can be used in \code{epoxy}, \code{epoxy_html} and \code{epoxy_latex}
+chunks and will choose the correct engine for each.
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_transform()}: Construct an epoxy styler, a.k.a. a glue transformer
-for use with \code{\link[=epoxy]{epoxy()}} or \code{\link[glue:glue]{glue::glue()}}.
+\item \code{epoxy_transform()}: Construct a chained transformer using \pkg{epoxy}
+transformers for use as a glue transformer. The resulting transformers can
+be passed to the \code{.transformer} argument of \code{\link[=epoxy]{epoxy()}} or \code{\link[glue:glue]{glue::glue()}}.
 
 \item \code{epoxy_transform_get()}: Get the default epoxy \code{.transformer} for all
 epoxy engines or for a subset of engines.
@@ -60,26 +61,25 @@ epoxy engines or for a subset of engines.
 epoxy engines or for a subset of engines.
 
 }}
-\section{Output-specific styling}{
+\section{Output-specific transformations}{
 
 The \code{epoxy_transform_} functions will attempt to use the correct engine for
-styling the replacement text for markdown, HTML and LaTeX. This choice is
-driven by the chunk engine where the styling function is used. The \code{epoxy}
-engine corresponds to markdown, \code{epoxy_html} to HTML, and \code{epoxy_latex} to
-LaTeX.
+transforming the replacement text for markdown, HTML and LaTeX. This choice
+is driven by the chunk engine where the transformer function is used. The
+\code{epoxy} engine corresponds to markdown, \code{epoxy_html} to HTML, and
+\code{epoxy_latex} to LaTeX.
 
-Automatic engine selection only works when the epoxy style functions are used
-with epoxy knitr engines and during the knitr rendering process. When
-used outside of this context, you can choose the desired engine by setting
-the \code{engine} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
+Automatic engine selection only works when the epoxy transform functions
+are used with epoxy knitr engines and during the knitr rendering process.
+When used outside of this context, you can choose the desired engine by
+setting the \code{engine} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
 }
 
 \examples{
 epoxy("{.strong {.and letters[1:3]}}")
 epoxy("{.and {.strong letters[1:3]}}")
 
-# You can also use the static stylers to apply these transformations
-# to every replacement. (This is slightly older syntax.)
+# If you used the development version of epoxy, the above is equivalent to:
 epoxy("{letters[1:3]&}", .transformer = epoxy_transform("bold", "collapse"))
 epoxy("{letters[1:3]&}", .transformer = epoxy_transform("collapse", "bold"))
 
@@ -89,7 +89,7 @@ epoxy_html("{{.strong {{.or letters[1:3] }} }}")
 # Or in an epoxy_latex chunk...
 epoxy_latex("<.and <.strong letters[1:3] >>")
 
-# ---- Other Transfomers ----
+# ---- Other Transformers ----
 
 # Format numbers with an inline transformation
 amount <- 123.4234234
@@ -117,8 +117,8 @@ epoxy(
 )
 }
 \seealso{
-Other epoxy-style glue transformers: 
+Other epoxy's \pkg{glue} transformers: 
 \code{\link{epoxy_transform_html}()},
 \code{\link{epoxy_transform_inline}()}
 }
-\concept{epoxy-style glue transformers}
+\concept{epoxy's \pkg{glue} transformers}
