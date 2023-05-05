@@ -26,8 +26,9 @@ the inline styles to format the replacement text as we build up a
 description from this data.
 
 <details>
-
-<summary>Movie data</summary>
+<summary>
+Movie data
+</summary>
 
 ``` r
 movie <- list(
@@ -60,18 +61,16 @@ and it features movie stars
 ````
 
 <blockquote>
-
 The movie *Back to the Future Part II* was released in **1989**. It
-earned $118,450,002 with a budget of $40,000,000, and it features movie
-stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
-Wilson.
-
+earned \$118,450,002 with a budget of \$40,000,000, and it features
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+F. Wilson.
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
 `epoxy_latex` – in [Getting
 Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html). Or
-read more about epoxy’s inline formatting in `?epoxy_style_inline`.
+read more about epoxy’s inline formatting in `?epoxy_transform_inline`.
 
 ## Installation
 
@@ -107,7 +106,7 @@ chunk types. Each type lets you intermix text with R code or data
 output context.
 
 | Engine        | Output Context       |                         Delimiter                         |
-| :------------ | :------------------- | :-------------------------------------------------------: |
+|:--------------|:---------------------|:---------------------------------------------------------:|
 | `epoxy`       | all-purpose markdown |                         `{expr}`                          |
 | `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
 | `epoxy_latex` | LaTeX                |                         `<expr>`                          |
@@ -152,18 +151,18 @@ But on average the distance traveled was only _{mean(cars$dist)} ft_.")
 ```
 
 One immediate advantage of using `epoxy` instead of `glue::glue()` is
-that RStudio’s autocompletion feature works inside `epoxy` chunks\!
+that RStudio’s autocompletion feature works inside `epoxy` chunks!
 Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\! Learn more:
+There’s a whole lot more that epoxy can do! Learn more:
 
-  - [epoxy Package
+-   [epoxy Package
     Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
-  - [Getting
+-   [Getting
     Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
-  - [Inline Reporting with
+-   [Inline Reporting with
     epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)

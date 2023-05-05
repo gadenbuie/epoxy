@@ -26,8 +26,9 @@ the inline styles to format the replacement text as we build up a
 description from this data.
 
 <details>
-
-<summary>Movie data</summary>
+<summary>
+Movie data
+</summary>
 
 ``` r
 movie <- list(
@@ -60,18 +61,16 @@ and it features movie stars
 ````
 
 <blockquote>
-
 The movie *Back to the Future Part II* was released in **1989**. It
-earned $118,450,002 with a budget of $40,000,000, and it features movie
-stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
-Wilson.
-
+earned \$118,450,002 with a budget of \$40,000,000, and it features
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+F. Wilson.
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
 `epoxy_latex` – in [Getting
 Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html). Or
-read more about epoxy’s inline formatting in `?epoxy_style_inline`.
+read more about epoxy’s inline formatting in `?epoxy_transform_inline`.
 
 ## Installation
 
@@ -96,11 +95,11 @@ install.packages("epoxy")
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\! Learn more:
+There’s a whole lot more that epoxy can do! Learn more:
 
-  - [Getting Started with epoxy in reports or Shiny
+-   [Getting Started with epoxy in reports or Shiny
     apps](articles/epoxy.html)
 
-  - [Inline Reporting with epoxy](articles/inline-reporting.html)
+-   [Inline Reporting with epoxy](articles/inline-reporting.html)
 
-  - [epoxy Package Documentation](reference/index.html)
+-   [epoxy Package Documentation](reference/index.html)
