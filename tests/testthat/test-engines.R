@@ -151,9 +151,9 @@ describe("epoxy_html()", {
 	})
 })
 
-describe("epoxy_style_set()", {
+describe("epoxy_transform_set()", {
 	it("sets the default for all styles", {
-		opts <- epoxy_style_set("bold")
+		opts <- epoxy_transform_set("bold")
 		on.exit(options(opts))
 
 		expect_equal(
@@ -163,7 +163,7 @@ describe("epoxy_style_set()", {
 
 		expect_equal(
 			epoxy("{1} and {2} is {3}"),
-			epoxy("{1} and {2} is {3}", .style = "bold")
+			epoxy("{1} and {2} is {3}", .transformer = "bold")
 		)
 
 		expect_equal(
@@ -180,13 +180,13 @@ describe("epoxy_style_set()", {
 	})
 
 	it("sets the default for individual styles", {
-		opts_md <- epoxy_style_set("bold", engine = "md")
+		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 
-		opts_html <- epoxy_style_set("italic", engine = "html")
+		opts_html <- epoxy_transform_set("italic", engine = "html")
 		on.exit(options(opts_html), add = TRUE)
 
-		opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
+		opts_latex <- epoxy_transform_set(epoxy_transform_code, engine = "latex")
 		on.exit(options(opts_latex), add = TRUE)
 
 		expect_equal(
@@ -208,32 +208,32 @@ describe("epoxy_style_set()", {
 	})
 })
 
-describe("epoxy_style_get()", {
+describe("epoxy_transform_get()", {
 	it("gets the current style function", {
-		opts_md <- epoxy_style_set("bold", engine = "md")
+		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 
-		opts_html <- epoxy_style_set("italic", engine = "html")
+		opts_html <- epoxy_transform_set("italic", engine = "html")
 		on.exit(options(opts_html), add = TRUE)
 
-		opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
+		opts_latex <- epoxy_transform_set(epoxy_transform_code, engine = "latex")
 		on.exit(options(opts_latex), add = TRUE)
 
 		expect_equal(
-			epoxy_style_get("md"),
-			epoxy_style_bold(),
+			epoxy_transform_get("md"),
+			epoxy_transform_bold(),
 			ignore_function_env = TRUE
 		)
 
 		expect_equal(
-			epoxy_style_get("html"),
-			epoxy_style_italic(),
+			epoxy_transform_get("html"),
+			epoxy_transform_italic(),
 			ignore_function_env = TRUE
 		)
 
 		expect_equal(
-			epoxy_style_get("latex"),
-			epoxy_style_code(),
+			epoxy_transform_get("latex"),
+			epoxy_transform_code(),
 			ignore_function_env = TRUE
 		)
 	})

@@ -88,6 +88,7 @@ use_epoxy_glue_engine <- function() {
 epoxy <- function(
 	...,
 	.data = NULL,
+	.transformer = NULL,
 	.sep = "",
 	.envir = parent.frame(),
 	.open = "{",
@@ -97,6 +98,7 @@ epoxy <- function(
 	.comment = character(),
 	.literal = FALSE,
 	.trim = FALSE,
+	# FIXME
 	.transformer = NULL
 ) {
 
@@ -142,7 +144,7 @@ knitr_engine_epoxy <- function(options) {
 			code,
 			.data        = options[["data"]],
 			# FIXME
-			# .transformer       = options[["epoxy_transform"]],
+			.transformer       = options[["epoxy_transform"]],
 			.sep         = "",
 			.envir       = options[[".envir"]]   %||% knitr::knit_global(),
 			.open        = options[[".open"]]    %||% "{",
@@ -166,6 +168,7 @@ knitr_engine_epoxy <- function(options) {
 epoxy_html <- function(
 	...,
 	.data = NULL,
+	.transformer = NULL,
 	.sep = "",
 	.envir = parent.frame(),
 	.open = "{{",
@@ -183,6 +186,7 @@ epoxy_html <- function(
 			epoxy(
 				...,
 				.data = .data,
+				.transformer = .transformer,
 				.sep = .sep,
 				.envir = .envir,
 				.open = .open,
@@ -210,7 +214,7 @@ knitr_engine_epoxy_html <- function(options) {
 			code,
 			.data        = options[["data"]],
 			# FIXME
-			# .transformer       = options[["epoxy_transform"]],
+			.transformer       = options[["epoxy_transform"]],
 			.sep         = "",
 			.envir       = options[[".envir"]]   %||% knitr::knit_global(),
 			.open        = options[[".open"]]    %||% "{{",
@@ -241,6 +245,7 @@ knitr_engine_epoxy_html <- function(options) {
 epoxy_latex <- function(
 	...,
 	.data = NULL,
+	.transformer = NULL,
 	.sep = "",
 	.envir = parent.frame(),
 	.open = "<",
@@ -257,6 +262,7 @@ epoxy_latex <- function(
 		epoxy(
 			...,
 			.data = .data,
+			.transformer = .transformer,
 			.sep = .sep,
 			.envir = .envir,
 			.open = .open,
@@ -283,7 +289,7 @@ knitr_engine_epoxy_latex <- function(options) {
 			code,
 			.data        = options[["data"]],
 			# FIXME
-			# .transformer       = options[["epoxy_transform"]],
+			.transformer       = options[["epoxy_transform"]],
 			.sep         = "",
 			.envir       = options[[".envir"]]   %||% knitr::knit_global(),
 			.open        = options[[".open"]]    %||% "<",

@@ -1,6 +1,6 @@
 # test_that
 
-describe("epoxy_style_inline()", {
+describe("epoxy_transform_inline()", {
 	it("applies transformations in order from outer to inner", {
 		expect_equal(
 			epoxy("{.strong {.dollar 1234}}"),
@@ -16,7 +16,7 @@ describe("epoxy_style_inline()", {
 		expect_equal(
 			epoxy(
 				"{ .test letters }",
-				.style = epoxy_style_inline(
+				.transformer = epoxy_transform_inline(
 					test = function(x) "PASS"
 				)
 			),
@@ -28,7 +28,7 @@ describe("epoxy_style_inline()", {
 		expect_equal(
 			epoxy(
 				"{ .bold letters[1] }",
-				.style = epoxy_style_inline(
+				.transformer = epoxy_transform_inline(
 					bold = function(x) "PASS"
 				)
 			),
@@ -38,7 +38,7 @@ describe("epoxy_style_inline()", {
 		expect_equal(
 			epoxy(
 				"{ .strong letters[1] }",
-				.style = epoxy_style_inline(
+				.transformer = epoxy_transform_inline(
 					bold = function(x) "PASS"
 				)
 			),
@@ -48,12 +48,12 @@ describe("epoxy_style_inline()", {
 
 	it("applies squote and dquote", {
 		expect_equal(
-			epoxy("{.squote letters[1]}", .style = "inline"),
+			epoxy("{.squote letters[1]}", .transformer = "inline"),
 			"'a'"
 		)
 
 		expect_equal(
-			epoxy("{.dquote letters[1]}", .style = "inline"),
+			epoxy("{.dquote letters[1]}", .transformer = "inline"),
 			'"a"'
 		)
 
@@ -62,12 +62,12 @@ describe("epoxy_style_inline()", {
 		on.exit(options(opts))
 
 		expect_equal(
-			epoxy("{.squote letters[1]}", .style = "inline"),
+			epoxy("{.squote letters[1]}", .transformer = "inline"),
 			"\xc2\xaba\xc2\xbb"
 		)
 
 		expect_equal(
-			epoxy("{.dquote letters[1]}", .style = "inline"),
+			epoxy("{.dquote letters[1]}", .transformer = "inline"),
 			'\xc2\xbfa?'
 		)
 	})

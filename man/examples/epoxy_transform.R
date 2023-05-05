@@ -3,8 +3,8 @@ epoxy("{.and {.strong letters[1:3]}}")
 
 # You can also use the static stylers to apply these transformations
 # to every replacement. (This is slightly older syntax.)
-epoxy("{letters[1:3]&}", .style = epoxy_style("bold", "collapse"))
-epoxy("{letters[1:3]&}", .style = epoxy_style("collapse", "bold"))
+epoxy("{letters[1:3]&}", .transformer = epoxy_transform("bold", "collapse"))
+epoxy("{letters[1:3]&}", .transformer = epoxy_transform("collapse", "bold"))
 
 # In an epoxy_html chunk...
 epoxy_html("{{.strong {{.or letters[1:3] }} }}")
@@ -19,7 +19,7 @@ amount <- 123.4234234
 epoxy("{.number amount}")
 epoxy(
   "{.number amount}",
-  .style = epoxy_style_inline(
+  .transformer = epoxy_transform_inline(
     number = scales::label_number(accuracy = 0.01)
   )
 )
@@ -27,14 +27,14 @@ epoxy(
 # Apply _any_ function to all replacements
 epoxy(
   "{amount} is the same as {amount}",
-  .style = epoxy_style_apply(round, digits = 0)
+  .transformer = epoxy_transform_apply(round, digits = 0)
 )
 
 epoxy(
   "{amount} is the same as {amount}",
-  .style = epoxy_style(
-    epoxy_style_apply(~ .x * 100),
-    epoxy_style_apply(round, digits = 2),
-    epoxy_style_apply(~ paste0(.x, "%"))
+  .transformer = epoxy_transform(
+    epoxy_transform_apply(~ .x * 100),
+    epoxy_transform_apply(round, digits = 2),
+    epoxy_transform_apply(~ paste0(.x, "%"))
   )
 )
