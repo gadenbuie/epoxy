@@ -44,27 +44,27 @@ epoxy_style_wrap(...)
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_style()}: Renamed \code{\link[=epoxy_transform]{epoxy_transform()}}.
+\item \code{epoxy_style()}: is now \code{\link[=epoxy_transform]{epoxy_transform()}}.
 
-\item \code{epoxy_style_apply()}: Renamed \code{\link[=epoxy_transform_apply]{epoxy_transform_apply()}}.
+\item \code{epoxy_style_apply()}: is now \code{\link[=epoxy_transform_apply]{epoxy_transform_apply()}}.
 
-\item \code{epoxy_style_bold()}: Renamed \code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}.
+\item \code{epoxy_style_bold()}: is now \code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}.
 
-\item \code{epoxy_style_code()}: Renamed \code{\link[=epoxy_transform_code]{epoxy_transform_code()}}.
+\item \code{epoxy_style_code()}: is now \code{\link[=epoxy_transform_code]{epoxy_transform_code()}}.
 
-\item \code{epoxy_style_collapse()}: Renamed \code{\link[=epoxy_transform_collapse]{epoxy_transform_collapse()}}.
+\item \code{epoxy_style_collapse()}: is now \code{\link[=epoxy_transform_collapse]{epoxy_transform_collapse()}}.
 
-\item \code{epoxy_style_get()}: Renamed \code{\link[=epoxy_transform_get]{epoxy_transform_get()}}.
+\item \code{epoxy_style_get()}: is now \code{\link[=epoxy_transform_get]{epoxy_transform_get()}}.
 
-\item \code{epoxy_style_html()}: Renamed \code{\link[=epoxy_transform_html]{epoxy_transform_html()}}.
+\item \code{epoxy_style_html()}: is now \code{\link[=epoxy_transform_html]{epoxy_transform_html()}}.
 
-\item \code{epoxy_style_inline()}: Renamed \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}.
+\item \code{epoxy_style_inline()}: is now \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}.
 
-\item \code{epoxy_style_italic()}: Renamed \code{\link[=epoxy_transform_italic]{epoxy_transform_italic()}}.
+\item \code{epoxy_style_italic()}: is now \code{\link[=epoxy_transform_italic]{epoxy_transform_italic()}}.
 
-\item \code{epoxy_style_set()}: Renamed \code{\link[=epoxy_transform_set]{epoxy_transform_set()}}.
+\item \code{epoxy_style_set()}: is now \code{\link[=epoxy_transform_set]{epoxy_transform_set()}}.
 
-\item \code{epoxy_style_wrap()}: Renamed \code{\link[=epoxy_transform_wrap]{epoxy_transform_wrap()}}.
+\item \code{epoxy_style_wrap()}: is now \code{\link[=epoxy_transform_wrap]{epoxy_transform_wrap()}}.
 
 }}
 \keyword{internal}

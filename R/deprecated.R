@@ -11,7 +11,7 @@ NULL
 
 # TODO(lifecycle): epoxy_style functions were deprecated 2023-05-06.
 
-#' @describeIn epoxy_style Renamed [epoxy_transform()].
+#' @describeIn epoxy_style is now [epoxy_transform()].
 #' @export
 epoxy_style <- function(...) {
 	lifecycle::deprecate_warn(
@@ -22,7 +22,7 @@ epoxy_style <- function(...) {
 	epoxy_transform(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_apply()].
+#' @describeIn epoxy_style is now [epoxy_transform_apply()].
 #' @export
 epoxy_style_apply <- function(...) {
 	lifecycle::deprecate_warn(
@@ -33,7 +33,7 @@ epoxy_style_apply <- function(...) {
 	epoxy_transform_apply(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_bold()].
+#' @describeIn epoxy_style is now [epoxy_transform_bold()].
 #' @export
 epoxy_style_bold <- function(...) {
 	lifecycle::deprecate_warn(
@@ -44,7 +44,7 @@ epoxy_style_bold <- function(...) {
 	epoxy_transform_bold(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_code()].
+#' @describeIn epoxy_style is now [epoxy_transform_code()].
 #' @export
 epoxy_style_code <- function(...) {
 	lifecycle::deprecate_warn(
@@ -55,7 +55,7 @@ epoxy_style_code <- function(...) {
 	epoxy_transform_code(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_collapse()].
+#' @describeIn epoxy_style is now [epoxy_transform_collapse()].
 #' @export
 epoxy_style_collapse <- function(...) {
 	lifecycle::deprecate_warn(
@@ -66,7 +66,7 @@ epoxy_style_collapse <- function(...) {
 	epoxy_transform_collapse(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_get()].
+#' @describeIn epoxy_style is now [epoxy_transform_get()].
 #' @export
 epoxy_style_get <- function(...) {
 	lifecycle::deprecate_warn(
@@ -77,7 +77,7 @@ epoxy_style_get <- function(...) {
 	epoxy_transform_get(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_html()].
+#' @describeIn epoxy_style is now [epoxy_transform_html()].
 #' @export
 epoxy_style_html <- function(...) {
 	lifecycle::deprecate_warn(
@@ -88,7 +88,7 @@ epoxy_style_html <- function(...) {
 	epoxy_transform_html(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_inline()].
+#' @describeIn epoxy_style is now [epoxy_transform_inline()].
 #' @export
 epoxy_style_inline <- function(...) {
 	lifecycle::deprecate_warn(
@@ -99,7 +99,7 @@ epoxy_style_inline <- function(...) {
 	epoxy_transform_inline(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_italic()].
+#' @describeIn epoxy_style is now [epoxy_transform_italic()].
 #' @export
 epoxy_style_italic <- function(...) {
 	lifecycle::deprecate_warn(
@@ -110,7 +110,7 @@ epoxy_style_italic <- function(...) {
 	epoxy_transform_italic(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_set()].
+#' @describeIn epoxy_style is now [epoxy_transform_set()].
 #' @export
 epoxy_style_set <- function(...) {
 	lifecycle::deprecate_warn(
@@ -121,7 +121,7 @@ epoxy_style_set <- function(...) {
 	epoxy_transform_set(...)
 }
 
-#' @describeIn epoxy_style Renamed [epoxy_transform_wrap()].
+#' @describeIn epoxy_style is now [epoxy_transform_wrap()].
 #' @export
 epoxy_style_wrap <- function(...) {
 	lifecycle::deprecate_warn(
