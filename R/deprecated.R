@@ -9,6 +9,8 @@
 #' @name epoxy_style
 NULL
 
+# TODO(lifecycle): epoxy_style functions were deprecated 2023-05-06.
+
 #' @describeIn epoxy_style Renamed [epoxy_transform()] instead.
 #' @export
 epoxy_style <- function(...) {
@@ -19,19 +21,6 @@ epoxy_style <- function(...) {
   )
   epoxy_transform(...)
 }
-
-# fns <- c("epoxy_style_apply",
-# "epoxy_style_bold",
-# "epoxy_style_code",
-# "epoxy_style_collapse",
-# "epoxy_style_get",
-# "epoxy_style_html",
-# "epoxy_style_inline",
-# "epoxy_style_italic",
-# "epoxy_style_set",
-# "epoxy_style_wrap")
-
-# glue(paste(clipr::read_clip(), collapse = "\n"), fn = fns)
 
 #' @describeIn epoxy_style Renamed [epoxy_transform_apply()].
 #' @export

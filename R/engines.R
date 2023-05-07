@@ -129,7 +129,7 @@ epoxy <- function(
 
 	opts_transformer <- list(
 		.transformer = .transformer,
-		# FIXME(lifecycle): .style was deprecated 2023-05
+		# TODO(lifecycle): .style was deprecated 2023-05
 		epoxy_style = .style
 	)
 
