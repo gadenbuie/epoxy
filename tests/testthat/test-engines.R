@@ -126,7 +126,7 @@ describe("epoxy_html()", {
 		)
 	})
 
-	it("uses html, inline stylers by default", {
+	it("uses html, inline transformers by default", {
 		expect_equal(
 			epoxy_html("{{ span letters[1:3] }}"),
 			html_chr(glue("<span>{x}</span>", x = letters[1:3]))
@@ -151,9 +151,9 @@ describe("epoxy_html()", {
 	})
 })
 
-describe("epoxy_style_set()", {
-	it("sets the default for all styles", {
-		opts <- epoxy_style_set("bold")
+describe("epoxy_transform_set()", {
+	it("sets the default epoxy_transform for all engines", {
+		opts <- epoxy_transform_set("bold")
 		on.exit(options(opts))
 
 		expect_equal(
@@ -163,7 +163,7 @@ describe("epoxy_style_set()", {
 
 		expect_equal(
 			epoxy("{1} and {2} is {3}"),
-			epoxy("{1} and {2} is {3}", .style = "bold")
+			epoxy("{1} and {2} is {3}", .transformer = "bold")
 		)
 
 		expect_equal(
@@ -179,14 +179,14 @@ describe("epoxy_style_set()", {
 		)
 	})
 
-	it("sets the default for individual styles", {
-		opts_md <- epoxy_style_set("bold", engine = "md")
+	it("sets the default for engine-specific epoxy_transform defaults", {
+		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 
-		opts_html <- epoxy_style_set("italic", engine = "html")
+		opts_html <- epoxy_transform_set("italic", engine = "html")
 		on.exit(options(opts_html), add = TRUE)
 
-		opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
+		opts_latex <- epoxy_transform_set(epoxy_transform_code, engine = "latex")
 		on.exit(options(opts_latex), add = TRUE)
 
 		expect_equal(
@@ -208,33 +208,65 @@ describe("epoxy_style_set()", {
 	})
 })
 
-describe("epoxy_style_get()", {
-	it("gets the current style function", {
-		opts_md <- epoxy_style_set("bold", engine = "md")
+describe("epoxy_transform_get()", {
+	it("gets the current transform function", {
+		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)
 
-		opts_html <- epoxy_style_set("italic", engine = "html")
+		opts_html <- epoxy_transform_set("italic", engine = "html")
 		on.exit(options(opts_html), add = TRUE)
 
-		opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
+		opts_latex <- epoxy_transform_set(epoxy_transform_code, engine = "latex")
 		on.exit(options(opts_latex), add = TRUE)
 
 		expect_equal(
-			epoxy_style_get("md"),
-			epoxy_style_bold(),
+			epoxy_transform_get("md"),
+			epoxy_transform_bold(),
 			ignore_function_env = TRUE
 		)
 
 		expect_equal(
-			epoxy_style_get("html"),
-			epoxy_style_italic(),
+			epoxy_transform_get("html"),
+			epoxy_transform_italic(),
 			ignore_function_env = TRUE
 		)
 
 		expect_equal(
-			epoxy_style_get("latex"),
-			epoxy_style_code(),
+			epoxy_transform_get("latex"),
+			epoxy_transform_code(),
 			ignore_function_env = TRUE
+		)
+	})
+})
+
+describe("chunk engine deprecations", {
+	it ("warns about `epoxy_style` deprecation", {
+		lifecycle::expect_deprecated(
+			deprecate_epoxy_style_chunk_option(list(epoxy_style = "bold"))
+		)
+	})
+
+	it ("warns about `glue_data` chunk option deprecation", {
+		lifecycle::expect_defunct(
+			deprecate_glue_data_chunk_option(list(glue_data = list()))
+		)
+	})
+
+	it ("warns about `glue` chunk engine usage", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue"))
+		)
+	})
+
+	it ("warns about `glue` chunk engine prefix", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_html")),
+			"epoxy_html"
+		)
+
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_latex")),
+			"epoxy_latex"
 		)
 	})
 })

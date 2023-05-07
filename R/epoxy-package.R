@@ -9,3 +9,5 @@
 #' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL
+
+.globals <- new.env(parent = emptyenv())

@@ -9,7 +9,6 @@
 epoxy(
   ...,
   .data = NULL,
-  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "{",
@@ -19,13 +18,13 @@ epoxy(
   .comment = character(),
   .literal = FALSE,
   .trim = FALSE,
-  .transformer = NULL
+  .transformer = NULL,
+  .style = lifecycle::deprecated()
 )
 
 epoxy_html(
   ...,
   .data = NULL,
-  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "{{",
@@ -41,7 +40,6 @@ epoxy_html(
 epoxy_latex(
   ...,
   .data = NULL,
-  .style = NULL,
   .sep = "",
   .envir = parent.frame(),
   .open = "<",
@@ -60,8 +58,6 @@ string(s) to format. Multiple inputs are concatenated together before formatting
 Named arguments are taken to be temporary variables available for substitution.}
 
 \item{.data}{A data set}
-
-\item{.style}{For \code{\link[=epoxy_style]{epoxy_style()}}}
 
 \item{.sep}{[\code{character(1)}: \sQuote{""}]\cr Separator used to separate elements.}
 
@@ -98,13 +94,21 @@ syntactic elements), when parsing the expression string. Setting \code{.literal 
 \item{.trim}{[\code{logical(1)}: \sQuote{TRUE}]\cr Whether to trim the input
 template with \code{\link[glue:trim]{trim()}} or not.}
 
-\item{.transformer}{[\verb{function]}\cr A function taking three parameters \code{code}, \code{envir} and
-\code{data} used to transform the output of each block before, during, or after
-evaluation. For example transformers see \code{vignette("transformers")}.}
+\item{.transformer}{A transformer function or transformer chain created with
+\code{\link[=epoxy_transform]{epoxy_transform()}}. Alternatively, a character vector of epoxy transformer
+names, e.g. \code{c("bold", "collapse")} or a list of epoxy transformers, e.g.
+\code{list(epoxy_transform_bold(), epoxy_transform_collapse())}.
+
+In \pkg{epoxy}, you'll most likely want to use the defaults or consult
+\code{\link[=epoxy_transform]{epoxy_transform()}} for more information. See also \code{\link[glue:glue]{glue::glue()}} for more
+information on transformers.}
+
+\item{.style}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.transformer}
+instead.}
 }
 \value{
 Returns a transformed string, using \code{glue::glue()} but with the
-additional transformers provided to the \code{.style} argument of \code{epoxy()}.
+additional transformers provided to the \code{.transformer} argument of \code{epoxy()}.
 }
 \description{
 The functions power the knitr chunk engines and are wrappers around
@@ -132,19 +136,19 @@ epoxy("- *{title}* ({year}) was directed by {director}.", .data = movies)
 epoxy(
   "{title} ({year}) was directed by {director}.",
   .data = movie,
-  .style = "bold"
+  .transformer = "bold"
 )
 
 epoxy(
   "I'd be happy to watch { title| }.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
 
 epoxy(
   "They were directed by { director& }.",
   .data = movies,
-  .style = c("collapse", "bold")
+  .transformer = c("collapse", "bold")
 )
 
 epoxy("The budget for *{title}* was {.dollar budget}.", .data = movie)
@@ -152,12 +156,12 @@ epoxy("The budget for *{title}* was {.dollar budget}.", .data = movie)
 epoxy_html(
   "I'd be happy to watch {{ title| }}.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
 
 epoxy_latex(
   "I'd be happy to watch < title| >.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
 }

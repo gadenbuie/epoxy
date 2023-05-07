@@ -9,11 +9,11 @@
 #' that is used to format the template variable in place.
 #'
 #' ```{r}
-#' epoxy("It cost {.dollar 123456}.", .style = "inline")
+#' epoxy("It cost {.dollar 123456}.", .transformer = "inline")
 #' ```
 #'
 #' The formatters, e.g. `dollar` in the example above, can be customized using
-#' the arguments of `epoxy_style_inline()`. Pass a customized
+#' the arguments of `epoxy_transform_inline()`. Pass a customized
 #' [scales::label_dollar()] to `dollar` to achieve a different style.
 #'
 #' ```{r}
@@ -21,7 +21,7 @@
 #'
 #' epoxy(
 #'   "It cost {.dollar 123456}.",
-#'   .style = epoxy_style_inline(dollar = dollars_nzd)
+#'   .transformer = epoxy_transform_inline(dollar = dollars_nzd)
 #' )
 #' ```
 #'
@@ -32,14 +32,14 @@
 #'
 #' ```{r}
 #' money <- 123456
-#' epoxy("It cost {.dollar money}.", .style = "inline")
+#' epoxy("It cost {.dollar money}.", .transformer = "inline")
 #' ```
 #'
 #' You can also nest inline markup expressions.
 #'
 #' ```{r}
 #' money <- c(123.456, 234.567)
-#' epoxy("It will cost either {.or {.dollar money}}.", .style = "inline")
+#' epoxy("It will cost either {.or {.dollar money}}.", .transformer = "inline")
 #' ```
 #'
 #' Finally, you can provide your own function that is applied to the evaluated
@@ -50,13 +50,13 @@
 #'
 #' epoxy(
 #'   "Here are three random percentages: {.and {.pct {.runif 3}}}.",
-#'   .style = epoxy_style_inline(
+#'   .transformer = epoxy_transform_inline(
 #'     runif = function(n) sort(runif(n))
 #'   )
 #' )
 #' ```
 #'
-#' @example man/examples/epoxy_style_inline.R
+#' @example man/examples/epoxy_transform_inline.R
 #'
 #' @param ... Additional named inline transformers as functions taking at least
 #'   one argument. The evaluated expression from the template expression is
@@ -65,15 +65,15 @@
 #'   argument is used for chaining the transformer functions. By providing a
 #'   function to this argument you can apply an additional transformation after
 #'   the current transformation. In nearly all cases, you can let
-#'   `epoxy_style()` handle this for you. The chain ends when
+#'   `epoxy_transform()` handle this for you. The chain ends when
 #'   [glue::identity_transformer()] is used as the `transformer`.
 #' @eval roxy_inline_params()
 #'
-#' @inherit epoxy_style return
-#' @seealso [epoxy_style()], [epoxy_style_set()]
-#' @family epoxy-style glue transformers
+#' @inherit epoxy_transform return
+#' @seealso [epoxy_transform()], [epoxy_transform_set()]
+#' @family epoxy's \pkg{glue} transformers
 #' @export
-epoxy_style_inline <- function(
+epoxy_transform_inline <- function(
 	...,
 	transformer = glue::identity_transformer,
 	and         = and::and,
@@ -285,7 +285,7 @@ epoxy_code <- function(text) {
 
 # nocov start
 roxy_inline_params <- function() {
-	args <- rlang::fn_fmls(epoxy_style_inline)
+	args <- rlang::fn_fmls(epoxy_transform_inline)
 	args <- args[setdiff(names(args), c("...", "transformer"))]
 	args <- purrr::map(args, rlang::expr_text)
 	args <- purrr::map_chr(args, function(expr) {

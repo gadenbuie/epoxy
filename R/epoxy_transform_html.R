@@ -1,7 +1,7 @@
 #' Concise syntax for expressions inside HTML elements
 #'
 #' @description
-#' `epoxy_style_html()` provides a [pug](https://pughtml.com/what-is-pug-html)-
+#' `epoxy_transform_html()` provides a [pug](https://pughtml.com/what-is-pug-html)-
 #' like syntax for expressions in HTML that are wrapped in HTML elements.
 #'
 #' ## Syntax
@@ -25,7 +25,7 @@
 #'
 #' 1. If a specific HTML element is desired, the element name must be first. If
 #'    no element is specified, the default as set by the `element` argument of
-#'    [epoxy_style_html()] will be used.
+#'    [epoxy_transform_html()] will be used.
 #'
 #' 2. IDs are specified using `#<id>` and only one ID may be present
 #'
@@ -45,7 +45,7 @@
 #'
 #' epoxy_html(
 #' 	"{{ h3#title title }}",
-#' 	title = "Epoxy Style for HTML"
+#' 	title = "Epoxy for HTML"
 #' )
 #'
 #' @param class `[character()]`\cr Additional classes to be added to the inline
@@ -53,13 +53,13 @@
 #' @param element `[character()`\cr The default HTML element tag name to be used
 #'   when an element isn't specified in the expression.
 #'
-#' @inheritParams epoxy_style_inline
-#' @inherit epoxy_style params return
+#' @inheritParams epoxy_transform_inline
+#' @inherit epoxy_transform params return
 #'
 #' @seealso Used by default in [epoxy_html()]
-#' @family epoxy-style glue transformers
+#' @family epoxy's \pkg{glue} transformers
 #' @export
-epoxy_style_html <- function(
+epoxy_transform_html <- function(
 	class = NULL,
 	element = "span",
 	transformer = glue::identity_transformer

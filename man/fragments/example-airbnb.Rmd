@@ -31,7 +31,7 @@ With standard inline R code in R Markdown, we can write the following:
   The average guest stays `r airbnb$avg_stay` nights
   at a rate of `r airbnb$avg_cost` per night.
 
-Using `epoxy` and the light-weight `fmt()` function from `epoxy_style_format()`,
+Using `epoxy` and the light-weight `fmt()` function from `epoxy_transform_format()`,
 we can improve the readability and formatting of the interwoven numbers.
 
 
@@ -40,14 +40,14 @@ we can improve the readability and formatting of the interwoven numbers.
 `r paste(knitr::knit_code$get("my-style"), collapse = "\n")`
 ```
 
-```{epoxy epoxy_style = my_style}`r ''`
+```{epoxy .transformer = my_style}`r ''`
 `r paste(knitr::knit_code$get("airbnb-epoxy"), collapse = "\n")`
 ```
 ````
 
 ```{r my-style, echo = FALSE}
-# Define number/dollar styles to apply consistently
-my_style <- epoxy_style_format(
+# Define number/dollar format to apply consistently
+my_style <- epoxy_transform_format(
  dollar = scales::label_dollar(accuracy = 1),
  number = scales::label_number(
    accuracy = 0.1,
@@ -56,7 +56,7 @@ my_style <- epoxy_style_format(
 )
 ```
 
-```{epoxy airbnb-epoxy, epoxy_style = my_style}
+```{epoxy airbnb-epoxy, .transformer = my_style}
 * Airbnb includes listings in {fmt(airbnb$cities, ",")} cities
   in {fmt(airbnb$countries, "auto")} countries
   from around {fmt(airbnb$hosts, "#")} hosts.

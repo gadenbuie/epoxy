@@ -22,7 +22,7 @@ chunk where you can write in markdown, blending prose and data using
 
 Here’s an example using a small list containing data about a `movie`
 (expand the section below to see the full code for `movie`). We can use
-the inline styles to format the replacement text as we build up a
+the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
@@ -71,7 +71,7 @@ Wilson.
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
 `epoxy_latex` – in [Getting
 Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html). Or
-read more about epoxy’s inline formatting in `?epoxy_style_inline`.
+read more about epoxy’s inline formatting in `?epoxy_transform_inline`.
 
 ## Installation
 

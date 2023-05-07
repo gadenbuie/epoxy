@@ -39,7 +39,7 @@ blending prose and data using [glue]'s template syntax.
 Learn more about `epoxy` chunks --
 and its siblings `epoxy_html` and `epoxy_latex` --
 in [Getting Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html).
-Or read more about epoxy's inline formatting in `?epoxy_style_inline`.
+Or read more about epoxy's inline formatting in `?epoxy_transform_inline`.
 
 ## Installation
 

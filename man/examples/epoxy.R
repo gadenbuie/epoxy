@@ -10,19 +10,19 @@ epoxy("- *{title}* ({year}) was directed by {director}.", .data = movies)
 epoxy(
   "{title} ({year}) was directed by {director}.",
   .data = movie,
-  .style = "bold"
+  .transformer = "bold"
 )
 
 epoxy(
   "I'd be happy to watch { title| }.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
 
 epoxy(
   "They were directed by { director& }.",
   .data = movies,
-  .style = c("collapse", "bold")
+  .transformer = c("collapse", "bold")
 )
 
 epoxy("The budget for *{title}* was {.dollar budget}.", .data = movie)
@@ -30,11 +30,11 @@ epoxy("The budget for *{title}* was {.dollar budget}.", .data = movie)
 epoxy_html(
   "I'd be happy to watch {{ title| }}.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
 
 epoxy_latex(
   "I'd be happy to watch < title| >.",
   .data = movies,
-  .style = c("italic", "collapse")
+  .transformer = c("italic", "collapse")
 )
