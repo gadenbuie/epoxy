@@ -11,7 +11,7 @@ NULL
 
 # TODO(lifecycle): epoxy_style functions were deprecated 2023-05-06.
 
-#' @describeIn epoxy_style Renamed [epoxy_transform()] instead.
+#' @describeIn epoxy_style Renamed [epoxy_transform()].
 #' @export
 epoxy_style <- function(...) {
 	lifecycle::deprecate_warn(
