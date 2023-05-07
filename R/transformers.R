@@ -70,7 +70,7 @@ epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()
 
 	dots <- purrr::modify_if(dots, rlang::is_call, close_over_transformer, parent_env)
 	dots <- purrr::modify_if(dots, rlang::is_symbol, rlang::eval_bare, parent_env)
-	dots <- purrr::modify_if(dots, is.character, pick_style)
+	dots <- purrr::modify_if(dots, is.character, find_epoxy_transformer)
 
 	with_options(
 		list(epoxy.engine = engine),
@@ -144,14 +144,13 @@ epoxy_transform_set <- function(
 	invisible(old_opts)
 }
 
-# FIXME: style -> transform
-pick_style <- function(style) {
-	fn_name <- glue("epoxy_transform_{style}")
+find_epoxy_transformer <- function(name) {
+	fn_name <- glue("epoxy_transform_{name}")
 	tryCatch(
 		rlang::as_function(fn_name),
 		error = function(err) {
-			msg <- glue("`epoxy_transform_{style}()` doesn't exist.")
-			info <- glue("`{style}` doesn't correspond to an {{epoxy}} function.")
+			msg <- glue("`epoxy_transform_{name}()` doesn't exist.")
+			info <- glue("`{name}` doesn't correspond to an {{epoxy}} function.")
 			rlang::abort(c(msg, x = info))
 		}
 	)
