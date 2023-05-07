@@ -99,9 +99,9 @@ install.packages("epoxy")
 There’s a whole lot more that epoxy can do\!
 
 <div class="container">
-<div class="row d-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1em;">
+<div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
 <!-- card -->
-<div class="col">
+<div class="col p-0">
 <div class="card">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Get Started</h3>
@@ -111,7 +111,7 @@ There’s a whole lot more that epoxy can do\!
 </div>
 </div>
 <!-- card -->
-<div class="col">
+<div class="col p-0">
 <div class="card">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Reference</h3>
@@ -121,7 +121,7 @@ There’s a whole lot more that epoxy can do\!
 </div>
 </div>
 <!-- card -->
-<div class="col">
+<div class="col p-0">
 <div class="card">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-4">Articles</h3>
