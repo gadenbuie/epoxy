@@ -5,17 +5,17 @@ epoxy's syntax is slightly different to accommodate reporting use
 cases.
 With the inline styles, you can include a keyword, prefixed with a dot (.)
 that is used to format the template variable in place.
-epoxy(&quot;It cost {.dollar 123456}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It cost {.dollar 123456}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
 The formatters, e.g. dollar in the example above, can be customized using
-the arguments of epoxy_style_inline(). Pass a customized
+the arguments of epoxy_transform_inline(). Pass a customized
 scales::label_dollar() to dollar to achieve a different style.
 dollars_nzd &amp;lt;- scales::label_dollar(suffix = &quot; NZD&quot;)
 
 epoxy(
   &quot;It cost {.dollar 123456}.&quot;,
-  .style = epoxy_style_inline(dollar = dollars_nzd)
+  .transformer = epoxy_transform_inline(dollar = dollars_nzd)
 )
 #&amp;gt; It cost $123,456 NZD.
 
@@ -24,12 +24,12 @@ inline markup with cli,
 the text within the template variable, other than the keyword, is treated as
 an R expression.
 money &amp;lt;- 123456
-epoxy(&quot;It cost {.dollar money}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It cost {.dollar money}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
 You can also nest inline markup expressions.
 money &amp;lt;- c(123.456, 234.567)
-epoxy(&quot;It will cost either {.or {.dollar money}}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It will cost either {.or {.dollar money}}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It will cost either $123.46 or $234.57.
 
 Finally, you can provide your own function that is applied to the evaluated
@@ -38,28 +38,28 @@ set.seed(4242)
 
 epoxy(
   &quot;Here are three random percentages: {.and {.pct {.runif 3}}}.&quot;,
-  .style = epoxy_style_inline(
+  .transformer = epoxy_transform_inline(
     runif = function(n) sort(runif(n))
   )
 )
 #&amp;gt; Here are three random percentages: 23%, 35% and 99%.
-"><title>Epoxy Inline Style Transformer — epoxy_style_inline • epoxy</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.5/font.css" rel="stylesheet"><link href="../deps/Outfit-0.4.5/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Epoxy Inline Style Transformer — epoxy_style_inline"><meta property="og:description" content="This epoxy style is heavily inspired by the inline formatters in
+"><title>Epoxy Inline Style Transformer — epoxy_transform_inline • epoxy</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.6/font.css" rel="stylesheet"><link href="../deps/Outfit-0.4.6/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Epoxy Inline Style Transformer — epoxy_transform_inline"><meta property="og:description" content="This epoxy style is heavily inspired by the inline formatters in
 the cli package. The syntax is quite similar, but
 epoxy's syntax is slightly different to accommodate reporting use
 cases.
 With the inline styles, you can include a keyword, prefixed with a dot (.)
 that is used to format the template variable in place.
-epoxy(&quot;It cost {.dollar 123456}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It cost {.dollar 123456}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
 The formatters, e.g. dollar in the example above, can be customized using
-the arguments of epoxy_style_inline(). Pass a customized
+the arguments of epoxy_transform_inline(). Pass a customized
 scales::label_dollar() to dollar to achieve a different style.
 dollars_nzd &amp;lt;- scales::label_dollar(suffix = &quot; NZD&quot;)
 
 epoxy(
   &quot;It cost {.dollar 123456}.&quot;,
-  .style = epoxy_style_inline(dollar = dollars_nzd)
+  .transformer = epoxy_transform_inline(dollar = dollars_nzd)
 )
 #&amp;gt; It cost $123,456 NZD.
 
@@ -68,12 +68,12 @@ inline markup with cli,
 the text within the template variable, other than the keyword, is treated as
 an R expression.
 money &amp;lt;- 123456
-epoxy(&quot;It cost {.dollar money}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It cost {.dollar money}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
 You can also nest inline markup expressions.
 money &amp;lt;- c(123.456, 234.567)
-epoxy(&quot;It will cost either {.or {.dollar money}}.&quot;, .style = &quot;inline&quot;)
+epoxy(&quot;It will cost either {.or {.dollar money}}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It will cost either $123.46 or $234.57.
 
 Finally, you can provide your own function that is applied to the evaluated
@@ -82,7 +82,7 @@ set.seed(4242)
 
 epoxy(
   &quot;Here are three random percentages: {.and {.pct {.runif 3}}}.&quot;,
-  .style = epoxy_style_inline(
+  .transformer = epoxy_transform_inline(
     runif = function(n) sort(runif(n))
   )
 )
@@ -156,8 +156,8 @@ epoxy(
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Epoxy Inline Style Transformer</h1>
-      <small class="dont-index">Source: <a href="https://github.com/gadenbuie/epoxy/blob/HEAD/R/epoxy_style_inline.R" class="external-link"><code>R/epoxy_style_inline.R</code></a></small>
-      <div class="d-none name"><code>epoxy_style_inline.Rd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/gadenbuie/epoxy/blob/HEAD/R/epoxy_transform_inline.R" class="external-link"><code>R/epoxy_transform_inline.R</code></a></small>
+      <div class="d-none name"><code>epoxy_transform_inline.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
@@ -167,16 +167,16 @@ the <a href="https://cli.r-lib.org" class="external-link">cli package</a>. The s
 cases.</p>
 <p>With the inline styles, you can include a keyword, prefixed with a dot (<code>.</code>)
 that is used to format the template variable in place.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It cost {.dollar 123456}."</span>, .style <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It cost {.dollar 123456}."</span>, .transformer <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; It cost $123,456.</span></span></code></pre><p></p></div>
 <p>The formatters, e.g. <code>dollar</code> in the example above, can be customized using
-the arguments of <code>epoxy_style_inline()</code>. Pass a customized
+the arguments of <code>epoxy_transform_inline()</code>. Pass a customized
 <code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code> to <code>dollar</code> to achieve a different style.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">dollars_nzd</span> <span class="op">&lt;-</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">" NZD"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span></span>
 <span>  <span class="st">"It cost {.dollar 123456}."</span>,</span>
-<span>  .style <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_style_inline.html">epoxy_style_inline</a></span><span class="op">(</span>dollar <span class="op">=</span> <span class="va">dollars_nzd</span><span class="op">)</span></span>
+<span>  .transformer <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline</a></span><span class="op">(</span>dollar <span class="op">=</span> <span class="va">dollars_nzd</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; It cost $123,456 NZD.</span></span></code></pre><p></p></div>
 <p>Note that, unlike
@@ -184,11 +184,11 @@ the arguments of <code>epoxy_style_inline()</code>. Pass a customized
 the text within the template variable, other than the keyword, is treated as
 an R expression.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">money</span> <span class="op">&lt;-</span> <span class="fl">123456</span></span>
-<span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It cost {.dollar money}."</span>, .style <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It cost {.dollar money}."</span>, .transformer <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; It cost $123,456.</span></span></code></pre><p></p></div>
 <p>You can also nest inline markup expressions.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">money</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">123.456</span>, <span class="fl">234.567</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It will cost either {.or {.dollar money}}."</span>, .style <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It will cost either {.or {.dollar money}}."</span>, .transformer <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; It will cost either $123.46 or $234.57.</span></span></code></pre><p></p></div>
 <p>Finally, you can provide your own function that is applied to the evaluated
 expression.</p>
@@ -196,7 +196,7 @@ expression.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Here are three random percentages: {.and {.pct {.runif 3}}}."</span>,</span>
-<span>  .style <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_style_inline.html">epoxy_style_inline</a></span><span class="op">(</span></span>
+<span>  .transformer <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline</a></span><span class="op">(</span></span>
 <span>    runif <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -205,7 +205,7 @@ expression.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_style_inline</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_transform_inline</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
 <span>  and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and</a></span>,</span>
@@ -247,7 +247,7 @@ passed as the first argument to the function.</p></dd>
 argument is used for chaining the transformer functions. By providing a
 function to this argument you can apply an additional transformation after
 the current transformation. In nearly all cases, you can let
-<code><a href="epoxy_style.html">epoxy_style()</a></code> handle this for you. The chain ends when
+<code><a href="epoxy_transform.html">epoxy_transform()</a></code> handle this for you. The chain ends when
 <code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
 
 
@@ -352,10 +352,10 @@ the current transformation. In nearly all cases, you can let
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="epoxy_style.html">epoxy_style()</a></code>, <code><a href="epoxy_style.html">epoxy_style_set()</a></code></p>
-<p>Other epoxy-style glue transformers: 
-<code><a href="epoxy_style_html.html">epoxy_style_html</a>()</code>,
-<code><a href="epoxy_style.html">epoxy_style</a>()</code></p></div>
+    <div class="dont-index"><p><code><a href="epoxy_transform.html">epoxy_transform()</a></code>, <code><a href="epoxy_transform.html">epoxy_transform_set()</a></code></p>
+<p>Other epoxy's <span class="pkg">glue</span> transformers: 
+<code><a href="epoxy_transform_html.html">epoxy_transform_html</a>()</code>,
+<code><a href="epoxy_transform.html">epoxy_transform</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -369,19 +369,19 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21% of revenue generates $42,000.13 in profits.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># With standard {glue} (`epoxy_style_inline()` is a glue transformer)</span></span></span>
+<span class="r-in"><span><span class="co"># With standard {glue} (`epoxy_transform_inline()` is a glue transformer)</span></span></span>
 <span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21% of revenue generates $42,000.13 in profits.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ---- Setting Inline Formatting Options ----------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># To set inline format options, provide `scales::label_*()` to the supporting</span></span></span>
-<span class="r-in"><span><span class="co"># epoxy_style_inline arguments.</span></span></span>
+<span class="r-in"><span><span class="co"># epoxy_transform_inline arguments.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
-<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
@@ -390,7 +390,7 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
@@ -403,7 +403,7 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"https://example.com?q={{ .url_encode search }}&gt;"</span>,</span></span>
-<span class="r-in"><span>  .style <span class="op">=</span> <span class="fu">epoxy_style_inline</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    url_encode <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

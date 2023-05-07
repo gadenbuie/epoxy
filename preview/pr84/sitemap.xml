@@ -49,13 +49,16 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_style.html</loc>
   </url>
   <url>
-    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_style_html.html</loc>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_transform.html</loc>
   </url>
   <url>
-    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_style_inline.html</loc>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_transform_html.html</loc>
   </url>
   <url>
-    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_style_one_shot.html</loc>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_transform_inline.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/epoxy_transform_one_shot.html</loc>
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr84/reference/index.html</loc>
