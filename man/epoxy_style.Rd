@@ -40,43 +40,31 @@ epoxy_style_wrap(...)
 \item{...}{Passed to the new \code{epoxy_transform} function.}
 }
 \description{
-\code{epoxy_style()} was deprecated in favor of \code{\link[=epoxy_transform]{epoxy_transform()}} in \pkg{epoxy}
-version 0.1.0.
+\code{epoxy_style()} was renamed \code{\link[=epoxy_transform]{epoxy_transform()}} in \pkg{epoxy} version 0.1.0.
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_style()}: Deprecated in v0.1.0. Use \code{\link[=epoxy_transform]{epoxy_transform()}}
-instead.
+\item \code{epoxy_style()}: Renamed \code{\link[=epoxy_transform]{epoxy_transform()}} instead.
 
-\item \code{epoxy_style_apply()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_apply]{epoxy_transform_apply()}} instead.
+\item \code{epoxy_style_apply()}: Renamed \code{\link[=epoxy_transform_apply]{epoxy_transform_apply()}}.
 
-\item \code{epoxy_style_bold()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}} instead.
+\item \code{epoxy_style_bold()}: Renamed \code{\link[=epoxy_transform_bold]{epoxy_transform_bold()}}.
 
-\item \code{epoxy_style_code()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_code]{epoxy_transform_code()}} instead.
+\item \code{epoxy_style_code()}: Renamed \code{\link[=epoxy_transform_code]{epoxy_transform_code()}}.
 
-\item \code{epoxy_style_collapse()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_collapse]{epoxy_transform_collapse()}} instead.
+\item \code{epoxy_style_collapse()}: Renamed \code{\link[=epoxy_transform_collapse]{epoxy_transform_collapse()}}.
 
-\item \code{epoxy_style_get()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_get]{epoxy_transform_get()}} instead.
+\item \code{epoxy_style_get()}: Renamed \code{\link[=epoxy_transform_get]{epoxy_transform_get()}}.
 
-\item \code{epoxy_style_html()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_html]{epoxy_transform_html()}} instead.
+\item \code{epoxy_style_html()}: Renamed \code{\link[=epoxy_transform_html]{epoxy_transform_html()}}.
 
-\item \code{epoxy_style_inline()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}} instead.
+\item \code{epoxy_style_inline()}: Renamed \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}.
 
-\item \code{epoxy_style_italic()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_italic]{epoxy_transform_italic()}} instead.
+\item \code{epoxy_style_italic()}: Renamed \code{\link[=epoxy_transform_italic]{epoxy_transform_italic()}}.
 
-\item \code{epoxy_style_set()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_set]{epoxy_transform_set()}} instead.
+\item \code{epoxy_style_set()}: Renamed \code{\link[=epoxy_transform_set]{epoxy_transform_set()}}.
 
-\item \code{epoxy_style_wrap()}: Deprecated in \pkg{epoxy} v0.1.0. Use
-\code{\link[=epoxy_transform_wrap]{epoxy_transform_wrap()}} instead.
+\item \code{epoxy_style_wrap()}: Renamed \code{\link[=epoxy_transform_wrap]{epoxy_transform_wrap()}}.
 
 }}
 \keyword{internal}
