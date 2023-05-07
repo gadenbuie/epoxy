@@ -12,6 +12,15 @@ describe("epoxy_style() functions are deprecated", {
 		)
 	})
 
+  it("deprecated epoxy_style_apply()", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_apply(toupper)("word", env),
+				"ABC"
+			)
+		)
+	})
+
 	it("epoxy_style_bold", {
     lifecycle::expect_deprecated(
       expect_equal(
