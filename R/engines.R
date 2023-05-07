@@ -386,7 +386,7 @@ epoxy_data_subset <- function(x, y) {
 
 epoxy_options_get_transformer <- function(options) {
 	transformer <- options[[".transformer"]] %||%
-	  # for backwards compatibility continue to check `epoxy_style` chunk option
+		# for backwards compatibility continue to check `epoxy_style` chunk option
 		options[["epoxy_style"]]
 
 	if (is.null(transformer)) {
