@@ -44,7 +44,7 @@ epoxy_style_wrap(...)
 }
 \section{Functions}{
 \itemize{
-\item \code{epoxy_style()}: Renamed \code{\link[=epoxy_transform]{epoxy_transform()}} instead.
+\item \code{epoxy_style()}: Renamed \code{\link[=epoxy_transform]{epoxy_transform()}}.
 
 \item \code{epoxy_style_apply()}: Renamed \code{\link[=epoxy_transform_apply]{epoxy_transform_apply()}}.
 
