@@ -40,8 +40,7 @@ we can improve the readability and formatting of the interwoven numbers.
 `r paste(knitr::knit_code$get("my-style"), collapse = "\n")`
 ```
 
-<!-- FIXME: style chunk opt -->
-```{epoxy epoxy_style = my_style}`r ''`
+```{epoxy .transformer = my_style}`r ''`
 `r paste(knitr::knit_code$get("airbnb-epoxy"), collapse = "\n")`
 ```
 ````
@@ -57,8 +56,7 @@ my_style <- epoxy_transform_format(
 )
 ```
 
-<!-- FIXME: style chunk opt -->
-```{epoxy airbnb-epoxy, epoxy_style = my_style}
+```{epoxy airbnb-epoxy, .transformer = my_style}
 * Airbnb includes listings in {fmt(airbnb$cities, ",")} cities
   in {fmt(airbnb$countries, "auto")} countries
   from around {fmt(airbnb$hosts, "#")} hosts.

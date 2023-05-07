@@ -50,16 +50,14 @@ Or you can use the pre-set
 `epoxy_transform_bold()`, `epoxy_transform_italic()`, or `epoxy_transform_code()`
 transformers or with `epoxy_transform()`.
 
-<!-- FIXME -->
 ````
-```{epoxy, epoxy_style = epoxy_transform("bold")}`r ''`
+```{epoxy, .transformer = epoxy_transform("bold")}`r ''`
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 ```
 ````
 
-<!-- FIXME -->
-```{epoxy, epoxy_style = epoxy_transform("bold")}
+```{epoxy, .transformer = epoxy_transform("bold")}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$dist)} mph.
 ```
@@ -87,16 +85,15 @@ to the end of the expression.
 - `&` collapses with commas and adds `" and "` between the last two items
 - `|` collapses with commas and adds `" or "` between the last two items.
 
-<!-- FIXME -->
 ````
-```{epoxy, epoxy_style = epoxy_transform("collapse")}`r ''`
+```{epoxy, .transformer = epoxy_transform("collapse")}`r ''`
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
 ```
 ````
 
-```{epoxy, epoxy_style = epoxy_transform("collapse")}
+```{epoxy, .transformer = epoxy_transform("collapse")}
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&}.
 - They're indexed by {1:3|}.
