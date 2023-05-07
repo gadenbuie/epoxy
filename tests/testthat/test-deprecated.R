@@ -13,6 +13,7 @@ describe("epoxy_style() functions are deprecated", {
 	})
 
 	it("deprecated epoxy_style_apply()", {
+	it("deprecated epoxy_style_apply()", {
 		lifecycle::expect_deprecated(
 			expect_equal(
 				epoxy_style_apply(toupper)("word", env),
@@ -29,6 +30,13 @@ describe("epoxy_style() functions are deprecated", {
 			)
 		)
 	})
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_bold()("word", env),
+				"**abc**"
+			)
+		)
+	})
 
 	it("epoxy_style_code", {
 		lifecycle::expect_deprecated(
@@ -38,7 +46,16 @@ describe("epoxy_style() functions are deprecated", {
 			)
 		)
 	})
+
 	it("epoxy_style_collapse", {
+		env <- rlang::env(word = c("a", "b", "c"))
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_collapse()("word*", env),
+				"a, b, c"
+			)
+		)
+	})
 		env <- rlang::env(word = c("a", "b", "c"))
 		lifecycle::expect_deprecated(
 			expect_equal(
@@ -56,8 +73,22 @@ describe("epoxy_style() functions are deprecated", {
 			)
 		)
 	})
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_html()("strong word", env),
+				html_chr("<strong>abc</strong>")
+			)
+		)
+	})
 
 	it("epoxy_style_inline", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_inline()(".code word", env),
+				"`abc`"
+			)
+		)
+	})
 		lifecycle::expect_deprecated(
 			expect_equal(
 				epoxy_style_inline()(".code word", env),
@@ -74,15 +105,34 @@ describe("epoxy_style() functions are deprecated", {
 			)
 		)
 	})
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_italic()("word", env),
+				"_abc_"
+			)
+		)
+	})
 
 	it("epoxy_style_get", {
+		lifecycle::expect_deprecated(epoxy_style_get())
+	})
 		lifecycle::expect_deprecated(epoxy_style_get())
 	})
 
 	it("epoxy_style_set", {
 		lifecycle::expect_deprecated(epoxy_style_set())
 	})
+		lifecycle::expect_deprecated(epoxy_style_set())
+	})
 
+	it("epoxy_style_wrap", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_style_wrap(before = "-")("word", env),
+				"-abc-"
+			)
+		)
+	})
 	it("epoxy_style_wrap", {
 		lifecycle::expect_deprecated(
 			expect_equal(
