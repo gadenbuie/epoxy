@@ -26,7 +26,7 @@
 #' ui <- fluidPage(
 #' 	h2("ui_epoxy_html demo"),
 #' 	ui_epoxy_html(
-#' 		.id = 'example',
+#' 		.id = "example",
 #' 		.class_item = "inner",
 #' 		fluidRow(
 #' 			tags$div(
@@ -65,9 +65,9 @@
 #' 		height = "HEIGHT"
 #' 	),
 #' 	tags$style(HTML(
-#' 		'.big { font-size: 1.5em; }
+#' 		".big { font-size: 1.5em; }
 #'      .inner { background-color: rgba(254, 233, 105, 0.5);}
-#'      .epoxy-item__placeholder { color: #999999; background-color: unset; }'
+#'      .epoxy-item__placeholder { color: #999999; background-color: unset; }"
 #' 	))
 #' )
 #'
@@ -147,18 +147,18 @@ ui_epoxy_html <- function(
 	}
 
 	dots <- list(...)
-	dots$.placeholder = .placeholder
-	dots$.transformer = epoxyHTML_transformer(.class_item, .container_item)
-	dots$.na = .na
-	dots$.sep = .sep
-	dots$.null = .null
-	dots$.trim = .trim
-	dots$.open = .open %||% "{{"
-	dots$.close = .close %||% "}}"
+	dots$.placeholder <- .placeholder
+	dots$.transformer <- epoxyHTML_transformer(.class_item, .container_item)
+	dots$.na <- .na
+	dots$.sep <- .sep
+	dots$.null <- .null
+	dots$.trim <- .trim
+	dots$.open <- .open %||% "{{"
+	dots$.close <- .close %||% "}}"
 	# disable # as comment so we can use it for id syntax (requires glue >= 1.5)
 	dots$.comment <- character()
-	dots$.literal = .literal
-	dots$.envir = new.env(parent = emptyenv())
+	dots$.literal <- .literal
+	dots$.envir <- new.env(parent = emptyenv())
 
 	tags <- purrr::keep(dots, is_tag)
 	deps <- if (length(tags)) {
@@ -197,7 +197,9 @@ ui_epoxy_html <- function(
 #' @export
 epoxyHTML <- function(.id, ...) {
 	lifecycle::deprecate_soft(
-		"0.1.0", "epoxyHTML()", "ui_epoxy_html()",
+		"0.1.0",
+		"epoxyHTML()",
+		"ui_epoxy_html()",
 		details = "`epoxyHTML()` was renamed. Please use the new name at your earliest convenience."
 	)
 	ui_epoxy_html(.id, ...)
@@ -327,7 +329,9 @@ ui_epoxy_mustache <- function(
 	}
 
 	dots <- rlang::list2(...)
-	if (!length(dots)) return(NULL)
+	if (!length(dots)) {
+		return(NULL)
+	}
 
 	tags <- purrr::keep(dots, is_tag)
 	deps <- purrr::flatten(purrr::map(tags, htmltools::findDependencies))
@@ -493,7 +497,7 @@ format_tags <- function(x) {
 }
 
 
-write_epoxy_example_app <- function(name, fn_name = paste0(name, '()')) {
+write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 	rd_path <- paste0(file.path("man", name), ".Rd")
 	ex_path <- file.path("inst", "examples", name, "app.R")
 	dir.create(dirname(ex_path), showWarnings = FALSE, recursive = TRUE)
