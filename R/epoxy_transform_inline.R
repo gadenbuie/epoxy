@@ -108,12 +108,14 @@ epoxy_transform_inline <- function(
 
 	comma_numeric <- comma
 	comma <- function(x) {
-		if (is.character(x)) return(paste(x, collapse = ", "))
+		if (is.character(x)) {
+			return(paste(x, collapse = ", "))
+		}
 		comma_numeric(x)
 	}
 
 	strong <- strong %||% epoxy_bold
-	emph  <- emph %||% epoxy_italic
+	emph <- emph %||% epoxy_italic
 	code <- code %||% epoxy_code
 
 	dots <- rlang::dots_list(...)
@@ -315,7 +317,7 @@ roxy_inline_params <- function() {
 
 	values <- purrr::map_chr(names(args), function(label) {
 		label <- c(label, names(extras[extras == label]))
-		knitr::combine_words(label, before = '`{.', after = " x}`", and = " or ")
+		knitr::combine_words(label, before = "`{.", after = " x}`", and = " or ")
 	})
 
 	glue(

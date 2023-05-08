@@ -22,7 +22,9 @@ str_count <- function(text, pattern) {
 }
 
 is_htmlish_output <- function(exclude = NULL) { # nocov start
-	if (isTRUE(rmarkdown::metadata$always_allow_html)) return(TRUE)
+	if (isTRUE(rmarkdown::metadata$always_allow_html)) {
+		return(TRUE)
+	}
 
 	fmt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 	fmt <- sub("[+-].+$", "", fmt)

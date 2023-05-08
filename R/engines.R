@@ -110,14 +110,13 @@ epoxy <- function(
 	.transformer = NULL,
 	.style = lifecycle::deprecated()
 ) {
-
 	if (lifecycle::is_present(.style)) {
 		lifecycle::deprecate_soft(
 			when = "0.1.0",
 			what = "epoxy(.style = )",
 			with = "epoxy(.transformer = )"
 		)
-	} else if (identical(.style, quote(expr = )))  {# rlang::is_missing()
+	} else if (identical(.style, quote(expr = ))) { # rlang::is_missing()
 		.style <- NULL
 	}
 
@@ -318,7 +317,7 @@ knitr_engine_epoxy_latex <- function(options) {
 
 		if (isTRUE(options$latex_raw %||% TRUE)) {
 			# use pandoc's raw latex block by default, but allow it to be disabled
-			out <- paste0('```{=latex}\n', out, "\n```")
+			out <- paste0("```{=latex}\n", out, "\n```")
 		}
 	}
 
@@ -350,7 +349,7 @@ knitr_engine_whisker <- function(options) {
 		if (isTRUE(options$html_raw %||% FALSE)) {
 			# use pandoc's raw html block by default, but this isn't always available
 			# so it can be disabled with the html_raw chunk option.
-			code <- paste0('\n```{=html}\n', code, "\n```")
+			code <- paste0("\n```{=html}\n", code, "\n```")
 		}
 		code
 	}
