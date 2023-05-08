@@ -124,7 +124,7 @@ library(shiny)
 ui <- fluidPage(
 	h2("ui_epoxy_html demo"),
 	ui_epoxy_html(
-		.id = 'example',
+		.id = "example",
 		.class_item = "inner",
 		fluidRow(
 			tags$div(
@@ -163,9 +163,9 @@ ui <- fluidPage(
 		height = "HEIGHT"
 	),
 	tags$style(HTML(
-		'.big { font-size: 1.5em; }
+		".big { font-size: 1.5em; }
      .inner { background-color: rgba(254, 233, 105, 0.5);}
-     .epoxy-item__placeholder { color: #999999; background-color: unset; }'
+     .epoxy-item__placeholder { color: #999999; background-color: unset; }"
 	))
 )
 
