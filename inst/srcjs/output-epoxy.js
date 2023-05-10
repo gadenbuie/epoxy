@@ -41,9 +41,10 @@ $.extend(epoxyOutputBinding, {
   },
   _last: null,
   renderValue: function (el, data) {
-    // remove copies of epoxyItem
-    const elCopies = el.querySelectorAll('[data-epoxy-copy]')
-    elCopies.forEach(e => e.parentElement.removeChild(e))
+    // remove copies of epoxyItem (the first item is the pattern)
+    el
+      .querySelectorAll('[data-epoxy-copy]')
+      .forEach(e => e.parentElement.removeChild(e))
 
     const items = el.querySelectorAll('[data-epoxy-item]')
     items.forEach(item => {
