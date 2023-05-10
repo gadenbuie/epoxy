@@ -4,36 +4,9 @@ skip_if_not_installed("shinytest2")
 library(shinytest2)
 
 test_that("ui_epoxy_html() with an array of values", {
-	the_app <- shiny::shinyApp(
-		ui = shiny::fluidPage(
-			shiny::div(
-				class = "row",
-				style = "margin: 1em;",
-				shiny::div(
-					class = "col-xs-6",
-					shiny::selectInput("number", "Number of words", choices = 1:5)
-				),
-				shiny::div(
-					class = "col-xs-6",
-					ui_epoxy_html(
-						.id = "word_list",
-						shiny::tags$ul("{{li.word the_words}}")
-					)
-				)
-			)
-		),
-		server = function(input, output, session) {
-			words <- shiny::reactive({
-				w <- c("one", "two", "three", "four", "five")
-				w[seq_len(as.integer(input$number))]
-			})
-
-			output$word_list <- render_epoxy(the_words = words())
-		}
-	)
 
 	app <- AppDriver$new(
-		app_dir = the_app,
+		app_dir = system.file("examples", "word-list", package = "epoxy"),
 		name = "shiny_word-list",
 		height = 500,
 		width = 700,
