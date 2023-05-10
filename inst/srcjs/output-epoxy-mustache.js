@@ -13,6 +13,10 @@ $.extend(epoxyMustacheOutputBinding, {
       el.removeAttribute('data-epoxy-template')
     }
     el.innerHTML = Mustache.render(el.epoxyTemplate, data)
+    el.dispatchEvent(new CustomEvent('epoxy-update-mustache', {
+      bubbles: true,
+      detail: { output: el.id, data: data }
+    }))
   },
   renderError: function (el, err) {
     this.clearError(el)
