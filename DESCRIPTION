@@ -34,8 +34,8 @@ VignetteBuilder:
     cleanrmd,
     knitr,
     rmarkdown
-Config/Needs/website: gadenbuie/grkgdown
 Config/Needs/rcmdcheck: shinytest2, rstudio/chromote
+Config/Needs/website: gadenbuie/grkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
