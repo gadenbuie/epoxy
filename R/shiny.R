@@ -507,13 +507,19 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 	idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
 	idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
 	if (is.infinite(idx_end)) return("")
+	if (nzchar(ex[idx_start])) idx_start <- idx_start + 1
+	if (ex[idx_start] == "library(shiny)") idx_start <- idx_start + 1
 	app_lines <- c(
 		glue("# Generated from example in {fn_name}: do not edit by hand"),
-		ex[idx_start:idx_end + 1]
+		"library(shiny)",
+		"library(epoxy)",
+		"",
+		ex[idx_start:(idx_end - 3) + 1],
+		trimws(ex[idx_end])
 	)
 	writeLines(app_lines, ex_path)
 	c(
-		"",
+		"\n",
 		"@examplesIf interactive()",
 		sprintf("run_epoxy_example_app(\"%s\")", name),
 		""

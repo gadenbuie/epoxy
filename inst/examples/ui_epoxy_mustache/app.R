@@ -1,5 +1,6 @@
 # Generated from example in ui_epoxy_mustache(): do not edit by hand
 library(shiny)
+library(epoxy)
 
 ui <- fluidPage(
 	fluidRow(
@@ -44,6 +45,4 @@ server <- function(input, output, session) {
 	)
 }
 
-if (interactive()) {
-	shiny::shinyApp(ui, server)
-}
+shiny::shinyApp(ui, server)

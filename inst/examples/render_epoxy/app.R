@@ -1,5 +1,7 @@
 # Generated from example in render_epoxy(): do not edit by hand
-# This small app shows the current time using `ui_epoxy_html()`
+library(shiny)
+library(epoxy)
+
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.
 
@@ -20,6 +22,4 @@ server <- function(input, output, session) {
 	output$time <- render_epoxy(time = current_time())
 }
 
-if (interactive()) {
-	shiny::shinyApp(ui, server)
-}
+shiny::shinyApp(ui, server)
