@@ -46,6 +46,8 @@ $.extend(epoxyOutputBinding, {
       .querySelectorAll('[data-epoxy-copy]')
       .forEach(e => e.parentElement.removeChild(e))
 
+    const outputId = el.id
+
     const items = el.querySelectorAll('[data-epoxy-item]')
     items.forEach(item => {
       item.classList.remove('epoxy-item__placeholder')
@@ -68,21 +70,31 @@ $.extend(epoxyOutputBinding, {
         item.style.removeProperty('display')
       }
 
+      const evData = { output: outputId, name: itemName}
+
       if (itemData instanceof Array) {
-        let lastItem = item
         item.innerHTML = itemData[0]
         const itemParent = item.parentElement
         itemData = itemData.slice(1)
+        item.dispatchEvent(new CustomEvent('epoxy-update', {
+          bubbles: true, detail: { ...evData, data: itemData[0] }
+        }))
+
         for (const itemDataThis of itemData) {
           const itemNew = item.cloneNode()
           itemNew.removeAttribute('data-epoxy-item')
           itemNew.dataset.epoxyCopy = itemName
           itemNew.innerHTML = itemDataThis
-          itemParent.insertBefore(itemNew, lastItem.nextSibling)
-          lastItem = itemNew
+          itemParent.insertAdjacentElement('beforeend', itemNew)
+          itemNew.dispatchEvent(new CustomEvent('epoxy-update', {
+            bubbles: true, detail: { ...evData, data: itemDataThis }
+          }))
         }
       } else {
         item.innerHTML = itemData
+        item.dispatchEvent(new CustomEvent('epoxy-update', {
+          bubbles: true, detail: { ...evData, data: itemData }
+        }))
       }
     })
 
