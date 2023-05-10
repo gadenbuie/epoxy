@@ -25,7 +25,7 @@ test_that("ui_epoxy_html() with an array of values", {
 		li <- app$get_js(
 			"Array.from(document.querySelectorAll('#word_list li')).map(x => x.className)"
 		)
-		unlist(li)
+		trimws(gsub("animate|blur|pop", "", unlist(li)))
 	}
 
 	expect_equal(app$get_value(input = "number"), "1")
