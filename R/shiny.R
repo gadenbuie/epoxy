@@ -544,13 +544,18 @@ run_epoxy_example_app <- function(
 	...
 ) {
 	rlang::check_installed("shiny")
+	apps <- list.dirs(
+		system.file("examples", package = "epoxy"),
+		recursive = FALSE
+	)
+	names(apps) <- basename(apps)
 	if (is.null(name)) {
-		apps <- eval(rlang::fn_fmls()[["name"]])
-		names(apps) <- rep("*", length(apps))
-		rlang::inform(c("Example app options:", apps))
+		rlang::inform(c("Example app options:", names(apps)))
 		return(invisible(apps))
 	}
-	name <- rlang::arg_match(name)
-	app_dir <- system.file("examples", name, package = "epoxy")
-	shiny::runApp(app_dir, display.mode = display.mode, ...)
+	name <- rlang::arg_match(name, names(apps))
+	if (identical(Sys.getenv("TESTTHAT"), "true")) {
+		return(apps[[name]])
+	}
+	shiny::runApp(apps[[name]], display.mode = display.mode, ...)
 }
