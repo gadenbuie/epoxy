@@ -1,12 +1,13 @@
-#' Epoxy Inline Style Transformer
+#' Epoxy Inline Transformer
 #'
-#' @description This epoxy style is heavily inspired by the inline formatters in
-#' the [cli package](https://cli.r-lib.org). The syntax is quite similar, but
-#' \pkg{epoxy}'s syntax is slightly different to accommodate reporting use
-#' cases.
+#' @description This epoxy transformer is heavily inspired by the inline
+#' formatters in the [cli package](https://cli.r-lib.org). The syntax is quite
+#' similar, but \pkg{epoxy}'s syntax is slightly different to accommodate
+#' reporting use cases.
 #'
-#' With the inline styles, you can include a keyword, prefixed with a dot (`.`)
-#' that is used to format the template variable in place.
+#' To transform a template expression inline, you include a keyword, prefixed
+#' with a dot (`.`) that is used to format the value of the template expression
+#' in place.
 #'
 #' ```{r}
 #' epoxy("It cost {.dollar 123456}.", .transformer = "inline")
@@ -14,7 +15,7 @@
 #'
 #' The formatters, e.g. `dollar` in the example above, can be customized using
 #' the arguments of `epoxy_transform_inline()`. Pass a customized
-#' [scales::label_dollar()] to `dollar` to achieve a different style.
+#' [scales::label_dollar()] to `dollar` to achieve a different transformation.
 #'
 #' ```{r}
 #' dollars_nzd <- scales::label_dollar(suffix = " NZD")
@@ -27,8 +28,8 @@
 #'
 #' Note that, unlike
 #' [inline markup with cli](https://cli.r-lib.org/reference/inline-markup.html),
-#' the text within the template variable, other than the keyword, is treated as
-#' an R expression.
+#' the text within the template expression, other than the keyword, is treated
+#' as an R expression.
 #'
 #' ```{r}
 #' money <- 123456
@@ -42,8 +43,9 @@
 #' epoxy("It will cost either {.or {.dollar money}}.", .transformer = "inline")
 #' ```
 #'
-#' Finally, you can provide your own function that is applied to the evaluated
-#' expression.
+#' Finally, you can provide your own functions that are applied to the evaluated
+#' expression. In this example, I add a `.runif` inline formatter that generates
+#' `n` random numbers (taken from the template expression) and sorts them.
 #'
 #' ```{r}
 #' set.seed(4242)
