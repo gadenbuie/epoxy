@@ -1,4 +1,4 @@
-/* globals Shiny,$ */
+/* globals Shiny,$,CustomEvent */
 
 const epoxyOutputBinding = new Shiny.OutputBinding()
 
@@ -20,7 +20,12 @@ $.extend(epoxyOutputBinding, {
       return true
     }
 
-    if (typeof x !== 'object' || typeof y !== 'object' || x === null || y === null) {
+    if (
+      typeof x !== 'object' ||
+      typeof y !== 'object' ||
+      x === null ||
+      y === null
+    ) {
       return false
     }
 
@@ -42,9 +47,9 @@ $.extend(epoxyOutputBinding, {
   _last: null,
   renderValue: function (el, data) {
     // remove copies of epoxyItem (the first item is the pattern)
-    el
-      .querySelectorAll('[data-epoxy-copy]')
-      .forEach(e => e.parentElement.removeChild(e))
+    el.querySelectorAll('[data-epoxy-copy]').forEach(e =>
+      e.parentElement.removeChild(e)
+    )
 
     const outputId = el.id
 
@@ -55,10 +60,7 @@ $.extend(epoxyOutputBinding, {
 
       let itemData = data[itemName]
 
-      if (
-        this._last &&
-        this._deepEqual(itemData, this._last[itemName])
-      ) {
+      if (this._last && this._deepEqual(itemData, this._last[itemName])) {
         // don't do anything, the value hasn't changed
         return
       }
@@ -70,15 +72,18 @@ $.extend(epoxyOutputBinding, {
         item.style.removeProperty('display')
       }
 
-      const evData = { output: outputId, name: itemName}
+      const evData = { output: outputId, name: itemName }
 
       if (itemData instanceof Array) {
         item.innerHTML = itemData[0]
         const itemParent = item.parentElement
         itemData = itemData.slice(1)
-        item.dispatchEvent(new CustomEvent('epoxy-update', {
-          bubbles: true, detail: { ...evData, data: itemData[0] }
-        }))
+        item.dispatchEvent(
+          new CustomEvent('epoxy-update', {
+            bubbles: true,
+            detail: { ...evData, data: itemData[0] }
+          })
+        )
 
         for (const itemDataThis of itemData) {
           const itemNew = item.cloneNode()
@@ -86,15 +91,21 @@ $.extend(epoxyOutputBinding, {
           itemNew.dataset.epoxyCopy = itemName
           itemNew.innerHTML = itemDataThis
           itemParent.insertAdjacentElement('beforeend', itemNew)
-          itemNew.dispatchEvent(new CustomEvent('epoxy-update', {
-            bubbles: true, detail: { ...evData, data: itemDataThis }
-          }))
+          itemNew.dispatchEvent(
+            new CustomEvent('epoxy-update', {
+              bubbles: true,
+              detail: { ...evData, data: itemDataThis }
+            })
+          )
         }
       } else {
         item.innerHTML = itemData
-        item.dispatchEvent(new CustomEvent('epoxy-update', {
-          bubbles: true, detail: { ...evData, data: itemData }
-        }))
+        item.dispatchEvent(
+          new CustomEvent('epoxy-update', {
+            bubbles: true,
+            detail: { ...evData, data: itemData }
+          })
+        )
       }
     })
 

@@ -1,4 +1,4 @@
-/* globals Shiny,$,Mustache */
+/* globals Shiny,$,Mustache,CustomEvent */
 
 const epoxyMustacheOutputBinding = new Shiny.OutputBinding()
 
@@ -13,10 +13,12 @@ $.extend(epoxyMustacheOutputBinding, {
       el.removeAttribute('data-epoxy-template')
     }
     el.innerHTML = Mustache.render(el.epoxyTemplate, data)
-    el.dispatchEvent(new CustomEvent('epoxy-update-mustache', {
-      bubbles: true,
-      detail: { output: el.id, data: data }
-    }))
+    el.dispatchEvent(
+      new CustomEvent('epoxy-update-mustache', {
+        bubbles: true,
+        detail: { output: el.id, data },
+      })
+    )
   },
   renderError: function (el, err) {
     this.clearError(el)
@@ -27,7 +29,10 @@ $.extend(epoxyMustacheOutputBinding, {
   },
   clearError: function (el) {
     el.classList.remove('epoxy-error')
-  }
+  },
 })
 
-Shiny.outputBindings.register(epoxyMustacheOutputBinding, 'shiny.ui_epoxy_mustache')
+Shiny.outputBindings.register(
+  epoxyMustacheOutputBinding,
+  'shiny.ui_epoxy_mustache'
+)
