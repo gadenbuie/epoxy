@@ -26,9 +26,8 @@ the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
-<summary>
-Movie data
-</summary>
+
+<summary>Movie data</summary>
 
 ``` r
 movie <- list(
@@ -61,10 +60,12 @@ and it features movie stars
 ````
 
 <blockquote>
+
 The movie *Back to the Future Part II* was released in **1989**. It
-earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
-F. Wilson.
+earned $118,450,002 with a budget of $40,000,000, and it features movie
+stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
+Wilson.
+
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
@@ -95,7 +96,7 @@ install.packages("epoxy")
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do!
+There’s a whole lot more that epoxy can do\!
 
 <div class="container">
 <div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
