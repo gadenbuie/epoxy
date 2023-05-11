@@ -114,3 +114,24 @@ $.extend(epoxyOutputBinding, {
 })
 
 Shiny.outputBindings.register(epoxyOutputBinding, 'shiny.ui_epoxy_html')
+
+/* Add epoxy styles to the document */
+const epoxyStyle = document.createElement('style')
+
+epoxyStyle.innerHTML = `.epoxy-html.recalculating { opacity: 1; }
+
+.epoxy-html.recalculating [data-epoxy-item],
+.epoxy-html.recalculating [data-epoxy-copy] {
+  animation-name: epoxy-pulse;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+  animation-delay: 1s;
+}
+
+@keyframes epoxy-pulse {
+  0% { opacity: 1; }
+  100% { opacity: 0.3; }
+}`
+
+document.head.appendChild(epoxyStyle)
