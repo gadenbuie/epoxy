@@ -30,7 +30,7 @@ A data frame with 10 rows and 18 variables:
 \source{
 \href{https://github.com/rfordatascience/tidytuesday/blob/044e769/data/2021/2021-03-09/readme.md}{TidyTuesday (2021-03-09)},
 \href{https://github.com/fivethirtyeight/data/tree/master/bechdel}{FiveThirtyEight},
-\href{http://bechdeltest.com/}{bechdeltest.com},
+\href{https://bechdeltest.com/}{bechdeltest.com},
 \href{https://www.themoviedb.org}{themoviedb.org}
 }
 \usage{
