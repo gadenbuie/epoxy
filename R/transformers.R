@@ -49,7 +49,7 @@
 #' @describeIn epoxy_transform Construct a chained transformer using \pkg{epoxy}
 #'   transformers for use as a glue transformer. The resulting transformers can
 #'   be passed to the `.transformer` argument of [epoxy()] or [glue::glue()].
-#' @family epoxy's \pkg{glue} transformers
+#' @family epoxy's glue transformers
 #' @export
 epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()) {
 	if (lifecycle::is_present(syntax)) {

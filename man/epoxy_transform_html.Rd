@@ -77,8 +77,8 @@ epoxy_html(
 \seealso{
 Used by default in \code{\link[=epoxy_html]{epoxy_html()}}
 
-Other epoxy's \pkg{glue} transformers: 
+Other epoxy's glue transformers: 
 \code{\link{epoxy_transform_inline}()},
 \code{\link{epoxy_transform}()}
 }
-\concept{epoxy's \pkg{glue} transformers}
+\concept{epoxy's glue transformers}

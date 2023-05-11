@@ -57,7 +57,7 @@
 #' @inherit epoxy_transform params return
 #'
 #' @seealso Used by default in [epoxy_html()]
-#' @family epoxy's \pkg{glue} transformers
+#' @family epoxy's glue transformers
 #' @export
 epoxy_transform_html <- function(
 	class = NULL,

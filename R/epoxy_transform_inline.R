@@ -71,7 +71,7 @@
 #'
 #' @inherit epoxy_transform return
 #' @seealso [epoxy_transform()], [epoxy_transform_set()]
-#' @family epoxy's \pkg{glue} transformers
+#' @family epoxy's glue transformers
 #' @export
 epoxy_transform_inline <- function(
 	...,

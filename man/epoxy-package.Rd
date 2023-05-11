@@ -7,7 +7,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Extra strength 'glue' for data-driven templating. String interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered 'Quarto' documents, built on the 'glue' and 'whisker' packages.
+Extra strength 'glue' for data-driven templates. String interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered 'Quarto' documents, built on the 'glue' and 'whisker' packages.
 }
 \seealso{
 Useful links:
