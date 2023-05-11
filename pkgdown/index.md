@@ -26,8 +26,9 @@ the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
-
-<summary>Movie data</summary>
+<summary>
+Movie data
+</summary>
 
 ``` r
 movie <- list(
@@ -60,12 +61,10 @@ and it features movie stars
 ````
 
 <blockquote>
-
 The movie *Back to the Future Part II* was released in **1989**. It
-earned $118,450,002 with a budget of $40,000,000, and it features movie
-stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
-Wilson.
-
+earned \$118,450,002 with a budget of \$40,000,000, and it features
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+F. Wilson.
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
@@ -96,37 +95,37 @@ install.packages("epoxy")
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\!
+There’s a whole lot more that epoxy can do!
 
 <div class="container">
 <div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
 <!-- card -->
 <div class="col p-0">
-<div class="card">
+<div class="card card-as-link">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Get Started</h3>
 <p class="card-text">Get up and running with epoxy in reports or Shiny apps.</p>
-<a href="articles/epoxy.html" class="btn btn-link text-decoration-none float-end">Get started &rarr;</a>
+<a href="articles/epoxy.html" class="btn btn-link text-decoration-none float-end">Get started</a>
 </div>
 </div>
 </div>
 <!-- card -->
 <div class="col p-0">
-<div class="card">
+<div class="card card-as-link">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Reference</h3>
 <p class="card-text">Function reference with usage and examples.</p>
-<a href="reference/index.html" class="btn btn-link text-decoration-none float-end">Reference &rarr;</a>
+<a href="reference/index.html" class="btn btn-link text-decoration-none float-end">Reference</a>
 </div>
 </div>
 </div>
 <!-- card -->
 <div class="col p-0">
-<div class="card">
+<div class="card card-as-link">
 <div class="card-body">
 <h3 class="card-title mt-0 mb-4">Articles</h3>
 <p class="card-text">Longer posts and tutorials about using epoxy in your reports and apps.</p>
-<a href="articles/" class="btn btn-link text-decoration-none float-end">Articles &rarr;</a>
+<a href="articles/" class="btn btn-link text-decoration-none float-end">Articles</a>
 </div>
 </div>
 </div>
