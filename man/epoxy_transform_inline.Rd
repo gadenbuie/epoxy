@@ -2,7 +2,7 @@
 % Please edit documentation in R/epoxy_transform_inline.R
 \name{epoxy_transform_inline}
 \alias{epoxy_transform_inline}
-\title{Epoxy Inline Style Transformer}
+\title{Epoxy Inline Transformer}
 \usage{
 epoxy_transform_inline(
   ...,
@@ -95,13 +95,14 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer} 
 \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
-This epoxy style is heavily inspired by the inline formatters in
-the \href{https://cli.r-lib.org}{cli package}. The syntax is quite similar, but
-\pkg{epoxy}'s syntax is slightly different to accommodate reporting use
-cases.
+This epoxy transformer is heavily inspired by the inline
+formatters in the \href{https://cli.r-lib.org}{cli package}. The syntax is quite
+similar, but \pkg{epoxy}'s syntax is slightly different to accommodate
+reporting use cases.
 
-With the inline styles, you can include a keyword, prefixed with a dot (\code{.})
-that is used to format the template variable in place.
+To transform a template expression inline, you include a keyword, prefixed
+with a dot (\code{.}) that is used to format the value of the template expression
+in place.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{epoxy("It cost \{.dollar 123456\}.", .transformer = "inline")
 #> It cost $123,456.
@@ -109,7 +110,7 @@ that is used to format the template variable in place.
 
 The formatters, e.g. \code{dollar} in the example above, can be customized using
 the arguments of \code{epoxy_transform_inline()}. Pass a customized
-\code{\link[scales:label_dollar]{scales::label_dollar()}} to \code{dollar} to achieve a different style.
+\code{\link[scales:label_dollar]{scales::label_dollar()}} to \code{dollar} to achieve a different transformation.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dollars_nzd <- scales::label_dollar(suffix = " NZD")
 
@@ -122,8 +123,8 @@ epoxy(
 
 Note that, unlike
 \href{https://cli.r-lib.org/reference/inline-markup.html}{inline markup with cli},
-the text within the template variable, other than the keyword, is treated as
-an R expression.
+the text within the template expression, other than the keyword, is treated
+as an R expression.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{money <- 123456
 epoxy("It cost \{.dollar money\}.", .transformer = "inline")
@@ -137,8 +138,9 @@ epoxy("It will cost either \{.or \{.dollar money\}\}.", .transformer = "inline")
 #> It will cost either $123.46 or $234.57.
 }\if{html}{\out{</div>}}
 
-Finally, you can provide your own function that is applied to the evaluated
-expression.
+Finally, you can provide your own functions that are applied to the evaluated
+expression. In this example, I add a \code{.runif} inline formatter that generates
+\code{n} random numbers (taken from the template expression) and sorts them.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{set.seed(4242)
 
