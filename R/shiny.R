@@ -20,6 +20,12 @@
 #' and ID prefixed with `#`. The template markup can contain only one element
 #' and one ID, but many classes can be specified.
 #'
+#' By default, the placeholder is assumed to be text content, which means that
+#' any HTML contents will be escaped (in other words you'll see `<strong>` in
+#' your app rather than having bold text). To mark a placeholder as safe to
+#' accept HTML, use `!!` before the placeholder, e.g. `{{<markup> !!<name>}}`.
+#' So `{{h3 !!demo}}` will create an `<h3>` tag that accepts HTML within it.
+#'
 #' @examplesIf rlang::is_installed("shiny")
 #' library(shiny)
 #'

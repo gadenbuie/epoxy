@@ -35,6 +35,10 @@
 #' If the expression is a vector, the same element container will be used for
 #' each item in the vector.
 #'
+#' Finally, if the expression returns HTML, it will be escaped by default. You
+#' can either use [htmltools::HTML()] to mark it as safe HTML in R, or you can
+#' write `!!expr` in the inline markup: `{{ li#food.fruit !!fruit_name }}`.
+#'
 #' @examples
 #' epoxy_html("<ul>{{ li letters[1:3] }}</ul>")
 #' epoxy_html("<ul>{{ li.alpha letters[1:3] }}</ul>")

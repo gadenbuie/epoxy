@@ -58,6 +58,10 @@ allowed.
 
 If the expression is a vector, the same element container will be used for
 each item in the vector.
+
+Finally, if the expression returns HTML, it will be escaped by default. You
+can either use \code{\link[htmltools:HTML]{htmltools::HTML()}} to mark it as safe HTML in R, or you can
+write \code{!!expr} in the inline markup: \verb{\{\{ li#food.fruit !!fruit_name \}\}}.
 }
 }
 \examples{

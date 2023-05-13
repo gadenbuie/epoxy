@@ -115,6 +115,12 @@ The markup syntax comes first, separated from the placeholder name by a
 space. The HTML element is first, followed by classes prefixed with \code{.} or
 and ID prefixed with \verb{#}. The template markup can contain only one element
 and one ID, but many classes can be specified.
+
+By default, the placeholder is assumed to be text content, which means that
+any HTML contents will be escaped (in other words you'll see \verb{<strong>} in
+your app rather than having bold text). To mark a placeholder as safe to
+accept HTML, use \verb{!!} before the placeholder, e.g. \verb{\{\{<markup> !!<name>\}\}}.
+So \verb{\{\{h3 !!demo\}\}} will create an \verb{<h3>} tag that accepts HTML within it.
 }
 
 \examples{
