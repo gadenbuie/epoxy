@@ -22,9 +22,8 @@ library(epoxy)
 [![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
 <!-- badges: end -->
 
-epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
-
-[glue]: https://glue.tidyverse.org
+```{r child = "man/fragments/epoxy-lead.Rmd"}
+```
 
 ## epoxy in R Markdown and Quarto documents
 

@@ -21,28 +21,7 @@ library(epoxy)
 [![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
 <!-- badges: end -->
 
-epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
-
-[glue]: https://glue.tidyverse.org
-
-## epoxy in R Markdown and Quarto documents
-
-In [R Markdown](https://rmarkdown.rstudio.com) and
-[Quarto](https://quarto.org) documents,
-**epoxy** gives you an `epoxy` chunk where you can write in markdown,
-blending prose and data using [glue]'s template syntax.
-
-```{r child = "../man/fragments/example-movie.Rmd"}
-```
-
-Learn more about `epoxy` chunks --
-and its siblings `epoxy_html` and `epoxy_latex` --
-in [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html).
-Or read more about epoxy's inline formatting in `?epoxy_transform_inline`.
-
-## Installation
-
-```{r child = "../man/fragments/installation.Rmd"}
+```{r child = "../man/fragments/epoxy-lead.Rmd"}
 ```
 
 ## Learn more
@@ -58,7 +37,7 @@ There's a whole lot more that epoxy can do!
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Get Started</h3>
 <p class="card-text">Get up and running with epoxy in reports or Shiny apps.</p>
-<a href="articles/epoxy.html" class="btn btn-link text-decoration-none float-end">Get started</a>
+<a href="articles/epoxy.html" class="card-primary-link btn btn-link text-decoration-none float-end">Get started</a>
 </div>
 </div>
 </div>
@@ -68,7 +47,7 @@ There's a whole lot more that epoxy can do!
 <div class="card-body">
 <h3 class="card-title mt-0 mb-3">Reference</h3>
 <p class="card-text">Function reference with usage and examples.</p>
-<a href="reference/index.html" class="btn btn-link text-decoration-none float-end">Reference</a>
+<a href="reference/index.html" class="card-primary-link btn btn-link text-decoration-none float-end">Reference</a>
 </div>
 </div>
 </div>
@@ -78,10 +57,16 @@ There's a whole lot more that epoxy can do!
 <div class="card-body">
 <h3 class="card-title mt-0 mb-4">Articles</h3>
 <p class="card-text">Longer posts and tutorials about using epoxy in your reports and apps.</p>
-<a href="articles/" class="btn btn-link text-decoration-none float-end">Articles</a>
+<a href="articles/" class="card-primary-link btn btn-link text-decoration-none float-end">Articles</a>
 </div>
 </div>
 </div>
 </div>
 </div>
+```
+
+
+## Installation
+
+```{r child = "../man/fragments/installation.Rmd"}
 ```
