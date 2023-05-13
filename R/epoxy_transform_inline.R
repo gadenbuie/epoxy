@@ -270,21 +270,27 @@ remove_outer_delims <- function(text) {
 }
 
 epoxy_bold <- function(text) {
+	text <- engine_pick(text, escape_html(text))
 	before <- engine_pick("**", "<strong>", "\\textbf{")
 	after <- engine_pick("**", "</strong>", "}")
-	paste0(before, text, after)
+	x <- paste0(before, text, after)
+	engine_pick(x, HTML(x))
 }
 
 epoxy_italic <- function(text) {
+	text <- engine_pick(text, escape_html(text))
 	before <- engine_pick("_", "<em>", "\\emph{")
 	after <- engine_pick("_", "</em>", "}")
-	paste0(before, text, after)
+	x <- paste0(before, text, after)
+	engine_pick(x, HTML(x))
 }
 
 epoxy_code <- function(text) {
+	text <- engine_pick(text, escape_html(text))
 	before <- engine_pick("`", "<code>", "\\texttt{")
 	after <- engine_pick("`", "</code>", "}")
-	paste0(before, text, after)
+	x <- paste0(before, text, after)
+	engine_pick(x, HTML(x))
 }
 
 # nocov start

@@ -83,12 +83,12 @@ describe("parse_html_markup()", {
 	it("returns the input as `item` if no markup detected", {
 		expect_equal(
 			parse_html_markup("word"),
-			list(item = "word")
+			list(item = "word", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup("& two"),
-			list(item = "& two")
+			list(item = "& two", as_html = FALSE)
 		)
 	})
 
@@ -134,37 +134,43 @@ describe("parse_html_markup()", {
 	it("syntax examples", {
 		expect_equal(
 			parse_html_markup("li item"),
-			list(item = "item", element = "li")
+			list(item = "item", element = "li", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup(".class item"),
-			list(item = "item", class = "class")
+			list(item = "item", class = "class", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup("#id item"),
-			list(item = "item", id = "id")
+			list(item = "item", id = "id", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup("#id.class item"),
-			list(item = "item", class = "class", id = "id")
+			list(item = "item", class = "class", id = "id", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup(".class#id item"),
-			list(item = "item", class = "class", id = "id")
+			list(item = "item", class = "class", id = "id", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup(".one.two#id item"),
-			list(item = "item", class = "one two", id = "id")
+			list(item = "item", class = "one two", id = "id", as_html = FALSE)
 		)
 
 		expect_equal(
 			parse_html_markup("li.one.two#id item"),
-			list(item = "item", element = "li", class = "one two", id = "id")
+			list(
+				item = "item",
+				element = "li",
+				class = "one two",
+				id = "id",
+				as_html = FALSE
+			)
 		)
 	})
 
@@ -173,21 +179,24 @@ describe("parse_html_markup()", {
 			parse_html_markup("div list('a', 'b', 'c')"),
 			list(
 				item = "list('a', 'b', 'c')",
-				element = "div"
+				element = "div",
+				as_html = FALSE
 			)
 		)
 
 		expect_equal(
 			parse_html_markup("list('a', 'b', 'c')"),
 			list(
-				item = "list('a', 'b', 'c')"
+				item = "list('a', 'b', 'c')",
+				as_html = FALSE
 			)
 		)
 
 		expect_equal(
 			parse_html_markup("div('a', 'b', 'c')"),
 			list(
-				item = "div('a', 'b', 'c')"
+				item = "div('a', 'b', 'c')",
+				as_html = FALSE
 			)
 		)
 	})
@@ -195,7 +204,7 @@ describe("parse_html_markup()", {
 	it("retains old alternate 'id' syntax with '%'", {
 		expect_equal(
 			parse_html_markup("%id item"),
-			list(item = "item", id = "id")
+			list(item = "item", id = "id", as_html = FALSE)
 		)
 	})
 
@@ -208,22 +217,43 @@ describe("parse_html_markup()", {
 	it("allows dashes, underscores and numbers in classes and ids", {
 		expect_equal(
 			parse_html_markup(".this-class x"),
-			list(item = "x", class = "this-class")
+			list(item = "x", class = "this-class", as_html = FALSE),
+			list_as_map = TRUE
 		)
 
 		expect_equal(
 			parse_html_markup("span.this-class x"),
-			list(item = "x", element = "span", class = "this-class")
+			list(item = "x", element = "span", class = "this-class", as_html = FALSE),
+			list_as_map = TRUE
 		)
 
 		expect_equal(
 			parse_html_markup("#this-id x"),
-			list(item = "x", id = "this-id")
+			list(item = "x", id = "this-id", as_html = FALSE),
+			list_as_map = TRUE
 		)
 
 		expect_equal(
 			parse_html_markup("span#this-id x"),
-			list(item = "x", element = "span", id = "this-id")
+			list(item = "x", element = "span", id = "this-id", as_html = FALSE),
+			list_as_map = TRUE
+		)
+	})
+
+	it("identifies allowed html in as_html", {
+		expect_equal(
+			parse_html_markup("!!x"),
+			list(item = "x", as_html = TRUE)
+		)
+
+		expect_equal(
+			parse_html_markup("   !!x"),
+			list(item = "x", as_html = TRUE)
+		)
+
+		expect_equal(
+			parse_html_markup("li !!x"),
+			list(item = "x", element = "li", as_html = TRUE)
 		)
 	})
 })

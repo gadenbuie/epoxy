@@ -220,7 +220,7 @@ epoxyHTML_transformer <- function(
 			markup$item,
 			env = envir,
 			inherit = TRUE,
-			default = get(".placeholder", envir = envir, inherits = FALSE)
+			default = get0(".placeholder", envir, inherits = FALSE)
 		)
 		tag_name <- markup$element
 		if (is.null(tag_name)) tag_name <- element
@@ -232,6 +232,7 @@ epoxyHTML_transformer <- function(
 				class = markup$class,
 				id = markup$id,
 				`data-epoxy-item` = markup$item,
+				`data-epoxy-as-html` = tolower(markup$as_html %||% FALSE),
 				htmltools::HTML(placeholder)
 			)
 		)

@@ -72,3 +72,22 @@ describe("epoxy_transform_inline()", {
 		)
 	})
 })
+
+test_that("epoxy_html() handles internal html at several levels", {
+	h <- "<foo>"
+
+	expect_equal(
+		format(epoxy_html("{{span {{.strong h }} }}")),
+		"<span><strong>&lt;foo&gt;</strong></span>"
+	)
+
+	expect_equal(
+		format(epoxy_html("{{span h }}")),
+		"<span>&lt;foo&gt;</span>"
+	)
+
+	expect_equal(
+		format(epoxy_html("{{span !!h }}")),
+		"<span><foo></span>"
+	)
+})
