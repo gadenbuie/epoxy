@@ -49,3 +49,7 @@ with_options <- function(opts, expr) {
 	on.exit(options(old))
 	force(expr)
 }
+
+escape_html <- function(x) {
+	htmltools::htmlEscape(x, attribute = FALSE)
+}

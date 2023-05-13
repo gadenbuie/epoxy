@@ -35,6 +35,10 @@
 #' If the expression is a vector, the same element container will be used for
 #' each item in the vector.
 #'
+#' Finally, if the expression returns HTML, it will be escaped by default. You
+#' can either use [htmltools::HTML()] to mark it as safe HTML in R, or you can
+#' write `!!expr` in the inline markup: `{{ li#food.fruit !!fruit_name }}`.
+#'
 #' @examples
 #' epoxy_html("<ul>{{ li letters[1:3] }}</ul>")
 #' epoxy_html("<ul>{{ li.alpha letters[1:3] }}</ul>")
@@ -47,6 +51,18 @@
 #' 	"{{ h3#title title }}",
 #' 	title = "Epoxy for HTML"
 #' )
+#'
+#' # If your replacement text contains HTML, it's escaped by default.
+#' hello <- "<strong>Hi there!</strong>"
+#' epoxy_html("{{ hello }}")
+#'
+#' # You can use !! inline to mark the text as safe HTML...
+#' epoxy_html("{{ !!hello }}")
+#' epoxy_html("{{ button !!hello }}")
+#'
+#' # ...or you can use htmltools::HTML() to mark it as safe HTML in R.
+#' hello <- htmltools::HTML("<strong>Hi there!</strong>")
+#' epoxy_html("{{ hello }}")
 #'
 #' @param class `[character()]`\cr Additional classes to be added to the inline
 #'   HTML element.
@@ -69,9 +85,16 @@ epoxy_transform_html <- function(
 		markup <- parse_html_markup(text)
 
 		text <- transformer(markup$item, envir)
+		if (inherits(text, "html")) {
+			markup$as_html <- TRUE
+		}
 
-		if (identical(names(markup), "item")) {
+		is_bare_item <- identical(names(markup), c("item", "as_html"))
+		if (is_bare_item) {
 			# regular glue text, no added html markup
+			if (!markup$as_html) {
+				text <- escape_html(text)
+			}
 			return(text)
 		}
 
@@ -79,6 +102,7 @@ epoxy_transform_html <- function(
 		if (is.null(tag_name)) tag_name <- element
 
 		html <- lapply(text, function(x) {
+			if (markup$as_html) x <- htmltools::HTML(x)
 			htmltools::tag(
 				tag_name,
 				list(class = class, class = markup$class, id = markup$id, x),
@@ -102,8 +126,9 @@ parse_html_markup <- function(x) {
 	x_og <- x
 	x <- trimws(x)
 	n_spaces <- str_count(x, " ")
+
 	if (n_spaces == 0) {
-		return(list(item = x))
+		return(parse_placeholder(x))
 	}
 
 	# pug-like syntax starts with # (id), . (class), or element name
@@ -112,7 +137,7 @@ parse_html_markup <- function(x) {
 			grepl(html_element_rgx(), x)
 
 	if (!has_el_syntax) {
-		return(list(item = x))
+		return(parse_placeholder(x))
 	}
 
 	x <- strsplit(x, " ")[[1]]
@@ -121,12 +146,13 @@ parse_html_markup <- function(x) {
 	rgx_markup <- "(([#%. ]|^)[[:alnum:]_-]+)"
 	m <- str_extract_all(x[1], rgx_markup)[[1]]
 
+	out <- parse_placeholder(item_id)
+
 	if (!length(m)) {
 		# should have been caught but just in case
-		return(list(item = item_id))
+		return(out)
 	}
 
-	out <- list(item = item_id)
 	for (m_part in m) {
 		if (grepl("^[.]", m_part)) {
 			out$class <- c(out$class, sub("^[.]", "", m_part))
@@ -145,7 +171,7 @@ parse_html_markup <- function(x) {
 				rlang::abort("Multiple elements were specified, please specify only one element.")
 			}
 			if (!m_part %in% names(htmltools::tags)) {
-				rlang::abort(glue::glue("Uknown tag used in markup: `{m_part}`"))
+				rlang::abort(glue::glue("Unknown tag used in markup: `{m_part}`"))
 			}
 			out$element <- m_part
 		}
@@ -155,9 +181,18 @@ parse_html_markup <- function(x) {
 		out$class <- paste(out$class, collapse = " ")
 	}
 
-	out <- out[intersect(c("item", "element", "class", "id"), names(out))]
+	keep_names <- c("item", "element", "class", "id", "as_html")
+	out <- out[intersect(keep_names, names(out))]
 
 	out
+}
+
+parse_placeholder <- function(x) {
+	as_html <- grepl("^!!", x)
+	list(
+		item = sub("^!!", "", x),
+		as_html = as_html
+	)
 }
 
 html_element_rgx <- function() {

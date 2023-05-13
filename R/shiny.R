@@ -10,15 +10,28 @@
 #' element in your UI, with the classes specified in `.class_item`.
 #'
 #' `ui_epoxy_html()` also supports an HTML markup syntax similar to
-#' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). With the
-#' markup syntax, `"{{h3.example.basic#basic-three demo}}"` creates a `demo`
-#' placeholder inside an `<h3 id="basic-three" class="example basic"></h3>` tag.
+#' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). As an
+#' example, the markup syntax
+#' ```
+#' "{{h3.example.basic#basic-three demo}}"
+#' ```
+#' creates a `demo` placeholder inside the following tag.
+#' ```
+#' <h3 id="basic-three" class="example basic"></h3>
+#' ```
 #'
 #' The placeholder template string follows the pattern `{{<markup> <name>}}`.
 #' The markup syntax comes first, separated from the placeholder name by a
 #' space. The HTML element is first, followed by classes prefixed with `.` or
 #' and ID prefixed with `#`. The template markup can contain only one element
 #' and one ID, but many classes can be specified.
+#'
+#' By default, the placeholder is assumed to be text content and any HTML
+#' in the sent to the placeholder will be escaped --- in other words if you sent
+#' `"<strong>word</strong>"`, you'd see that exact literal text in your app,
+#' rather than an emboldened **word**. To mark a placeholder as safe to accept
+#' HTML, use `!!` before the placeholder, e.g. `{{<markup> !!<name>}}`. So
+#' `{{h3 !!demo}}` will create an `<h3>` tag that accepts HTML within it.
 #'
 #' @examplesIf rlang::is_installed("shiny")
 #' library(shiny)
@@ -220,7 +233,7 @@ epoxyHTML_transformer <- function(
 			markup$item,
 			env = envir,
 			inherit = TRUE,
-			default = get(".placeholder", envir = envir, inherits = FALSE)
+			default = get0(".placeholder", envir, inherits = FALSE)
 		)
 		tag_name <- markup$element
 		if (is.null(tag_name)) tag_name <- element
@@ -232,6 +245,7 @@ epoxyHTML_transformer <- function(
 				class = markup$class,
 				id = markup$id,
 				`data-epoxy-item` = markup$item,
+				`data-epoxy-as-html` = tolower(markup$as_html %||% FALSE),
 				htmltools::HTML(placeholder)
 			)
 		)
@@ -414,7 +428,7 @@ epoxy_mustache_dependencies <- function() {
 #' 	output$time <- render_epoxy(time = current_time())
 #' }
 #'
-#' if (interactive()) {
+#' if (rlang::is_interactive()) {
 #' 	shiny::shinyApp(ui, server)
 #' }
 #'
@@ -520,7 +534,7 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 	writeLines(app_lines, ex_path)
 	c(
 		"\n",
-		"@examplesIf interactive()",
+		"@examplesIf rlang::is_interactive()",
 		sprintf("run_epoxy_example_app(\"%s\")", name),
 		""
 	)

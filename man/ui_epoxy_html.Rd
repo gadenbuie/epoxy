@@ -106,15 +106,29 @@ alias, please use \code{ui_epoxy_html()}.
 element in your UI, with the classes specified in \code{.class_item}.
 
 \code{ui_epoxy_html()} also supports an HTML markup syntax similar to
-\href{https://pughtml.com/what-is-pug-html}{pug} (an HTML preprocessor). With the
-markup syntax, \code{"{{h3.example.basic#basic-three demo}}"} creates a \code{demo}
-placeholder inside an \verb{<h3 id="basic-three" class="example basic"></h3>} tag.
+\href{https://pughtml.com/what-is-pug-html}{pug} (an HTML preprocessor). As an
+example, the markup syntax
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{"\{\{h3.example.basic#basic-three demo\}\}"
+}\if{html}{\out{</div>}}
+
+creates a \code{demo} placeholder inside the following tag.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{<h3 id="basic-three" class="example basic"></h3>
+}\if{html}{\out{</div>}}
 
 The placeholder template string follows the pattern \verb{\{\{<markup> <name>\}\}}.
 The markup syntax comes first, separated from the placeholder name by a
 space. The HTML element is first, followed by classes prefixed with \code{.} or
 and ID prefixed with \verb{#}. The template markup can contain only one element
 and one ID, but many classes can be specified.
+
+By default, the placeholder is assumed to be text content and any HTML
+in the sent to the placeholder will be escaped --- in other words if you sent
+\code{"<strong>word</strong>"}, you'd see that exact literal text in your app,
+rather than an emboldened \strong{word}. To mark a placeholder as safe to accept
+HTML, use \verb{!!} before the placeholder, e.g. \verb{\{\{<markup> !!<name>\}\}}. So
+\verb{\{\{h3 !!demo\}\}} will create an \verb{<h3>} tag that accepts HTML within it.
 }
 
 \examples{
@@ -181,7 +195,7 @@ if (interactive()) {
 	shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_html")
 \dontshow{\}) # examplesIf}
 }

@@ -57,6 +57,10 @@ $.extend(epoxyOutputBinding, {
     items.forEach(item => {
       item.classList.remove('epoxy-item__placeholder')
       const itemName = item.dataset.epoxyItem
+      const asHTML = item.dataset.epoxyAsHtml === 'true'
+      const replaceContents = (el, contents) => {
+        asHTML ? (el.innerHTML = contents) : (el.textContent = contents)
+      }
 
       let itemData = data[itemName]
 
@@ -75,7 +79,7 @@ $.extend(epoxyOutputBinding, {
       const evData = { output: outputId, name: itemName }
 
       if (itemData instanceof Array) {
-        item.innerHTML = itemData[0]
+        replaceContents(item, itemData[0])
         const itemParent = item.parentElement
         itemData = itemData.slice(1)
         item.dispatchEvent(
@@ -89,7 +93,7 @@ $.extend(epoxyOutputBinding, {
           const itemNew = item.cloneNode()
           itemNew.removeAttribute('data-epoxy-item')
           itemNew.dataset.epoxyCopy = itemName
-          itemNew.innerHTML = itemDataThis
+          replaceContents(itemNew, itemDataThis)
           itemParent.insertAdjacentElement('beforeend', itemNew)
           itemNew.dispatchEvent(
             new CustomEvent('epoxy-update', {
@@ -99,7 +103,7 @@ $.extend(epoxyOutputBinding, {
           )
         }
       } else {
-        item.innerHTML = itemData
+        replaceContents(item, itemData)
         item.dispatchEvent(
           new CustomEvent('epoxy-update', {
             bubbles: true,

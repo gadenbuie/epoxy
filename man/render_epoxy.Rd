@@ -75,11 +75,11 @@ server <- function(input, output, session) {
 	output$time <- render_epoxy(time = current_time())
 }
 
-if (interactive()) {
+if (rlang::is_interactive()) {
 	shiny::shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 run_epoxy_example_app("render_epoxy")
 \dontshow{\}) # examplesIf}
 }

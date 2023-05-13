@@ -58,6 +58,10 @@ allowed.
 
 If the expression is a vector, the same element container will be used for
 each item in the vector.
+
+Finally, if the expression returns HTML, it will be escaped by default. You
+can either use \code{\link[htmltools:HTML]{htmltools::HTML()}} to mark it as safe HTML in R, or you can
+write \code{!!expr} in the inline markup: \verb{\{\{ li#food.fruit !!fruit_name \}\}}.
 }
 }
 \examples{
@@ -72,6 +76,18 @@ epoxy_html(
 	"{{ h3#title title }}",
 	title = "Epoxy for HTML"
 )
+
+# If your replacement text contains HTML, it's escaped by default.
+hello <- "<strong>Hi there!</strong>"
+epoxy_html("{{ hello }}")
+
+# You can use !! inline to mark the text as safe HTML...
+epoxy_html("{{ !!hello }}")
+epoxy_html("{{ button !!hello }}")
+
+# ...or you can use htmltools::HTML() to mark it as safe HTML in R.
+hello <- htmltools::HTML("<strong>Hi there!</strong>")
+epoxy_html("{{ hello }}")
 
 }
 \seealso{
