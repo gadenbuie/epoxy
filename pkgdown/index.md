@@ -19,25 +19,25 @@ scripts, reports, and apps.
 
 ## epoxy is super-strength glue
 
--   In [R Markdown](https://rmarkdown.rstudio.com) and
+  - In [R Markdown](https://rmarkdown.rstudio.com) and
     [Quarto](https://quarto.org) reports, use `epoxy` chunks for
     super-strength inline syntax. Just call `library(epoxy)` or use
     `use_epoxy_knitr_engines()` to get started.
 
--   In R scripts, the same functions that power epoxy chunks are
+  - In R scripts, the same functions that power epoxy chunks are
     availble in three flavors:
-
-    -   `epoxy()` for markdown and general purpose outputs
-
-    -   `epoxy_html()` for HTML outputs, with added support for HTML
+    
+      - `epoxy()` for markdown and general purpose outputs
+    
+      - `epoxy_html()` for HTML outputs, with added support for HTML
         templating (see `?epoxy_transform_html`).
-
-    -   `epoxy_latex()` for LaTeX reports
-
+    
+      - `epoxy_latex()` for LaTeX reports
+    
     These functions are accompanied by a robust system for chained
     glue-transformers powered by `epoxy_transform()`.
 
--   In [Shiny apps](https://shiny.posit.co/), `ui_epoxy_html()` make it
+  - In [Shiny apps](https://shiny.posit.co/), `ui_epoxy_html()` make it
     easy to update text or HTML dynamically anywhere in your app. For
     even more complicated situations, `ui_epoxy_mustache()` lets you
     turn any Shiny UI into a template that leverages the [Mustache
@@ -45,7 +45,7 @@ scripts, reports, and apps.
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do!
+There’s a whole lot more that epoxy can do\!
 
 <div class="container">
 <div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
