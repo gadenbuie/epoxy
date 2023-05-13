@@ -1,6 +1,6 @@
 ---
 title: "epoxy"
-output: 
+output:
   cleanrmd::html_document_clean:
     theme: holiday
 toc: false
@@ -11,7 +11,6 @@ knitr::opts_chunk$set(
 	collapse = TRUE,
 	comment = "#>"
 )
-library(epoxy)
 ```
 
 ```{css echo=FALSE}
@@ -25,59 +24,44 @@ library(epoxy)
 }
 ```
 
-[glue]: https://glue.tidyverse.org
-
 ## Use epoxy
 
 ```{=html}
-<div class="row">
-  <div class="col-sm-6 mb-4 mb-sm-0 px-5 px-sm-2">
-    <div class="card shadow">
-      <a href="epoxy-report.html">
-        <img src="images/mel-poole-gT-Sob4njj8-unsplash.jpg" class="card-img-top" alt="small cut paper">
-      </a>
-      <div class="card-body">
-        <h3 class="card-title">Reporting</h3>
-        <p class="card-text">Use epoxy to blend data and prose with inline templating and formatting.</p>
-        <a href="epoxy-report.html" class="btn btn-primary float-end">epoxy in Reports</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 px-5 px-sm-2">
-    <div class="card shadow">
-      <a href="epoxy-shiny.html">
-        <img src="images/hal-gatewood-tZc3vjPCk-Q-unsplash.jpg" class="card-img-top" alt="colorful water-color dashboard">
-      </a>
-      <div class="card-body">
-        <h3 class="card-title">Shiny</h3>
-        <p class="card-text">Use epoxy for reactive templating and targeted updates in Shiny apps.</p>
-        <a href="epoxy-shiny.html" class="btn btn-primary float-end">epoxy in Shiny Apps</a>
-      </div>
-    </div>
-  </div>
+<div class="container">
+<div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<img src="images/mel-poole-gT-Sob4njj8-unsplash.jpg" class="card-img-top" alt="">
+<div class="card-body">
+<h3 class="card-title">Reporting</h3>
+<p class="card-text">Use epoxy to blend data and prose with inline templating and formatting.</p>
+<a href="epoxy-report.html" class="card-primary-link btn btn-primary float-end">epoxy in Reports</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<img src="images/hal-gatewood-tZc3vjPCk-Q-unsplash.jpg" class="card-img-top" alt="">
+<div class="card-body">
+<h3 class="card-title">Shiny</h3>
+<p class="card-text">Use epoxy for reactive templating and targeted updates in Shiny apps.</p>
+<a href="epoxy-shiny.html" class="card-primary-link btn btn-primary float-end">epoxy in Shiny Apps</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<img src="images/javier-quesada-ZYb_fGvNndA-unsplash.jpg" class="card-img-top" alt="">
+<div class="card-body">
+<h3 class="card-title">Scripts</h3>
+<p class="card-text">Use epoxy in your R scripts, anywhere you've used glue.</p>
+<a href="epoxy-script.html" class="card-primary-link btn btn-primary float-end">epoxy in R scripts</a>
+</div>
+</div>
+</div>
+</div>
 </div>
 ```
-
-## epoxy in R scripts
-
-epoxy isn't just for reports and Shiny apps!
-You can use the `epoxy()` function just like an `epoxy` knitr chunk.
-
-```{r}
-movie <- list(
-	year = 1989,
-	title = "Back to the Future Part II",
-	budget = 4e+07
-)
-
-epoxy(
-	"The movie {.titlecase movie$title} ",
-	"was released in {movie$year} ",
-	"and was filmed with a budget of ",
-	"{.dollar movie$budget}."
-)
-```
-
-For HTML and LaTeX contexts, check out `epoxy_html()` and `epoxy_latex()`.
-These work just like `epoxy()`,
-but use convenient defaults for HTML and LaTeX settings.

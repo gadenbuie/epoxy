@@ -1,0 +1,47 @@
+---
+title: "epoxy in R scripts"
+output:
+  cleanrmd::html_document_clean:
+    theme: new.css
+    toc: true
+    toc_depth: 2
+    pandoc_args: ["--tab-size=2"]
+tab-size: 2
+vignette: >
+  %\VignetteIndexEntry{epoxy in R scripts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(epoxy)
+
+knitr::opts_chunk$set(
+	collapse = TRUE,
+	comment = "#>"
+)
+```
+
+
+epoxy isn't just for reports and Shiny apps!
+You can use the `epoxy()` function just like an `epoxy` knitr chunk.
+
+```{r}
+movie <- list(
+	year = 1989,
+	title = "Back to the Future Part II",
+	budget = 4e+07
+)
+
+epoxy(
+	"The movie {.titlecase movie$title}",
+	"was released in {movie$year}",
+	"and was filmed with a budget of",
+	"{.dollar movie$budget}.",
+	.sep = "\n"
+)
+```
+
+For HTML and LaTeX contexts, check out `epoxy_html()` and `epoxy_latex()`.
+These work just like `epoxy()`,
+but use convenient defaults for HTML and LaTeX settings.
