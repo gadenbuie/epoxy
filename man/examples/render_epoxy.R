@@ -19,6 +19,6 @@ server <- function(input, output, session) {
   output$time <- render_epoxy(time = current_time())
 }
 
-if (interactive()) {
+if (rlang::is_interactive()) {
   shiny::shinyApp(ui, server)
 }

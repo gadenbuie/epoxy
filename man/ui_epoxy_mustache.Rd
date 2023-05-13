@@ -92,7 +92,7 @@ if (interactive()) {
 	shiny::shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_mustache")
 \dontshow{\}) # examplesIf}
 }
