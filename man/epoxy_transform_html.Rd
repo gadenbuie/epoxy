@@ -77,6 +77,18 @@ epoxy_html(
 	title = "Epoxy for HTML"
 )
 
+# If your replacement text contains HTML, it's escaped by default.
+hello <- "<strong>Hi there!</strong>"
+epoxy_html("{{ hello }}")
+
+# You can use !! inline to mark the text as safe HTML...
+epoxy_html("{{ !!hello }}")
+epoxy_html("{{ button !!hello }}")
+
+# ...or you can use htmltools::HTML() to mark it as safe HTML in R.
+hello <- htmltools::HTML("<strong>Hi there!</strong>")
+epoxy_html("{{ hello }}")
+
 }
 \seealso{
 Used by default in \code{\link[=epoxy_html]{epoxy_html()}}

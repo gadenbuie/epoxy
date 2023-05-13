@@ -77,6 +77,40 @@ describe("epoxy_transform_html()", {
 			html_chr('<mark class="special other">a</mark>')
 		)
 	})
+
+	it("escapes inner HTML or not appropriately", {
+		env <- rlang::env(x = "<b>bold</b>", y = HTML("<i>italic</i>"))
+
+		expect_equal(
+			epoxy_transform_html()("x", env),
+			"&lt;b&gt;bold&lt;/b&gt;"
+		)
+
+		expect_equal(
+			epoxy_transform_html()("mark x", env),
+			html_chr("<mark>&lt;b&gt;bold&lt;/b&gt;</mark>")
+		)
+
+		expect_equal(
+			epoxy_transform_html()("!!x", env),
+			"<b>bold</b>"
+		)
+
+		expect_equal(
+			epoxy_transform_html()("mark !!x", env),
+			html_chr("<mark><b>bold</b></mark>")
+		)
+
+		expect_equal(
+			epoxy_transform_html()("y", env),
+			HTML("<i>italic</i>")
+		)
+
+		expect_equal(
+			epoxy_transform_html()("mark y", env),
+			html_chr("<mark><i>italic</i></mark>")
+		)
+	})
 })
 
 describe("parse_html_markup()", {

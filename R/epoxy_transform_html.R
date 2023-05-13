@@ -52,6 +52,18 @@
 #' 	title = "Epoxy for HTML"
 #' )
 #'
+#' # If your replacement text contains HTML, it's escaped by default.
+#' hello <- "<strong>Hi there!</strong>"
+#' epoxy_html("{{ hello }}")
+#'
+#' # You can use !! inline to mark the text as safe HTML...
+#' epoxy_html("{{ !!hello }}")
+#' epoxy_html("{{ button !!hello }}")
+#'
+#' # ...or you can use htmltools::HTML() to mark it as safe HTML in R.
+#' hello <- htmltools::HTML("<strong>Hi there!</strong>")
+#' epoxy_html("{{ hello }}")
+#'
 #' @param class `[character()]`\cr Additional classes to be added to the inline
 #'   HTML element.
 #' @param element `[character()`\cr The default HTML element tag name to be used
@@ -80,7 +92,9 @@ epoxy_transform_html <- function(
 		is_bare_item <- identical(names(markup), c("item", "as_html"))
 		if (is_bare_item) {
 			# regular glue text, no added html markup
-			# note: we ignore the as_html argument here
+			if (!markup$as_html) {
+				text <- escape_html(text)
+			}
 			return(text)
 		}
 
