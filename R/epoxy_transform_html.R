@@ -77,7 +77,7 @@ epoxy_transform_html <- function(
 			markup$as_html <- TRUE
 		}
 
-    is_bare_item <- identical(names(markup), c("item", "as_html"))
+		is_bare_item <- identical(names(markup), c("item", "as_html"))
 		if (is_bare_item) {
 			# regular glue text, no added html markup
 			# note: we ignore the as_html argument here
@@ -167,7 +167,7 @@ parse_html_markup <- function(x) {
 		out$class <- paste(out$class, collapse = " ")
 	}
 
-  keep_names <- c("item", "element", "class", "id", "as_html")
+	keep_names <- c("item", "element", "class", "id", "as_html")
 	out <- out[intersect(keep_names, names(out))]
 
 	out
