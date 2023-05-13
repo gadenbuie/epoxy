@@ -54,6 +54,11 @@ versions that were available on GitHub prior to the CRAN release.
 * The HTML element syntax used in `ui_epoxy_html()` is now available in
   `epoxy_transform_html()` and is used by default in `epoxy_html()` (#46).
 
+* The HTML syntax used by `ui_epoxy_html()` and `epoxy_html()` now provides a
+  mechanism for differentiating between HTML-safe and -unsafe content. To mark
+  an expression as HTML-safe, use `!!` before the variable or expression:
+  e.g. `{{ button !!expr }}` (#88).
+
 * New `ui_epoxy_mustache()` provides a dynamically rendered Shiny UI element
   that uses the [mustache templating syntax](https://mustache.github.io/). The
   advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
