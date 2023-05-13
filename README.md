@@ -17,23 +17,27 @@ scripts, reports, and apps.
 
 </div>
 
--   In [R Markdown](https://rmarkdown.rstudio.com) and
+## epoxy is super-strength glue
+
+  - In [R Markdown](https://rmarkdown.rstudio.com) and
     [Quarto](https://quarto.org) reports, use `epoxy` chunks for
     super-strength inline syntax. Just call `library(epoxy)` or use
     `use_epoxy_knitr_engines()` to get started.
 
--   In R scripts, the same functions that power epoxy chunks are
+  - In R scripts, the same functions that power epoxy chunks are
     availble in three flavors:
-
-        * `epoxy()` for markdown and general purpose outputs
-        * `epoxy_html()` for HTML outputs, with added support for HTML templating
-        (see `?epoxy_transform_html`).
-        * `epoxy_latex()` for LaTeX reports
-
+    
+      - `epoxy()` for markdown and general purpose outputs
+    
+      - `epoxy_html()` for HTML outputs, with added support for HTML
+        templating (see `?epoxy_transform_html`).
+    
+      - `epoxy_latex()` for LaTeX reports
+    
     These functions are accompanied by a robust system for chained
     glue-transformers powered by `epoxy_transform()`.
 
--   In [Shiny apps](https://shiny.posit.co/), `ui_epoxy_html()` make it
+  - In [Shiny apps](https://shiny.posit.co/), `ui_epoxy_html()` make it
     easy to update text or HTML dynamically anywhere in your app. For
     even more complicated situations, `ui_epoxy_mustache()` lets you
     turn any Shiny UI into a template that leverages the [Mustache
@@ -52,9 +56,8 @@ the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
-<summary>
-Movie data
-</summary>
+
+<summary>Movie data</summary>
 
 ``` r
 movie <- list(
@@ -87,10 +90,12 @@ and it features movie stars
 ````
 
 <blockquote>
+
 The movie *Back to the Future Part II* was released in **1989**. It
-earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
-F. Wilson.
+earned $118,450,002 with a budget of $40,000,000, and it features movie
+stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
+Wilson.
+
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
@@ -132,7 +137,7 @@ chunk types. Each type lets you intermix text with R code or data
 output context.
 
 | Engine        | Output Context       |                         Delimiter                         |
-|:--------------|:---------------------|:---------------------------------------------------------:|
+| :------------ | :------------------- | :-------------------------------------------------------: |
 | `epoxy`       | all-purpose markdown |                         `{expr}`                          |
 | `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
 | `epoxy_latex` | LaTeX                |                         `<expr>`                          |
@@ -177,18 +182,18 @@ But on average the distance traveled was only _{mean(cars$dist)} ft_.")
 ```
 
 One immediate advantage of using `epoxy` instead of `glue::glue()` is
-that RStudio’s autocompletion feature works inside `epoxy` chunks!
+that RStudio’s autocompletion feature works inside `epoxy` chunks\!
 Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do! Learn more:
+There’s a whole lot more that epoxy can do\! Learn more:
 
--   [epoxy Package
+  - [epoxy Package
     Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
--   [Getting
+  - [Getting
     Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
--   [Inline Reporting with
+  - [Inline Reporting with
     epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)
