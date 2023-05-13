@@ -5,8 +5,6 @@ output:
     theme: new.css
     toc: true
     toc_depth: 2
-    pandoc_args: ["--tab-size=2"]
-tab-size: 2
 vignette: >
   %\VignetteIndexEntry{epoxy in R scripts}
   %\VignetteEngine{knitr::rmarkdown}
