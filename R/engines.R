@@ -73,7 +73,7 @@ use_epoxy_glue_engine <- function() {
 #'
 #' All of `epoxy()`, `epoxy_html()` and `epoxy_latex()` use
 #' [epoxy_transform_inline()] by default. This transformer brings a concise
-#' inline-formatting syntax. Read more about this syntax in
+#' inline-formatting syntax that you can read more about in
 #' `?epoxy_transform_inline`.
 #'
 #' `epoxy_html()` also includes an inline transformation syntax that makes it

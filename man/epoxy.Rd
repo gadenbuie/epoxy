@@ -121,7 +121,7 @@ can be passed in as chunk options.
 
 All of \code{epoxy()}, \code{epoxy_html()} and \code{epoxy_latex()} use
 \code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}} by default. This transformer brings a concise
-inline-formatting syntax. Read more about this syntax in
+inline-formatting syntax that you can read more about in
 \code{?epoxy_transform_inline}.
 
 \code{epoxy_html()} also includes an inline transformation syntax that makes it
