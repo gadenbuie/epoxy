@@ -111,57 +111,25 @@
 </div>
 <!-- badges: start -->
 
-<p>epoxy makes templating with <a href="https://glue.tidyverse.org" class="external-link">glue</a> easy in R Markdown documents and Shiny apps.</p>
-<div class="section level2">
-<h2 id="epoxy-in-r-markdown-and-quarto-documents">epoxy in R Markdown and Quarto documents<a class="anchor" aria-label="anchor" href="#epoxy-in-r-markdown-and-quarto-documents"></a>
-</h2>
-<p>In <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> and <a href="https://quarto.org" class="external-link">Quarto</a> documents, <strong>epoxy</strong> gives you an <code>epoxy</code> chunk where you can write in markdown, blending prose and data using <a href="https://glue.tidyverse.org" class="external-link">glue</a>’s template syntax.</p>
-<p>Here’s an example using a small list containing data about a <code>movie</code> (expand the section below to see the full code for <code>movie</code>). We can use the inline transformer to format the replacement text as we build up a description from this data.</p>
-<details><summary>
-Movie data
-</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  year <span class="op">=</span> <span class="fl">1989</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"Back to the Future Part II"</span>,</span>
-<span>  budget <span class="op">=</span> <span class="fl">4e+07</span>,</span>
-<span>  domgross <span class="op">=</span> <span class="fl">118450002</span>,</span>
-<span>  imdb_rating <span class="op">=</span> <span class="fl">7.8</span>,</span>
-<span>  actors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Michael J. Fox"</span>,</span>
-<span>    <span class="st">"Christopher Lloyd"</span>,</span>
-<span>    <span class="st">"Lea Thompson"</span>,</span>
-<span>    <span class="st">"Thomas F. Wilson"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  runtime <span class="op">=</span> <span class="fl">108L</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</details><div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>The movie {.emph {.titlecase movie$title}}</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>was released in {.strong movie$year}.</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>It earned {.dollar movie$domgross}</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>with a budget of {.dollar movie$budget},</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>and it features movie stars</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>{.and movie$actors}.</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<blockquote>
-<p>The movie <em>Back to the Future Part II</em> was released in <strong>1989</strong>. It earned $118,450,002 with a budget of $40,000,000, and it features movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F. Wilson.</p>
-</blockquote>
-<p>Learn more about <code>epoxy</code> chunks – and its siblings <code>epoxy_html</code> and <code>epoxy_latex</code> – in <a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html" class="external-link">Getting Started</a>. Or read more about epoxy’s inline formatting in <code><a href="reference/epoxy_transform_inline.html">?epoxy_transform_inline</a></code>.</p>
+<div class="lead">
+<p>epoxy makes it easy to use <a href="https://glue.tidyverse.org" class="external-link">glue</a> in scripts, reports, and apps.</p>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="epoxy-is-super-strength-glue">epoxy is super-strength glue<a class="anchor" aria-label="anchor" href="#epoxy-is-super-strength-glue"></a>
 </h2>
-<p>You can install the latest version of epoxy with <a href="https://remotes.r-lib.org" class="external-link">remotes</a></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gadenbuie/epoxy"</span><span class="op">)</span></span></code></pre></div>
-<p>or from <a href="https://gadenbuie.r-universe.dev" class="external-link">gadenbuie.r-universe.dev</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  gadenbuie <span class="op">=</span> <span class="st">"https://gadenbuie.r-universe.dev/"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"epoxy"</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li><p>In <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> and <a href="https://quarto.org" class="external-link">Quarto</a> reports, use <code>epoxy</code> chunks for super-strength inline syntax. Just call <code><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">library(epoxy)</a></code> or use <code><a href="reference/use_epoxy_knitr_engines.html">use_epoxy_knitr_engines()</a></code> to get started.</p></li>
+<li>
+<p>In R scripts, the same functions that power epoxy chunks are availble in three flavors:</p>
+<ul>
+<li><p><code><a href="reference/epoxy.html">epoxy()</a></code> for markdown and general purpose outputs</p></li>
+<li><p><code><a href="reference/epoxy.html">epoxy_html()</a></code> for HTML outputs, with added support for HTML templating (see <code><a href="reference/epoxy_transform_html.html">?epoxy_transform_html</a></code>).</p></li>
+<li><p><code><a href="reference/epoxy.html">epoxy_latex()</a></code> for LaTeX reports</p></li>
+</ul>
+<p>These functions are accompanied by a robust system for chained glue-transformers powered by <code><a href="reference/epoxy_transform.html">epoxy_transform()</a></code>.</p>
+</li>
+<li><p>In <a href="https://shiny.posit.co/" class="external-link">Shiny apps</a>, <code><a href="reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> make it easy to update text or HTML dynamically anywhere in your app. For even more complicated situations, <code><a href="reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> lets you turn any Shiny UI into a template that leverages the <a href="https://mustache.github.io" class="external-link">Mustache templating language</a>.</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
@@ -179,7 +147,7 @@ Get Started
 <p class="card-text">
 Get up and running with epoxy in reports or Shiny apps.
 </p>
-<p><a href="articles/epoxy.html" class="btn btn-link text-decoration-none float-end">Get started</a></p>
+<p><a href="articles/epoxy.html" class="card-primary-link btn btn-link text-decoration-none float-end">Get started</a></p>
 </div>
 </div>
 </div>
@@ -193,7 +161,7 @@ Reference
 <p class="card-text">
 Function reference with usage and examples.
 </p>
-<p><a href="reference/index.html" class="btn btn-link text-decoration-none float-end">Reference</a></p>
+<p><a href="reference/index.html" class="card-primary-link btn btn-link text-decoration-none float-end">Reference</a></p>
 </div>
 </div>
 </div>
@@ -207,12 +175,28 @@ Articles
 <p class="card-text">
 Longer posts and tutorials about using epoxy in your reports and apps.
 </p>
-<p><a href="articles/" class="btn btn-link text-decoration-none float-end">Articles</a></p>
+<p><a href="articles/" class="card-primary-link btn btn-link text-decoration-none float-end">Articles</a></p>
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the latest version of epoxy with <a href="https://remotes.r-lib.org" class="external-link">remotes</a></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gadenbuie/epoxy"</span><span class="op">)</span></span></code></pre></div>
+<p>or from <a href="https://gadenbuie.r-universe.dev" class="external-link">gadenbuie.r-universe.dev</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  gadenbuie <span class="op">=</span> <span class="st">"https://gadenbuie.r-universe.dev/"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"epoxy"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
