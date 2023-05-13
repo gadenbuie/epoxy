@@ -218,14 +218,22 @@ alias, please use <code>ui_epoxy_html()</code>.</p></li>
     <p>By default, placeholders are inserted into a <code>&lt;span&gt;</code>
 element in your UI, with the classes specified in <code>.class_item</code>.</p>
 <p><code>ui_epoxy_html()</code> also supports an HTML markup syntax similar to
-<a href="https://pughtml.com/what-is-pug-html" class="external-link">pug</a> (an HTML preprocessor). With the
-markup syntax, <code>"{{h3.example.basic#basic-three demo}}"</code> creates a <code>demo</code>
-placeholder inside an <code>&lt;h3 id="basic-three" class="example basic"&gt;&lt;/h3&gt;</code> tag.</p>
+<a href="https://pughtml.com/what-is-pug-html" class="external-link">pug</a> (an HTML preprocessor). As an
+example, the markup syntax</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"{{h3.example.basic#basic-three demo}}"</span></span></code></pre><p></p></div>
+<p>creates a <code>demo</code> placeholder inside the following tag.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>h3 id<span class="ot">=</span><span class="st">"basic-three"</span> class<span class="ot">=</span><span class="st">"example basic"</span><span class="sc">&gt;</span><span class="er">&lt;/</span>h3<span class="sc">&gt;</span></span></code></pre><p></p></div>
 <p>The placeholder template string follows the pattern <code>{{&lt;markup&gt; &lt;name&gt;}}</code>.
 The markup syntax comes first, separated from the placeholder name by a
 space. The HTML element is first, followed by classes prefixed with <code>.</code> or
 and ID prefixed with <code>#</code>. The template markup can contain only one element
 and one ID, but many classes can be specified.</p>
+<p>By default, the placeholder is assumed to be text content and any HTML
+in the sent to the placeholder will be escaped --- in other words if you sent
+<code>"&lt;strong&gt;word&lt;/strong&gt;"</code>, you'd see that exact literal text in your app,
+rather than an emboldened <strong>word</strong>. To mark a placeholder as safe to accept
+HTML, use <code>!!</code> before the placeholder, e.g. <code>{{&lt;markup&gt; !!&lt;name&gt;}}</code>. So
+<code>{{h3 !!demo}}</code> will create an <code>&lt;h3&gt;</code> tag that accepts HTML within it.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -295,7 +303,7 @@ and one ID, but many classes can be specified.</p>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># rlang::is_interactive()</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="run_epoxy_example_app.html">run_epoxy_example_app</a></span><span class="op">(</span><span class="st">"ui_epoxy_html"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
