@@ -29,8 +29,9 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer} 
 \code{\link[glue:glue]{glue::glue()}}.
 }
 \description{
-\code{epoxy_transform_html()} provides a \href{https://pughtml.com/what-is-pug-html}{pug}-
-like syntax for expressions in HTML that are wrapped in HTML elements.
+\code{epoxy_transform_html()} provides a
+\href{https://pughtml.com/what-is-pug-html}{pug}-like syntax for expressions in
+HTML that are wrapped in HTML elements.
 \subsection{Syntax}{
 
 You can specify the HTML element and its \code{id} and \code{class} into which the

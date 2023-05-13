@@ -63,8 +63,22 @@ use_epoxy_glue_engine <- function() {
 
 #' Epoxy string interpolation
 #'
+#' @description
 #' The functions power the knitr chunk engines and are wrappers around
-#' [glue::glue()], with a few extra conveniences provided by \pkg{epoxy}.
+#' [glue::glue()], with a few extra conveniences provided by \pkg{epoxy}. Each
+#' of these functions can be called directly or used as a knitr chunk engine
+#' where the chunk text is handled as if it were a string passed into the
+#' function version. When used as a knitr chunk engine, the function arguments
+#' can be passed in as chunk options.
+#'
+#' All of `epoxy()`, `epoxy_html()` and `epoxy_latex()` use
+#' [epoxy_transform_inline()] by default. This transformer brings a concise
+#' inline-formatting syntax. Read more about this syntax in
+#' `?epoxy_transform_inline`.
+#'
+#' `epoxy_html()` also includes an inline transformation syntax that makes it
+#' easier to wrap the expression text in HTML elements with a specific ID or
+#' a set of classes. Learn more about this syntax in `?epoxy_transform_html`.
 #'
 #' @example man/examples/epoxy.R
 #'
@@ -91,7 +105,8 @@ use_epoxy_glue_engine <- function() {
 #' @inheritParams glue::glue
 #'
 #' @return Returns a transformed string, using `glue::glue()` but with the
-#'   additional transformers provided to the `.transformer` argument of `epoxy()`.
+#'   additional transformers provided to the `.transformer` argument of
+#'   `epoxy()`.
 #'
 #' @describeIn epoxy super `glue()`
 #' @export

@@ -108,11 +108,25 @@ instead.}
 }
 \value{
 Returns a transformed string, using \code{glue::glue()} but with the
-additional transformers provided to the \code{.transformer} argument of \code{epoxy()}.
+additional transformers provided to the \code{.transformer} argument of
+\code{epoxy()}.
 }
 \description{
 The functions power the knitr chunk engines and are wrappers around
-\code{\link[glue:glue]{glue::glue()}}, with a few extra conveniences provided by \pkg{epoxy}.
+\code{\link[glue:glue]{glue::glue()}}, with a few extra conveniences provided by \pkg{epoxy}. Each
+of these functions can be called directly or used as a knitr chunk engine
+where the chunk text is handled as if it were a string passed into the
+function version. When used as a knitr chunk engine, the function arguments
+can be passed in as chunk options.
+
+All of \code{epoxy()}, \code{epoxy_html()} and \code{epoxy_latex()} use
+\code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}} by default. This transformer brings a concise
+inline-formatting syntax. Read more about this syntax in
+\code{?epoxy_transform_inline}.
+
+\code{epoxy_html()} also includes an inline transformation syntax that makes it
+easier to wrap the expression text in HTML elements with a specific ID or
+a set of classes. Learn more about this syntax in \code{?epoxy_transform_html}.
 }
 \section{Functions}{
 \itemize{
