@@ -64,6 +64,28 @@ $.extend(epoxyOutputBinding, {
 
       let itemData = data[itemName]
 
+      if (data.__errors__ && data.__errors__.includes(itemName)) {
+        item.classList.add('epoxy-item__error')
+        item.innerHTML = item.dataset.epoxyPlaceholder || ''
+        item.style.removeProperty('display')
+        item.setAttribute('title', itemData)
+        item.dispatchEvent(
+          new CustomEvent('epoxy-error', {
+            bubbles: true,
+            detail: {
+              output: el.id,
+              key: itemName,
+              message: itemData,
+              outputType: 'html'
+            }
+          })
+        )
+        return
+      } else {
+        item.classList.remove('epoxy-item__error')
+        item.removeAttribute('title')
+      }
+
       if (this._last && this._deepEqual(itemData, this._last[itemName])) {
         // don't do anything, the value hasn't changed
         return
@@ -76,7 +98,7 @@ $.extend(epoxyOutputBinding, {
         item.style.removeProperty('display')
       }
 
-      const evData = { output: outputId, name: itemName }
+      const evData = { output: outputId, name: itemName, outputType: 'html' }
 
       if (itemData instanceof Array) {
         replaceContents(item, itemData[0])
@@ -147,6 +169,13 @@ epoxyStyle.innerHTML = `.epoxy-html.recalculating { opacity: 1; }
 @keyframes epoxy-pulse {
   0% { opacity: 1; }
   100% { opacity: 0.3; }
+}
+
+.epoxy-html .epoxy-item__error {
+  text-decoration-style: wavy;
+  text-decoration-color: red;
+  text-decoration-line: underline;
+  text-decoration-thickness: from-font;
 }`
 
 document.head.appendChild(epoxyStyle)

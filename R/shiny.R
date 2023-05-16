@@ -235,6 +235,9 @@ epoxyHTML_transformer <- function(
 			inherit = TRUE,
 			default = get0(".placeholder", envir, inherits = FALSE)
 		)
+		if (!is.null(placeholder)) {
+			placeholder <- htmltools::HTML(placeholder)
+		}
 		tag_name <- markup$element
 		if (is.null(tag_name)) tag_name <- element
 		htmltools::tag(
@@ -246,7 +249,8 @@ epoxyHTML_transformer <- function(
 				id = markup$id,
 				`data-epoxy-item` = markup$item,
 				`data-epoxy-as-html` = tolower(markup$as_html %||% FALSE),
-				htmltools::HTML(placeholder)
+				`data-epoxy-placeholder` = placeholder,
+				placeholder
 			)
 		)
 	}
@@ -476,13 +480,31 @@ render_epoxy <- function(
 				stop("`.list` must be a named list", call. = FALSE)
 			}
 		}
-		lapply(c(list(...), .list), format_tags)
+		dots <- rlang::enquos(...)
+		dots <- purrr::map(dots, function(x) {
+			tryCatch(rlang::eval_tidy(x), error = identity)
+	  })
+		errored <- c()
+		for (i in seq_along(dots)) {
+			if (rlang::cnd_inherits(dots[[i]], "error")) {
+				errored <- c(errored, names(dots)[i])
+				dots[[i]] <- conditionMessage(dots[[i]])
+			}
+		}
+
+		data <- lapply(c(dots, .list), format_tags)
+		if (length(errored)) {
+			data[["__errors__"]] <- I(errored)
+		}
+		data
 	}
+
 	shiny::installExprFunction(
 		name = "epoxyPrepare",
 		quoted = FALSE,
 		expr = epoxyPrepare(..., .list = .list)
 	)
+
 	shiny::createRenderFunction(
 		func = epoxyPrepare,
 		transform = function(value, session, name, ...) {
