@@ -243,7 +243,6 @@ ui_epoxy_html <- function(
 #'       width = 9,
 #'       ui_epoxy_markdown(
 #'         .id = "about_movie",
-#'         # .markdown_fn = commonmark::markdown_html,
 #'         "
 #' ## {{title}}
 #'
