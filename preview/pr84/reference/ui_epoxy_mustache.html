@@ -102,9 +102,9 @@ of the data that have changed.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ui_epoxy_mustache</span><span class="op">(</span><span class="va">id</span>, <span class="va">...</span>, .sep <span class="op">=</span> <span class="st">""</span>, .container <span class="op">=</span> <span class="st">"div"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ui_epoxy_mustache</span><span class="op">(</span><span class="va">id</span>, <span class="va">...</span>, .file <span class="op">=</span> <span class="cn">NULL</span>, .sep <span class="op">=</span> <span class="st">""</span>, .container <span class="op">=</span> <span class="st">"div"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ui_epoxy_whisker</span><span class="op">(</span><span class="va">id</span>, <span class="va">...</span>, .sep <span class="op">=</span> <span class="st">""</span>, .container <span class="op">=</span> <span class="st">"div"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">ui_epoxy_whisker</span><span class="op">(</span><span class="va">id</span>, <span class="va">...</span>, .file <span class="op">=</span> <span class="cn">NULL</span>, .sep <span class="op">=</span> <span class="st">""</span>, .container <span class="op">=</span> <span class="st">"div"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -116,6 +116,11 @@ of the data that have changed.</p>
 <dt>...</dt>
 <dd><p>Character strings of HTML or <a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">htmltools::tags</a>. All elements
 should be unnamed.</p></dd>
+
+
+<dt>.file</dt>
+<dd><p>A path to a template file. If provided, no other template lines
+should be included in <code>...</code>.</p></dd>
 
 
 <dt>.sep</dt>
