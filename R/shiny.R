@@ -37,63 +37,63 @@
 #' library(shiny)
 #'
 #' ui <- fluidPage(
-#' 	h2("ui_epoxy_html demo"),
-#' 	ui_epoxy_html(
-#' 		.id = "example",
-#' 		.class_item = "inner",
-#' 		fluidRow(
-#' 			tags$div(
-#' 				class = "col-xs-4",
-#' 				selectInput(
-#' 					inputId = "thing",
-#' 					label = "What is this {{color}} thing?",
-#' 					choices = c("apple", "banana", "coconut", "dolphin")
-#' 				)
-#' 			),
-#' 			tags$div(
-#' 				class = "col-xs-4",
-#' 				selectInput(
-#' 					inputId = "color",
-#' 					label = "What color is the {{thing}}?",
-#' 					c("red", "blue", "black", "green", "yellow")
-#' 				)
-#' 			),
-#' 			tags$div(
-#' 				class = "col-xs-4",
-#' 				sliderInput(
-#' 					inputId = "height",
-#' 					label = "How tall is the {{color}} {{thing}}?",
-#' 					value = 5,
-#' 					min = 0,
-#' 					max = 10,
-#' 					step = 0.1,
-#' 					post = "ft"
-#' 				)
-#' 			)
-#' 		),
-#' 		tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
-#' 		# Default values for placeholders above.
-#' 		thing = "THING",
-#' 		color = "COLOR",
-#' 		height = "HEIGHT"
-#' 	),
-#' 	tags$style(HTML(
-#' 		".big { font-size: 1.5em; }
+#'   h2("ui_epoxy_html demo"),
+#'   ui_epoxy_html(
+#'     .id = "example",
+#'     .class_item = "inner",
+#'     fluidRow(
+#'       tags$div(
+#'         class = "col-xs-4",
+#'         selectInput(
+#'           inputId = "thing",
+#'           label = "What is this {{color}} thing?",
+#'           choices = c("apple", "banana", "coconut", "dolphin")
+#'         )
+#'       ),
+#'       tags$div(
+#'         class = "col-xs-4",
+#'         selectInput(
+#'           inputId = "color",
+#'           label = "What color is the {{thing}}?",
+#'           c("red", "blue", "black", "green", "yellow")
+#'         )
+#'       ),
+#'       tags$div(
+#'         class = "col-xs-4",
+#'         sliderInput(
+#'           inputId = "height",
+#'           label = "How tall is the {{color}} {{thing}}?",
+#'           value = 5,
+#'           min = 0,
+#'           max = 10,
+#'           step = 0.1,
+#'           post = "ft"
+#'         )
+#'       )
+#'     ),
+#'     tags$p(class = "big", "The {{color}} {{thing}} is {{height}} feet tall."),
+#'     # Default values for placeholders above.
+#'     thing = "THING",
+#'     color = "COLOR",
+#'     height = "HEIGHT"
+#'   ),
+#'   tags$style(HTML(
+#'     ".big { font-size: 1.5em; }
 #'      .inner { background-color: rgba(254, 233, 105, 0.5);}
 #'      .epoxy-item__placeholder { color: #999999; background-color: unset; }"
-#' 	))
+#'   ))
 #' )
 #'
 #' server <- function(input, output, session) {
-#' 	output$example <- render_epoxy(
-#' 		thing = input$thing,
-#' 		color = input$color,
-#' 		height = input$height
-#' 	)
+#'   output$example <- render_epoxy(
+#'     thing = input$thing,
+#'     color = input$color,
+#'     height = input$height
+#'   )
 #' }
 #'
 #' if (interactive()) {
-#' 	shinyApp(ui, server)
+#'   shinyApp(ui, server)
 #' }
 #'
 #' @eval write_epoxy_example_app("ui_epoxy_html")
@@ -430,50 +430,50 @@ epoxyHTML_transformer <- function(
 #' library(shiny)
 #'
 #' ui <- fluidPage(
-#' 	fluidRow(
-#' 		style = "max-width: 600px; margin: 0 auto",
-#' 		column(
-#' 			width = 6,
-#' 			ui_epoxy_mustache(
-#' 				id = "template",
-#' 				h2(class = "{{heading_class}}", "Hello, {{name}}!"),
-#' 				"{{#favorites}}",
-#' 				p("Your favorite fruits are..."),
-#' 				tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
-#' 				"{{/favorites}}",
-#' 				"{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
-#' 			)
-#' 		),
-#' 		column(
-#' 			width = 6,
-#' 			h2("Inputs"),
-#' 			textInput("name", "Your name"),
-#' 			textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
-#' 			helpText("Enter a comma-separated list of fruits.")
-#' 		)
-#' 	)
+#'   fluidRow(
+#'     style = "max-width: 600px; margin: 0 auto",
+#'     column(
+#'       width = 6,
+#'       ui_epoxy_mustache(
+#'         id = "template",
+#'         h2(class = "{{heading_class}}", "Hello, {{name}}!"),
+#'         "{{#favorites}}",
+#'         p("Your favorite fruits are..."),
+#'         tags$ul(HTML("{{#fruits}}<li>{{.}}</li>{{/fruits}}")),
+#'         "{{/favorites}}",
+#'         "{{^favorites}}<p>Do you have any favorite fruits?</p>{{/favorites}}"
+#'       )
+#'     ),
+#'     column(
+#'       width = 6,
+#'       h2("Inputs"),
+#'       textInput("name", "Your name"),
+#'       textInput("fruits", "Favorite fruits", placeholder = "apple, banana"),
+#'       helpText("Enter a comma-separated list of fruits.")
+#'     )
+#'   )
 #' )
 #'
 #' server <- function(input, output, session) {
-#' 	user_name <- reactive({
-#' 		if (!nzchar(input$name)) return("user")
-#' 		input$name
-#' 	})
+#'   user_name <- reactive({
+#'     if (!nzchar(input$name)) return("user")
+#'     input$name
+#'   })
 #'
-#' 	favorites <- reactive({
-#' 		if (!nzchar(input$fruits)) return(NULL)
-#' 		list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
-#' 	})
+#'   favorites <- reactive({
+#'     if (!nzchar(input$fruits)) return(NULL)
+#'     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
+#'   })
 #'
-#' 	output$template <- render_epoxy(
-#' 		name = user_name(),
-#' 		heading_class = if (user_name() != "user") "text-success",
-#' 		favorites = favorites()
-#' 	)
+#'   output$template <- render_epoxy(
+#'     name = user_name(),
+#'     heading_class = if (user_name() != "user") "text-success",
+#'     favorites = favorites()
+#'   )
 #' }
 #'
 #' if (interactive()) {
-#' 	shiny::shinyApp(ui, server)
+#'   shiny::shinyApp(ui, server)
 #' }
 #'
 #' @eval write_epoxy_example_app("ui_epoxy_mustache")
