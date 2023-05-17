@@ -42,7 +42,7 @@ is_htmlish_output <- function(exclude = NULL) { # nocov start
 	fmt %in% fmt_htmlish
 } # nocov end
 
-is_tag <- function(x) inherits(x, c("shiny.tag", "shiny.tag.list"))
+is_tag <- function(x) inherits(x, c("shiny.tag", "shiny.tag.list", "html"))
 
 with_options <- function(opts, expr) {
 	old <- options(opts)
@@ -52,4 +52,15 @@ with_options <- function(opts, expr) {
 
 escape_html <- function(x) {
 	htmltools::htmlEscape(x, attribute = FALSE)
+}
+
+list_split_named <- function(l) {
+	if (is.null(names(l))) {
+		return(list(unnamed = l, named = NULL))
+	}
+
+	list(
+		unnamed = l[!nzchar(names(l))],
+		named = l[nzchar(names(l))]
+	)
 }

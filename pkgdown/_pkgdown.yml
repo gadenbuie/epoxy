@@ -41,6 +41,7 @@ reference:
 - title: Templating for Shiny
   contents:
   - ui_epoxy_html
+  - ui_epoxy_markdown
   - ui_epoxy_mustache
   - render_epoxy
   - run_epoxy_example_app

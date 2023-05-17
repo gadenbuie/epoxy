@@ -159,7 +159,7 @@ ui_epoxy_html <- function(
 		if (isTRUE(.aria_atomic)) "true" else "false"
 	}
 
-	dots <- list(...)
+	dots <- rlang::list2(...)
 	dots$.placeholder <- .placeholder
 	dots$.transformer <- epoxyHTML_transformer(.class_item, .container_item)
 	dots$.na <- .na
@@ -203,6 +203,93 @@ ui_epoxy_html <- function(
 	} else {
 		out
 	}
+}
+
+#' Epoxy Markdown Template for Shiny
+#'
+#' Create reactive HTML from a Markdown template. `ui_epoxy_markdown()` uses the
+#' same template syntax as [ui_epoxy_html()], but rather than requiring HTML
+#' inputs, you can write in markdown. The template is first rendered from
+#' markdown to HTML using [pandoc::pandoc_convert()] (if \pkg{pandoc} is
+#' available) or [commonmark::markdown_html()] otherwise.
+#'
+#' @param ... Unnamed arguments are treated as lines of markdown text, and named
+#'   arguments are treated as initial values for templated variables.
+#' @param .markdown_fn The function used to convert the markdown to HTML. This
+#'   function is passed the markdown text as a character vector for the first
+#'   argument and any additional arguments from the list `.markdown_args`. By
+#'   default, we use [pandoc::pandoc_convert()] if \pkg{pandoc} is available,
+#'   otherwise we use [commonmark::markdown_html()].
+#' @param .markdown_args A list of arguments to pass to
+#'   [commonmark::markdown_html()].
+#' @inheritParams ui_epoxy_html
+#'
+#' @seealso [ui_epoxy_html()], [ui_epoxy_mustache()], [render_epoxy()]
+#' @return An HTML object.
+#' @export
+ui_epoxy_markdown <- function(
+	.id,
+	...,
+	.markdown_fn = NULL,
+	.markdown_args = list(),
+	.class = NULL,
+	.class_item = NULL,
+	.container = "div",
+	.container_item = "span",
+	.placeholder = "",
+	.sep = "",
+	.open = "{{",
+	.close = "}}",
+	.na = "",
+	.null = "",
+	.literal = FALSE,
+	.trim = FALSE,
+	.aria_live = c("polite", "off", "assertive"),
+	.aria_atomic = TRUE
+) {
+
+	dots <- list_split_named(rlang::dots_list(...))
+	lines <- dots[["unnamed"]]
+	dots <- dots[["named"]]
+
+	if (is.null(lines)) {
+		rlang::abort(
+			"You must provide at least one line of markdown text in `...` as an unnamed character string or vector."
+		)
+	}
+
+	if (is.null(.markdown_fn)) {
+		.markdown_fn <- function(lines, ...) {
+			if (rlang::is_installed("pandoc")) {
+				x <- pandoc::pandoc_convert(text = lines, to = "html", ...)
+				return(paste(x, collapse = "\n"))
+			}
+
+			commonmark::markdown_html(lines, ...)
+		}
+	}
+
+	html <- rlang::exec(.markdown_fn, lines, !!!.markdown_args)
+
+	ui_epoxy_html(
+		.id,
+		htmltools::HTML(html),
+		!!!dots,
+		.class = .class,
+		.class_item = .class_item,
+		.container = .container,
+		.container_item = .container_item,
+		.placeholder = .placeholder,
+		.sep = .sep,
+		.open = .open,
+		.close = .close,
+		.na = .na,
+		.null = .null,
+		.literal = .literal,
+		.trim = .trim,
+		.aria_live = .aria_live,
+		.aria_atomic = .aria_atomic
+	)
 }
 
 #' @describeIn ui_epoxy_html `r lifecycle::badge('deprecated')` Deprecated

@@ -15,6 +15,7 @@ Depends:
     R (>= 2.10)
 Imports:
     and,
+    commonmark,
     glue (>= 1.5.0),
     htmltools,
     knitr (>= 1.37),
@@ -28,6 +29,7 @@ Imports:
 Suggests:
     cleanrmd,
     debugme,
+    pandoc,
     shiny,
     shinytest2,
     testthat
