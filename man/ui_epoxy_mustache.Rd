@@ -5,15 +5,18 @@
 \alias{ui_epoxy_whisker}
 \title{Epoxy HTML Mustache Template}
 \usage{
-ui_epoxy_mustache(id, ..., .sep = "", .container = "div")
+ui_epoxy_mustache(id, ..., .file = NULL, .sep = "", .container = "div")
 
-ui_epoxy_whisker(id, ..., .sep = "", .container = "div")
+ui_epoxy_whisker(id, ..., .file = NULL, .sep = "", .container = "div")
 }
 \arguments{
 \item{id}{The ID of the output.}
 
 \item{...}{Character strings of HTML or \link[htmltools:builder]{htmltools::tags}. All elements
 should be unnamed.}
+
+\item{.file}{A path to a template file. If provided, no other template lines
+should be included in \code{...}.}
 
 \item{.sep}{The separator used to concatenate elements in \code{...}.}
 

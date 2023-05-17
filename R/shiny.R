@@ -410,6 +410,8 @@ epoxyHTML_transformer <- function(
 #' @param id The ID of the output.
 #' @param ... Character strings of HTML or [htmltools::tags]. All elements
 #'   should be unnamed.
+#' @param .file A path to a template file. If provided, no other template lines
+#'   should be included in `...`.
 #' @param .sep The separator used to concatenate elements in `...`.
 #' @param .container A character tag name, e.g. `"div"` or `"span"`, or a
 #'   function that returns an [htmltools::tag()].
@@ -421,6 +423,7 @@ epoxyHTML_transformer <- function(
 ui_epoxy_mustache <- function(
 	id,
 	...,
+	.file = NULL,
 	.sep = "",
 	.container = "div"
 ) {
@@ -434,8 +437,13 @@ ui_epoxy_mustache <- function(
 	}
 
 	dots <- rlang::list2(...)
-	if (!length(dots)) {
-		return(NULL)
+	if (length(dots) == 0) {
+		if (is.null(.file)) return(NULL)
+		dots <- as.list(readLines(.file))
+	} else {
+		if (!is.null(.file)) {
+			rlang::abort("Cannot specify both `...` and `.file`.")
+		}
 	}
 
 	tags <- purrr::keep(dots, is_tag)
