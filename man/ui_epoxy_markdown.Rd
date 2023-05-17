@@ -103,6 +103,80 @@ inputs, you can write in markdown. The template is first rendered from
 markdown to HTML using \code{\link[pandoc:pandoc_convert]{pandoc::pandoc_convert()}} (if \pkg{pandoc} is
 available) or \code{\link[commonmark:commonmark]{commonmark::markdown_html()}} otherwise.
 }
+\examples{
+\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(shiny)
+
+movie_ids <- rlang::set_names(
+  bechdel$imdb_id,
+  bechdel$title
+)
+
+ui <- fixedPage(
+  fluidRow(
+    column(
+      width = 3,
+      selectInput("movie", "Movie", movie_ids),
+      uiOutput("poster")
+    ),
+    column(
+      width = 9,
+      ui_epoxy_markdown(
+        .id = "about_movie",
+        # .markdown_fn = commonmark::markdown_html,
+        "
+## {{title}}
+
+**Released:** {{ year }} \\\\
+**Rated:** {{ rated }} \\\\
+**IMDB Rating:** {{ imdb_rating }}
+
+_{{ title }}_ is {{ genre }} film released in {{ year }}.
+It was filmed in {{ country }} with a budget of {{ budget }}
+and made {{ domgross }} at the box office.
+_{{ title }}_ recieved a Bechdel rating of **{{ bechdel_rating }}**
+for the following plot:
+
+> {{ plot }}
+"
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  movie <- reactive({
+    movie <- bechdel[bechdel$imdb_id == input$movie, ]
+    movie$budget <- epoxy("{.dollar budget}", .data = movie)
+    movie$domgross <- epoxy("{.dollar domgross}", .data = movie)
+
+    vowels <- c("a", "e", "i", "o", "u")
+    movie$genre  <- paste(
+      ifelse(substr(tolower(movie$genre), 1, 1) \%in\% vowels, "an", "a"),
+      tolower(movie$genre)
+    )
+
+    movie
+  })
+
+  output$about_movie <- render_epoxy(.list = movie())
+  output$poster <- renderUI(
+    img(
+      src = movie()$poster,
+      alt = paste0("Poster for ", movie()$title),
+      style = "max-height: 400px; max-width: 100\%; margin: 0 auto; display: block;"
+    )
+  )
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+run_epoxy_example_app("ui_epoxy_markdown")
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 }

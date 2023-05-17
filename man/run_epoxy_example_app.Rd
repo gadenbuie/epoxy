@@ -5,14 +5,14 @@
 \title{Example epoxy Shiny apps}
 \usage{
 run_epoxy_example_app(
-  name = c("ui_epoxy_html", "ui_epoxy_mustache", "render_epoxy"),
+  name = c("ui_epoxy_html", "ui_epoxy_markdown", "ui_epoxy_mustache", "render_epoxy"),
   display.mode = "showcase",
   ...
 )
 }
 \arguments{
 \item{name}{Name of the example, currently one of \code{"ui_epoxy_html"},
-\code{"ui_epoxy_mustache"}, or \code{"render_epoxy"}.}
+\code{"ui_epoxy_markdown"}, \code{"ui_epoxy_mustache"}, or \code{"render_epoxy"}.}
 
 \item{display.mode}{The mode in which to display the application. If set to
 the value \code{"showcase"}, shows application code and metadata from a
@@ -69,5 +69,5 @@ run_epoxy_example_app(name = NULL)
 
 }
 \seealso{
-\code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
+\code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=ui_epoxy_markdown]{ui_epoxy_markdown()}}, \code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 }
