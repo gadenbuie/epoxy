@@ -15,7 +15,6 @@ Depends:
     R (>= 2.10)
 Imports:
     and,
-    commonmark,
     glue (>= 1.5.0),
     htmltools,
     knitr (>= 1.37),
@@ -28,6 +27,7 @@ Imports:
     whisker
 Suggests:
     cleanrmd,
+    commonmark,
     debugme,
     pandoc,
     shiny,

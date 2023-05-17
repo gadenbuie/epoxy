@@ -265,6 +265,7 @@ ui_epoxy_markdown <- function(
 				return(paste(x, collapse = "\n"))
 			}
 
+			rlang::check_installed("commonmark", "for converting markdown to HTML")
 			commonmark::markdown_html(lines, ...)
 		}
 	}
