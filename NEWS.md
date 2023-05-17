@@ -59,11 +59,16 @@ versions that were available on GitHub prior to the CRAN release.
   an expression as HTML-safe, use `!!` before the variable or expression:
   e.g. `{{ button !!expr }}` (#88).
 
+* A new `ui_epoxy_markdown()` function provides a way to create dynamic Shiny
+  UI elements written in Markdown. Rendering from markdown to HTML is handled
+  using `pandoc::pandoc_convert()` if the `{pandoc}` package is installed, or
+  otherwise `commonmark::markdown_html()` is used.
+
 * New `ui_epoxy_mustache()` provides a dynamically rendered Shiny UI element
   that uses the [mustache templating syntax](https://mustache.github.io/). The
-  advantage of mustache templating over `ui_epoxy_html()` is that you have dynamic
-  variables in the template can appear anywhere in the HTML, not just in the
-  text portion (#51).
+  advantage of mustache templating over `ui_epoxy_html()` is that you have
+  dynamic variables in the template can appear anywhere in the HTML, not just in
+  the text portion (#51).
 
   * `ui_epoxy_whisker()` is also provided as an alias for discoverability/user
     comfort (#60).
