@@ -649,7 +649,7 @@ render_epoxy <- function(
 		dots <- rlang::enquos(...)
 		dots <- purrr::map(dots, function(x) {
 			tryCatch(rlang::eval_tidy(x), error = identity)
-	  })
+		})
 		errored <- c()
 		for (i in seq_along(dots)) {
 			if (rlang::cnd_inherits(dots[[i]], "error")) {
