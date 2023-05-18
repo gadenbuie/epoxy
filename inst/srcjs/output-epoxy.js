@@ -46,11 +46,6 @@ $.extend(epoxyOutputBinding, {
   },
   _last: null,
   renderValue: function (el, data) {
-    // remove copies of epoxyItem (the first item is the pattern)
-    el.querySelectorAll('[data-epoxy-copy]').forEach(e =>
-      e.parentElement.removeChild(e)
-    )
-
     const outputId = el.id
 
     const items = el.querySelectorAll('[data-epoxy-item]')
@@ -58,8 +53,25 @@ $.extend(epoxyOutputBinding, {
       item.classList.remove('epoxy-item__placeholder')
       const itemName = item.dataset.epoxyItem
       const asHTML = item.dataset.epoxyAsHtml === 'true'
-      const replaceContents = (el, contents) => {
+
+      const evData = { output: outputId, name: itemName, outputType: 'html' }
+
+      const updateContents = (el, contents) => {
         asHTML ? (el.innerHTML = contents) : (el.textContent = contents)
+        el.dispatchEvent(
+          new CustomEvent('epoxy-update', {
+            bubbles: true,
+            detail: { ...evData, value: contents }
+          })
+        )
+        return el
+      }
+
+      // remove copies of epoxyItem (the first item is the pattern)
+      const removeCopies = () => {
+        el
+          .querySelectorAll(`[data-epoxy-copy="${itemName}"]`)
+          .forEach(item => item.parentElement.removeChild(item))
       }
 
       let itemData = data[itemName]
@@ -68,7 +80,8 @@ $.extend(epoxyOutputBinding, {
 
       if (data.__errors__ && data.__errors__.includes(itemName)) {
         errorClasses.forEach(c => item.classList.add(c))
-        item.innerHTML = item.dataset.epoxyPlaceholder || ''
+        removeCopies()
+        updateContents(item, item.dataset.epoxyPlaceholder || '')
         item.style.removeProperty('display')
         item.setAttribute('aria-label', itemData)
         item.dispatchEvent(
@@ -93,6 +106,8 @@ $.extend(epoxyOutputBinding, {
         return
       }
 
+      removeCopies()
+
       if (this._is_empty(itemData)) {
         item.style.display = 'none'
         return
@@ -100,40 +115,22 @@ $.extend(epoxyOutputBinding, {
         item.style.removeProperty('display')
       }
 
-      const evData = { output: outputId, name: itemName, outputType: 'html' }
+      if (!(itemData instanceof Array)) {
+        updateContents(item, itemData)
+        return
+      }
 
-      if (itemData instanceof Array) {
-        replaceContents(item, itemData[0])
-        const itemParent = item.parentElement
-        itemData = itemData.slice(1)
-        item.dispatchEvent(
-          new CustomEvent('epoxy-update', {
-            bubbles: true,
-            detail: { ...evData, data: itemData[0] }
-          })
-        )
+      // If an array, use the initial item as a pattern
+      updateContents(item, itemData[0])
+      const itemParent = item.parentElement
+      itemData = itemData.slice(1)
 
-        for (const itemDataThis of itemData) {
-          const itemNew = item.cloneNode()
-          itemNew.removeAttribute('data-epoxy-item')
-          itemNew.dataset.epoxyCopy = itemName
-          replaceContents(itemNew, itemDataThis)
-          itemParent.insertAdjacentElement('beforeend', itemNew)
-          itemNew.dispatchEvent(
-            new CustomEvent('epoxy-update', {
-              bubbles: true,
-              detail: { ...evData, data: itemDataThis }
-            })
-          )
-        }
-      } else {
-        replaceContents(item, itemData)
-        item.dispatchEvent(
-          new CustomEvent('epoxy-update', {
-            bubbles: true,
-            detail: { ...evData, data: itemData }
-          })
-        )
+      for (const itemDataThis of itemData) {
+        const itemNew = item.cloneNode()
+        itemNew.removeAttribute('data-epoxy-item')
+        itemNew.dataset.epoxyCopy = itemName
+        itemParent.insertAdjacentElement('beforeend', itemNew)
+        updateContents(itemNew, itemDataThis)
       }
     })
 
