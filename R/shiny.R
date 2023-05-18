@@ -190,7 +190,7 @@ ui_epoxy_html <- function(
 		"aria-live" = .aria_live,
 		htmltools::HTML(res),
 		html_dependency_epoxy(),
-	  html_dependency_hint_css()
+		html_dependency_hint_css()
 	)
 	if (!is.null(deps) && length(deps)) {
 		htmltools::attachDependencies(out, deps)

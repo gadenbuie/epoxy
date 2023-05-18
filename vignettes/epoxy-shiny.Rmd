@@ -65,12 +65,12 @@ It's a simple but friendly app that greets the user by name.
 library(shiny)
 
 ui <- fluidPage(
-  textInput("name", "What's your name?"),
-  p("Hello,", textOutput("greeting", inline = TRUE), "!")
+	textInput("name", "What's your name?"),
+	p("Hello,", textOutput("greeting", inline = TRUE), "!")
 )
 
 server <- function(input, output) {
-  output$greeting <- renderText(input$name)
+	output$greeting <- renderText(input$name)
 }
 
 shinyApp(ui, server)
@@ -103,17 +103,17 @@ library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-  textInput("name", "What's your name?"),
-  ui_epoxy_html(
-    .id = "greeting",
-    p("Hello, {{name}}!")
-  )
+	textInput("name", "What's your name?"),
+	ui_epoxy_html(
+		.id = "greeting",
+		p("Hello, {{name}}!")
+	)
 )
 
 server <- function(input, output) {
-  output$greeting <- render_epoxy(
-    name = input$name
-  )
+	output$greeting <- render_epoxy(
+		name = input$name
+	)
 }
 
 shinyApp(ui, server)
@@ -137,26 +137,26 @@ library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-  textInput("name", "What's your name?"),
-  ui_epoxy_html(
-    .id = "greeting",
-    p("Hello, {{name}}!"),
-    name = "friend"
-  )
+	textInput("name", "What's your name?"),
+	ui_epoxy_html(
+		.id = "greeting",
+		p("Hello, {{name}}!"),
+		name = "friend"
+	)
 )
 
 server <- function(input, output) {
-  name <- reactive({
-    validate(need(
-      nchar(input$name) > 2,
-      "Name must be more than 2 characters."
-    ))
-    input$name
-  })
+	name <- reactive({
+		validate(need(
+			nchar(input$name) > 2,
+			"Name must be more than 2 characters."
+		))
+		input$name
+	})
 
-  output$greeting <- render_epoxy(
-    name = name()
-  )
+	output$greeting <- render_epoxy(
+		name = name()
+	)
 }
 
 shinyApp(ui, server)
@@ -190,22 +190,22 @@ movie_choices <- bechdel$imdb_id
 names(movie_choices) <- bechdel$title
 
 ui <- fixedPage(
-  selectInput("movie", "Pick a movie", choices = movie_choices),
-  ui_epoxy_html(
-    .id = "movie_info",
-    p(
-      "{{ em title }} was released in {{ strong year }}.",
-      "It was directed by {{ director }} and rated {{ rated }}."
-    )
-  )
+	selectInput("movie", "Pick a movie", choices = movie_choices),
+	ui_epoxy_html(
+		.id = "movie_info",
+		p(
+			"{{ em title }} was released in {{ strong year }}.",
+			"It was directed by {{ director }} and rated {{ rated }}."
+		)
+	)
 )
 
 server <- function(input, output, session) {
-  movie <- reactive({
-    bechdel[bechdel$imdb_id == input$movie, ]
-  })
+	movie <- reactive({
+		bechdel[bechdel$imdb_id == input$movie, ]
+	})
 
-  output$movie_info <- render_epoxy(.list = movie())
+	output$movie_info <- render_epoxy(.list = movie())
 }
 
 shinyApp(ui, server)
