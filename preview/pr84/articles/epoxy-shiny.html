@@ -300,12 +300,17 @@ Example app code
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="images/epoxy-shiny/epoxy-app-input.png" alt="An app where the user has entered 'Shiny friend' as their name. The label of the select input includes their name, updated dynamically."></p>
-<p>You can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code>
-syntax[^not-inline] from <code><a href="../reference/epoxy.html">epoxy_html()</a></code>, which makes it
-possible to determine which HTML element and class is used to contain
-the dynamic text. If you send an array of values to this reactive field,
-the tag is used as a template, making it easy to do things like
-dynamically update a list.</p>
+<p>You can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code> syntax<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Unfortunately, you can’t use the inline formatting
+syntax from &lt;code&gt;&lt;a href="../reference/epoxy_transform_inline.html"&gt;epoxy_transform_inline()&lt;/a&gt;&lt;/code&gt; in
+&lt;code&gt;&lt;a href="../reference/ui_epoxy_html.html"&gt;ui_epoxy_html()&lt;/a&gt;&lt;/code&gt;, e.g. &lt;code&gt;{{ .bold name}}&lt;/code&gt; wraps
+the &lt;code&gt;name&lt;/code&gt; field in a &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; with
+&lt;code&gt;class = "bold"&lt;/code&gt; rather than a &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;
+tag.&lt;/p&gt;'><sup>3</sup></a> from
+<code><a href="../reference/epoxy.html">epoxy_html()</a></code>, which makes it possible to determine which
+HTML element and class is used to contain the dynamic text. If you send
+an array of values to this reactive field, the tag is used as a
+template, making it easy to do things like dynamically update a
+list.</p>
 <details><summary>
 Example app code
 </summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -339,18 +344,37 @@ Example app code
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="images/epoxy-shiny/epoxy-app-copies.png" alt="An app that aks the user for a list of fruits. The user has entered 'mango, coconut, papaya' and a dynamically rendered list below the input shows each fruit as a bullet in a unordered list item."></p>
-<ul>
-<li>can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code> syntax from
-<code><a href="../reference/epoxy.html">epoxy_html()</a></code> (but not inline transformations)</li>
-<li>bare character strings are assumed to be HTML, replacement is not
-unless you use <code>{{{ name }}}</code>
-</li>
-<li>sends html, can’t send html with new dependencies</li>
-</ul>
+<p>Three more quick things about <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code>:</p>
+<ol style="list-style-type: decimal">
+<li><p>It assumes that bare character strings are HTML, so you don’t
+have to worry about adding <code><a href="https://rstudio.github.io/htmltools/reference/HTML.html" class="external-link">HTML()</a></code> all over the
+place.</p></li>
+<li><p>The replacement text is <em>not assumed to be HTML</em>, by
+default, to save you from accidentally injecting unsafe HTML from user
+input into your app. If you’re very certain that a field will only
+contain safe HTML, you can mark it as safe for HTML with three braces,
+e.g. <code>{{{ &lt;expr&gt; }}}</code>.</p></li>
+<li><p>The replacement text is sent as bare text or HTML, making it more
+like <code><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput()</a></code> than <code><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html" class="external-link">uiOutput()</a></code>. In
+particular, where <code><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html" class="external-link">uiOutput()</a></code> would allow you to send
+arbitary widgets based on <a href="https://github.com/ramnathv/htmlwidgets" class="external-link">htmlwidgets</a> or
+<a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a>, <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> only ever sends
+the bare text or HTML.</p></li>
+</ol>
 </div>
-<div class="section level3">
-<h3 id="connecting-epoxy-with-a-reactive-data-frame">Connecting epoxy with a reactive data frame<a class="anchor" aria-label="anchor" href="#connecting-epoxy-with-a-reactive-data-frame"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="connecting-epoxy-with-a-reactive-data-frame">Connecting epoxy with a reactive data frame<a class="anchor" aria-label="anchor" href="#connecting-epoxy-with-a-reactive-data-frame"></a>
+</h2>
+<p>One of my favorite use cases for epoxy’s templating functions in
+Shiny is to store the data for a template in a data frame. Then, the
+apps’s inputs are combined in a reactive expressions that filters down
+to a single row of the data frame. Finally, that row is sent via
+<code><a href="../reference/render_epoxy.html">render_epoxy()</a></code> to the UI, where it’s dynamically injected
+into the template.</p>
+<p>Here’s a small example using epoxy’s built in <code>bechdel</code>
+data set. In this app, the user picks a movie and the template below is
+filled out with information from the data set for that movie.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
@@ -363,8 +387,10 @@ unless you use <code>{{{ name }}}</code>
 <span>  <span class="fu"><a href="../reference/ui_epoxy_html.html">ui_epoxy_html</a></span><span class="op">(</span></span>
 <span>    .id <span class="op">=</span> <span class="st">"movie_info"</span>,</span>
 <span>    <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
-<span>      <span class="st">"{{ em title }} was released in {{ strong year }}."</span>,</span>
-<span>      <span class="st">"It was directed by {{ director }} and rated {{ rated }}."</span></span>
+<span>      <span class="st">"{{ em title }} was released"</span>,</span>
+<span>      <span class="st">"in {{ strong year }}."</span>,</span>
+<span>      <span class="st">"It was directed by {{ director }}"</span>,</span>
+<span>      <span class="st">"and was rated {{ rated }}."</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -378,7 +404,6 @@ unless you use <code>{{{ name }}}</code>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 id="cut-this-cut-this-cut-this">Cut this, cut this, cut this<a class="anchor" aria-label="anchor" href="#cut-this-cut-this-cut-this"></a>
