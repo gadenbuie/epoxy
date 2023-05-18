@@ -278,7 +278,19 @@ Three more quick things about `ui_epoxy_html()`:
    widgets based on `{htmlwidgets}` or `{htmltools}`,
    `ui_epoxy_html()` only ever sends the bare text or HTML.
 
-### Connecting epoxy with a reactive data frame
+## Connecting epoxy with a reactive data frame
+
+One of my favorite use cases for epoxy's templating functions in Shiny
+is to store the data for a template in a data frame.
+Then, the apps's inputs are combined in a reactive expressions
+that filters down to a single row of the data frame.
+Finally, that row is sent via `render_epoxy()` to the UI,
+where it's dynamically injected into the template.
+
+Here's a small example using epoxy's built in `bechdel` data set.
+In this app,
+the user picks a movie and the template below is filled out
+with information from the data set for that movie.
 
 ``` r
 library(shiny)
@@ -292,8 +304,10 @@ ui <- fixedPage(
   ui_epoxy_html(
     .id = "movie_info",
     p(
-      "{{ em title }} was released in {{ strong year }}.",
-      "It was directed by {{ director }} and rated {{ rated }}."
+      "{{ em title }} was released",
+      "in {{ strong year }}.",
+      "It was directed by {{ director }}",
+      "and was rated {{ rated }}."
     )
   )
 )
