@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 	collapse = TRUE,
 	comment = "#>"
 )
+library(shiny)
+library(epoxy)
 ```
 
 ## Templating in Shiny
@@ -220,6 +222,8 @@ If you send an array of values to this reactive field,
 the tag is used as a template,
 making it easy to do things like dynamically update a list.
 
+[^not-inline]: Unfortunately, you can't use the inline formatting syntax from `epoxy_transform_inline()` in `ui_epoxy_html()`, e.g. `{{ .bold name}}` wraps the `name` field in a `<span>` with `class = "bold"` rather than a `<strong>` tag.
+
 <details><summary>Example app code</summary>
 
 ```{r eval = FALSE}
@@ -258,11 +262,21 @@ shinyApp(ui, server)
 
 <img src="images/epoxy-shiny/epoxy-app-copies.png" alt="An app that aks the user for a list of fruits. The user has entered 'mango, coconut, papaya' and a dynamically rendered list below the input shows each fruit as a bullet in a unordered list item.">
 
-* can use `{{ <markup> <expr> }}` syntax from `epoxy_html()`
-  (but not inline transformations)
-* bare character strings are assumed to be HTML,
-  replacement is not unless you use `{{{ name }}}`
-* sends html, can't send html with new dependencies
+Three more quick things about `ui_epoxy_html()`:
+
+1. It assumes that bare character strings are HTML, so you don't have to worry
+  about adding `HTML()` all over the place.
+
+2. The replacement text is _not assumed to be HTML_, by default, to save you
+   from accidentally injecting unsafe HTML from user input into your app. If
+   you're very certain that a field will only contain safe HTML, you can mark it
+   as safe for HTML with three braces, e.g. `{{{ <expr> }}}`.
+
+3. The replacement text is sent as bare text or HTML,
+   making it more like `textOutput()` than `uiOutput()`.
+   In particular, where `uiOutput()` would allow you to send arbitary
+   widgets based on `{htmlwidgets}` or `{htmltools}`,
+   `ui_epoxy_html()` only ever sends the bare text or HTML.
 
 ### Connecting epoxy with a reactive data frame
 
