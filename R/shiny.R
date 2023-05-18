@@ -206,6 +206,7 @@ html_dependency_epoxy <- function() {
 		package = "epoxy",
 		src = "srcjs",
 		script = "output-epoxy.js",
+		stylesheet = "output-epoxy.css",
 		all_files = FALSE
 	)
 }
