@@ -1,15 +1,18 @@
 ---
 title: "epoxy in Shiny"
-output: 
+output:
   cleanrmd::html_document_clean:
     theme: new.css
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{epoxy in Shiny}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+[shiny]: https://shiny.posit.co/
+[mustache]: https://mustache.github.io/
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -17,6 +20,198 @@ knitr::opts_chunk$set(
 	comment = "#>"
 )
 ```
+
+## Templating in Shiny
+
+[Shiny apps][shiny] are a great way to design interactive web applications,
+and epoxy includes several functions
+to help you weave reactive data into your apps.
+
+Here are some ways you can use epoxy in your Shiny apps:
+
+1. Make the text portion of any element in your Shiny UI update dynamically.
+
+2. Weave reactive text into prose in your app.
+
+3. Build powerful templates using the [mustache templating language][mustache].
+
+
+Shiny already includes two reactive text outputs:
+
+* `shiny::uiOutput()` (a.k.a. `shiny::htmlOutput()`) and
+* `shiny::textOutput()`.
+
+These are great for displaying reactive text in your app,
+but they have some limitations:
+
+* `uiOutput()` tends to move your UI logic into the `server` function,
+  making it harder to know the final structure of your UI.
+
+* `textOutput()` is great for displaying reactive text,
+  but often requires messing with the `.noWS` argument
+  to get the spacing around the dynamic text _just right_.
+
+In this article, we'll learn how to use epoxy in Shiny apps
+and see that it can help us overcome these limitations.
+
+## Introducing epoxy in Shiny
+
+### A basic Shiny app with `textOutput()`
+
+Let's start with an example Shiny app.
+It's a simple but friendly app that greets the user by name.
+
+```{r eval = FALSE}
+library(shiny)
+
+ui <- fluidPage(
+  textInput("name", "What's your name?"),
+  p("Hello,", textOutput("greeting", inline = TRUE), "!")
+)
+
+server <- function(input, output) {
+  output$greeting <- renderText(input$name)
+}
+
+shinyApp(ui, server)
+```
+
+![](images/epoxy-shiny/shiny-app-1.png)
+
+This gets you pretty close,
+but you have to remember to include `inline = TRUE` in `textOutput()`
+and there's some extra space
+between the user's name and the exclamation point
+that you'd probably like to get rid of[^container-arg].
+
+[^container-arg]: To fix the spacing between `textOutput()` and it's syblings, you'd have to use the `container` argument of `textOutput()` to give it a custom container function that includes the `.noWS` argument, such as `container = function(x) span(x, .noWS = "after")`.
+
+### Setting up `ui_epoxy_html()`
+
+With `ui_epoxy_html()`, this is easy to fix:
+
+1. Wrap a portion of your UI in `ui_epoxy_html()` and give it an `.id`.
+
+1. Use `{{ name }}` syntax to define fields where the dynamic text should go.
+
+1. In your server code, assign `render_epoxy()` to an output matching the UI's
+   `.id` and pass in the reactive data as arguments with names matching the
+   dynamic fields.
+
+```{r eval = FALSE}
+library(shiny)
+library(epoxy)
+
+ui <- fluidPage(
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    p("Hello, {{name}}!")
+  )
+)
+
+server <- function(input, output) {
+  output$greeting <- render_epoxy(
+    name = input$name
+  )
+}
+
+shinyApp(ui, server)
+```
+
+![](images/epoxy-shiny/epoxy-app-1.png)
+
+### Default or error values
+
+Another advantage of using `ui_epoxy_html()` over `textOutput()`
+is that you can set default values that appear immediately
+before the server responds
+or that are used when an error occurs.
+In the next app,
+`name` is set to `"friend"` by default in `ui_epoxy_html()`,
+and on the server side I've also added a `validate()` call
+indicating that we need a name with at least 2 characters.
+
+```{r eval = FALSE}
+library(shiny)
+library(epoxy)
+
+ui <- fluidPage(
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    p("Hello, {{name}}!"),
+    name = "friend"
+  )
+)
+
+server <- function(input, output) {
+  name <- reactive({
+    validate(need(
+      nchar(input$name) > 2,
+      "Name must be more than 2 characters."
+    ))
+    input$name
+  })
+
+  output$greeting <- render_epoxy(
+    name = name()
+  )
+}
+
+shinyApp(ui, server)
+```
+
+If the user hasn't yet entered a name of more than 2 characters,
+the text for the `name` field will use the default value
+and will have a red squiggle below it.
+If they hover over the squiggle,
+the error message is shown in the hover text.
+
+<img src="images/epoxy-shiny/epoxy-app-error.png" alt="An app where the user has entered 'me' as their name. The text reads 'Hello, friend!' with a red squiggle below the word friend.">
+
+### A few more things about `ui_epoxy_html()`
+
+* can re-use `{{ name }}` in several places
+* can use `{{ name }}` anywhere that you could put a `<span>`
+* can use `{{ <markup> <expr> }}` syntax from `epoxy_html()`
+  (but not inline transformations)
+* bare character strings are assumed to be HTML,
+  replacement is not unless you use `{{{ name }}}`
+* sends html, can't send html with new dependencies
+
+### Connecting epoxy with a reactive data frame
+
+```{r eval = FALSE}
+library(shiny)
+library(epoxy)
+
+movie_choices <- bechdel$imdb_id
+names(movie_choices) <- bechdel$title
+
+ui <- fixedPage(
+  selectInput("movie", "Pick a movie", choices = movie_choices),
+  ui_epoxy_html(
+    .id = "movie_info",
+    p(
+      "{{ em title }} was released in {{ strong year }}.",
+      "It was directed by {{ director }} and rated {{ rated }}."
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  movie <- reactive({
+    bechdel[bechdel$imdb_id == input$movie, ]
+  })
+
+  output$movie_info <- render_epoxy(.list = movie())
+}
+
+shinyApp(ui, server)
+```
+
+## Cut this, cut this, cut this
 
 Sorry! I'm still working on this article.
 In the mean time,
@@ -26,3 +221,4 @@ Or read about the related Shiny UI and server functions:
 * `ui_epoxy_html()`
 * `ui_epoxy_mustache()`
 * `render_epoxy()`
+
