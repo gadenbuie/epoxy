@@ -113,6 +113,201 @@
 
     
     
+<div class="section level2">
+<h2 id="templating-in-shiny">Templating in Shiny<a class="anchor" aria-label="anchor" href="#templating-in-shiny"></a>
+</h2>
+<p><a href="https://shiny.posit.co/" class="external-link">Shiny apps</a> are a great way to
+design interactive web applications, and epoxy includes several
+functions to help you weave reactive data into your apps.</p>
+<p>Here are some ways you can use epoxy in your Shiny apps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make the text portion of any element in your Shiny UI update
+dynamically.</p></li>
+<li><p>Weave reactive text into prose in your app.</p></li>
+<li><p>Build powerful templates using the <a href="https://mustache.github.io/" class="external-link">mustache templating
+language</a>.</p></li>
+</ol>
+<p>Shiny already includes two reactive text outputs:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html" class="external-link">shiny::uiOutput()</a></code> (a.k.a.
+<code><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html" class="external-link">shiny::htmlOutput()</a></code>) and</li>
+<li>
+<code><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">shiny::textOutput()</a></code>.</li>
+</ul>
+<p>These are great for displaying reactive text in your app, but they
+have some limitations:</p>
+<ul>
+<li><p><code><a href="https://rdrr.io/pkg/shiny/man/htmlOutput.html" class="external-link">uiOutput()</a></code> tends to move your UI logic into the
+<code>server</code> function, making it harder to know the final
+structure of your UI.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput()</a></code> is great for displaying reactive text,
+but often requires messing with the <code>.noWS</code> argument to get
+the spacing around the dynamic text <em>just right</em>.</p></li>
+</ul>
+<p>In this article, we’ll learn how to use epoxy in Shiny apps and see
+that it can help us overcome these limitations.</p>
+</div>
+<div class="section level2">
+<h2 id="introducing-epoxy-in-shiny">Introducing epoxy in Shiny<a class="anchor" aria-label="anchor" href="#introducing-epoxy-in-shiny"></a>
+</h2>
+<div class="section level3">
+<h3 id="a-basic-shiny-app-with-textoutput">A basic Shiny app with <code>textOutput()</code><a class="anchor" aria-label="anchor" href="#a-basic-shiny-app-with-textoutput"></a>
+</h3>
+<p>Let’s start with an example Shiny app. It’s a simple but friendly app
+that greets the user by name.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html" class="external-link">textInput</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"What's your name?"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Hello,"</span>, <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput</a></span><span class="op">(</span><span class="st">"greeting"</span>, inline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="st">"!"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderText</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p><img src="images/epoxy-shiny/shiny-app-1.png"></p>
+<p>This gets you pretty close, but you have to remember to include
+<code>inline = TRUE</code> in <code><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput()</a></code> and there’s some
+extra space between the user’s name and the exclamation point that you’d
+probably like to get rid of<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;To fix the spacing between &lt;code&gt;&lt;a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link"&gt;textOutput()&lt;/a&gt;&lt;/code&gt; and
+it’s syblings, you’d have to use the &lt;code&gt;container&lt;/code&gt; argument of
+&lt;code&gt;&lt;a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link"&gt;textOutput()&lt;/a&gt;&lt;/code&gt; to give it a custom container function that
+includes the &lt;code&gt;.noWS&lt;/code&gt; argument, such as
+&lt;code&gt;container = function(x) span(x, .noWS = "after")&lt;/code&gt;.&lt;/p&gt;'><sup>1</sup></a>.</p>
+</div>
+<div class="section level3">
+<h3 id="setting-up-ui_epoxy_html">Setting up <code>ui_epoxy_html()</code><a class="anchor" aria-label="anchor" href="#setting-up-ui_epoxy_html"></a>
+</h3>
+<p>With <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code>, this is easy to fix:</p>
+<ol style="list-style-type: decimal">
+<li><p>Wrap a portion of your UI in <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> and
+give it an <code>.id</code>.</p></li>
+<li><p>Use <code>{{ name }}</code> syntax to define fields where the
+dynamic text should go.</p></li>
+<li><p>In your server code, assign <code><a href="../reference/render_epoxy.html">render_epoxy()</a></code> to an
+output matching the UI’s <code>.id</code> and pass in the reactive data
+as arguments with names matching the dynamic fields.</p></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html" class="external-link">textInput</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"What's your name?"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ui_epoxy_html.html">ui_epoxy_html</a></span><span class="op">(</span></span>
+<span>    .id <span class="op">=</span> <span class="st">"greeting"</span>,</span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Hello, {{name}}!"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">name</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p><img src="images/epoxy-shiny/epoxy-app-1.png"></p>
+</div>
+<div class="section level3">
+<h3 id="default-or-error-values">Default or error values<a class="anchor" aria-label="anchor" href="#default-or-error-values"></a>
+</h3>
+<p>Another advantage of using <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> over
+<code><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput()</a></code> is that you can set default values that appear
+immediately before the server responds or that are used when an error
+occurs. In the next app, <code>name</code> is set to
+<code>"friend"</code> by default in <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code>, and on
+the server side I’ve also added a <code><a href="https://rdrr.io/pkg/shiny/man/validate.html" class="external-link">validate()</a></code> call
+indicating that we need a name with at least 2 characters.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html" class="external-link">textInput</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"What's your name?"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ui_epoxy_html.html">ui_epoxy_html</a></span><span class="op">(</span></span>
+<span>    .id <span class="op">=</span> <span class="st">"greeting"</span>,</span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Hello, {{name}}!"</span><span class="op">)</span>,</span>
+<span>    name <span class="op">=</span> <span class="st">"friend"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/validate.html" class="external-link">validate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/validate.html" class="external-link">need</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">name</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span>,</span>
+<span>      <span class="st">"Name must be more than 2 characters."</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">name</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">greeting</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu">name</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p>If the user hasn’t yet entered a name of more than 2 characters, the
+text for the <code>name</code> field will use the default value and will
+have a red squiggle below it. If they hover over the squiggle, the error
+message is shown in the hover text.</p>
+<p><img src="images/epoxy-shiny/epoxy-app-error.png" alt="An app where the user has entered 'me' as their name. The text reads 'Hello, friend!' with a red squiggle below the word friend."></p>
+</div>
+<div class="section level3">
+<h3 id="a-few-more-things-about-ui_epoxy_html">A few more things about <code>ui_epoxy_html()</code><a class="anchor" aria-label="anchor" href="#a-few-more-things-about-ui_epoxy_html"></a>
+</h3>
+<ul>
+<li>can re-use <code>{{ name }}</code> in several places</li>
+<li>can use <code>{{ name }}</code> anywhere that you could put a
+<code>&lt;span&gt;</code>
+</li>
+<li>can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code> syntax from
+<code><a href="../reference/epoxy.html">epoxy_html()</a></code> (but not inline transformations)</li>
+<li>bare character strings are assumed to be HTML, replacement is not
+unless you use <code>{{{ name }}}</code>
+</li>
+<li>sends html, can’t send html with new dependencies</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="connecting-epoxy-with-a-reactive-data-frame">Connecting epoxy with a reactive data frame<a class="anchor" aria-label="anchor" href="#connecting-epoxy-with-a-reactive-data-frame"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">movie_choices</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">$</span><span class="va">imdb_id</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">movie_choices</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">$</span><span class="va">title</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fixedPage.html" class="external-link">fixedPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html" class="external-link">selectInput</a></span><span class="op">(</span><span class="st">"movie"</span>, <span class="st">"Pick a movie"</span>, choices <span class="op">=</span> <span class="va">movie_choices</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ui_epoxy_html.html">ui_epoxy_html</a></span><span class="op">(</span></span>
+<span>    .id <span class="op">=</span> <span class="st">"movie_info"</span>,</span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
+<span>      <span class="st">"{{ em title }} was released in {{ strong year }}."</span>,</span>
+<span>      <span class="st">"It was directed by {{ director }} and rated {{ rated }}."</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">bechdel</span><span class="op">[</span><span class="va">bechdel</span><span class="op">$</span><span class="va">imdb_id</span> <span class="op">==</span> <span class="va">input</span><span class="op">$</span><span class="va">movie</span>, <span class="op">]</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">movie_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span>.list <span class="op">=</span> <span class="fu">movie</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="cut-this-cut-this-cut-this">Cut this, cut this, cut this<a class="anchor" aria-label="anchor" href="#cut-this-cut-this-cut-this"></a>
+</h2>
 <p>Sorry! I’m still working on this article. In the mean time, check out
 the packaged Shiny app examples using
 <code><a href="../reference/run_epoxy_example_app.html">run_epoxy_example_app()</a></code>. Or read about the related Shiny UI
@@ -121,7 +316,11 @@ and server functions:</p>
 <li><code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code></li>
 <li><code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code></li>
 <li><code><a href="../reference/render_epoxy.html">render_epoxy()</a></code></li>
-</ul></main>
+</ul>
+</div>
+
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
