@@ -173,8 +173,91 @@ Hovering over the squiggle reveals the error message.
 
 ### A few more things about `ui_epoxy_html()`
 
-* can re-use `{{ name }}` in several places
-* can use `{{ name }}` anywhere that you could put a `<span>`
+First, you can reference the same reactive value,
+e.g. `{{ name }}`,
+as many times as you want in your template.
+This value can also go just about anywhere in your UI.
+as long as it's okay to put a `<span>` around the text[^not-attributes].
+
+[^not-attributes]: For `ui_epoxy_html()` this means you can't dynamically update attribute values, like the `href` attribute of an `<a>` tag. You _can do that_ with `ui_epoxy_mustache()` though, which we'll cover later. Or you can write the full HTML on the server side with `htmltools::tags$a()`.
+
+<details><summary>Example app code</summary>
+
+```{r eval = FALSE}
+library(shiny)
+library(epoxy)
+
+ui <- fluidPage(
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    selectInput(
+      inputId = "color",
+      label = "What's your favorite color, {{ name }}?",
+      choices = c("red", "green", "blue", "purple", "yellow")
+    ),
+    name = "friend"
+  )
+)
+
+server <- function(input, output) {
+  output$greeting <- render_epoxy(
+    name = input$name
+  )
+}
+
+shinyApp(ui, server)
+```
+
+</details>
+
+<img src="images/epoxy-shiny/epoxy-app-input.png" alt="An app where the user has entered 'Shiny friend' as their name. The label of the select input includes their name, updated dynamically.">
+
+You can use `{{ <markup> <expr> }}` syntax[^not-inline] from `epoxy_html()`,
+which makes it possible to determine which HTML element and class is used
+to contain the dynamic text.
+If you send an array of values to this reactive field,
+the tag is used as a template,
+making it easy to do things like dynamically update a list.
+
+<details><summary>Example app code</summary>
+
+```{r eval = FALSE}
+library(shiny)
+library(epoxy)
+
+ui <- fluidPage(
+  textInput("faves", "What are your favorite fruits?"),
+  helpText("Enter a list of comma-separated fruits."),
+  ui_epoxy_html(
+    .id = "fruit_list",
+    tags$ul("{{ li fruits }}"),
+    fruits = "favorite fruits"
+  )
+)
+
+server <- function(input, output) {
+  fruits <- reactive({
+    validate(need(
+      nzchar(input$faves),
+      "Please share your favorite fruits."
+    ))
+    fruits <- trimws(strsplit(input$faves, ",\\s*")[[1]])
+    fruits[nzchar(fruits)]
+  })
+
+  output$fruit_list <- render_epoxy(
+    fruits = fruits()
+  )
+}
+
+shinyApp(ui, server)
+```
+
+</details>
+
+<img src="images/epoxy-shiny/epoxy-app-copies.png" alt="An app that aks the user for a list of fruits. The user has entered 'mango, coconut, papaya' and a dynamically rendered list below the input shows each fruit as a bullet in a unordered list item.">
+
 * can use `{{ <markup> <expr> }}` syntax from `epoxy_html()`
   (but not inline transformations)
 * bare character strings are assumed to be HTML,
@@ -191,22 +274,22 @@ movie_choices <- bechdel$imdb_id
 names(movie_choices) <- bechdel$title
 
 ui <- fixedPage(
-	selectInput("movie", "Pick a movie", choices = movie_choices),
-	ui_epoxy_html(
-		.id = "movie_info",
-		p(
-			"{{ em title }} was released in {{ strong year }}.",
-			"It was directed by {{ director }} and rated {{ rated }}."
-		)
-	)
+  selectInput("movie", "Pick a movie", choices = movie_choices),
+  ui_epoxy_html(
+    .id = "movie_info",
+    p(
+      "{{ em title }} was released in {{ strong year }}.",
+      "It was directed by {{ director }} and rated {{ rated }}."
+    )
+  )
 )
 
 server <- function(input, output, session) {
-	movie <- reactive({
-		bechdel[bechdel$imdb_id == input$movie, ]
-	})
+  movie <- reactive({
+    bechdel[bechdel$imdb_id == input$movie, ]
+  })
 
-	output$movie_info <- render_epoxy(.list = movie())
+  output$movie_info <- render_epoxy(.list = movie())
 }
 
 shinyApp(ui, server)
