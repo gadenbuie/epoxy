@@ -44,19 +44,20 @@ Shiny already includes two reactive text outputs:
 These are great for displaying reactive text in your app,
 but they have some limitations:
 
-* `uiOutput()` tends to move your UI logic into the `server` function,
+* `uiOutput()` tends to move your UI code into the `server` function,
   making it harder to know the final structure of your UI.
 
 * `textOutput()` is great for displaying reactive text,
-  but often requires messing with the `.noWS` argument
-  to get the spacing around the dynamic text _just right_.
+  but it takes some work to get the spacing around the dynamic text
+  _just right_.
 
 In this article, we'll learn how to use epoxy in Shiny apps
-and see that it can help us overcome these limitations.
+and how epoxy improves the experience of writing apps
+with dynamic text and templates.
 
 ## Introducing epoxy in Shiny
 
-### A basic Shiny app with `textOutput()`
+### A basic Shiny app with textOutput()
 
 Let's start with an example Shiny app.
 It's a simple but friendly app that greets the user by name.
@@ -65,12 +66,12 @@ It's a simple but friendly app that greets the user by name.
 library(shiny)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	p("Hello,", textOutput("greeting", inline = TRUE), "!")
+  textInput("name", "What's your name?"),
+  p("Hello,", textOutput("greeting", inline = TRUE), "!")
 )
 
 server <- function(input, output) {
-	output$greeting <- renderText(input$name)
+  output$greeting <- renderText(input$name)
 }
 
 shinyApp(ui, server)
@@ -78,23 +79,23 @@ shinyApp(ui, server)
 
 ![](images/epoxy-shiny/shiny-app-1.png)
 
-This gets you pretty close,
-but you have to remember to include `inline = TRUE` in `textOutput()`
-and there's some extra space
+This gets you pretty close to what you want,
+but you have to remember to include `inline = TRUE` in `textOutput()`.
+There's also some extra space
 between the user's name and the exclamation point
 that you'd probably like to get rid of[^container-arg].
 
-[^container-arg]: To fix the spacing between `textOutput()` and it's syblings, you'd have to use the `container` argument of `textOutput()` to give it a custom container function that includes the `.noWS` argument, such as `container = function(x) span(x, .noWS = "after")`.
+[^container-arg]: To remove the spacing between `textOutput()` and the next character after it, you need to use the `.noWS` argument of a tag function. `textOutput()` doesn't expose this argument though, so you have to give it a custom container function, such as `container = function(x) span(x, .noWS = "after")`.
 
 ### Setting up `ui_epoxy_html()`
 
-With `ui_epoxy_html()`, this is easy to fix:
+Here's how to approach dynamic text with `ui_epoxy_html()`:
 
 1. Wrap a portion of your UI in `ui_epoxy_html()` and give it an `.id`.
 
-1. Use `{{ name }}` syntax to define fields where the dynamic text should go.
+2. Use `{{ name }}` syntax to define fields where the dynamic text should go.
 
-1. In your server code, assign `render_epoxy()` to an output matching the UI's
+3. In your server code, assign `render_epoxy()` to an output matching the UI's
    `.id` and pass in the reactive data as arguments with names matching the
    dynamic fields.
 
@@ -103,17 +104,17 @@ library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	ui_epoxy_html(
-		.id = "greeting",
-		p("Hello, {{name}}!")
-	)
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(           #<< Template wrapper
+    .id = "greeting",      #<< Unique ID
+    p("Hello, {{name}}!")  #<< Dynamic text
+  )                        #<<
 )
 
 server <- function(input, output) {
-	output$greeting <- render_epoxy(
-		name = input$name
-	)
+  output$greeting <- render_epoxy( #<< Connect to template
+    name = input$name              #<< Reactive data field
+  )
 }
 
 shinyApp(ui, server)
@@ -125,8 +126,9 @@ shinyApp(ui, server)
 
 Another advantage of using `ui_epoxy_html()` over `textOutput()`
 is that you can set default values that appear immediately
-before the server responds
+while your app is loading
 or that are used when an error occurs.
+
 In the next app,
 `name` is set to `"friend"` by default in `ui_epoxy_html()`,
 and on the server side I've also added a `validate()` call
@@ -137,26 +139,26 @@ library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	ui_epoxy_html(
-		.id = "greeting",
-		p("Hello, {{name}}!"),
-		name = "friend"
-	)
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    p("Hello, {{name}}!"),
+    name = "friend"
+  )
 )
 
 server <- function(input, output) {
-	name <- reactive({
-		validate(need(
-			nchar(input$name) > 2,
-			"Name must be more than 2 characters."
-		))
-		input$name
-	})
+  name <- reactive({
+    validate(need(
+      nchar(input$name) > 2,
+      "Name must be more than 2 characters."
+    ))
+    input$name
+  })
 
-	output$greeting <- render_epoxy(
-		name = name()
-	)
+  output$greeting <- render_epoxy(
+    name = name()
+  )
 }
 
 shinyApp(ui, server)
@@ -165,8 +167,7 @@ shinyApp(ui, server)
 If the user hasn't yet entered a name of more than 2 characters,
 the text for the `name` field will use the default value
 and will have a red squiggle below it.
-If they hover over the squiggle,
-the error message is shown in the hover text.
+Hovering over the squiggle reveals the error message.
 
 <img src="images/epoxy-shiny/epoxy-app-error.png" alt="An app where the user has entered 'me' as their name. The text reads 'Hello, friend!' with a red squiggle below the word friend.">
 
