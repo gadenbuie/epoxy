@@ -16,8 +16,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-	collapse = TRUE,
-	comment = "#>"
+  collapse = TRUE,
+  comment = "#>"
 )
 library(shiny)
 library(epoxy)
@@ -64,16 +64,16 @@ with dynamic text and templates.
 Let's start with an example Shiny app.
 It's a simple but friendly app that greets the user by name.
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	p("Hello,", textOutput("greeting", inline = TRUE), "!")
+  textInput("name", "What's your name?"),
+  p("Hello,", textOutput("greeting", inline = TRUE), "!")
 )
 
 server <- function(input, output) {
-	output$greeting <- renderText(input$name)
+  output$greeting <- renderText(input$name)
 }
 
 shinyApp(ui, server)
@@ -101,22 +101,22 @@ Here's how to approach dynamic text with `ui_epoxy_html()`:
    `.id` and pass in the reactive data as arguments with names matching the
    dynamic fields.
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	ui_epoxy_html(           #<< Template wrapper
-		.id = "greeting",      #<< Unique ID
-		p("Hello, {{name}}!")  #<< Dynamic text
-	)                        #<<
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(           #<< Template wrapper
+    .id = "greeting",      #<< Unique ID
+    p("Hello, {{name}}!")  #<< Dynamic text
+  )                        #<<
 )
 
 server <- function(input, output) {
-	output$greeting <- render_epoxy( #<< Connect to template
-		name = input$name              #<< Reactive data field
-	)
+  output$greeting <- render_epoxy( #<< Connect to template
+    name = input$name              #<< Reactive data field
+  )
 }
 
 shinyApp(ui, server)
@@ -136,31 +136,31 @@ In the next app,
 and on the server side I've also added a `validate()` call
 indicating that we need a name with at least 2 characters.
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	ui_epoxy_html(
-		.id = "greeting",
-		p("Hello, {{name}}!"),
-		name = "friend"
-	)
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    p("Hello, {{name}}!"),
+    name = "friend"
+  )
 )
 
 server <- function(input, output) {
-	name <- reactive({
-		validate(need(
-			nchar(input$name) > 2,
-			"Name must be more than 2 characters."
-		))
-		input$name
-	})
+  name <- reactive({
+    validate(need(
+      nchar(input$name) > 2,
+      "Name must be more than 2 characters."
+    ))
+    input$name
+  })
 
-	output$greeting <- render_epoxy(
-		name = name()
-	)
+  output$greeting <- render_epoxy(
+    name = name()
+  )
 }
 
 shinyApp(ui, server)
@@ -185,27 +185,27 @@ as long as it's okay to put a `<span>` around the text[^not-attributes].
 
 <details><summary>Example app code</summary>
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("name", "What's your name?"),
-	ui_epoxy_html(
-		.id = "greeting",
-		selectInput(
-			inputId = "color",
-			label = "What's your favorite color, {{ name }}?",
-			choices = c("red", "green", "blue", "purple", "yellow")
-		),
-		name = "friend"
-	)
+  textInput("name", "What's your name?"),
+  ui_epoxy_html(
+    .id = "greeting",
+    selectInput(
+      inputId = "color",
+      label = "What's your favorite color, {{ name }}?",
+      choices = c("red", "green", "blue", "purple", "yellow")
+    ),
+    name = "friend"
+  )
 )
 
 server <- function(input, output) {
-	output$greeting <- render_epoxy(
-		name = input$name
-	)
+  output$greeting <- render_epoxy(
+    name = input$name
+  )
 }
 
 shinyApp(ui, server)
@@ -226,33 +226,33 @@ making it easy to do things like dynamically update a list.
 
 <details><summary>Example app code</summary>
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 library(epoxy)
 
 ui <- fluidPage(
-	textInput("faves", "What are your favorite fruits?"),
-	helpText("Enter a list of comma-separated fruits."),
-	ui_epoxy_html(
-		.id = "fruit_list",
-		tags$ul("{{ li fruits }}"),
-		fruits = "favorite fruits"
-	)
+  textInput("faves", "What are your favorite fruits?"),
+  helpText("Enter a list of comma-separated fruits."),
+  ui_epoxy_html(
+    .id = "fruit_list",
+    tags$ul("{{ li fruits }}"),
+    fruits = "favorite fruits"
+  )
 )
 
 server <- function(input, output) {
-	fruits <- reactive({
-		validate(need(
-			nzchar(input$faves),
-			"Please share your favorite fruits."
-		))
-		fruits <- trimws(strsplit(input$faves, ",\\s*")[[1]])
-		fruits[nzchar(fruits)]
-	})
+  fruits <- reactive({
+    validate(need(
+      nzchar(input$faves),
+      "Please share your favorite fruits."
+    ))
+    fruits <- trimws(strsplit(input$faves, ",\\s*")[[1]])
+    fruits[nzchar(fruits)]
+  })
 
-	output$fruit_list <- render_epoxy(
-		fruits = fruits()
-	)
+  output$fruit_list <- render_epoxy(
+    fruits = fruits()
+  )
 }
 
 shinyApp(ui, server)
@@ -280,7 +280,7 @@ Three more quick things about `ui_epoxy_html()`:
 
 ### Connecting epoxy with a reactive data frame
 
-```{r eval = FALSE}
+``` r
 library(shiny)
 library(epoxy)
 
@@ -288,22 +288,22 @@ movie_choices <- bechdel$imdb_id
 names(movie_choices) <- bechdel$title
 
 ui <- fixedPage(
-	selectInput("movie", "Pick a movie", choices = movie_choices),
-	ui_epoxy_html(
-		.id = "movie_info",
-		p(
-			"{{ em title }} was released in {{ strong year }}.",
-			"It was directed by {{ director }} and rated {{ rated }}."
-		)
-	)
+  selectInput("movie", "Pick a movie", choices = movie_choices),
+  ui_epoxy_html(
+    .id = "movie_info",
+    p(
+      "{{ em title }} was released in {{ strong year }}.",
+      "It was directed by {{ director }} and rated {{ rated }}."
+    )
+  )
 )
 
 server <- function(input, output, session) {
-	movie <- reactive({
-		bechdel[bechdel$imdb_id == input$movie, ]
-	})
+  movie <- reactive({
+    bechdel[bechdel$imdb_id == input$movie, ]
+  })
 
-	output$movie_info <- render_epoxy(.list = movie())
+  output$movie_info <- render_epoxy(.list = movie())
 }
 
 shinyApp(ui, server)
