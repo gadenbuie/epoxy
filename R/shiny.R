@@ -189,20 +189,36 @@ ui_epoxy_html <- function(
 		"aria-atomic" = .aria_atomic,
 		"aria-live" = .aria_live,
 		htmltools::HTML(res),
-		htmltools::htmlDependency(
-			name = "epoxy",
-			version = "0.0.1",
-			package = "epoxy",
-			src = "srcjs",
-			script = "output-epoxy.js",
-			all_files = FALSE
-		)
+		html_dependency_epoxy(),
+	  html_dependency_hint_css()
 	)
 	if (!is.null(deps) && length(deps)) {
 		htmltools::attachDependencies(out, deps)
 	} else {
 		out
 	}
+}
+
+html_dependency_epoxy <- function() {
+	htmltools::htmlDependency(
+		name = "epoxy",
+		version = "0.0.1",
+		package = "epoxy",
+		src = "srcjs",
+		script = "output-epoxy.js",
+		all_files = FALSE
+	)
+}
+
+html_dependency_hint_css <- function() {
+	htmltools::htmlDependency(
+		name = "hint.css",
+		version = "2.7.0",
+		package = "epoxy",
+		src = "lib/hint.css",
+		stylesheet = "hint.min.css",
+		all_files = FALSE
+	)
 }
 
 #' Epoxy Markdown Template for Shiny

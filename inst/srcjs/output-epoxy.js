@@ -64,11 +64,13 @@ $.extend(epoxyOutputBinding, {
 
       let itemData = data[itemName]
 
+      const errorClasses = ['epoxy-item__error', 'hint--top-right', 'hint--error']
+
       if (data.__errors__ && data.__errors__.includes(itemName)) {
-        item.classList.add('epoxy-item__error')
+        errorClasses.forEach(c => item.classList.add(c))
         item.innerHTML = item.dataset.epoxyPlaceholder || ''
         item.style.removeProperty('display')
-        item.setAttribute('title', itemData)
+        item.setAttribute('aria-label', itemData)
         item.dispatchEvent(
           new CustomEvent('epoxy-error', {
             bubbles: true,
@@ -82,8 +84,8 @@ $.extend(epoxyOutputBinding, {
         )
         return
       } else {
-        item.classList.remove('epoxy-item__error')
-        item.removeAttribute('title')
+        errorClasses.forEach(c => item.classList.remove(c))
+        item.removeAttribute('aria-label')
       }
 
       if (this._last && this._deepEqual(itemData, this._last[itemName])) {

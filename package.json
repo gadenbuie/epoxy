@@ -4,8 +4,9 @@
   "description": "web dependencies for the {epoxy} R package",
   "main": "index.js",
   "scripts": {
-    "copy": "npm run copy:mustache",
+    "copy": "npm run copy:mustache && npm run copy:hint.css",
     "copy:mustache": "cpy 'mustache.min.js' ../../inst/lib/mustache --cwd node_modules/mustache/",
+    "copy:hint.css": "cpy 'hint.min.css' ../../inst/lib/hint.css --cwd node_modules/hint.css/",
     "lint": "standard inst/srcjs/*.js",
     "lint:fix": "standard --fix inst/srcjs/*.js",
     "build": "npm run lint:fix && npm run copy"
@@ -21,6 +22,7 @@
   },
   "homepage": "https://pkg.garrickadenbuie.com/epoxy",
   "dependencies": {
+    "hint.css": "^2.7.0",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
