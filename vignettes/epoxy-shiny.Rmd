@@ -173,7 +173,7 @@ Hovering over the squiggle reveals the error message.
 
 <img src="images/epoxy-shiny/epoxy-app-error.png" alt="An app where the user has entered 'me' as their name. The text reads 'Hello, friend!' with a red squiggle below the word friend.">
 
-### A few more things about `ui_epoxy_html()`
+### A few more things about `ui_epoxy_html()` {#few-more-things}
 
 First, you can reference the same reactive value,
 e.g. `{{ name }}`,
@@ -330,7 +330,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-<img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt="">
+<img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt="The example app with the movie 'Stick It' selected. Below the select input is a description of the movie using its year, director and rating.">
 
 Notice that instead of passing named arguments for each field to `render_epoxy()`,
 we pass the entire data frame to the `.list` argument.
@@ -403,7 +403,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-<img src="images/epoxy-shiny/epoxy-app-markdown.png" alt="">
+<img src="images/epoxy-shiny/epoxy-app-markdown.png" alt="The example app with 'Back to the Future Part II' selected. Below the input, a short description of the movie is displayed using the correpsonding rows and columns of 'bechdel'.">
 
 For an even more involved example, try the epoxy markdown example app
 
@@ -411,7 +411,89 @@ For an even more involved example, try the epoxy markdown example app
 run_epoxy_example_app("ui_epoxy_markdown")
 ```
 
-<img src="images/epoxy-shiny/epoxy-example-markdown.png" alt="">
+<img src="images/epoxy-shiny/epoxy-example-markdown.png" alt="epoxy's built-in example movie app, with 'Back to the Future Part II' selected. The left column shows the movie poster and the right column includes a description of the movie formed from its corresponding row in 'bechdel'.">
 
 ## Mustache templates
 
+For more complex templates,
+you might want to use a template language like [Mustache](https://mustache.github.io/).
+In R, we know this syntax from the `{whisker}` package.
+
+`ui_epoxy_mustache()`[^or-whisker] wraps the Mustache language,
+letting you blend typical `{shiny}` and `{htmltools}` UI
+with the mustache template.
+
+[^or-whisker]: Or `ui_epoxy_whisker()` if you prefer.
+
+When would you use `ui_epoxy_mustache()` instead of `ui_epoxy_html()`?
+
+* If your template variables are used as HTML attributes,
+  e.g. in links or images (via the `href` or `src` attributes).
+
+* If you want to use mustache's conditional logic,
+  e.g. `{{#<expr>}} ... {{/<expr>}}`.
+
+Let's revist our favorite fruits example app [from earlier](#few-more-things).
+
+
+``` r
+library(shiny)
+library(epoxy)
+
+ui <- fluidPage(
+  textInput("faves", "What are your favorite fruits?"),
+  ui_epoxy_mustache(
+    id = "fruit_list",
+    tags$ul(
+      # If fruits is not empty, wrap into list items
+      "{{#fruits}}",
+      tags$li("{{.}}"),
+      "{{/fruits}}",
+      # If fruits is empty, show a help message
+      "{{^fruits}}",
+      tags$li(
+        class = "text-muted",
+        "Enter a list of comma-separated fruits."
+      ),
+      "{{/fruits}}"
+    )
+  )
+)
+
+server <- function(input, output) {
+  fruits <- reactive({
+    req(input$faves)
+    fruits <- trimws(strsplit(input$faves, ",\\s*")[[1]])
+    fruits[nzchar(fruits)]
+  })
+
+  output$fruit_list <- render_epoxy(
+    fruits = fruits()
+  )
+}
+
+shinyApp(ui, server)
+```
+
+This app use's mustache's conditional logic to show a help message
+when no fruits are entered.
+
+<img src="images/epoxy-shiny/epoxy-mustache-empty.png" alt="The example app without any user input. The list item reminds the user, in muted text, to write their favorite fruits.">
+
+And it uses mustache's looping syntax to show a list of fruits
+when fruits are entered.
+
+<img src="images/epoxy-shiny/epoxy-mustache-list.png" alt="The user has entered 'apple, banana, coconut' and each fruit is now a list item in the unordered list below the app.">
+
+You can find a more detailed example in the epoxy mustache example app.
+
+``` r
+run_epoxy_example_app("ui_epoxy_mustache")
+```
+
+One important thing to note about `ui_epoxy_mustache()`
+is that, unlike `ui_epoxy_html()`,
+then entire template is re-rendered (in the browser)
+whenever a reactive source updates.
+So it'd be better to use smaller, localized templates
+than to wrap your entire app in `ui_epoxy_mustache()`.
