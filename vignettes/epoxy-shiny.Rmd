@@ -361,14 +361,57 @@ render_epoxy(.list = {
 })
 ```
 
-## Cut this, cut this, cut this
+## Markdown templates
 
-Sorry! I'm still working on this article.
-In the mean time,
-check out the packaged Shiny app examples using `run_epoxy_example_app()`.
-Or read about the related Shiny UI and server functions:
+If you're using epoxy to write data-driven prose,
+you might want to use markdown for your templates,
+rather than writing in HTML.
+`ui_epoxy_markdown()` is a version of `ui_epoxy_html()`
+that uses markdown syntax instead of HTML syntax[^md-limitation].
 
-* `ui_epoxy_html()`
-* `ui_epoxy_mustache()`
-* `render_epoxy()`
+[^md-limitation]: It also has the same limitations: you can only use template fields in the text portions of your markdown. That's mostly everywhere, but notably `![]({{ image_url }})` won't work.
+
+Let's revisit our movie app from the last example,
+but this time using markdown for the template.
+
+``` r
+library(shiny)
+library(epoxy)
+
+movie_choices <- bechdel$imdb_id
+names(movie_choices) <- bechdel$title
+
+ui <- fixedPage(
+  selectInput("movie", "Pick a movie", choices = movie_choices),
+  ui_epoxy_markdown(
+    .id = "movie_info",
+    "_{{ title }}_ was released",
+    "in **{{ year }}**.",
+    "It was directed by {{ director }}",
+    "and was rated {{ rated }}."
+  )
+)
+
+server <- function(input, output, session) {
+  movie <- reactive({
+    bechdel[bechdel$imdb_id == input$movie, ]
+  })
+
+  output$movie_info <- render_epoxy(.list = movie())
+}
+
+shinyApp(ui, server)
+```
+
+<img src="images/epoxy-shiny/epoxy-app-markdown.png" alt="">
+
+For an even more involved example, try the epoxy markdown example app
+
+``` r
+run_epoxy_example_app("ui_epoxy_markdown")
+```
+
+<img src="images/epoxy-shiny/epoxy-example-markdown.png" alt="">
+
+## Mustache templates
 
