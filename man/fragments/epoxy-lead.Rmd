@@ -1,12 +1,10 @@
 ```{r include = FALSE}
 rel_or_abs_url <- function(path) {
-	IS_PKGDOWN <- identical(
-		basename(dirname(knitr::current_input())),
-		"pkgdown"
-	)
+	rel_path <- knitr::opts_chunk$get("use_rel_path")
+	if (is.null(rel_path)) rel_path <- FALSE
 	paste0(
-		if (IS_PKGDOWN)  "articles/",
-		if (!IS_PKGDOWN) "https://pkg.garrickadenbuie.com/epoxy/articles/",
+		if (rel_path)  "articles/",
+		if (!rel_path) "https://pkg.garrickadenbuie.com/epoxy/articles/",
 		path
 	)
 }

@@ -21,7 +21,7 @@ library(epoxy)
 [![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
 <!-- badges: end -->
 
-```{r child = "../man/fragments/epoxy-lead.Rmd"}
+```{r child = "../man/fragments/epoxy-lead.Rmd", use_rel_path = TRUE}
 ```
 
 ## Learn more
