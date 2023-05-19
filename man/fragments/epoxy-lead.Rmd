@@ -27,8 +27,8 @@ epoxy makes it easy to use [glue] in scripts, reports, and apps.
 
 ## epoxy is super-strength glue
 
-**[In R Markdown and Quarto reports][epoxy-report]**,
-use `epoxy` chunks for super-strength inline syntax.
+[In R Markdown and Quarto reports][epoxy-report] \
+Use `epoxy` chunks for super-strength inline syntax.
 Just `library(epoxy)`
 in your [R Markdown][rmarkdown] or [Quarto][quarto]
 document to get started.
@@ -36,8 +36,8 @@ All epoxy chunks make it easy to tranform values in place
 with a `{cli}`-inspired inline syntax
 described in `?epoxy_transform_inline`.
 
-**[In R scripts][epoxy-script]**,
-the same functions that power epoxy chunks are availble in three flavors:
+[In R scripts][epoxy-script] \
+The same functions that power epoxy chunks are availble in three flavors:
 
 * `epoxy()` for markdown and general purpose outputs
 
@@ -50,7 +50,7 @@ These functions are accompanied by
 a robust system for chained glue-transformers
 powered by `epoxy_transform()`.
 
-**[In Shiny apps][epoxy-shiny]**,
+**[In Shiny apps][epoxy-shiny]** \
 `ui_epoxy_html()` makes it easy to update text or HTML dynamically,
 anywhere in your [Shiny][shiny] app's UI.
 For more complicated situations,

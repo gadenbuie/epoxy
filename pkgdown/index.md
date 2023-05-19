@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- pkgdown/index.md is generated from pkgdown/index.Rmd. Please edit that file -->
 
 # epoxy <a href='https://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
@@ -19,31 +19,31 @@ scripts, reports, and apps.
 
 ## epoxy is super-strength glue
 
-**[In R Markdown and Quarto
-reports](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-report.html)**,
-use `epoxy` chunks for super-strength inline syntax. Just
+[In R Markdown and Quarto
+reports](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-report.html)  
+Use `epoxy` chunks for super-strength inline syntax. Just
 `library(epoxy)` in your [R Markdown](https://rmarkdown.rstudio.com) or
 [Quarto](https://quarto.org) document to get started. All epoxy chunks
 make it easy to tranform values in place with a `{cli}`-inspired inline
 syntax described in `?epoxy_transform_inline`.
 
-**[In R
-scripts](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html)**,
-the same functions that power epoxy chunks are availble in three
+[In R
+scripts](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html)  
+The same functions that power epoxy chunks are availble in three
 flavors:
 
-  - `epoxy()` for markdown and general purpose outputs
+-   `epoxy()` for markdown and general purpose outputs
 
-  - `epoxy_html()` for HTML outputs, with added support for HTML
+-   `epoxy_html()` for HTML outputs, with added support for HTML
     templating (see `?epoxy_transform_html`)
 
-  - `epoxy_latex()` for LaTeX reports
+-   `epoxy_latex()` for LaTeX reports
 
 These functions are accompanied by a robust system for chained
 glue-transformers powered by `epoxy_transform()`.
 
 **[In Shiny
-apps](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-shiny.html)**,
+apps](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-shiny.html)**  
 `ui_epoxy_html()` makes it easy to update text or HTML dynamically,
 anywhere in your [Shiny](https://shiny.posit.co/) app’s UI. For more
 complicated situations, `ui_epoxy_mustache()` lets you turn any Shiny UI
@@ -52,7 +52,7 @@ language](https://mustache.github.io).
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\!
+There’s a whole lot more that epoxy can do!
 
 <div class="container">
 <div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
