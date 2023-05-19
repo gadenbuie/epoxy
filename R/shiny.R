@@ -244,6 +244,22 @@ html_dependency_hint_css <- function() {
 #' @examplesIf rlang::is_installed("shiny")
 #' library(shiny)
 #'
+#' # Shiny epoxy template functions don't support inline transformations,
+#' # so we still have to do some prep work ourselves.
+#' bechdel <- epoxy::bechdel
+#'
+#' as_dollars <- scales::label_dollar(
+#'   scale_cut = scales::cut_short_scale()
+#' )
+#' bechdel$budget <- as_dollars(bechdel$budget)
+#' bechdel$domgross <- as_dollars(bechdel$domgross)
+#'
+#' vowels <- c("a", "e", "i", "o", "u")
+#' bechdel$genre  <- paste(
+#'   ifelse(substr(tolower(bechdel$genre), 1, 1) %in% vowels, "an", "a"),
+#'   tolower(bechdel$genre)
+#' )
+#'
 #' movie_ids <- rlang::set_names(
 #'   bechdel$imdb_id,
 #'   bechdel$title
@@ -282,17 +298,7 @@ html_dependency_hint_css <- function() {
 #'
 #' server <- function(input, output, session) {
 #'   movie <- reactive({
-#'     movie <- bechdel[bechdel$imdb_id == input$movie, ]
-#'     movie$budget <- epoxy("{.dollar budget}", .data = movie)
-#'     movie$domgross <- epoxy("{.dollar domgross}", .data = movie)
-#'
-#'     vowels <- c("a", "e", "i", "o", "u")
-#'     movie$genre  <- paste(
-#'       ifelse(substr(tolower(movie$genre), 1, 1) %in% vowels, "an", "a"),
-#'       tolower(movie$genre)
-#'     )
-#'
-#'     movie
+#'     bechdel[bechdel$imdb_id == input$movie, ]
 #'   })
 #'
 #'   output$about_movie <- render_epoxy(.list = movie())
