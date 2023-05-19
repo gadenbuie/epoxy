@@ -300,17 +300,21 @@ Example app code
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="images/epoxy-shiny/epoxy-app-input.png" alt="An app where the user has entered 'Shiny friend' as their name. The label of the select input includes their name, updated dynamically."></p>
-<p>You can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code> syntax<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Unfortunately, you can’t use the inline formatting
+<p>You can use <code>{{ &lt;markup&gt; &lt;expr&gt; }}</code> syntax<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Um, so this is awkward. But I’m using
+&lt;code&gt;&amp;lt;..&amp;gt;&lt;/code&gt; to denote things &lt;strong&gt;you&lt;/strong&gt; should
+replace and the &lt;code&gt;{{ .. }}&lt;/code&gt; to denote things
+&lt;strong&gt;epoxy&lt;/strong&gt; will replace. I hope that’s not too confusing.
+Here’s a real world example:
+&lt;code&gt;{{ strong.text-success name }}&lt;/code&gt;.&lt;/p&gt;"><sup>3</sup></a> from
+<code><a href="../reference/epoxy.html">epoxy_html()</a></code>, which makes it possible to determine which
+HTML element and class is used to contain the dynamic text<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Unfortunately, you can’t use the inline formatting
 syntax from &lt;code&gt;&lt;a href="../reference/epoxy_transform_inline.html"&gt;epoxy_transform_inline()&lt;/a&gt;&lt;/code&gt; in
 &lt;code&gt;&lt;a href="../reference/ui_epoxy_html.html"&gt;ui_epoxy_html()&lt;/a&gt;&lt;/code&gt;, e.g. &lt;code&gt;{{ .bold name}}&lt;/code&gt; wraps
 the &lt;code&gt;name&lt;/code&gt; field in a &lt;code&gt;&amp;lt;span&amp;gt;&lt;/code&gt; with
 &lt;code&gt;class = "bold"&lt;/code&gt; rather than a &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;
-tag.&lt;/p&gt;'><sup>3</sup></a> from
-<code><a href="../reference/epoxy.html">epoxy_html()</a></code>, which makes it possible to determine which
-HTML element and class is used to contain the dynamic text. If you send
-an array of values to this reactive field, the tag is used as a
-template, making it easy to do things like dynamically update a
-list.</p>
+tag.&lt;/p&gt;'><sup>4</sup></a>. If you send an array
+of values to this reactive field, the tag is used as a template, making
+it easy to do things like dynamically update a list.</p>
 <details><summary>
 Example app code
 </summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -366,14 +370,16 @@ the bare text or HTML.</p></li>
 <div class="section level2">
 <h2 id="connecting-epoxy-with-a-reactive-data-frame">Connecting epoxy with a reactive data frame<a class="anchor" aria-label="anchor" href="#connecting-epoxy-with-a-reactive-data-frame"></a>
 </h2>
-<p>One of my favorite use cases for epoxy’s templating functions in
-Shiny is to store the data for a template in a data frame. Then, the
-apps’s inputs are combined in a reactive expressions that filters down
-to a single row of the data frame. Finally, that row is sent via
+<p>One of my favorite use cases for epoxy’s Shiny functions is to create
+a UI template that’s filled in by a row in a data frame. In this
+pattern, the app’s inputs are combined in a reactive expression that
+filters the data frame down to a single row. Then, that row is sent via
 <code><a href="../reference/render_epoxy.html">render_epoxy()</a></code> to the UI, where it’s dynamically injected
-into the template.</p>
+into the template UI.</p>
 <p>Here’s a small example using epoxy’s built in <code>bechdel</code>
-data set. In this app, the user picks a movie and the template below is
+data set, a small data set with the 10 highest-rated movies that pass
+the <a href="https://en.wikipedia.org/wiki/Bechdel_test" class="external-link">Bechdel
+test</a>. In this app, the user picks a movie and the template below is
 filled out with information from the data set for that movie.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
@@ -397,13 +403,42 @@ filled out with information from the data set for that movie.</p>
 <span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="co"># Use the inputs to filter a single row</span></span>
 <span>    <span class="va">bechdel</span><span class="op">[</span><span class="va">bechdel</span><span class="op">$</span><span class="va">imdb_id</span> <span class="op">==</span> <span class="va">input</span><span class="op">$</span><span class="va">movie</span>, <span class="op">]</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span></span>
+<span>  <span class="co"># Pass the reactive data frame to</span></span>
+<span>  <span class="co"># the .list argument of render_epoxy()</span></span>
 <span>  <span class="va">output</span><span class="op">$</span><span class="va">movie_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span>.list <span class="op">=</span> <span class="fu">movie</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p><img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt=""></p>
+<p>Notice that instead of passing named arguments for each field to
+<code><a href="../reference/render_epoxy.html">render_epoxy()</a></code>, we pass the entire data frame to the
+<code>.list</code> argument.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span>.list <span class="op">=</span> <span class="fu">movie</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>You can use this same pattern with a list in a
+<code><a href="https://rdrr.io/pkg/shiny/man/reactiveVal.html" class="external-link">reactiveVal()</a></code>, a <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive()</a></code> that returns a
+data frame, a list or a list-like object, or a
+<code><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues()</a></code> list. And <code>.list</code> can coexist
+with named expressions.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">name</span>,</span>
+<span>  .list <span class="op">=</span> <span class="fu">movie</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>If you want to build the entire list within a single reactive
+expression, set <code>.list</code> equal to the expression, wrapped in
+braces:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span>.list <span class="op">=</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">name</span>,</span>
+<span>    age <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">age</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cut-this-cut-this-cut-this">Cut this, cut this, cut this<a class="anchor" aria-label="anchor" href="#cut-this-cut-this-cut-this"></a>
