@@ -32,12 +32,12 @@ scripts](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html)**,
 the same functions that power epoxy chunks are availble in three
 flavors:
 
--   `epoxy()` for markdown and general purpose outputs
+  - `epoxy()` for markdown and general purpose outputs
 
--   `epoxy_html()` for HTML outputs, with added support for HTML
+  - `epoxy_html()` for HTML outputs, with added support for HTML
     templating (see `?epoxy_transform_html`)
 
--   `epoxy_latex()` for LaTeX reports
+  - `epoxy_latex()` for LaTeX reports
 
 These functions are accompanied by a robust system for chained
 glue-transformers powered by `epoxy_transform()`.
@@ -52,7 +52,7 @@ language](https://mustache.github.io).
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do!
+There’s a whole lot more that epoxy can do\!
 
 <div class="container">
 <div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
