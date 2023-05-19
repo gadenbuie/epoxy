@@ -1,8 +1,25 @@
+```{r include = FALSE}
+rel_or_abs_url <- function(path) {
+	IS_PKGDOWN <- identical(
+		basename(dirname(knitr::current_input())),
+		"pkgdown"
+	)
+	paste0(
+		if (IS_PKGDOWN)  "articles/",
+		if (!IS_PKGDOWN) "https://pkg.garrickadenbuie.com/epoxy/articles/",
+		path
+	)
+}
+```
+
 [glue]: https://glue.tidyverse.org
 [shiny]: https://shiny.posit.co/
 [rmarkdown]: https://rmarkdown.rstudio.com
 [quarto]: https://quarto.org
 [mustache]: https://mustache.github.io
+[epoxy-report]: `r rel_or_abs_url("epoxy-report.html")`
+[epoxy-script]: `r rel_or_abs_url("epoxy-script.html")`
+[epoxy-shiny]: `r rel_or_abs_url("epoxy-shiny.html")`
 
 ::: lead
 epoxy makes it easy to use [glue] in scripts, reports, and apps.
@@ -10,12 +27,17 @@ epoxy makes it easy to use [glue] in scripts, reports, and apps.
 
 ## epoxy is super-strength glue
 
-**In [R Markdown][rmarkdown] and [Quarto][quarto] reports**,
+**[In R Markdown and Quarto reports][epoxy-report]**,
 use `epoxy` chunks for super-strength inline syntax.
-Just `library(epoxy)` in your `.Rmd` or `.qmd`,
-or call `epoxy::use_epoxy_knitr_engines()` to get started.
+Just `library(epoxy)`
+in your [R Markdown][rmarkdown] or [Quarto][quarto]
+document to get started.
+All epoxy chunks make it easy to tranform values in place
+with a `{cli}`-inspired inline syntax
+described in `?epoxy_transform_inline`.
 
-**In R scripts**, the same functions that power epoxy chunks are availble in three flavors:
+**[In R scripts][epoxy-script]**,
+the same functions that power epoxy chunks are availble in three flavors:
 
 * `epoxy()` for markdown and general purpose outputs
 
@@ -28,9 +50,9 @@ These functions are accompanied by
 a robust system for chained glue-transformers
 powered by `epoxy_transform()`.
 
-**In [Shiny apps][shiny]**,
+**[In Shiny apps][epoxy-shiny]**,
 `ui_epoxy_html()` makes it easy to update text or HTML dynamically,
-anywhere in your app's UI.
+anywhere in your [Shiny][shiny] app's UI.
 For more complicated situations,
 `ui_epoxy_mustache()` lets you turn any Shiny UI
 into a template that leverages the [Mustache templating language][mustache].
