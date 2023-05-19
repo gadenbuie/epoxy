@@ -215,12 +215,14 @@ shinyApp(ui, server)
 
 <img src="images/epoxy-shiny/epoxy-app-input.png" alt="An app where the user has entered 'Shiny friend' as their name. The label of the select input includes their name, updated dynamically.">
 
-You can use `{{ <markup> <expr> }}` syntax[^not-inline] from `epoxy_html()`,
+You can use `{{ <markup> <expr> }}` syntax[^awkward] from `epoxy_html()`,
 which makes it possible to determine which HTML element and class is used
-to contain the dynamic text.
+to contain the dynamic text[^not-inline].
 If you send an array of values to this reactive field,
 the tag is used as a template,
 making it easy to do things like dynamically update a list.
+
+[^awkward]: Um, so this is awkward. But I'm using `<..>` to denote things **you** should replace and the `{{ .. }}` to denote things **epoxy** will replace. I hope that's not too confusing. Here's a real world example: `{{ strong.text-success name }}`.
 
 [^not-inline]: Unfortunately, you can't use the inline formatting syntax from `epoxy_transform_inline()` in `ui_epoxy_html()`, e.g. `{{ .bold name}}` wraps the `name` field in a `<span>` with `class = "bold"` rather than a `<strong>` tag.
 
@@ -316,9 +318,12 @@ ui <- fixedPage(
 
 server <- function(input, output, session) {
   movie <- reactive({
+    # Use the inputs to filter a single row
     bechdel[bechdel$imdb_id == input$movie, ]
   })
 
+  # Pass the reactive data frame to
+  # the .list argument of render_epoxy()
   output$movie_info <- render_epoxy(.list = movie())
 }
 
@@ -326,6 +331,35 @@ shinyApp(ui, server)
 ```
 
 <img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt="">
+
+Notice that instead of passing named arguments for each field to `render_epoxy()`,
+we pass the entire data frame to the `.list` argument.
+
+```r
+render_epoxy(.list = movie())
+```
+
+You can use this same pattern with a list in a `reactiveVal()`, a `reactive()` that returns a data frame, a list or a list-like object, or a `reactiveValues()` list.
+And `.list` can coexist with named expressions.
+
+```r
+render_epoxy(
+  name = input$name,
+  .list = movie()
+)
+```
+
+If you want to build the entire list within a single reactive expression,
+set `.list` equal to the expression, wrapped in braces:
+
+``` r
+render_epoxy(.list = {
+  list(
+    name = input$name,
+    age = input$age
+  )
+})
+```
 
 ## Cut this, cut this, cut this
 
