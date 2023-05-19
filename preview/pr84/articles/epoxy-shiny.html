@@ -262,7 +262,7 @@ error message.</p>
 <p><img src="images/epoxy-shiny/epoxy-app-error.png" alt="An app where the user has entered 'me' as their name. The text reads 'Hello, friend!' with a red squiggle below the word friend."></p>
 </div>
 <div class="section level3">
-<h3 id="a-few-more-things-about-ui_epoxy_html">A few more things about <code>ui_epoxy_html()</code><a class="anchor" aria-label="anchor" href="#a-few-more-things-about-ui_epoxy_html"></a>
+<h3 id="few-more-things">A few more things about <code>ui_epoxy_html()</code><a class="anchor" aria-label="anchor" href="#few-more-things"></a>
 </h3>
 <p>First, you can reference the same reactive value,
 e.g. <code>{{ name }}</code>, as many times as you want in your
@@ -413,7 +413,7 @@ filled out with information from the data set for that movie.</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
-<p><img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt=""></p>
+<p><img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt="The example app with the movie 'Stick It' selected. Below the select input is a description of the movie using its year, director and rating."></p>
 <p>Notice that instead of passing named arguments for each field to
 <code><a href="../reference/render_epoxy.html">render_epoxy()</a></code>, we pass the entire data frame to the
 <code>.list</code> argument.</p>
@@ -441,17 +441,122 @@ braces:</p>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="cut-this-cut-this-cut-this">Cut this, cut this, cut this<a class="anchor" aria-label="anchor" href="#cut-this-cut-this-cut-this"></a>
+<h2 id="markdown-templates">Markdown templates<a class="anchor" aria-label="anchor" href="#markdown-templates"></a>
 </h2>
-<p>Sorry! I’m still working on this article. In the mean time, check out
-the packaged Shiny app examples using
-<code><a href="../reference/run_epoxy_example_app.html">run_epoxy_example_app()</a></code>. Or read about the related Shiny UI
-and server functions:</p>
+<p>If you’re using epoxy to write data-driven prose, you might want to
+use markdown for your templates, rather than writing in HTML.
+<code><a href="../reference/ui_epoxy_markdown.html">ui_epoxy_markdown()</a></code> is a version of
+<code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code> that uses markdown syntax instead of HTML
+syntax<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;It also has the same limitations: you can only use
+template fields in the text portions of your markdown. That’s mostly
+everywhere, but notably &lt;code&gt;![]({{ image_url }})&lt;/code&gt; won’t work.&lt;/p&gt;"><sup>5</sup></a>.</p>
+<p>Let’s revisit our movie app from the last example, but this time
+using markdown for the template.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">movie_choices</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">$</span><span class="va">imdb_id</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">movie_choices</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">$</span><span class="va">title</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fixedPage.html" class="external-link">fixedPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html" class="external-link">selectInput</a></span><span class="op">(</span><span class="st">"movie"</span>, <span class="st">"Pick a movie"</span>, choices <span class="op">=</span> <span class="va">movie_choices</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ui_epoxy_markdown.html">ui_epoxy_markdown</a></span><span class="op">(</span></span>
+<span>    .id <span class="op">=</span> <span class="st">"movie_info"</span>,</span>
+<span>    <span class="st">"_{{ title }}_ was released"</span>,</span>
+<span>    <span class="st">"in **{{ year }}**."</span>,</span>
+<span>    <span class="st">"It was directed by {{ director }}"</span>,</span>
+<span>    <span class="st">"and was rated {{ rated }}."</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">movie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">bechdel</span><span class="op">[</span><span class="va">bechdel</span><span class="op">$</span><span class="va">imdb_id</span> <span class="op">==</span> <span class="va">input</span><span class="op">$</span><span class="va">movie</span>, <span class="op">]</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">movie_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span>.list <span class="op">=</span> <span class="fu">movie</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p><img src="images/epoxy-shiny/epoxy-app-markdown.png" alt="The example app with 'Back to the Future Part II' selected. Below the input, a short description of the movie is displayed using the correpsonding rows and columns of 'bechdel'."></p>
+<p>For an even more involved example, try the epoxy markdown example
+app</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_epoxy_example_app.html">run_epoxy_example_app</a></span><span class="op">(</span><span class="st">"ui_epoxy_markdown"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="images/epoxy-shiny/epoxy-example-markdown.png" alt="epoxy's built-in example movie app, with 'Back to the Future Part II' selected. The left column shows the movie poster and the right column includes a description of the movie formed from its corresponding row in 'bechdel'."></p>
+</div>
+<div class="section level2">
+<h2 id="mustache-templates">Mustache templates<a class="anchor" aria-label="anchor" href="#mustache-templates"></a>
+</h2>
+<p>For more complex templates, you might want to use a template language
+like <a href="https://mustache.github.io/" class="external-link">Mustache</a>. In R, we know
+this syntax from the <a href="https://github.com/edwindj/whisker" class="external-link">whisker</a> package.</p>
+<p><code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Or &lt;code&gt;&lt;a href="../reference/ui_epoxy_mustache.html"&gt;ui_epoxy_whisker()&lt;/a&gt;&lt;/code&gt; if you prefer.&lt;/p&gt;'><sup>6</sup></a> wraps the Mustache language, letting you
+blend typical <a href="https://shiny.rstudio.com/" class="external-link">shiny</a> and <a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a> UI with
+the mustache template.</p>
+<p>When would you use <code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> instead of
+<code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code>?</p>
 <ul>
-<li><code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code></li>
-<li><code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code></li>
-<li><code><a href="../reference/render_epoxy.html">render_epoxy()</a></code></li>
+<li><p>If your template variables are used as HTML attributes, e.g. in
+links or images (via the <code>href</code> or <code>src</code>
+attributes).</p></li>
+<li><p>If you want to use mustache’s conditional logic,
+e.g. <code>{{#&lt;expr&gt;}} ... {{/&lt;expr&gt;}}</code>.</p></li>
 </ul>
+<p>Let’s revist our favorite fruits example app <a href="#few-more-things">from earlier</a>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html" class="external-link">textInput</a></span><span class="op">(</span><span class="st">"faves"</span>, <span class="st">"What are your favorite fruits?"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="st">"fruit_list"</span>,</span>
+<span>    <span class="va">tags</span><span class="op">$</span><span class="fu">ul</span><span class="op">(</span></span>
+<span>      <span class="co"># If fruits is not empty, wrap into list items</span></span>
+<span>      <span class="st">"{{#fruits}}"</span>,</span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">li</span><span class="op">(</span><span class="st">"{{.}}"</span><span class="op">)</span>,</span>
+<span>      <span class="st">"{{/fruits}}"</span>,</span>
+<span>      <span class="co"># If fruits is empty, show a help message</span></span>
+<span>      <span class="st">"{{^fruits}}"</span>,</span>
+<span>      <span class="va">tags</span><span class="op">$</span><span class="fu">li</span><span class="op">(</span></span>
+<span>        class <span class="op">=</span> <span class="st">"text-muted"</span>,</span>
+<span>        <span class="st">"Enter a list of comma-separated fruits."</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="st">"{{/fruits}}"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">fruits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html" class="external-link">req</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">faves</span><span class="op">)</span></span>
+<span>    <span class="va">fruits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">faves</span>, <span class="st">",\\s*"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">fruits</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nzchar</a></span><span class="op">(</span><span class="va">fruits</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">fruit_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/render_epoxy.html">render_epoxy</a></span><span class="op">(</span></span>
+<span>    fruits <span class="op">=</span> <span class="fu">fruits</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p>This app use’s mustache’s conditional logic to show a help message
+when no fruits are entered.</p>
+<p><img src="images/epoxy-shiny/epoxy-mustache-empty.png" alt="The example app without any user input. The list item reminds the user, in muted text, to write their favorite fruits."></p>
+<p>And it uses mustache’s looping syntax to show a list of fruits when
+fruits are entered.</p>
+<p><img src="images/epoxy-shiny/epoxy-mustache-list.png" alt="The user has entered 'apple, banana, coconut' and each fruit is now a list item in the unordered list below the app."></p>
+<p>You can find a more detailed example in the epoxy mustache example
+app.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_epoxy_example_app.html">run_epoxy_example_app</a></span><span class="op">(</span><span class="st">"ui_epoxy_mustache"</span><span class="op">)</span></span></code></pre></div>
+<p>One important thing to note about <code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> is
+that, unlike <code><a href="../reference/ui_epoxy_html.html">ui_epoxy_html()</a></code>, then entire template is
+re-rendered (in the browser) whenever a reactive source updates. So it’d
+be better to use smaller, localized templates than to wrap your entire
+app in <code><a href="../reference/ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code>.</p>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
