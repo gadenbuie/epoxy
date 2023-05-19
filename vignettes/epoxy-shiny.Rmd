@@ -280,14 +280,16 @@ Three more quick things about `ui_epoxy_html()`:
 
 ## Connecting epoxy with a reactive data frame
 
-One of my favorite use cases for epoxy's templating functions in Shiny
-is to store the data for a template in a data frame.
-Then, the apps's inputs are combined in a reactive expressions
-that filters down to a single row of the data frame.
-Finally, that row is sent via `render_epoxy()` to the UI,
-where it's dynamically injected into the template.
+One of my favorite use cases for epoxy's Shiny functions
+is to create a UI template that's filled in by a row in a data frame.
+In this pattern, the app's inputs are combined in a reactive expression
+that filters the data frame down to a single row.
+Then, that row is sent via `render_epoxy()` to the UI,
+where it's dynamically injected into the template UI.
 
-Here's a small example using epoxy's built in `bechdel` data set.
+Here's a small example using epoxy's built in `bechdel` data set,
+a small data set with the 10 highest-rated movies
+that pass the [Bechdel test](https://en.wikipedia.org/wiki/Bechdel_test).
 In this app,
 the user picks a movie and the template below is filled out
 with information from the data set for that movie.
@@ -322,6 +324,8 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+<img src="images/epoxy-shiny/epoxy-app-bechdel.png" alt="">
 
 ## Cut this, cut this, cut this
 
