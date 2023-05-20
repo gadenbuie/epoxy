@@ -1,49 +1,49 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
-
-<!-- badges: start -->
-
-[![epoxy r-universe
-badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
-[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
-<!-- badges: end -->
-
-<div class="lead">
-
-epoxy makes it easy to use [glue](https://glue.tidyverse.org) in
+<h1 align="center">
+<a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="center" height="250" alt="epoxy logo" /></a><br/>
+{epoxy}
+</h1>
+<p align="center">
+<b>extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for
 scripts, reports, and apps.
+</p>
+<p align="center">
+<!-- badges: start -->
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
+<a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
+<a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
+<a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+<!-- badges: end -->
+</p>
 
-</div>
+## epoxy is super glue
 
-## epoxy is super-strength glue
+### [In R Markdown and Quarto reports](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-report.html)
 
-[In R Markdown and Quarto
-reports](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-report.html)  
-Use `epoxy` chunks for super-strength inline syntax. Just
+Use `epoxy` chunks for extra-strength inline syntax. Just
 `library(epoxy)` in your [R Markdown](https://rmarkdown.rstudio.com) or
 [Quarto](https://quarto.org) document to get started. All epoxy chunks
 make it easy to tranform values in place with a `{cli}`-inspired inline
 syntax described in `?epoxy_transform_inline`.
 
-[In R
-scripts](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html)  
+### [In R scripts](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html)
+
 The same functions that power epoxy chunks are availble in three
 flavors:
 
-  - `epoxy()` for markdown and general purpose outputs
+- `epoxy()` for markdown and general purpose outputs
 
-  - `epoxy_html()` for HTML outputs, with added support for HTML
-    templating (see `?epoxy_transform_html`)
+- `epoxy_html()` for HTML outputs, with added support for HTML
+  templating (see `?epoxy_transform_html`)
 
-  - `epoxy_latex()` for LaTeX reports
+- `epoxy_latex()` for LaTeX reports
 
 These functions are accompanied by a robust system for chained
 glue-transformers powered by `epoxy_transform()`.
 
-**[In Shiny
-apps](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-shiny.html)**  
+### [In Shiny apps](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-shiny.html)
+
 `ui_epoxy_html()` makes it easy to update text or HTML dynamically,
 anywhere in your [Shiny](https://shiny.posit.co/) app’s UI. For more
 complicated situations, `ui_epoxy_mustache()` lets you turn any Shiny UI
@@ -63,8 +63,9 @@ the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
-
-<summary>Movie data</summary>
+<summary>
+Movie data
+</summary>
 
 ``` r
 movie <- list(
@@ -97,12 +98,10 @@ and it features movie stars
 ````
 
 <blockquote>
-
 The movie *Back to the Future Part II* was released in **1989**. It
-earned $118,450,002 with a budget of $40,000,000, and it features movie
-stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas F.
-Wilson.
-
+earned \$118,450,002 with a budget of \$40,000,000, and it features
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+F. Wilson.
 </blockquote>
 
 Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
@@ -144,7 +143,7 @@ chunk types. Each type lets you intermix text with R code or data
 output context.
 
 | Engine        | Output Context       |                         Delimiter                         |
-| :------------ | :------------------- | :-------------------------------------------------------: |
+|:--------------|:---------------------|:---------------------------------------------------------:|
 | `epoxy`       | all-purpose markdown |                         `{expr}`                          |
 | `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
 | `epoxy_latex` | LaTeX                |                         `<expr>`                          |
@@ -189,18 +188,17 @@ But on average the distance traveled was only _{mean(cars$dist)} ft_.")
 ```
 
 One immediate advantage of using `epoxy` instead of `glue::glue()` is
-that RStudio’s autocompletion feature works inside `epoxy` chunks\!
+that RStudio’s autocompletion feature works inside `epoxy` chunks!
 Typing `cars$` in the chunk will suggest the columns of `cars`.
 
 ## Learn more
 
-There’s a whole lot more that epoxy can do\! Learn more:
+There’s a whole lot more that epoxy can do! Learn more:
 
-  - [epoxy Package
-    Documentation](https://pkg.garrickadenbuie.com/epoxy/)
+- [epoxy Package Documentation](https://pkg.garrickadenbuie.com/epoxy/)
 
-  - [Getting
-    Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
+- [Getting
+  Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
-  - [Inline Reporting with
-    epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)
+- [Inline Reporting with
+  epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)

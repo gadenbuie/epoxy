@@ -15,12 +15,20 @@ knitr::opts_chunk$set(
 library(epoxy)
 ```
 
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+<h1 align="center">
+	<a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="center" height="250" alt="epoxy logo" /></a><br/>
+  {epoxy}
+</h1>
+<p align="center"><b>extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for scripts, reports, and apps.</p>
 
+<p align="center">
 <!-- badges: start -->
-[![epoxy r-universe badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
-[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
+<a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
+<a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
+<a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <!-- badges: end -->
+</p>
 
 ```{r child = "man/fragments/epoxy-lead.Rmd"}
 ```
