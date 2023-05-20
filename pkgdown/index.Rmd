@@ -24,7 +24,7 @@ library(epoxy)
 <!-- badges: end -->
 
 ::: lead
-epoxy makes it easy to use [glue] in scripts, reports, and apps.
+Extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for scripts, reports, and apps
 :::
 
 ```{r child = "../man/fragments/epoxy-lead.Rmd", use_rel_path = TRUE}

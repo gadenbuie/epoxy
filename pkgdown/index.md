@@ -13,8 +13,8 @@
 
 <div class="lead">
 
-epoxy makes it easy to use [glue](https://glue.tidyverse.org) in
-scripts, reports, and apps.
+Extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for
+scripts, reports, and apps
 
 </div>
 
