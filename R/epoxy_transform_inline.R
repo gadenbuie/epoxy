@@ -196,7 +196,7 @@ epoxy_transform_inline <- function(
 		}
 
 		text_fn <-
-		  if (class %in% names(fmts_defaults)) {
+			if (class %in% names(fmts_defaults)) {
 				fmts_defaults[[class]]
 			} else {
 				maybe_custom_class
@@ -261,20 +261,20 @@ epoxy_transform_inline_defaults <- function() {
 }
 
 epoxy_transform_inline_add_aliases <- function(fmts) {
-  apply_if_missing_but_has <- function(miss, has) {
-    if (!miss %in% names(fmts) && has %in% names(fmts)) {
+	apply_if_missing_but_has <- function(miss, has) {
+		if (!miss %in% names(fmts) && has %in% names(fmts)) {
 			fmts[[miss]] <<- fmts[[has]]
 		}
-  }
-  apply_if_missing_but_has(".bold", ".strong")
-  apply_if_missing_but_has(".italic", ".emph")
-  apply_if_missing_but_has(".dttm", ".datetime")
-  apply_if_missing_but_has(".num", ".number")
-  apply_if_missing_but_has(".pct", ".percent")
-  apply_if_missing_but_has(".lc", ".lowercase")
-  apply_if_missing_but_has(".uc", ".uppercase")
-  apply_if_missing_but_has(".tc", ".titlecase")
-  fmts
+	}
+	apply_if_missing_but_has(".bold", ".strong")
+	apply_if_missing_but_has(".italic", ".emph")
+	apply_if_missing_but_has(".dttm", ".datetime")
+	apply_if_missing_but_has(".num", ".number")
+	apply_if_missing_but_has(".pct", ".percent")
+	apply_if_missing_but_has(".lc", ".lowercase")
+	apply_if_missing_but_has(".uc", ".uppercase")
+	apply_if_missing_but_has(".tc", ".titlecase")
+	fmts
 }
 
 epoxy_comma <- function(comma_numeric) {
