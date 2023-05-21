@@ -9,14 +9,14 @@ in place.
 epoxy(&quot;It cost {.dollar 123456}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
-The formatters, e.g. dollar in the example above, can be customized using
+The formatters, e.g. .dollar in the example above, can be customized using
 the arguments of epoxy_transform_inline(). Pass a customized
-scales::label_dollar() to dollar to achieve a different transformation.
+scales::label_dollar() to .dollar to achieve a different transformation.
 dollars_nzd &amp;lt;- scales::label_dollar(suffix = &quot; NZD&quot;)
 
 epoxy(
   &quot;It cost {.dollar 123456}.&quot;,
-  .transformer = epoxy_transform_inline(dollar = dollars_nzd)
+  .transformer = epoxy_transform_inline(.dollar = dollars_nzd)
 )
 #&amp;gt; It cost $123,456 NZD.
 
@@ -41,7 +41,7 @@ set.seed(4242)
 epoxy(
   &quot;Here are three random percentages: {.and {.pct {.runif 3}}}.&quot;,
   .transformer = epoxy_transform_inline(
-    runif = function(n) sort(runif(n))
+    .runif = function(n) sort(runif(n))
   )
 )
 #&amp;gt; Here are three random percentages: 23%, 35% and 99%.
@@ -55,14 +55,14 @@ in place.
 epoxy(&quot;It cost {.dollar 123456}.&quot;, .transformer = &quot;inline&quot;)
 #&amp;gt; It cost $123,456.
 
-The formatters, e.g. dollar in the example above, can be customized using
+The formatters, e.g. .dollar in the example above, can be customized using
 the arguments of epoxy_transform_inline(). Pass a customized
-scales::label_dollar() to dollar to achieve a different transformation.
+scales::label_dollar() to .dollar to achieve a different transformation.
 dollars_nzd &amp;lt;- scales::label_dollar(suffix = &quot; NZD&quot;)
 
 epoxy(
   &quot;It cost {.dollar 123456}.&quot;,
-  .transformer = epoxy_transform_inline(dollar = dollars_nzd)
+  .transformer = epoxy_transform_inline(.dollar = dollars_nzd)
 )
 #&amp;gt; It cost $123,456 NZD.
 
@@ -87,7 +87,7 @@ set.seed(4242)
 epoxy(
   &quot;Here are three random percentages: {.and {.pct {.runif 3}}}.&quot;,
   .transformer = epoxy_transform_inline(
-    runif = function(n) sort(runif(n))
+    .runif = function(n) sort(runif(n))
   )
 )
 #&amp;gt; Here are three random percentages: 23%, 35% and 99%.
@@ -174,14 +174,14 @@ with a dot (<code>.</code>) that is used to format the value of the template exp
 in place.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span><span class="st">"It cost {.dollar 123456}."</span>, .transformer <span class="op">=</span> <span class="st">"inline"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; It cost $123,456.</span></span></code></pre><p></p></div>
-<p>The formatters, e.g. <code>dollar</code> in the example above, can be customized using
+<p>The formatters, e.g. <code>.dollar</code> in the example above, can be customized using
 the arguments of <code>epoxy_transform_inline()</code>. Pass a customized
-<code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code> to <code>dollar</code> to achieve a different transformation.</p>
+<code><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">scales::label_dollar()</a></code> to <code>.dollar</code> to achieve a different transformation.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">dollars_nzd</span> <span class="op">&lt;-</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">" NZD"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span></span>
 <span>  <span class="st">"It cost {.dollar 123456}."</span>,</span>
-<span>  .transformer <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline</a></span><span class="op">(</span>dollar <span class="op">=</span> <span class="va">dollars_nzd</span><span class="op">)</span></span>
+<span>  .transformer <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline</a></span><span class="op">(</span>.dollar <span class="op">=</span> <span class="va">dollars_nzd</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; It cost $123,456 NZD.</span></span></code></pre><p></p></div>
 <p>Note that, unlike
@@ -203,7 +203,7 @@ expression. In this example, I add a <code>.runif</code> inline formatter that g
 <span><span class="fu"><a href="../reference/epoxy.html">epoxy</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Here are three random percentages: {.and {.pct {.runif 3}}}."</span>,</span>
 <span>  .transformer <span class="op">=</span> <span class="fu"><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline</a></span><span class="op">(</span></span>
-<span>    runif <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
+<span>    .runif <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Here are three random percentages: 23%, 35% and 99%.</span></span></code></pre><p></p></div>
@@ -214,29 +214,29 @@ expression. In this example, I add a <code>.runif</code> inline formatter that g
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_transform_inline</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
-<span>  and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and</a></span>,</span>
-<span>  or <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">or</a></span>,</span>
-<span>  incr <span class="op">=</span> <span class="va">sort</span>,</span>
-<span>  decr <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  bytes <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">label_bytes</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  date <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F"</span><span class="op">)</span>,</span>
-<span>  time <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%T"</span><span class="op">)</span>,</span>
-<span>  datetime <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F %T"</span><span class="op">)</span>,</span>
-<span>  dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="fu"><a href="engine_pick.html">engine_pick</a></span><span class="op">(</span><span class="st">"$"</span>, <span class="st">"$"</span>, <span class="st">"\\$"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  number <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_number</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  comma <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_comma</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  ordinal <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">label_ordinal</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="fu"><a href="engine_pick.html">engine_pick</a></span><span class="op">(</span><span class="st">"%"</span>, <span class="st">"%"</span>, <span class="st">"\\%"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  pvalue <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">label_pvalue</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  scientific <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">label_scientific</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  uppercase <span class="op">=</span> <span class="va">toupper</span>,</span>
-<span>  lowercase <span class="op">=</span> <span class="va">tolower</span>,</span>
-<span>  titlecase <span class="op">=</span> <span class="fu">tools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span>,</span>
-<span>  squote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">sQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  dquote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  strong <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  emph <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  code <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  .and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and</a></span>,</span>
+<span>  .or <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">or</a></span>,</span>
+<span>  .incr <span class="op">=</span> <span class="va">sort</span>,</span>
+<span>  .decr <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  .bytes <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">label_bytes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .date <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F"</span><span class="op">)</span>,</span>
+<span>  .time <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%T"</span><span class="op">)</span>,</span>
+<span>  .datetime <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"%F %T"</span><span class="op">)</span>,</span>
+<span>  .dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="fu"><a href="engine_pick.html">engine_pick</a></span><span class="op">(</span><span class="st">"$"</span>, <span class="st">"$"</span>, <span class="st">"\\$"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  .number <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_number</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .comma <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_comma</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .ordinal <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_ordinal.html" class="external-link">label_ordinal</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="fu"><a href="engine_pick.html">engine_pick</a></span><span class="op">(</span><span class="st">"%"</span>, <span class="st">"%"</span>, <span class="st">"\\%"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  .pvalue <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">label_pvalue</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .scientific <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_scientific.html" class="external-link">label_scientific</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .uppercase <span class="op">=</span> <span class="va">toupper</span>,</span>
+<span>  .lowercase <span class="op">=</span> <span class="va">tolower</span>,</span>
+<span>  .titlecase <span class="op">=</span> <span class="fu">tools</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">toTitleCase</a></span>,</span>
+<span>  .squote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">sQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  .dquote <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sQuote.html" class="external-link">dQuote</a></span><span class="op">(</span><span class="va">x</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"epoxy.fancy_quotes"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  .strong <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .emph <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .code <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -245,7 +245,8 @@ expression. In this example, I add a <code>.runif</code> inline formatter that g
     <dl><dt>...</dt>
 <dd><p>Additional named inline transformers as functions taking at least
 one argument. The evaluated expression from the template expression is
-passed as the first argument to the function.</p></dd>
+passed as the first argument to the function. The argument names must
+include the leading <code>.</code> to match the syntax used inline.</p></dd>
 
 
 <dt>transformer</dt>
@@ -257,96 +258,96 @@ the current transformation. In nearly all cases, you can let
 <code><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">glue::identity_transformer()</a></code> is used as the <code>transformer</code>.</p></dd>
 
 
-<dt>and</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.and x}</code>. Default is <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::and()</a></code>.</p></dd>
+<dt>.and</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..and x}</code>. Default is <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::and()</a></code>.</p></dd>
 
 
-<dt>or</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.or x}</code>. Default is <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::or()</a></code>.</p></dd>
+<dt>.or</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..or x}</code>. Default is <code><a href="https://and.rossellhayes.com/reference/and.html" class="external-link">and::or()</a></code>.</p></dd>
 
 
-<dt>incr</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.incr x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
+<dt>.incr</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..incr x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
 
 
-<dt>decr</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.decr x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
+<dt>.decr</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..decr x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
 
 
-<dt>bytes</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.bytes x}</code>. Default is scales::label_bytes().</p></dd>
+<dt>.bytes</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..bytes x}</code>. Default is scales::label_bytes().</p></dd>
 
 
-<dt>date</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.date x}</code>. Default is <code>function(x) format(x, format = "%F")</code>.</p></dd>
+<dt>.date</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..date x}</code>. Default is <code>function(x) format(x, format = "%F")</code>.</p></dd>
 
 
-<dt>time</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.time x}</code>. Default is <code>function(x) format(x, format = "%T")</code>.</p></dd>
+<dt>.time</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..time x}</code>. Default is <code>function(x) format(x, format = "%T")</code>.</p></dd>
 
 
-<dt>datetime</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.datetime x}</code> or <code>{.dttm x}</code>. Default is <code>function(x) format(x, format = "%F %T")</code>.</p></dd>
+<dt>.datetime</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..datetime x}</code>. Default is <code>function(x) format(x, format = "%F %T")</code>.</p></dd>
 
 
-<dt>dollar</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.dollar x}</code>. Default is scales::label_dollar().</p></dd>
+<dt>.dollar</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..dollar x}</code>. Default is scales::label_dollar().</p></dd>
 
 
-<dt>number</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.number x}</code> or <code>{.num x}</code>. Default is scales::label_number().</p></dd>
+<dt>.number</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..number x}</code>. Default is scales::label_number().</p></dd>
 
 
-<dt>comma</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.comma x}</code>. Default is scales::label_comma().</p></dd>
+<dt>.comma</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..comma x}</code>. Default is scales::label_comma().</p></dd>
 
 
-<dt>ordinal</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.ordinal x}</code>. Default is scales::label_ordinal().</p></dd>
+<dt>.ordinal</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..ordinal x}</code>. Default is scales::label_ordinal().</p></dd>
 
 
-<dt>percent</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.percent x}</code> or <code>{.pct x}</code>. Default is scales::label_percent().</p></dd>
+<dt>.percent</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..percent x}</code>. Default is scales::label_percent().</p></dd>
 
 
-<dt>pvalue</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.pvalue x}</code>. Default is scales::label_pvalue().</p></dd>
+<dt>.pvalue</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..pvalue x}</code>. Default is scales::label_pvalue().</p></dd>
 
 
-<dt>scientific</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.scientific x}</code>. Default is scales::label_scientific().</p></dd>
+<dt>.scientific</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..scientific x}</code>. Default is scales::label_scientific().</p></dd>
 
 
-<dt>uppercase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.uppercase x}</code> or <code>{.uc x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code>.</p></dd>
+<dt>.uppercase</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..uppercase x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code>.</p></dd>
 
 
-<dt>lowercase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.lowercase x}</code> or <code>{.lo x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code>.</p></dd>
+<dt>.lowercase</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..lowercase x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code>.</p></dd>
 
 
-<dt>titlecase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.titlecase x}</code> or <code>{.tc x}</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
+<dt>.titlecase</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..titlecase x}</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
 
 
-<dt>squote</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.squote x}</code>. Default is <code>function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
+<dt>.squote</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..squote x}</code>. Default is <code>function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
 
 
-<dt>dquote</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.dquote x}</code>. Default is <code>function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
+<dt>.dquote</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..dquote x}</code>. Default is <code>function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
 
 
-<dt>strong</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.strong x}</code> or <code>{.bold x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dt>.strong</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..strong x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 
-<dt>emph</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.emph x}</code> or <code>{.italic x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dt>.emph</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..emph x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 
-<dt>code</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.code x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dt>.code</dt>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{..code x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -388,8 +389,8 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
 <span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    .percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    .dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
@@ -397,8 +398,8 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">'{.pct revenue} of revenue generates {.dollar sales} in profits.'</span>,</span></span>
 <span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    .percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    .dollar <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html" class="external-link">label_dollar</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21.2% of revenue generates $42,000 in profits.</span>
@@ -410,7 +411,7 @@ the current transformation. In nearly all cases, you can let
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"https://example.com?q={{ .url_encode search }}&gt;"</span>,</span></span>
 <span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu">epoxy_transform_inline</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    url_encode <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span></span>
+<span class="r-in"><span>    .url_encode <span class="op">=</span> <span class="fu">utils</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/utils/URLencode.html" class="external-link">URLencode</a></span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> https://example.com?q=why%20are%20cats%20scared%20of%20cucumbers&gt;</span>
