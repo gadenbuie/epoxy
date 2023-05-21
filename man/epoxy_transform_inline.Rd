@@ -150,7 +150,7 @@ epoxy(
     .runif = function(n) sort(runif(n))
   )
 )
-#> Here are three random percentages: 23\%, 35\%, and 99\%.
+#> Here are three random percentages: 23\%, 35\% and 99\%.
 }\if{html}{\out{</div>}}
 }
 \examples{
