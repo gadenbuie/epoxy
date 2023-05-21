@@ -19,7 +19,7 @@ epoxy("{.number amount}")
 epoxy(
   "{.number amount}",
   .transformer = epoxy_transform_inline(
-    number = scales::label_number(accuracy = 0.01)
+    .number = scales::label_number(accuracy = 0.01)
   )
 )
 

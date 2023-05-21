@@ -64,3 +64,7 @@ list_split_named <- function(l) {
 		named = l[nzchar(names(l))]
 	)
 }
+
+discard_null <- function(x) {
+	x[!vapply(x, is.null, logical(1))]
+}

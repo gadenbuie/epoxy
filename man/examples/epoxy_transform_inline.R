@@ -18,16 +18,16 @@ glue::glue(
 epoxy(
   '{.pct revenue} of revenue generates {.dollar sales} in profits.',
   .transformer = epoxy_transform_inline(
-    percent = scales::label_percent(accuracy = 0.1),
-    dollar = scales::label_dollar(accuracy = 10)
+    .percent = scales::label_percent(accuracy = 0.1),
+    .dollar = scales::label_dollar(accuracy = 10)
   )
 )
 
 glue::glue(
   '{.pct revenue} of revenue generates {.dollar sales} in profits.',
   .transformer = epoxy_transform_inline(
-    percent = scales::label_percent(accuracy = 0.1),
-    dollar = scales::label_dollar(accuracy = 10)
+    .percent = scales::label_percent(accuracy = 0.1),
+    .dollar = scales::label_dollar(accuracy = 10)
   )
 )
 
@@ -38,6 +38,6 @@ search <- "why are cats scared of cucumbers"
 epoxy_html(
   "https://example.com?q={{ .url_encode search }}>",
   .transformer = epoxy_transform_inline(
-    url_encode = utils::URLencode
+    .url_encode = utils::URLencode
   )
 )
