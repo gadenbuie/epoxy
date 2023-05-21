@@ -22,7 +22,7 @@
 #'
 #' epoxy(
 #'   "It cost {.dollar 123456}.",
-#'   .transformer = epoxy_transform_inline(dollar = dollars_nzd)
+#'   .transformer = epoxy_transform_inline(.dollar = dollars_nzd)
 #' )
 #' ```
 #'
@@ -53,7 +53,7 @@
 #' epoxy(
 #'   "Here are three random percentages: {.and {.pct {.runif 3}}}.",
 #'   .transformer = epoxy_transform_inline(
-#'     runif = function(n) sort(runif(n))
+#'     .runif = function(n) sort(runif(n))
 #'   )
 #' )
 #' ```
@@ -78,53 +78,66 @@
 epoxy_transform_inline <- function(
 	...,
 	transformer = glue::identity_transformer,
-	and         = and::and,
-	or          = and::or,
-	incr        = sort,
-	decr        = function(x) sort(x, decreasing = TRUE),
-	bytes       = scales::label_bytes(),
-	date        = function(x) format(x, format = "%F"),
-	time        = function(x) format(x, format = "%T"),
-	datetime    = function(x) format(x, format = "%F %T"),
-	dollar      = scales::label_dollar(prefix = engine_pick("$", "$", "\\$")),
-	number      = scales::label_number(),
-	comma       = scales::label_comma(),
-	ordinal     = scales::label_ordinal(),
-	percent     = scales::label_percent(suffix = engine_pick("%", "%", "\\%")),
-	pvalue      = scales::label_pvalue(),
-	scientific  = scales::label_scientific(),
-	uppercase   = toupper,
-	lowercase   = tolower,
-	titlecase   = tools::toTitleCase,
-	squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
-	dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
-	strong      = NULL,
-	emph        = NULL,
-	code        = NULL
+	.and         = and::and,
+	.or          = and::or,
+	.incr        = sort,
+	.decr        = function(x) sort(x, decreasing = TRUE),
+	.bytes       = scales::label_bytes(),
+	.date        = function(x) format(x, format = "%F"),
+	.time        = function(x) format(x, format = "%T"),
+	.datetime    = function(x) format(x, format = "%F %T"),
+	.dollar      = scales::label_dollar(prefix = engine_pick("$", "$", "\\$")),
+	.number      = scales::label_number(),
+	.comma       = scales::label_comma(),
+	.ordinal     = scales::label_ordinal(),
+	.percent     = scales::label_percent(suffix = engine_pick("%", "%", "\\%")),
+	.pvalue      = scales::label_pvalue(),
+	.scientific  = scales::label_scientific(),
+	.uppercase   = toupper,
+	.lowercase   = tolower,
+	.titlecase   = tools::toTitleCase,
+	.squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
+	.dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
+	.strong      = NULL,
+	.emph        = NULL,
+	.code        = NULL
 ) {
 	force(transformer)
-
-	# for rcmdcheck
-	tools::toTitleCase("")
-	scales::percent(0.1)
-
-	comma_numeric <- comma
-	comma <- function(x) {
-		if (is.character(x)) {
-			return(paste(x, collapse = ", "))
-		}
-		comma_numeric(x)
-	}
-
-	strong <- strong %||% epoxy_bold
-	emph <- emph %||% epoxy_italic
-	code <- code %||% epoxy_code
 
 	dots <- rlang::dots_list(...)
 	if (!all(nzchar(rlang::names2(dots)))) {
 		rlang::abort("All functions provided in `...` must be named.")
 	}
-	dots <- purrr::keep(dots, rlang::is_function)
+	not_dotted <- setdiff(names(dots), grep("^[.]", names(dots), value = TRUE))
+	if (length(not_dotted) > 0) {
+		rlang::abort(c(
+			"Functions provided in `...` must be named with a leading dot (`.`).",
+			i = paste0("Check: `", paste(not_dotted, collapse = "`, `"), "`.")
+		))
+	}
+
+	# for rcmdcheck
+	tools::toTitleCase("")
+	scales::percent(0.1)
+
+	# Get the defaults for the inline transformers
+	defaults <- epoxy_transform_inline_defaults()
+
+	# Get user-provided arguments to this function call
+	user <- rlang::call_args(match.call())
+	user <- user[setdiff(names(user), c("...", "transformer"))]
+	if (length(user)) {
+		user <- lapply(user, rlang::eval_bare, env = parent.frame())
+		user <- epoxy_transform_inline_add_aliases(user)
+		user <- discard_null(user)
+	}
+
+	# Merge the user-provided arguments with the defaults
+	fmts <- purrr::list_assign(defaults, !!!user)
+	fmts <- epoxy_transform_inline_add_aliases(fmts)
+
+	fmts_custom <- fmts[setdiff(names(fmts), names(defaults))]
+	fmts_defaults <- fmts[names(defaults)]
 
 	self <- function(text, envir) {
 		if (detect_wrapped_delims(text)) {
@@ -146,82 +159,48 @@ epoxy_transform_inline <- function(
 		text_sans_class <- sub(inline_regex, "\\2", text, perl = TRUE)
 
 		text <- remove_outer_delims(text_sans_class)
+		class <- paste0(".", class) # restore leading dot
 
 		# recurse into template before applying the current transformation
 		text <- self(text, envir)
 
 		maybe_custom_class <- function(text) {
-			if (class %in% rlang::names2(dots)) {
-				dots[[class]](text)
-			} else {
-				# if this isn't a known inline class, then we pass the original template
-				# text to the next transformer, who might know what to do with it.
-				"!DEBUG inline was unmatched"
-				tryCatch(
-					{
-						'!DEBUG inline trying {text: "`text`"}'
-						transformer(text_orig, envir)
-					},
-					error = function(err_og) {
-						tryCatch(
-							{
-								'!DEBUG inline trying {text: "`text_sans_class`"}'
-								transformer(text_sans_class, envir)
-							},
-							error = function(err_sc) {
-								rlang::abort(
-									glue("Could not evaluate text '{text_orig}`"),
-									parent = err_og
-								)
-							}
-						)
-					}
-				)
+			if (class %in% rlang::names2(fmts_custom)) {
+				"!DEBUG inline custom class `{class}`"
+				return(fmts_custom[[class]](text))
 			}
-		}
 
-		class_switch <- class
-		if (class %in% names(dots)) {
-			# Use provided a transformer for a hidden class, make sure we hit that one
-			class_switch <- ""
+			# if this isn't a known inline class, then we pass the original template
+			# text to the next transformer, who might know what to do with it.
+			"!DEBUG inline was unmatched"
+			tryCatch(
+				{
+					'!DEBUG inline trying {text: "`text`"}'
+					transformer(text_orig, envir)
+				},
+				error = function(err_og) {
+					tryCatch(
+						{
+							'!DEBUG inline trying {text: "`text_sans_class`"}'
+							transformer(text_sans_class, envir)
+						},
+						error = function(err_sc) {
+							rlang::abort(
+								glue("Could not evaluate text '{text_orig}`"),
+								parent = err_og
+							)
+						}
+					)
+				}
+			)
 		}
 
 		text_fn <-
-			switch(
-				class_switch,
-				and = and,
-				or = or,
-				bold = ,
-				strong     = epoxy_bold,
-				italic = ,
-				emph       = epoxy_italic,
-				code       = epoxy_code,
-				bytes      = bytes,
-				date       = date,
-				time       = time,
-				dttm = ,
-				datetime   = datetime,
-				dollar     = dollar,
-				num = ,
-				number     = number,
-				comma      = comma,
-				ordinal    = ordinal,
-				pct = ,
-				percent    = percent,
-				pvalue     = pvalue,
-				scientific = scientific,
-				uc = ,
-				uppercase  = uppercase,
-				lc = ,
-				lowercase  = lowercase,
-				tc = ,
-				titlecase  = titlecase,
-				incr       = incr,
-				decr       = decr,
-				squote     = squote,
-				dquote     = dquote,
+		  if (class %in% names(fmts_defaults)) {
+				fmts_defaults[[class]]
+			} else {
 				maybe_custom_class
-			)
+			}
 
 		withCallingHandlers(
 			text_fn(text),
@@ -267,6 +246,45 @@ remove_outer_delims <- function(text) {
 	text <- paste(text, collapse = close)
 	attr(text, "is_inner_expr") <- TRUE
 	text
+}
+
+epoxy_transform_inline_defaults <- function() {
+	fn <- epoxy_transform_inline
+	defaults <- formals(fn)
+	defaults <- defaults[setdiff(names(defaults), c("...", "transformer"))]
+	defaults <- lapply(defaults, rlang::eval_bare, env = rlang::get_env(fn))
+	defaults$.comma <- epoxy_comma(defaults$.comma)
+	defaults$.strong <- epoxy_bold
+	defaults$.emph <- epoxy_italic
+	defaults$.code <- epoxy_code
+	defaults
+}
+
+epoxy_transform_inline_add_aliases <- function(fmts) {
+  apply_if_missing_but_has <- function(miss, has) {
+    if (!miss %in% names(fmts) && has %in% names(fmts)) {
+			fmts[[miss]] <<- fmts[[has]]
+		}
+  }
+  apply_if_missing_but_has(".bold", ".strong")
+  apply_if_missing_but_has(".italic", ".emph")
+  apply_if_missing_but_has(".dttm", ".datetime")
+  apply_if_missing_but_has(".num", ".number")
+  apply_if_missing_but_has(".pct", ".percent")
+  apply_if_missing_but_has(".lc", ".lowercase")
+  apply_if_missing_but_has(".uc", ".uppercase")
+  apply_if_missing_but_has(".tc", ".titlecase")
+  fmts
+}
+
+epoxy_comma <- function(comma_numeric) {
+	force(comma_numeric)
+	function(x) {
+		if (is.character(x)) {
+			return(paste(x, collapse = ", "))
+		}
+		comma_numeric(x)
+	}
 }
 
 epoxy_bold <- function(text) {

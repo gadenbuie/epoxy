@@ -17,19 +17,29 @@ describe("epoxy_transform_inline()", {
 			epoxy(
 				"{ .test letters }",
 				.transformer = epoxy_transform_inline(
-					test = function(x) "PASS"
+					.test = function(x) "PASS"
 				)
 			),
 			"PASS"
 		)
 	})
 
-	it("applies user-supplied format when it's an internal alias", {
+	it("applies user-supplied format over-riding internal alias", {
 		expect_equal(
 			epoxy(
 				"{ .bold letters[1] }",
 				.transformer = epoxy_transform_inline(
-					bold = function(x) "PASS"
+					.bold = function(x) "PASS"
+				)
+			),
+			"PASS"
+		)
+
+		expect_equal(
+			epoxy(
+				"{ .bold letters[1] }",
+				.transformer = epoxy_transform_inline(
+					.strong = function(x) "PASS"
 				)
 			),
 			"PASS"
@@ -39,7 +49,7 @@ describe("epoxy_transform_inline()", {
 			epoxy(
 				"{ .strong letters[1] }",
 				.transformer = epoxy_transform_inline(
-					bold = function(x) "PASS"
+					.bold = function(x) "PASS"
 				)
 			),
 			"**a**"
