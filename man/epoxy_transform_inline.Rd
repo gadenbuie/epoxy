@@ -35,7 +35,8 @@ epoxy_transform_inline(
 \arguments{
 \item{...}{Additional named inline transformers as functions taking at least
 one argument. The evaluated expression from the template expression is
-passed as the first argument to the function.}
+passed as the first argument to the function. The argument names must
+include the leading \code{.} to match the syntax used inline.}
 
 \item{transformer}{The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
@@ -108,9 +109,9 @@ in place.
 #> It cost $123,456.
 }\if{html}{\out{</div>}}
 
-The formatters, e.g. \code{dollar} in the example above, can be customized using
+The formatters, e.g. \code{.dollar} in the example above, can be customized using
 the arguments of \code{epoxy_transform_inline()}. Pass a customized
-\code{\link[scales:label_dollar]{scales::label_dollar()}} to \code{dollar} to achieve a different transformation.
+\code{\link[scales:label_dollar]{scales::label_dollar()}} to \code{.dollar} to achieve a different transformation.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dollars_nzd <- scales::label_dollar(suffix = " NZD")
 

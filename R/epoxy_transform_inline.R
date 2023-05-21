@@ -13,9 +13,9 @@
 #' epoxy("It cost {.dollar 123456}.", .transformer = "inline")
 #' ```
 #'
-#' The formatters, e.g. `dollar` in the example above, can be customized using
+#' The formatters, e.g. `.dollar` in the example above, can be customized using
 #' the arguments of `epoxy_transform_inline()`. Pass a customized
-#' [scales::label_dollar()] to `dollar` to achieve a different transformation.
+#' [scales::label_dollar()] to `.dollar` to achieve a different transformation.
 #'
 #' ```{r}
 #' dollars_nzd <- scales::label_dollar(suffix = " NZD")
@@ -62,7 +62,8 @@
 #'
 #' @param ... Additional named inline transformers as functions taking at least
 #'   one argument. The evaluated expression from the template expression is
-#'   passed as the first argument to the function.
+#'   passed as the first argument to the function. The argument names must
+#'   include the leading `.` to match the syntax used inline.
 #' @param transformer The transformer to apply to the replacement string. This
 #'   argument is used for chaining the transformer functions. By providing a
 #'   function to this argument you can apply an additional transformation after
