@@ -100,7 +100,7 @@ and it features movie stars
 <blockquote>
 The movie *Back to the Future Part II* was released in **1989**. It
 earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
 F. Wilson.
 </blockquote>
 
@@ -202,3 +202,9 @@ There’s a whole lot more that epoxy can do! Learn more:
 
 - [Inline Reporting with
   epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)
+
+## Code of Conduct
+
+Please note that the epoxy project is released with a [Contributor Code
+of Conduct](http://pkg.garrickadenbuie.com/epoxy/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

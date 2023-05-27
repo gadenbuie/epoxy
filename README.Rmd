@@ -73,3 +73,8 @@ Learn more:
 - [Getting Started](https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html)
 
 - [Inline Reporting with epoxy](https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html)
+
+## Code of Conduct
+
+Please note that the epoxy project is released with a [Contributor Code of Conduct](http://pkg.garrickadenbuie.com/epoxy/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
