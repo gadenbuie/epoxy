@@ -8,7 +8,7 @@
 \usage{
 epoxy_transform(..., engine = NULL, syntax = lifecycle::deprecated())
 
-epoxy_transform_get(engine = c("md", "html", "latex"))
+epoxy_transform_get(engine = c("md", "html", "latex"), inline = FALSE)
 
 epoxy_transform_set(..., engine = NULL, syntax = lifecycle::deprecated())
 }
@@ -35,6 +35,10 @@ function is called, or according to the option \code{epoxy.engine}. Caution:
 invalid options are silently ignored, falling back to \code{"markdown"}.}
 
 \item{syntax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{engine} instead.}
+
+\item{inline}{In \code{epoxy_transform_get()}, whether to return the
+session-specific inline formatting functions for
+\code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of
@@ -69,10 +73,61 @@ is driven by the chunk engine where the transformer function is used. The
 \code{epoxy} engine corresponds to markdown, \code{epoxy_html} to HTML, and
 \code{epoxy_latex} to LaTeX.
 
-Automatic engine selection only works when the epoxy transform functions
-are used with epoxy knitr engines and during the knitr rendering process.
-When used outside of this context, you can choose the desired engine by
-setting the \code{engine} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
+Automatic engine selection only works when the epoxy transform functions are
+used with epoxy knitr engines and during the knitr rendering process. When
+used outside of this context, you can choose the desired engine by setting
+the \code{engine} to one of \code{"markdown"}, \code{"html"} or \code{"latex"}.
+}
+
+\section{Session-wide settings}{
+
+
+To change the transformer used by \code{\link[=epoxy]{epoxy()}} and the HTML and LaTeX variants, use \code{epoxy_transform_set()}.
+This function takes the same values as \code{\link[=epoxy_transform]{epoxy_transform()}}, but makes them the default transformer for any \code{\link[=epoxy]{epoxy()}} calls that do not specify a transformer.
+By default, the setting is made for all engines, but you can specify a single engine with the \code{engine} argument.
+
+Here's a small example that applies the \link[=epoxy_transform_bold]{bold} and \link[=epoxy_transform_collapse]{collapse} transformers to all epoxy chunks:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{epoxy_transform_set("bold", "collapse")
+}\if{html}{\out{</div>}}
+
+Most often, you'll want to to update the default transformer to customize the formatting functions used by the \link[=epoxy_transform_inline]{inline transformer}.
+You can use \code{epoxy_transform_set()} to change settings of existing formatting functions or to add new one.
+Pass the new function to an argument with the dot-prefixed name.
+
+In the next example I'm setting the \code{.dollar} transformation to use "K" and "M" to abbreviate large numbers.
+I'm also adding my own transformation that truncates long strings to fit in 8 characters.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{epoxy_transform_set(
+	.dollar = scales::label_dollar(
+		accuracy = 0.01,
+		scale_cut = scales::cut_short_scale()
+	),
+	.trunc8 = function(x) glue::glue_collapse(x, width = 8)
+)
+
+epoxy("\{.dollar 12345678\}")
+#> $12.34M
+epoxy("\{.trunc8 12345678\}")
+#> 12345...
+}\if{html}{\out{</div>}}
+
+Note that the \code{engine} argument can be used even with inline tranformations, e.g. to apply a change only for HTML you can use \code{engine = "html"}.
+
+To unset the session defaults, you have two options:
+\enumerate{
+\item Unset everything by passing \code{NULL} to \code{epoxy_transform_set()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{epoxy_transform_set(NULL)
+}\if{html}{\out{</div>}}
+\item Unset a single inline transformation by passing \code{rlang::zap()} to the named argument:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{epoxy_transform_set(.dollar = rlang::zap())
+}\if{html}{\out{</div>}}
+}
+
+Or you can provide new values to overwrite the current settings.
+And as before, you can unset session defaults for a specific \code{engine}.
 }
 
 \examples{

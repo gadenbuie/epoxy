@@ -8,16 +8,21 @@
 #' chunks and will choose the correct engine for each.
 #'
 #' @section Output-specific transformations:
-#'   The `epoxy_transform_` functions will attempt to use the correct engine for
-#'   transforming the replacement text for markdown, HTML and LaTeX. This choice
-#'   is driven by the chunk engine where the transformer function is used. The
-#'   `epoxy` engine corresponds to markdown, `epoxy_html` to HTML, and
-#'   `epoxy_latex` to LaTeX.
+#' The `epoxy_transform_` functions will attempt to use the correct engine for
+#' transforming the replacement text for markdown, HTML and LaTeX. This choice
+#' is driven by the chunk engine where the transformer function is used. The
+#' `epoxy` engine corresponds to markdown, `epoxy_html` to HTML, and
+#' `epoxy_latex` to LaTeX.
 #'
-#'   Automatic engine selection only works when the epoxy transform functions
-#'   are used with epoxy knitr engines and during the knitr rendering process.
-#'   When used outside of this context, you can choose the desired engine by
-#'   setting the `engine` to one of `"markdown"`, `"html"` or `"latex"`.
+#' Automatic engine selection only works when the epoxy transform functions are
+#' used with epoxy knitr engines and during the knitr rendering process. When
+#' used outside of this context, you can choose the desired engine by setting
+#' the `engine` to one of `"markdown"`, `"html"` or `"latex"`.
+#'
+#' @section Session-wide settings:
+#'
+#' ```{r child="man/fragments/transformers-epoxy_transform_set.Rmd"}
+#' ```
 #'
 #' @example man/examples/epoxy_transform.R
 #'
@@ -83,9 +88,19 @@ epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()
 
 #' @describeIn epoxy_transform Get the default epoxy `.transformer` for all
 #'   epoxy engines or for a subset of engines.
+#' @param inline In `epoxy_transform_get()`, whether to return the
+#'   session-specific inline formatting functions for
+#'   [epoxy_transform_inline()].
 #' @export
-epoxy_transform_get <- function(engine = c("md", "html", "latex")) {
+epoxy_transform_get <- function(
+	engine = c("md", "html", "latex"),
+	inline = FALSE
+) {
 	engine <- engine_validate_alias(engine)
+	if (isTRUE(inline)) {
+		return(.globals$inline[engine])
+	}
+
 	ret <- lapply(engine, function(eng) {
 		with_options(
 			list(epoxy.engine = eng),
@@ -118,7 +133,9 @@ epoxy_transform_set <- function(
 		engine <- c("md", "html", "latex")
 	}
 
-	if (identical(list(...), list(NULL))) {
+	if (identical(rlang::list2(...), list(NULL))) {
+		# unset inlines
+		.globals[["inline"]][engine] <- list(list())
 		# unset engine options
 		opts_unset <- list()
 		engine <- glue("epoxy.transformer_default.{engine}")
@@ -126,7 +143,11 @@ epoxy_transform_set <- function(
 		return(invisible(options(opts_unset)))
 	}
 
-	if (length(list(...)) == 0) {
+	dots <- list_split_named(rlang::list2(...))
+	transforms <- dots$unnamed
+	inlines  <- dots$named
+
+	if (length(transforms) + length(inlines) == 0) {
 		# get current option values
 		engine <- rlang::set_names(
 			glue("epoxy.transformer_default.{engine}")
@@ -134,13 +155,19 @@ epoxy_transform_set <- function(
 		return(lapply(engine, getOption, default = NULL))
 	}
 
-	opts_to_set <- list()
-	for (engine in engine) {
-		opt_name <- glue("epoxy.transformer_default.{engine}")
-		opts_to_set[[opt_name]] <- epoxy_transform(..., engine = engine)
+	for (eng in engine) {
+		# TODO: make it possible to reset inline transformer settings
+		.globals[["inline"]][[eng]] <-
+		  purrr::list_assign(.globals[["inline"]][[eng]], !!!inlines)
 	}
 
+	opts_to_set <- list()
+	for (eng in engine) {
+		opt_name <- glue("epoxy.transformer_default.{eng}")
+		opts_to_set[[opt_name]] <- epoxy_transform(!!!transforms, engine = eng)
+	}
 	old_opts <- options(opts_to_set)
+
 	invisible(old_opts)
 }
 
@@ -286,8 +313,7 @@ epoxy_transform_code <- function(engine = NULL, transformer = glue::identity_tra
 #'
 #' @export
 engine_pick <- function(md, html = md, latex = md) {
-	engine <- getOption("epoxy.engine", NULL) %||%
-		knitr::opts_current$get("engine")
+	engine <- engine_current()
 
 	if (is.null(engine)) {
 		return(md)
@@ -302,6 +328,17 @@ engine_pick <- function(md, html = md, latex = md) {
 		latex = latex,
 		md
 	)
+}
+
+engine_current <- function(default = NULL) {
+	engine <-
+	  getOption("epoxy.engine", NULL) %||%
+		knitr::opts_current$get("engine") %||%
+		default
+
+	if (is.null(engine)) return(NULL)
+
+	engine_aliases[engine]
 }
 
 engine_aliases <- c(

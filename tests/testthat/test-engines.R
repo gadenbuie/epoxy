@@ -179,6 +179,68 @@ describe("epoxy_transform_set()", {
 		)
 	})
 
+	it("sets inline formatters for all engines", {
+		opts <- epoxy_transform_set(.bold = function(x) "PASS")
+		on.exit(epoxy_transform_set(.bold = rlang::zap()))
+
+		expect_equal(
+			epoxy("{.bold 'hi'}"),
+			glue("PASS")
+		)
+
+		expect_equal(
+			epoxy_html("{{ {{.bold 'hi'}} }}"),
+			glue("PASS")
+		)
+
+		expect_equal(
+			epoxy_latex("<.bold 'hi'>"),
+			glue("PASS")
+		)
+	})
+
+	it("set, get, reset with NULL", {
+		expect_equal(
+			epoxy_transform_get(inline = TRUE),
+			list(md = list(), html = list(), latex = list()),
+			ignore_attr = TRUE
+		)
+
+		epoxy_transform_set(.bold = function(x) "PASS", engine = "md")
+		epoxy_transform_set(.mold = function(x) "PASS", engine = "html")
+		epoxy_transform_set(.fold = function(x) "PASS", engine = "latex")
+
+		expect_equal(
+			epoxy_transform_get(inline = TRUE),
+			list(
+				md = list(.bold = function(x) "PASS"),
+				html = list(.mold = function(x) "PASS"),
+				latex = list(.fold = function(x) "PASS")
+			)
+		)
+
+		epoxy_transform_set(NULL)
+		expect_equal(
+			epoxy_transform_get(inline = TRUE),
+			list(md = list(), html = list(), latex = list())
+		)
+	})
+
+	it("accepts a spliced list", {
+		opts_list <- list(.bold = function(x) "PASS", "inline", "code")
+		opts <- epoxy_transform_set(!!!opts_list, engine = "md")
+		on.exit({
+			# ensure the global settings are reset
+			options(epoxy.transformer_default.md = NULL)
+			.globals$inline$md <- list(md = list())
+		})
+
+		expect_equal(
+			epoxy("{.bold 'hi'}"),
+			"`PASS`"
+		)
+	})
+
 	it("sets the default for engine-specific epoxy_transform defaults", {
 		opts_md <- epoxy_transform_set("bold", engine = "md")
 		on.exit(options(opts_md), add = TRUE)

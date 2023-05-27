@@ -249,15 +249,29 @@ remove_outer_delims <- function(text) {
 	text
 }
 
+.globals$inline <- list(md = list(), html = list(), latex = list())
+
 epoxy_transform_inline_defaults <- function() {
+	# Base defaults are stored in the function arguments
 	fn <- epoxy_transform_inline
 	defaults <- formals(fn)
 	defaults <- defaults[setdiff(names(defaults), c("...", "transformer"))]
 	defaults <- lapply(defaults, rlang::eval_bare, env = rlang::get_env(fn))
+
+	# A few defaults are internal
+	# FIXME: do this inside epoxy_transform_inline()
 	defaults$.comma <- epoxy_comma(defaults$.comma)
 	defaults$.strong <- epoxy_bold
 	defaults$.emph <- epoxy_italic
 	defaults$.code <- epoxy_code
+
+	# User-supplied session defaults
+	if (length(.globals$inline) > 0) {
+		engine <- engine_current("md")
+		session <- .globals[["inline"]][[engine]]
+		session <- purrr::compact(session)
+		defaults <- purrr::list_assign(defaults, !!!session)
+	}
 	defaults
 }
 
