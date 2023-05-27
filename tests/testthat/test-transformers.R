@@ -182,7 +182,6 @@ test_that("epoxy_transform_apply()", {
 	)
 })
 
-
 describe("epoxy_transform_collapse()", {
 	it("does nothing by default", {
 		expect_equal(
@@ -321,6 +320,37 @@ describe("epoxy_transform_collapse()", {
 		expect_equal(
 			glue("{1:3*}", .transformer = epoxy_transform_bold(transformer = epoxy_transform_collapse())),
 			"**1, 2, 3**"
+		)
+	})
+})
+
+describe("epoxy_transform_get()", {
+	it("gets the current transform function", {
+		opts_md <- epoxy_transform_set("bold", engine = "md")
+		on.exit(options(opts_md), add = TRUE)
+
+		opts_html <- epoxy_transform_set("italic", engine = "html")
+		on.exit(options(opts_html), add = TRUE)
+
+		opts_latex <- epoxy_transform_set(epoxy_transform_code, engine = "latex")
+		on.exit(options(opts_latex), add = TRUE)
+
+		expect_equal(
+			epoxy_transform_get("md"),
+			epoxy_transform_bold(),
+			ignore_function_env = TRUE
+		)
+
+		expect_equal(
+			epoxy_transform_get("html"),
+			epoxy_transform_italic(),
+			ignore_function_env = TRUE
+		)
+
+		expect_equal(
+			epoxy_transform_get("latex"),
+			epoxy_transform_code(),
+			ignore_function_env = TRUE
 		)
 	})
 })
