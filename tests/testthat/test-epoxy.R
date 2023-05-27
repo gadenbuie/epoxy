@@ -1,4 +1,3 @@
-
 describe("epoxy_html()", {
 	it("returns an html glue character", {
 		expect_s3_class(
