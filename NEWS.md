@@ -84,6 +84,10 @@ versions that were available on GitHub prior to the CRAN release.
   `epoxy_transform_get()` to retrieve the epoxy transformer for a particular
   engine.
 
+  You can also use `epoxy_transform_set()` to set the inline transformation
+  functions by matching the syntax used by `epoxy_transform_inline()`. See
+  `?epoxy_transform_set` for an example.
+
 * `epoxy_transform_inline()` is the default `.transformer` for `epoxy()` and
   `epoxy_latex()` and their related knitr engines. `epoxy_html()` now uses
   `.transformer = epoxy_transform(c("inline", "html"))`.
