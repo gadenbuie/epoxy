@@ -1,3 +1,41 @@
+describe("knitr engines", {
+	opts <- list(
+		echo = FALSE,
+		eval = TRUE
+	)
+
+	it("works with knitr_engine_epoxy()", {
+		opts$code <- "{.bold 'hello'}"
+		opts$engine <- "epoxy"
+
+		expect_equal(
+			knitr_engine_epoxy(opts),
+			"**hello**\n"
+		)
+	})
+
+	it("works with knitr_engine_epoxy_html()", {
+		opts$code <- "{{.bold 'hello'}}"
+		opts$engine <- "epoxy_html"
+
+		expect_equal(
+			knitr_engine_epoxy_html(opts),
+			"```{=html}\n<strong>hello</strong>\n```\n"
+		)
+	})
+
+	it("works with knitr_engine_epoxy_latex()", {
+		opts$code <- "<.bold 'hello'>"
+		opts$engine <- "epoxy_latex"
+
+		expect_equal(
+			knitr_engine_epoxy_latex(opts),
+			"```{=latex}\n\\textbf{hello}\n```\n"
+		)
+	})
+})
+
+
 test_that("whisker template works", {
 	# standard usage ----
 	rmd <- '

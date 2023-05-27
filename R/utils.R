@@ -27,6 +27,11 @@ is_htmlish_output <- function(exclude = NULL) { # nocov start
 	}
 
 	fmt <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+
+	if (is.null(fmt) || !nzchar(fmt)) {
+		return(TRUE)
+	}
+
 	fmt <- sub("[+-].+$", "", fmt)
 	if (grepl("^markdown", fmt)) {
 		fmt <- "markdown"
