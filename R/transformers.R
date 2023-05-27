@@ -158,7 +158,7 @@ epoxy_transform_set <- function(
 	for (eng in engine) {
 		# TODO: make it possible to reset inline transformer settings
 		.globals[["inline"]][[eng]] <-
-		  purrr::list_assign(.globals[["inline"]][[eng]], !!!inlines)
+			purrr::list_assign(.globals[["inline"]][[eng]], !!!inlines)
 	}
 
 	opts_to_set <- list()
@@ -332,7 +332,7 @@ engine_pick <- function(md, html = md, latex = md) {
 
 engine_current <- function(default = NULL) {
 	engine <-
-	  getOption("epoxy.engine", NULL) %||%
+		getOption("epoxy.engine", NULL) %||%
 		knitr::opts_current$get("engine") %||%
 		default
 
