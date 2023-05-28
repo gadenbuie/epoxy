@@ -197,7 +197,14 @@ attribute values for the entire template region. By default, with
 <code>"polite"</code>, any updates within the region will be announced via screen
 readers.</p>
 <p>If your template includes changes in lots of disparate areas, it would be
-better to set <code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"`` on specific regions that should be announced together. Otherwise, the default is to announce the entire region within the </code>ui_epoxy_html()<code>whenever any of the values within change. In other words, set</code>.aria_live = "off"<code>and</code>.aria_atomic = NULL<code>on the</code>ui_epoxy_html()<code>parent item and then set</code>"aria-live" = "polite"<code>and</code>"aria-atomic" = "true"<code>on the parent containers of each region in the app that receives updates.</code>ui_epoxy_html()` does targeted updates, changing only the parts of the
+better to set <code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"</code> on
+specific regions that should be announced together. Otherwise, the default
+is to announce the entire region within the <code>ui_epoxy_html()</code> whenever any
+of the values within change. In other words, set <code>.aria_live = "off"</code> and
+<code>.aria_atomic = NULL</code> on the <code>ui_epoxy_html()</code> parent item and then set
+<code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"</code> on the parent
+containers of each region in the app that receives updates.
+<code>ui_epoxy_html()</code> does targeted updates, changing only the parts of the
 UI that have changed.</p></dd>
 
 </dl></div>
