@@ -118,7 +118,7 @@
 #'   readers.
 #'
 #'   If your template includes changes in lots of disparate areas, it would be
-#'   better to set `"aria-live" = "polite"` and `"aria-atomic" = "true"`` on
+#'   better to set `"aria-live" = "polite"` and `"aria-atomic" = "true"` on
 #'   specific regions that should be announced together. Otherwise, the default
 #'   is to announce the entire region within the `ui_epoxy_html()` whenever any
 #'   of the values within change. In other words, set `.aria_live = "off"` and
