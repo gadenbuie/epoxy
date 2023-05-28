@@ -1,67 +1,67 @@
 describe("knitr engines", {
-  opts <- list(
-    echo = FALSE,
-    eval = TRUE
-  )
+	opts <- list(
+		echo = FALSE,
+		eval = TRUE
+	)
 
-  it("works with knitr_engine_epoxy()", {
-    opts$code <- "{.bold 'hello'}"
-    opts$engine <- "epoxy"
+	it("works with knitr_engine_epoxy()", {
+		opts$code <- "{.bold 'hello'}"
+		opts$engine <- "epoxy"
 
-    expect_equal(
-      knitr_engine_epoxy(opts),
-      "**hello**\n"
-    )
-  })
+		expect_equal(
+			knitr_engine_epoxy(opts),
+			"**hello**\n"
+		)
+	})
 
-  it("works with knitr_engine_epoxy_html()", {
-    opts$code <- "{{.bold 'hello'}}"
-    opts$engine <- "epoxy_html"
+	it("works with knitr_engine_epoxy_html()", {
+		opts$code <- "{{.bold 'hello'}}"
+		opts$engine <- "epoxy_html"
 
-    expect_equal(
-      knitr_engine_epoxy_html(opts),
-      "```{=html}\n<strong>hello</strong>\n```\n"
-    )
-  })
+		expect_equal(
+			knitr_engine_epoxy_html(opts),
+			"```{=html}\n<strong>hello</strong>\n```\n"
+		)
+	})
 
-  it("works with knitr_engine_epoxy_latex()", {
-    opts$code <- "<.bold 'hello'>"
-    opts$engine <- "epoxy_latex"
+	it("works with knitr_engine_epoxy_latex()", {
+		opts$code <- "<.bold 'hello'>"
+		opts$engine <- "epoxy_latex"
 
-    expect_equal(
-      knitr_engine_epoxy_latex(opts),
-      "```{=latex}\n\\textbf{hello}\n```\n"
-    )
-  })
+		expect_equal(
+			knitr_engine_epoxy_latex(opts),
+			"```{=latex}\n\\textbf{hello}\n```\n"
+		)
+	})
 
-  describe("use data chunk options", {
-    opts$code <- "{x} and {y}"
-    opts$engine <- "epoxy"
-    opts$.data <- data.frame(x = 1:2, y = 3:4)
+	describe("use data chunk options", {
+		opts$code <- "{x} and {y}"
+		opts$engine <- "epoxy"
+		opts$.data <- data.frame(x = 1:2, y = 3:4)
 
-    it("accepts a data frame in the .data chunk option", {
-      expect_equal(
-        knitr_engine_epoxy(opts),
-        "1 and 3\n2 and 4\n"
-      )
-    })
+		it("accepts a data frame in the .data chunk option", {
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"1 and 3\n2 and 4\n"
+			)
+		})
 
-    it("supports legacy data chunk option", {
-      opts$data <- opts$.data
-      opts$.data <- NULL
+		it("supports legacy data chunk option", {
+			opts$data <- opts$.data
+			opts$.data <- NULL
 
-      expect_equal(
-        knitr_engine_epoxy(opts),
-        "1 and 3\n2 and 4\n"
-      )
-    })
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"1 and 3\n2 and 4\n"
+			)
+		})
 
 		it("prefers .data over data", {
 			opts$.data <- data.frame(x = 5:6, y = 7:8)
 			expect_equal(
-        knitr_engine_epoxy(opts),
-        "5 and 7\n6 and 8\n"
-      )
+				knitr_engine_epoxy(opts),
+				"5 and 7\n6 and 8\n"
+			)
 		})
 
 		it("handles list-column subsetting", {
@@ -74,7 +74,7 @@ describe("knitr engines", {
 				"1 and 3\n2 and 4\n"
 			)
 		})
-  })
+	})
 })
 
 test_that("whisker template works", {
