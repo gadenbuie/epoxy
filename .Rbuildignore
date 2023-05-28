@@ -16,3 +16,4 @@
 ^vignettes/epoxy\.Rmd$
 ^\.vscode$
 ^CODE_OF_CONDUCT\.md$
+^cran-comments\.md$
