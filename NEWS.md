@@ -1,4 +1,4 @@
-# epoxy 0.1.0
+# epoxy rc-0.1.0
 
 This is epoxy's first release on CRAN! This NEWS file collects changes from
 versions that were available on GitHub prior to the CRAN release.
