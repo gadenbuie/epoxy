@@ -354,3 +354,29 @@ describe("epoxy_transform_get()", {
 		)
 	})
 })
+
+describe("engine_validate_alias()", {
+	it("returns standardized engine name for markdown", {
+		expect_equal(engine_validate_alias("markdown"), c(markdown = "md"))
+		expect_equal(engine_validate_alias("md"), c(md = "md"))
+		expect_equal(engine_validate_alias("glue"), c(glue = "md"))
+		expect_equal(engine_validate_alias("epoxy"), c(epoxy = "md"))
+	})
+
+	it("returns standardized engine name for html", {
+		expect_equal(engine_validate_alias("html"), c(html = "html"))
+		expect_equal(engine_validate_alias("glue_html"), c(glue_html = "html"))
+		expect_equal(engine_validate_alias("epoxy_html"), c(epoxy_html = "html"))
+	})
+
+	it("returns standardized engine name for latex", {
+		expect_equal(engine_validate_alias("latex"), c(latex = "latex"))
+		expect_equal(engine_validate_alias("glue_latex"), c(glue_latex = "latex"))
+		expect_equal(engine_validate_alias("epoxy_latex"), c(epoxy_latex = "latex"))
+	})
+
+	it("errors with unknown engine names", {
+		expect_snapshot_error(engine_validate_alias("unknown"))
+		expect_error(engine_validate_alias("BlubberScript"))
+	})
+})

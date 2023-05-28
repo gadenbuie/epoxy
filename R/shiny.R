@@ -722,6 +722,7 @@ format_tags <- function(x) {
 }
 
 
+# nocov start
 write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 	rd_path <- paste0(file.path("man", name), ".Rd")
 	ex_path <- file.path("inst", "examples", name, "app.R")
@@ -790,3 +791,4 @@ run_epoxy_example_app <- function(
 	}
 	shiny::runApp(apps[[name]], display.mode = display.mode, ...)
 }
+# nocov end

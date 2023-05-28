@@ -107,13 +107,16 @@ epoxy_transform_inline <- function(
 
 	dots <- rlang::dots_list(...)
 	if (!all(nzchar(rlang::names2(dots)))) {
-		rlang::abort("All functions provided in `...` must be named.")
+		rlang::abort("Arguments to `epoxy_transform_inline()` must all be named.")
 	}
 	not_dotted <- setdiff(names(dots), grep("^[.]", names(dots), value = TRUE))
 	if (length(not_dotted) > 0) {
+		not_dotted <- sprintf("`.%s` instead of `%s`", not_dotted, not_dotted)
+		names(not_dotted) <- rep_len("*", length(not_dotted))
 		rlang::abort(c(
 			"Functions provided in `...` must be named with a leading dot (`.`).",
-			i = paste0("Check: `", paste(not_dotted, collapse = "`, `"), "`.")
+			"i" = "Did you mean to use the following?",
+			not_dotted
 		))
 	}
 

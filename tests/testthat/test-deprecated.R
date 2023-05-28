@@ -93,3 +93,43 @@ describe("epoxy_style() functions are deprecated", {
 		)
 	})
 })
+
+describe("deprecated shiny functions", {
+	it("epoxyHTML()", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxyHTML(.id = "test"),
+				ui_epoxy_html(.id = "test")
+			)
+		)
+	})
+
+	it("renderEpoxy()", {
+		lifecycle::expect_deprecated(renderEpoxyHTML())
+	})
+})
+
+describe("engine replaces syntax", {
+	it("epoxy_transform()", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_transform("bold", syntax = "md"),
+				epoxy_transform("bold", engine = "md")
+			)
+		)
+	})
+
+	it("epoxy_transform_set()", {
+		lifecycle::expect_deprecated(epoxy_transform_set(syntax = "md"))
+	})
+
+	it("epoxy_transform_wrap()", {
+		lifecycle::expect_deprecated(
+			expect_equal(
+				epoxy_transform_wrap(syntax = "md"),
+				epoxy_transform_wrap(engine = "md"),
+				ignore_function_env = TRUE
+			)
+		)
+	})
+})
