@@ -90,7 +90,14 @@ attribute values for the entire template region. By default, with
 readers.
 
 If your template includes changes in lots of disparate areas, it would be
-better to set \code{"aria-live" = "polite"} and \verb{"aria-atomic" = "true"`` on specific regions that should be announced together. Otherwise, the default is to announce the entire region within the }ui_epoxy_html()\verb{whenever any of the values within change. In other words, set}.aria_live = "off"\code{and}.aria_atomic = NULL\verb{on the}ui_epoxy_html()\verb{parent item and then set}"aria-live" = "polite"\code{and}"aria-atomic" = "true"\verb{on the parent containers of each region in the app that receives updates.}ui_epoxy_html()` does targeted updates, changing only the parts of the
+better to set \code{"aria-live" = "polite"} and \code{"aria-atomic" = "true"} on
+specific regions that should be announced together. Otherwise, the default
+is to announce the entire region within the \code{ui_epoxy_html()} whenever any
+of the values within change. In other words, set \code{.aria_live = "off"} and
+\code{.aria_atomic = NULL} on the \code{ui_epoxy_html()} parent item and then set
+\code{"aria-live" = "polite"} and \code{"aria-atomic" = "true"} on the parent
+containers of each region in the app that receives updates.
+\code{ui_epoxy_html()} does targeted updates, changing only the parts of the
 UI that have changed.}
 }
 \value{
