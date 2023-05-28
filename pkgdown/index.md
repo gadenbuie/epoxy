@@ -26,7 +26,7 @@ scripts, reports, and apps
 Use `epoxy` chunks for extra-strength inline syntax. Just
 `library(epoxy)` in your [R Markdown](https://rmarkdown.rstudio.com) or
 [Quarto](https://quarto.org) document to get started. All epoxy chunks
-make it easy to tranform values in place with a `{cli}`-inspired inline
+make it easy to transform values in place with a `{cli}`-inspired inline
 syntax described in `?epoxy_transform_inline`.
 
 ### [In R scripts](articles/epoxy-script.html)
