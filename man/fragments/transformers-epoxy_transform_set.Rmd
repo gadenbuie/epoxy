@@ -1,0 +1,50 @@
+To change the transformer used by [epoxy()] and the HTML and LaTeX variants, use `epoxy_transform_set()`.
+This function takes the same values as [epoxy_transform()], but makes them the default transformer for any [epoxy()] calls that do not specify a transformer.
+By default, the setting is made for all engines, but you can specify a single engine with the `engine` argument.
+
+Here's a small example that applies the [bold][epoxy_transform_bold] and [collapse][epoxy_transform_collapse] transformers to all epoxy chunks:
+
+```{r eval = FALSE}
+epoxy_transform_set("bold", "collapse")
+```
+
+Most often, you'll want to to update the default transformer to customize the formatting functions used by the [inline transformer][epoxy_transform_inline].
+You can use `epoxy_transform_set()` to change settings of existing formatting functions or to add new one.
+Pass the new function to an argument with the dot-prefixed name.
+
+In the next example I'm setting the `.dollar` transformation to use "K" and "M" to abbreviate large numbers.
+I'm also adding my own transformation that truncates long strings to fit in 8 characters.
+
+```{r eval = FALSE}
+epoxy_transform_set(
+	.dollar = scales::label_dollar(
+		accuracy = 0.01,
+		scale_cut = scales::cut_short_scale()
+	),
+	.trunc8 = function(x) glue::glue_collapse(x, width = 8)
+)
+
+epoxy("{.dollar 12345678}")
+#> $12.34M
+epoxy("{.trunc8 12345678}")
+#> 12345...
+```
+
+Note that the `engine` argument can be used even with inline tranformations, e.g. to apply a change only for HTML you can use `engine = "html"`.
+
+To unset the session defaults, you have two options:
+
+1. Unset everything by passing `NULL` to `epoxy_transform_set()`:
+
+	 ```{r eval = FALSE}
+	 epoxy_transform_set(NULL)
+	 ```
+
+1. Unset a single inline transformation by passing `rlang::zap()` to the named argument:
+
+	 ```{r eval = FALSE}
+	 epoxy_transform_set(.dollar = rlang::zap())
+	 ```
+
+Or you can provide new values to overwrite the current settings.
+And as before, you can unset session defaults for a specific `engine`.

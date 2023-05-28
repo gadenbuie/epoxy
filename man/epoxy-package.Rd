@@ -7,12 +7,12 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Extra strength 'glue' for data-driven templating. String interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered 'Quarto' documents, built on the 'glue' and 'whisker' packages.
+Extra strength 'glue' for data-driven templates. String interpolation for 'Shiny' apps or 'R Markdown' and 'knitr'-powered 'Quarto' documents, built on the 'glue' and 'whisker' packages.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://pkg.garrickadenbuie.com/epoxy}
+  \item \url{https://pkg.garrickadenbuie.com/epoxy/}
   \item \url{https://github.com/gadenbuie/epoxy}
   \item Report bugs at \url{https://github.com/gadenbuie/epoxy/issues}
 }
@@ -20,6 +20,12 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Garrick Aden-Buie \email{garrick@adenbuie.com} (\href{https://orcid.org/0000-0002-7111-0077}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Kushagra Gour (hint.css) [contributor]
+  \item The mustache.js community (mustache.js) [contributor]
+}
 
 }
 \keyword{internal}

@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- pkgdown/index.md is generated from pkgdown/index.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,44 +14,65 @@ knitr::opts_chunk$set(
 library(epoxy)
 ```
 
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# epoxy <a href='https://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![epoxy r-universe badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
-[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
+<a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
+<a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
+<a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <!-- badges: end -->
 
-epoxy makes templating with [glue] easy in R Markdown documents and Shiny apps.
+::: lead
+Extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for scripts, reports, and apps
+:::
 
-[glue]: https://glue.tidyverse.org
-
-## epoxy in R Markdown and Quarto documents
-
-In [R Markdown](https://rmarkdown.rstudio.com) and
-[Quarto](https://quarto.org) documents,
-**epoxy** gives you an `epoxy` chunk where you can write in markdown,
-blending prose and data using [glue]'s template syntax.
-
-```{r child = "../man/fragments/example-movie.Rmd"}
-```
-
-Learn more about `epoxy` chunks --
-and its siblings `epoxy_html` and `epoxy_latex` --
-in [Getting Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html).
-Or read more about epoxy's inline formatting in `?epoxy_style_inline`.
-
-## Installation
-
-```{r child = "../man/fragments/installation.Rmd"}
+```{r child = "../man/fragments/epoxy-lead.Rmd", use_rel_path = TRUE}
 ```
 
 ## Learn more
 
 There's a whole lot more that epoxy can do!
-Learn more:
 
-- [Getting Started with epoxy in reports or Shiny apps](articles/epoxy.html)
+```{=html}
+<div class="container">
+<div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-3">Get Started</h3>
+<p class="card-text">Get up and running with epoxy in reports or Shiny apps.</p>
+<a href="articles/epoxy.html" class="card-primary-link btn btn-link text-decoration-none float-end">Get started</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-3">Reference</h3>
+<p class="card-text">Function reference with usage and examples.</p>
+<a href="reference/index.html" class="card-primary-link btn btn-link text-decoration-none float-end">Reference</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-4">Articles</h3>
+<p class="card-text">Longer posts and tutorials about using epoxy in your reports and apps.</p>
+<a href="articles/" class="card-primary-link btn btn-link text-decoration-none float-end">Articles</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+```
 
-- [Inline Reporting with epoxy](articles/inline-reporting.html)
 
-- [epoxy Package Documentation](reference/index.html)
+## Installation
+
+```{r child = "../man/fragments/installation.Rmd"}
+```

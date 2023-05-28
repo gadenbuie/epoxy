@@ -26,6 +26,6 @@
 #' }
 #' @source [TidyTuesday (2021-03-09)](https://github.com/rfordatascience/tidytuesday/blob/044e769/data/2021/2021-03-09/readme.md),
 #'   [FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/bechdel),
-#'   [bechdeltest.com](http://bechdeltest.com/),
+#'   [bechdeltest.com](https://bechdeltest.com/),
 #'   [themoviedb.org](https://www.themoviedb.org)
 "bechdel"

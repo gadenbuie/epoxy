@@ -1,6 +1,85 @@
+describe("knitr engines", {
+	opts <- list(
+		echo = FALSE,
+		eval = TRUE
+	)
+
+	it("works with knitr_engine_epoxy()", {
+		opts$code <- "{.bold 'hello'}"
+		opts$engine <- "epoxy"
+
+		expect_equal(
+			knitr_engine_epoxy(opts),
+			"**hello**\n"
+		)
+	})
+
+	it("works with knitr_engine_epoxy_html()", {
+		opts$code <- "{{.bold 'hello'}}"
+		opts$engine <- "epoxy_html"
+
+		expect_equal(
+			knitr_engine_epoxy_html(opts),
+			"```{=html}\n<strong>hello</strong>\n```\n"
+		)
+	})
+
+	it("works with knitr_engine_epoxy_latex()", {
+		opts$code <- "<.bold 'hello'>"
+		opts$engine <- "epoxy_latex"
+
+		expect_equal(
+			knitr_engine_epoxy_latex(opts),
+			"```{=latex}\n\\textbf{hello}\n```\n"
+		)
+	})
+
+	describe("use data chunk options", {
+		opts$code <- "{x} and {y}"
+		opts$engine <- "epoxy"
+		opts$.data <- data.frame(x = 1:2, y = 3:4)
+
+		it("accepts a data frame in the .data chunk option", {
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"1 and 3\n2 and 4\n"
+			)
+		})
+
+		it("supports legacy data chunk option", {
+			opts$data <- opts$.data
+			opts$.data <- NULL
+
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"1 and 3\n2 and 4\n"
+			)
+		})
+
+		it("prefers .data over data", {
+			opts$.data <- data.frame(x = 5:6, y = 7:8)
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"5 and 7\n6 and 8\n"
+			)
+		})
+
+		it("handles list-column subsetting", {
+			opts$.data <- data.frame(x = 1:2)
+			opts$.data$a <- list(list(y = 3), list(y = 4))
+			opts$code <- "{x} and {a$y}"
+
+			expect_equal(
+				knitr_engine_epoxy(opts),
+				"1 and 3\n2 and 4\n"
+			)
+		})
+	})
+})
+
 test_that("whisker template works", {
-  # standard usage ----
-  rmd <- '
+	# standard usage ----
+	rmd <- '
 ```{r echo=FALSE}
 library(epoxy)
 data <- list(name = "Chris", value = 1000, taxed = 600, in_ca = TRUE)
@@ -15,13 +94,13 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-  expect_equal(
-    render_rmd(rmd),
-    "Hello Chris, You have just won $1000! Well, $600, after taxes."
-  )
+	expect_equal(
+		render_rmd(rmd),
+		"Hello Chris, You have just won $1000! Well, $600, after taxes."
+	)
 
-  # base case is the same as `data_asis = TRUE` ----
-  rmd <- '
+	# base case is the same as `data_asis = TRUE` ----
+	rmd <- '
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
@@ -37,13 +116,13 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-  expect_equal(
-    render_rmd(rmd),
-    "Hello Chris, You have just won $1000! Well, $600, after taxes."
-  )
+	expect_equal(
+		render_rmd(rmd),
+		"Hello Chris, You have just won $1000! Well, $600, after taxes."
+	)
 
-  # with multiple values per list item ----
-  rmd <- '
+	# with multiple values per list item ----
+	rmd <- '
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
@@ -59,16 +138,16 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-  expect_equal(
-    render_rmd(rmd),
-    c("Hello Chris, You have just won $1000! Well, $600, after taxes.",
-      "",
-      "Hello Jane, You have just won $2000!"
-    )
-  )
+	expect_equal(
+		render_rmd(rmd),
+		c("Hello Chris, You have just won $1000! Well, $600, after taxes.",
+			"",
+			"Hello Jane, You have just won $2000!"
+		)
+	)
 
-  # NULL list items are ignored
-  rmd <- '
+	# NULL list items are ignored
+	rmd <- '
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
@@ -84,16 +163,16 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-  expect_equal(
-    render_rmd(rmd),
-    c("Hello Chris, You have just won $1000!",
-      "",
-      "Hello Jane, You have just won $2000!"
-    )
-  )
+	expect_equal(
+		render_rmd(rmd),
+		c("Hello Chris, You have just won $1000!",
+			"",
+			"Hello Jane, You have just won $2000!"
+		)
+	)
 
-  # But mismatched data item lengths throws an error
-  rmd <- '
+	# But mismatched data item lengths throws an error
+	rmd <- '
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
@@ -109,132 +188,38 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-  expect_error(render_rmd(rmd))
+	expect_error(render_rmd(rmd))
 })
 
 
-describe("epoxy_html()", {
-  it("returns an html glue character", {
-    expect_s3_class(
-      epoxy_html("word"),
-      c("html", "glue", "character")
-    )
+describe("chunk engine deprecations", {
+	it ("warns about `epoxy_style` deprecation", {
+		lifecycle::expect_deprecated(
+			deprecate_epoxy_style_chunk_option(list(epoxy_style = "bold"))
+		)
+	})
 
-    expect_s3_class(
-      epoxy_html("{{'word'}}"),
-      c("html", "glue", "character")
-    )
-  })
+	it ("warns about `glue_data` chunk option deprecation", {
+		lifecycle::expect_defunct(
+			deprecate_glue_data_chunk_option(list(glue_data = list()))
+		)
+	})
 
-  it("uses html, inline stylers by default", {
-    expect_equal(
-      epoxy_html("{{ span letters[1:3] }}"),
-      html_chr(glue("<span>{x}</span>", x = letters[1:3]))
-    )
+	it ("warns about `glue` chunk engine usage", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue"))
+		)
+	})
 
-    expect_equal(
-      epoxy_html("{{ span {{ .and letters[1:3] }} }}"),
-      html_chr(glue("<span>{and::and(letters[1:3])}</span>"))
-    )
+	it ("warns about `glue` chunk engine prefix", {
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_html")),
+			"epoxy_html"
+		)
 
-    # need to escape one level to access inline formatter
-    expect_equal(
-      epoxy_html("{{ {{.and letters[1:3] }} }}"),
-      html_chr(glue(and::and(letters[1:3])))
-    )
-
-    # otherwise `.and` is interpreted as a class
-    expect_equal(
-      epoxy_html("{{.and letters[1] }}"),
-      html_chr(glue('<span class="and">a</span>'))
-    )
-  })
-})
-
-describe("epoxy_style_set()", {
-  it("sets the default for all styles", {
-    opts <- epoxy_style_set("bold")
-    on.exit(options(opts))
-
-    expect_equal(
-      epoxy("{1} and {2} is {3}"),
-      glue("**1** and **2** is **3**")
-    )
-
-    expect_equal(
-      epoxy("{1} and {2} is {3}"),
-      epoxy("{1} and {2} is {3}", .style = "bold")
-    )
-
-    expect_equal(
-      epoxy_html("{{1}} and {{2}} is {{3}}"),
-      html_chr(glue(
-        "<strong>1</strong> and <strong>2</strong> is <strong>3</strong>"
-      ))
-    )
-
-    expect_equal(
-      epoxy_latex("<1> and <2> is <3>"),
-      glue("\\textbf{{1}} and \\textbf{{2}} is \\textbf{{3}}")
-    )
-  })
-
-  it("sets the default for individual styles", {
-    opts_md <- epoxy_style_set("bold", engine = "md")
-    on.exit(options(opts_md), add = TRUE)
-
-    opts_html <- epoxy_style_set("italic", engine = "html")
-    on.exit(options(opts_html), add = TRUE)
-
-    opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
-    on.exit(options(opts_latex), add = TRUE)
-
-    expect_equal(
-      epoxy("{1} and {2} is {3}"),
-      glue("**1** and **2** is **3**")
-    )
-
-    expect_equal(
-      epoxy_html("{{1}} and {{2}} is {{3}}"),
-      html_chr(glue(
-        "<em>1</em> and <em>2</em> is <em>3</em>"
-      ))
-    )
-
-    expect_equal(
-      epoxy_latex("<1> and <2> is <3>"),
-      glue("\\texttt{{1}} and \\texttt{{2}} is \\texttt{{3}}")
-    )
-  })
-})
-
-describe("epoxy_style_get()", {
-  it("gets the current style function", {
-    opts_md <- epoxy_style_set("bold", engine = "md")
-    on.exit(options(opts_md), add = TRUE)
-
-    opts_html <- epoxy_style_set("italic", engine = "html")
-    on.exit(options(opts_html), add = TRUE)
-
-    opts_latex <- epoxy_style_set(epoxy_style_code, engine = "latex")
-    on.exit(options(opts_latex), add = TRUE)
-
-    expect_equal(
-      epoxy_style_get("md"),
-      epoxy_style_bold(),
-      ignore_function_env = TRUE
-    )
-
-    expect_equal(
-      epoxy_style_get("html"),
-      epoxy_style_italic(),
-      ignore_function_env = TRUE
-    )
-
-    expect_equal(
-      epoxy_style_get("latex"),
-      epoxy_style_code(),
-      ignore_function_env = TRUE
-    )
-  })
+		lifecycle::expect_deprecated(
+			deprecate_glue_engine_prefix(list(engine = "glue_latex")),
+			"epoxy_latex"
+		)
+	})
 })

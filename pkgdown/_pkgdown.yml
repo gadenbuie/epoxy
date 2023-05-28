@@ -12,6 +12,11 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/gadenbuie/epoxy
 
+home:
+  links:
+  - text: <i class="fas fa-question-circle"></i> Help and discussions
+    href: https://github.com/gadenbuie/epoxy/discussions
+
 articles:
 - title: Get Started
   desc: ~
@@ -19,6 +24,7 @@ articles:
   - '`epoxy`'
   - '`epoxy-report`'
   - '`epoxy-shiny`'
+  - '`epoxy-script`'
 - title: Articles
   desc: ~
   navbar: ~
@@ -30,16 +36,17 @@ reference:
   contents:
   - use_epoxy_knitr_engines
   - epoxy
-- title: epoxy Style Transformers
+- title: epoxy Transformers
   contents:
-  - epoxy_style
-  - epoxy_style_inline
-  - epoxy_style_html
-  - epoxy_style_one_shot
+  - epoxy_transform
+  - epoxy_transform_inline
+  - epoxy_transform_html
+  - epoxy_transform_one_shot
   - engine_pick
 - title: Templating for Shiny
   contents:
   - ui_epoxy_html
+  - ui_epoxy_markdown
   - ui_epoxy_mustache
   - render_epoxy
   - run_epoxy_example_app

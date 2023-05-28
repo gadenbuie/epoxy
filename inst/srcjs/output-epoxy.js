@@ -1,4 +1,4 @@
-/* globals Shiny,$ */
+/* globals Shiny,$,CustomEvent */
 
 const epoxyOutputBinding = new Shiny.OutputBinding()
 
@@ -20,7 +20,12 @@ $.extend(epoxyOutputBinding, {
       return true
     }
 
-    if (typeof x !== 'object' || typeof y !== 'object' || x === null || y === null) {
+    if (
+      typeof x !== 'object' ||
+      typeof y !== 'object' ||
+      x === null ||
+      y === null
+    ) {
       return false
     }
 
@@ -41,24 +46,67 @@ $.extend(epoxyOutputBinding, {
   },
   _last: null,
   renderValue: function (el, data) {
-    // remove copies of epoxyItem
-    const elCopies = el.querySelectorAll('[data-epoxy-copy]')
-    elCopies.forEach(e => e.parentElement.removeChild(e))
+    const outputId = el.id
 
     const items = el.querySelectorAll('[data-epoxy-item]')
     items.forEach(item => {
       item.classList.remove('epoxy-item__placeholder')
       const itemName = item.dataset.epoxyItem
+      const asHTML = item.dataset.epoxyAsHtml === 'true'
+
+      const evData = { output: outputId, name: itemName, outputType: 'html' }
+
+      const updateContents = (el, contents) => {
+        asHTML ? (el.innerHTML = contents) : (el.textContent = contents)
+        el.dispatchEvent(
+          new CustomEvent('epoxy-update', {
+            bubbles: true,
+            detail: { ...evData, value: contents }
+          })
+        )
+        return el
+      }
+
+      // remove copies of epoxyItem (the first item is the pattern)
+      const removeCopies = () => {
+        el
+          .querySelectorAll(`[data-epoxy-copy="${itemName}"]`)
+          .forEach(item => item.parentElement.removeChild(item))
+      }
 
       let itemData = data[itemName]
 
-      if (
-        this._last &&
-        this._deepEqual(itemData, this._last[itemName])
-      ) {
+      const errorClasses = ['epoxy-item__error', 'hint--top-right', 'hint--error']
+
+      if (data.__errors__ && data.__errors__.includes(itemName)) {
+        errorClasses.forEach(c => item.classList.add(c))
+        removeCopies()
+        updateContents(item, item.dataset.epoxyPlaceholder || '')
+        item.style.removeProperty('display')
+        item.setAttribute('aria-label', itemData)
+        item.dispatchEvent(
+          new CustomEvent('epoxy-error', {
+            bubbles: true,
+            detail: {
+              output: el.id,
+              key: itemName,
+              message: itemData,
+              outputType: 'html'
+            }
+          })
+        )
+        return
+      } else {
+        errorClasses.forEach(c => item.classList.remove(c))
+        item.removeAttribute('aria-label')
+      }
+
+      if (this._last && this._deepEqual(itemData, this._last[itemName])) {
         // don't do anything, the value hasn't changed
         return
       }
+
+      removeCopies()
 
       if (this._is_empty(itemData)) {
         item.style.display = 'none'
@@ -67,21 +115,22 @@ $.extend(epoxyOutputBinding, {
         item.style.removeProperty('display')
       }
 
-      if (itemData instanceof Array) {
-        let lastItem = item
-        item.innerHTML = itemData[0]
-        const itemParent = item.parentElement
-        itemData = itemData.slice(1)
-        for (const itemDataThis of itemData) {
-          const itemNew = item.cloneNode()
-          itemNew.removeAttribute('data-epoxy-item')
-          itemNew.dataset.epoxyCopy = itemName
-          itemNew.innerHTML = itemDataThis
-          itemParent.insertBefore(itemNew, lastItem.nextSibling)
-          lastItem = itemNew
-        }
-      } else {
-        item.innerHTML = itemData
+      if (!(itemData instanceof Array)) {
+        updateContents(item, itemData)
+        return
+      }
+
+      // If an array, use the initial item as a pattern
+      updateContents(item, itemData[0])
+      const itemParent = item.parentElement
+      itemData = itemData.slice(1)
+
+      for (const itemDataThis of itemData) {
+        const itemNew = item.cloneNode()
+        itemNew.removeAttribute('data-epoxy-item')
+        itemNew.dataset.epoxyCopy = itemName
+        itemParent.insertAdjacentElement('beforeend', itemNew)
+        updateContents(itemNew, itemDataThis)
       }
     })
 

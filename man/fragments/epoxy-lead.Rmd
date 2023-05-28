@@ -1,0 +1,55 @@
+```{r include = FALSE}
+rel_or_abs_url <- function(path) {
+	rel_path <- knitr::opts_chunk$get("use_rel_path")
+	if (is.null(rel_path)) rel_path <- FALSE
+	paste0(
+		if (rel_path)  "articles/",
+		if (!rel_path) "https://pkg.garrickadenbuie.com/epoxy/articles/",
+		path
+	)
+}
+```
+
+[glue]: https://glue.tidyverse.org
+[shiny]: https://shiny.posit.co/
+[rmarkdown]: https://rmarkdown.rstudio.com
+[quarto]: https://quarto.org
+[mustache]: https://mustache.github.io
+[epoxy-report]: `r rel_or_abs_url("epoxy-report.html")`
+[epoxy-script]: `r rel_or_abs_url("epoxy-script.html")`
+[epoxy-shiny]: `r rel_or_abs_url("epoxy-shiny.html")`
+
+## epoxy is super glue
+
+### [In R Markdown and Quarto reports][epoxy-report]
+
+Use `epoxy` chunks for extra-strength inline syntax.
+Just `library(epoxy)`
+in your [R Markdown][rmarkdown] or [Quarto][quarto]
+document to get started.
+All epoxy chunks make it easy to tranform values in place
+with a `{cli}`-inspired inline syntax
+described in `?epoxy_transform_inline`.
+
+### [In R scripts][epoxy-script]
+
+The same functions that power epoxy chunks are availble in three flavors:
+
+* `epoxy()` for markdown and general purpose outputs
+
+* `epoxy_html()` for HTML outputs, with added support for HTML templating
+	(see `?epoxy_transform_html`)
+
+* `epoxy_latex()` for LaTeX reports
+
+These functions are accompanied by
+a robust system for chained glue-transformers
+powered by `epoxy_transform()`.
+
+### [In Shiny apps][epoxy-shiny]
+
+`ui_epoxy_html()` makes it easy to update text or HTML dynamically,
+anywhere in your [Shiny][shiny] app's UI.
+For more complicated situations,
+`ui_epoxy_mustache()` lets you turn any Shiny UI
+into a template that leverages the [Mustache templating language][mustache].

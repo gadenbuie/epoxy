@@ -1,76 +1,94 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- pkgdown/index.md is generated from pkgdown/index.Rmd. Please edit that file -->
 
-# epoxy <a href='http://pkg.garrickadenbuie.com/epoxy'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# epoxy <a href='https://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
-[![epoxy r-universe
-badge](https://gadenbuie.r-universe.dev/badges/epoxy)](https://gadenbuie.r-universe.dev)
-[![R-CMD-check](https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg)](https://github.com/gadenbuie/epoxy/actions)
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
+<a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
+<a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
+<a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <!-- badges: end -->
 
-epoxy makes templating with [glue](https://glue.tidyverse.org) easy in R
-Markdown documents and Shiny apps.
+<div class="lead">
 
-## epoxy in R Markdown and Quarto documents
+Extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for
+scripts, reports, and apps
 
-In [R Markdown](https://rmarkdown.rstudio.com) and
-[Quarto](https://quarto.org) documents, **epoxy** gives you an `epoxy`
-chunk where you can write in markdown, blending prose and data using
-[glue](https://glue.tidyverse.org)’s template syntax.
+</div>
 
-Here’s an example using a small list containing data about a `movie`
-(expand the section below to see the full code for `movie`). We can use
-the inline styles to format the replacement text as we build up a
-description from this data.
+## epoxy is super glue
 
-<details>
-<summary>
-Movie data
-</summary>
+### [In R Markdown and Quarto reports](articles/epoxy-report.html)
 
-``` r
-movie <- list(
-  year = 1989,
-  title = "Back to the Future Part II",
-  budget = 4e+07,
-  domgross = 118450002,
-  imdb_rating = 7.8,
-  actors = c(
-    "Michael J. Fox",
-    "Christopher Lloyd",
-    "Lea Thompson",
-    "Thomas F. Wilson"
-  ),
-  runtime = 108L
-)
-```
+Use `epoxy` chunks for extra-strength inline syntax. Just
+`library(epoxy)` in your [R Markdown](https://rmarkdown.rstudio.com) or
+[Quarto](https://quarto.org) document to get started. All epoxy chunks
+make it easy to tranform values in place with a `{cli}`-inspired inline
+syntax described in `?epoxy_transform_inline`.
 
-</details>
+### [In R scripts](articles/epoxy-script.html)
 
-```` default
-```{epoxy}
-The movie {.emph {.titlecase movie$title}}
-was released in {.strong movie$year}.
-It earned {.dollar movie$domgross}
-with a budget of {.dollar movie$budget},
-and it features movie stars
-{.and movie$actors}.
-```
-````
+The same functions that power epoxy chunks are availble in three
+flavors:
 
-<blockquote>
-The movie *Back to the Future Part II* was released in **1989**. It
-earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
-F. Wilson.
-</blockquote>
+- `epoxy()` for markdown and general purpose outputs
 
-Learn more about `epoxy` chunks – and its siblings `epoxy_html` and
-`epoxy_latex` – in [Getting
-Started](https://pkg.garrickadenbuie.com/epoxy/articles/epoxy.html). Or
-read more about epoxy’s inline formatting in `?epoxy_style_inline`.
+- `epoxy_html()` for HTML outputs, with added support for HTML
+  templating (see `?epoxy_transform_html`)
+
+- `epoxy_latex()` for LaTeX reports
+
+These functions are accompanied by a robust system for chained
+glue-transformers powered by `epoxy_transform()`.
+
+### [In Shiny apps](articles/epoxy-shiny.html)
+
+`ui_epoxy_html()` makes it easy to update text or HTML dynamically,
+anywhere in your [Shiny](https://shiny.posit.co/) app’s UI. For more
+complicated situations, `ui_epoxy_mustache()` lets you turn any Shiny UI
+into a template that leverages the [Mustache templating
+language](https://mustache.github.io).
+
+## Learn more
+
+There’s a whole lot more that epoxy can do!
+
+<div class="container">
+<div class="row d-grid" style="grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 1em;">
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-3">Get Started</h3>
+<p class="card-text">Get up and running with epoxy in reports or Shiny apps.</p>
+<a href="articles/epoxy.html" class="card-primary-link btn btn-link text-decoration-none float-end">Get started</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-3">Reference</h3>
+<p class="card-text">Function reference with usage and examples.</p>
+<a href="reference/index.html" class="card-primary-link btn btn-link text-decoration-none float-end">Reference</a>
+</div>
+</div>
+</div>
+<!-- card -->
+<div class="col p-0">
+<div class="card card-as-link">
+<div class="card-body">
+<h3 class="card-title mt-0 mb-4">Articles</h3>
+<p class="card-text">Longer posts and tutorials about using epoxy in your reports and apps.</p>
+<a href="articles/" class="card-primary-link btn btn-link text-decoration-none float-end">Articles</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 ## Installation
 
@@ -92,14 +110,3 @@ options(repos = c(
 
 install.packages("epoxy")
 ```
-
-## Learn more
-
-There’s a whole lot more that epoxy can do! Learn more:
-
-- [Getting Started with epoxy in reports or Shiny
-  apps](articles/epoxy.html)
-
-- [Inline Reporting with epoxy](articles/inline-reporting.html)
-
-- [epoxy Package Documentation](reference/index.html)

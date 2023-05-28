@@ -1,0 +1,64 @@
+:root {
+  --animate-delay-base: 150ms;
+  --animate-duration: 500ms;
+}
+
+.animate {
+  animation-duration: var(--animate-duration);
+  animation-delay: calc((var(--delay) - 1) * var(--animate-delay-base));
+  animation-name: animate-fade;
+  animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+  animation-fill-mode: backwards;
+}
+
+.animate:nth-child(1) { --delay: 1; }
+.animate:nth-child(2) { --delay: 2; }
+.animate:nth-child(3) { --delay: 3; }
+.animate:nth-child(4) { --delay: 4; }
+.animate:nth-child(5) { --delay: 5; }
+.animate:nth-child(6) { --delay: 6; }
+.animate:nth-child(7) { --delay: 7; }
+.animate:nth-child(8) { --delay: 8; }
+.animate:nth-child(9) { --delay: 9; }
+.animate:nth-child(10) { --delay: 10; }
+.animate:nth-child(11) { --delay: 11; }
+.animate:nth-child(12) { --delay: 12; }
+.animate:nth-child(13) { --delay: 13; }
+.animate:nth-child(14) { --delay: 14; }
+.animate:nth-child(15) { --delay: 15; }
+.animate:nth-child(16) { --delay: 16; }
+.animate:nth-child(17) { --delay: 17; }
+.animate:nth-child(18) { --delay: 18; }
+.animate:nth-child(19) { --delay: 19; }
+.animate:nth-child(20) { --delay: 20; }
+
+/* Pop In */
+.animate.pop { animation-name: animate-pop; }
+
+@keyframes animate-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+/* Blur In */
+.animate.blur {
+  animation-name: animate-blur;
+  animation-timing-function: ease;
+}
+
+@keyframes animate-blur {
+  0% {
+    opacity: 0;
+    filter: blur(15px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
