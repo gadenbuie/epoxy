@@ -67,10 +67,13 @@ eval_epoxy_engine <- function(fn, code, options) {
 	defaults <- defaults[setdiff(names(defaults), exclude)]
 	defaults <- lapply(defaults, rlang::eval_bare, env = environment(fn))
 	defaults$.envir <- knitr::knit_global()
-	defaults
 
-	chunk_opt_names <- c("data", names(defaults))
+	chunk_opt_names <- c("data", ".data", names(defaults))
 	chunk_opts <- options[intersect(chunk_opt_names, names(options))]
+
+	if ("data" %in% names(chunk_opts) && !".data" %in% names(chunk_opts)) {
+		names(chunk_opts)[which(names(chunk_opts) == "data")] <- ".data"
+	}
 
 	args <- purrr::list_assign(defaults, !!!chunk_opts)
 	args$.transformer <- epoxy_options_get_transformer(options)
