@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/Outfit-0.4.5/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/Outfit-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="epoxy in Reports">
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.0.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy" class="external-link">epoxy</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span></code></pre></div>
 <p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html" class="external-link">knitr
 engines</a>, or chunk types. Each type lets you intermix text with R
 code or data (<code>expr</code> in the table below), and each is geared
@@ -194,15 +194,15 @@ inside <code>epoxy</code> chunks! Typing <code>cars$</code> in the chunk
 will suggest the columns of <code>cars</code>.</p>
 </div>
 <div class="section level2">
-<h2 id="inline-styles">Inline styles<a class="anchor" aria-label="anchor" href="#inline-styles"></a>
+<h2 id="inline-transformers">Inline transformers<a class="anchor" aria-label="anchor" href="#inline-transformers"></a>
 </h2>
-<p><strong>epoxy</strong> provides inline styling inspired by <a href="https://cli.r-lib.org/reference/inline-markup.html" class="external-link">cli’s inline
-markup</a>. This styling is enabled by default in <code><a href="../reference/epoxy.html">epoxy()</a></code>,
-<code><a href="../reference/epoxy.html">epoxy_html()</a></code> and <code><a href="../reference/epoxy.html">epoxy_latex()</a></code> and their
-respective knitr chunk engines.</p>
+<p><strong>epoxy</strong> provides inline transformations inspired by <a href="https://cli.r-lib.org/reference/inline-markup.html" class="external-link">cli’s inline
+markup</a>. This transformer is enabled by default in
+<code><a href="../reference/epoxy.html">epoxy()</a></code>, <code><a href="../reference/epoxy.html">epoxy_html()</a></code> and
+<code><a href="../reference/epoxy.html">epoxy_latex()</a></code> and their respective knitr chunk engines.</p>
 <p>Here’s an example using a small list containing data about a
 <code>movie</code> (expand the section below to see the full code for
-<code>movie</code>). We can use the inline styles to format the
+<code>movie</code>). We can use the inline transformer to format the
 replacement text as we build up a description from this data.</p>
 <details><summary>
 Movie data
@@ -235,18 +235,19 @@ The movie <em>Back to the Future Part II</em> was released in
 $40,000,000, and it features movie stars Michael J. Fox, Christopher
 Lloyd, Lea Thompson and Thomas F. Wilson.
 </blockquote>
-<p>Read more about inline styles in
-<code><a href="../reference/epoxy_style_inline.html">?epoxy_style_inline</a></code>.</p>
+<p>Read more about inline transformations in
+<code><a href="../reference/epoxy_transform_inline.html">?epoxy_transform_inline</a></code>.</p>
 <div class="section level3">
-<h3 id="style-replaced-values">Style replaced values<a class="anchor" aria-label="anchor" href="#style-replaced-values"></a>
+<h3 id="transform-replaced-values">Transform replaced values<a class="anchor" aria-label="anchor" href="#transform-replaced-values"></a>
 </h3>
-<p>You can use the <code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_wrap()</a></code> with the
-<code>epoxy_style</code> chunk option to wrap the evaluated R expression
-in formatting or templating text. Or you can use the pre-set
-<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_bold()</a></code>, <code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_italic()</a></code>, or
-<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_code()</a></code> style transformers or with
-<code><a href="../reference/epoxy_style.html">epoxy_style()</a></code>.</p>
-<pre><code>```{epoxy, epoxy_style = epoxy_style("bold")}
+<p>You can use the <code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_wrap()</a></code> with the
+<code>epoxy_transform</code> chunk option to wrap the evaluated R
+expression in formatting or templating text. Or you can use the pre-set
+<code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_bold()</a></code>,
+<code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_italic()</a></code>, or
+<code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_code()</a></code> transformers or with
+<code><a href="../reference/epoxy_transform.html">epoxy_transform()</a></code>.</p>
+<pre><code>```{epoxy, .transformer = epoxy_transform("bold")}
 All cars stopped between {min(cars$dist)} and {max(cars$dist)} feet
 from a starting speed of {min(cars$speed)}---{max(cars$speed)}
 ```</code></pre>
@@ -269,9 +270,9 @@ This can be something to watch out for or it can be an advantage:</p>
 <li>“d” is for donut</li>
 </ol>
 <p>You can collapse fields automatically using the
-<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_collapse()</a></code> transformer. You can then choose how
-vectors are collapsed by adding <code>*</code>, <code>&amp;</code> or
-<code>|</code> to the end of the expression.</p>
+<code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_collapse()</a></code> transformer. You can then choose
+how vectors are collapsed by adding <code>*</code>, <code>&amp;</code>
+or <code>|</code> to the end of the expression.</p>
 <ul>
 <li>
 <code>*</code> collapses with commas,
@@ -283,7 +284,7 @@ e.g. <code>{letters[1:3]*}</code>.</li>
 <code>|</code> collapses with commas and adds <code>" or "</code>
 between the last two items.</li>
 </ul>
-<pre><code>```{epoxy, epoxy_style = epoxy_style("collapse")}
+<pre><code>```{epoxy, .transformer = epoxy_transform("collapse")}
 - The first three letters are {letters[1:3]*}.
 - When capitalized, they are {LETTERS[1:3]&amp;}.
 - They're indexed by {1:3|}.
@@ -296,7 +297,7 @@ between the last two items.</li>
 <p>You can change the separator between entries and between the last
 entry using the <code>sep</code>, <code>last</code> and the
 <code>_and</code> and <code>_or</code> specific arguments of the
-<code><a href="../reference/epoxy_style_one_shot.html">epoxy_style_collapse()</a></code> function.</p>
+<code><a href="../reference/epoxy_transform_one_shot.html">epoxy_transform_collapse()</a></code> function.</p>
 </div>
 <div class="section level3">
 <h3 id="templating-with-epoxy-chunks">Templating with epoxy chunks<a class="anchor" aria-label="anchor" href="#templating-with-epoxy-chunks"></a>
@@ -307,10 +308,10 @@ in the <code>data</code> chunk option, which can be a list or data
 frame.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  manufacturer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chevrolet"</span>, <span class="st">"Dodge"</span>, <span class="st">"Ford"</span><span class="op">)</span>,</span>
-<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Malibu"</span>, <span class="st">"Caravan"</span>, <span class="st">"Expedition"</span><span class="op">)</span>,</span>
-<span>  cty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="fl">7</span>, <span class="fl">11</span><span class="op">)</span>,</span>
-<span>  hwy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">24</span>, <span class="fl">17</span><span class="op">)</span></span>
+<span>    manufacturer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chevrolet"</span>, <span class="st">"Dodge"</span>, <span class="st">"Ford"</span><span class="op">)</span>,</span>
+<span>    model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Malibu"</span>, <span class="st">"Caravan"</span>, <span class="st">"Expedition"</span><span class="op">)</span>,</span>
+<span>    cty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>, <span class="fl">7</span>, <span class="fl">11</span><span class="op">)</span>,</span>
+<span>    hwy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">24</span>, <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>```{epoxy car-name, eval=FALSE}
 - A {manufacturer} {model} gets {cty} city and {hwy} highway miles per gallon.
@@ -409,11 +410,11 @@ set the chunk option <code>html_raw = FALSE</code>.</p>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>&lt;/ul&gt;</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>````</span></code></pre></div>
 <p><code>epoxy_html</code> uses two custom transformers,
-<code><a href="../reference/epoxy_style_inline.html">epoxy_style_inline()</a></code> and <code><a href="../reference/epoxy_style_html.html">epoxy_style_html()</a></code>,
-applying the html style before the inline formatting style. With
-<code><a href="../reference/epoxy_style_html.html">epoxy_style_html()</a></code> you can use
-<code>element.class#id</code> syntax to wrap expressions in HTML
-elements (all parts are optional). Let’s use this syntax to place
+<code><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline()</a></code> and
+<code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code>, applying the html transformer
+before the inline transformer. With <code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code>
+you can use <code>element.class#id</code> syntax to wrap expressions in
+HTML elements (all parts are optional). Let’s use this syntax to place
 manufacturer and model in <code>&lt;strong&gt;</code> and
 <code>&lt;em&gt;</code> elements, each with a custom class.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;ul&gt;</span>
@@ -440,9 +441,9 @@ manufacturer and model in <code>&lt;strong&gt;</code> and
   &lt;/li&gt;
 ```
 &lt;/ul&gt;</code></pre>
-<p>Because <code><a href="../reference/epoxy_style_html.html">epoxy_style_html()</a></code> is applied first,
+<p>Because <code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code> is applied first,
 <code>{{.uppercase manufacturer}}</code> is assumed to be a CSS class
-and not an inline style class.</p>
+and not an inline transformer class.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>```{epoxy_html data = mpg[1,]}</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>{{.uppercase manufacturer}}</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>

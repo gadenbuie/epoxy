@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/Outfit-0.4.5/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/Outfit-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Inline Reporting">
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.0.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,10 +186,10 @@ Bundling everything into a <code><a href="https://rdrr.io/r/base/list.html" clas
 results by accessing the list elements by name with <code>$</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">knitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  when <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  where <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/current_input.html" class="external-link">current_input</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  with <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"knitr"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  doc_url <span class="op">=</span> <span class="st">"https://rdrr.io/pkg/knitr/man/knit.html"</span></span>
+<span>    when <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    where <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/current_input.html" class="external-link">current_input</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    with <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"knitr"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    doc_url <span class="op">=</span> <span class="st">"https://rdrr.io/pkg/knitr/man/knit.html"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Report prepared on {knitted$when} from `{knitted$where}` </span>
@@ -197,8 +197,8 @@ results by accessing the list elements by name with <code>$</code>.</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Read more about [`knitr::knit()`]({knitted$doc_url}).</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2023-04-30 from <code>inline-reporting.Rmd</code>
-with knitr version 1.42 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
+<p>Report prepared on 2023-05-28 from <code>inline-reporting.Rmd</code>
+with knitr version 1.43 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>This is still essentially equivalent to R Markdown’s inline R chunks.
 But <code>epoxy</code> chunks include a <code>data</code> chunk
@@ -210,8 +210,8 @@ list directly without having to use <code>$</code>.</p>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>Read more about [`knitr::knit()`]({doc_url}).</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2023-04-30 from <code>inline-reporting.Rmd</code>
-with knitr version 1.42 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
+<p>Report prepared on 2023-05-28 from <code>inline-reporting.Rmd</code>
+with knitr version 1.43 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>Note that we can still have arbitrary R code in epoxy inline
 expressions: the <code>emo_ji()</code> function — a vignette-safe
@@ -228,13 +228,13 @@ copied the resulting data frame into this vignette to avoid taking extra
 dependencies for this vignette.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_ready</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intercept"</span>, <span class="st">"hund_days"</span>, <span class="st">"ozone"</span>, <span class="st">"hund_days_ozone"</span><span class="op">)</span>,</span>
-<span>    estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4.25"</span>, <span class="st">"0.34"</span>, <span class="st">"&amp;minus;0.14"</span>, <span class="st">"&amp;minus;0.04"</span><span class="op">)</span>,</span>
-<span>    se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.131</span>, <span class="fl">0.013</span>, <span class="fl">0.158</span>, <span class="fl">0.015</span><span class="op">)</span>,</span>
-<span>    ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"[4.00, 4.51]"</span>, <span class="st">"[0.31, 0.36]"</span>, <span class="st">"[&amp;minus;0.45, 0.17]"</span>,<span class="st">"[&amp;minus;0.07, &amp;minus;0.01]"</span><span class="op">)</span>,</span>
-<span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intercept"</span>, <span class="st">"hund_days"</span>, <span class="st">"ozone"</span>, <span class="st">"hund_days_ozone"</span><span class="op">)</span>,</span>
+<span>        estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4.25"</span>, <span class="st">"0.34"</span>, <span class="st">"&amp;minus;0.14"</span>, <span class="st">"&amp;minus;0.04"</span><span class="op">)</span>,</span>
+<span>        se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.131</span>, <span class="fl">0.013</span>, <span class="fl">0.158</span>, <span class="fl">0.015</span><span class="op">)</span>,</span>
+<span>        ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"[4.00, 4.51]"</span>, <span class="st">"[0.31, 0.36]"</span>, <span class="st">"[&amp;minus;0.45, 0.17]"</span>,<span class="st">"[&amp;minus;0.07, &amp;minus;0.01]"</span><span class="op">)</span>,</span>
+<span>        stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <p>We can use <code><a href="https://rdrr.io/r/base/split.html" class="external-link">split()</a></code> to make a list of data frames that we
 can index by the values in the <code>term</code> column.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -336,15 +336,15 @@ combination of <code>dplyr::group_by()</code> and
 <code>dplyr::summarize()</code> here.)</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarize_tree_growth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">tree</span> <span class="op">&lt;-</span> <span class="va">Orange</span><span class="op">[</span><span class="va">Orange</span><span class="op">$</span><span class="va">Tree</span> <span class="op">==</span> <span class="va">tree</span>, <span class="op">]</span></span>
-<span>  <span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    tree <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">Tree</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span>    age_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">tree</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    circumference_first <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">circumference</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span>    circumference_last <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">circumference</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">]</span></span>
-<span>  <span class="op">)</span></span>
-<span>  <span class="va">tree</span><span class="op">$</span><span class="va">growth_rate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">tree</span>, <span class="op">(</span><span class="va">circumference_last</span> <span class="op">-</span> <span class="va">circumference_first</span><span class="op">)</span> <span class="op">/</span> <span class="va">age_range</span><span class="op">)</span></span>
-<span>  <span class="va">tree</span></span>
+<span>    <span class="va">tree</span> <span class="op">&lt;-</span> <span class="va">Orange</span><span class="op">[</span><span class="va">Orange</span><span class="op">$</span><span class="va">Tree</span> <span class="op">==</span> <span class="va">tree</span>, <span class="op">]</span></span>
+<span>    <span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        tree <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">Tree</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>        age_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">tree</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        circumference_first <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">circumference</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>        circumference_last <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">circumference</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">]</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="va">tree</span><span class="op">$</span><span class="va">growth_rate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">tree</span>, <span class="op">(</span><span class="va">circumference_last</span> <span class="op">-</span> <span class="va">circumference_first</span><span class="op">)</span> <span class="op">/</span> <span class="va">age_range</span><span class="op">)</span></span>
+<span>    <span class="va">tree</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">orange_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="va">summarize_tree_growth</span><span class="op">)</span></span>
