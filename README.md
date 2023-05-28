@@ -13,6 +13,7 @@ scripts, reports, and apps.
 <a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
 <a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
 <a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
+<a href="https://app.codecov.io/gh/gadenbuie/epoxy?branch=main"><img src="https://codecov.io/gh/gadenbuie/epoxy/branch/main/graph/badge.svg" alt="Codecov test coverage" /></a>
 <a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
 <!-- badges: end -->
 </p>
@@ -100,7 +101,7 @@ and it features movie stars
 <blockquote>
 The movie *Back to the Future Part II* was released in **1989**. It
 earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
 F. Wilson.
 </blockquote>
 
