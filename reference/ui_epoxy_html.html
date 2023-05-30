@@ -18,7 +18,7 @@ the server-side data have changed are updated in ui_epoxy_html().'><meta propert
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4.9999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,7 +197,14 @@ attribute values for the entire template region. By default, with
 <code>"polite"</code>, any updates within the region will be announced via screen
 readers.</p>
 <p>If your template includes changes in lots of disparate areas, it would be
-better to set <code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"`` on specific regions that should be announced together. Otherwise, the default is to announce the entire region within the </code>ui_epoxy_html()<code>whenever any of the values within change. In other words, set</code>.aria_live = "off"<code>and</code>.aria_atomic = NULL<code>on the</code>ui_epoxy_html()<code>parent item and then set</code>"aria-live" = "polite"<code>and</code>"aria-atomic" = "true"<code>on the parent containers of each region in the app that receives updates.</code>ui_epoxy_html()` does targeted updates, changing only the parts of the
+better to set <code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"</code> on
+specific regions that should be announced together. Otherwise, the default
+is to announce the entire region within the <code>ui_epoxy_html()</code> whenever any
+of the values within change. In other words, set <code>.aria_live = "off"</code> and
+<code>.aria_atomic = NULL</code> on the <code>ui_epoxy_html()</code> parent item and then set
+<code>"aria-live" = "polite"</code> and <code>"aria-atomic" = "true"</code> on the parent
+containers of each region in the app that receives updates.
+<code>ui_epoxy_html()</code> does targeted updates, changing only the parts of the
 UI that have changed.</p></dd>
 
 </dl></div>
