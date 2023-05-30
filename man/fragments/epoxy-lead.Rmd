@@ -27,7 +27,7 @@ Use `epoxy` chunks for extra-strength inline syntax.
 Just `library(epoxy)`
 in your [R Markdown][rmarkdown] or [Quarto][quarto]
 document to get started.
-All epoxy chunks make it easy to tranform values in place
+All epoxy chunks make it easy to transform values in place
 with a `{cli}`-inspired inline syntax
 described in `?epoxy_transform_inline`.
 

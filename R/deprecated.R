@@ -4,6 +4,8 @@
 #'
 #' @param ... Passed to the new `epoxy_transform` function.
 #'
+#' @return Returns the result of the new `epoxy_transform` function.
+#'
 #' @keywords internal
 #' @export
 #' @name epoxy_style

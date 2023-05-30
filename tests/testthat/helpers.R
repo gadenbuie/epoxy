@@ -4,7 +4,7 @@ render_rmd <- function(rmd_text, ..., output_format = rmarkdown::md_document()) 
 	writeLines(rmd_text, tmpfile)
 	out <- rmarkdown::render(tmpfile, output_format = output_format, ..., envir = new.env(), quiet = TRUE)
 	if (is.character(out) && file.exists(out)) {
-		on.exit(unlink(out))
+		on.exit(unlink(out), add = TRUE)
 		readLines(out)
 	} else out
 }

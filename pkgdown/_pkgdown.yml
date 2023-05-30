@@ -4,7 +4,7 @@ template:
   package: grkgdown
 
 development:
-  mode: release
+  mode: auto
 
 navbar:
   components:
