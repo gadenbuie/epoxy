@@ -1,3 +1,5 @@
+# epoxy (development version)
+
 # epoxy 0.1.0
 
 This is epoxy's first release on CRAN! This NEWS file collects changes from
