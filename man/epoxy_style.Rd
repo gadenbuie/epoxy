@@ -39,6 +39,9 @@ epoxy_style_wrap(...)
 \arguments{
 \item{...}{Passed to the new \code{epoxy_transform} function.}
 }
+\value{
+Returns the result of the new \code{epoxy_transform} function.
+}
 \description{
 \code{epoxy_style()} was renamed \code{\link[=epoxy_transform]{epoxy_transform()}} in \pkg{epoxy} version 0.1.0.
 }
