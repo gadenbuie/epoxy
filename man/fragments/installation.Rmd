@@ -1,4 +1,10 @@
-You can install the latest version of epoxy with [remotes]
+You can install epoxy from CRAN:
+
+```{r eval=FALSE}
+install.packages("epoxy")
+```
+
+You can install the latest development version of epoxy with [remotes]
 
 ```{r eval=FALSE}
 # install.packages("remotes")

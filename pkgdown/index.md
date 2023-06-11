@@ -90,7 +90,13 @@ There’s a whole lot more that epoxy can do!
 
 ## Installation
 
-You can install the latest version of epoxy with
+You can install epoxy from CRAN:
+
+``` r
+install.packages("epoxy")
+```
+
+You can install the latest development version of epoxy with
 [remotes](https://remotes.r-lib.org)
 
 ``` r
