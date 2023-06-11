@@ -7,6 +7,7 @@
 epoxy_transform_html(
   class = NULL,
   element = "span",
+  collapse = TRUE,
   transformer = glue::identity_transformer
 )
 }
@@ -16,6 +17,12 @@ HTML element.}
 
 \item{element}{\verb{[character()}\cr The default HTML element tag name to be used
 when an element isn't specified in the expression.}
+
+\item{collapse}{\verb{[logical(1)]}\cr If \code{TRUE}, transformed HTML outputs will be
+collapsed into a single character string. This is helpful when you're
+including the value of a vector within an outer HTML tag. Use \code{collapse = FALSE} to return a vector of HTML character strings instead, which follows
+what you'd typically expect from \code{glue::glue()}, i.e. when you want to
+repeat the outer wrapping text for each element of the vector.}
 
 \item{transformer}{The transformer to apply to the replacement string. This
 argument is used for chaining the transformer functions. By providing a
