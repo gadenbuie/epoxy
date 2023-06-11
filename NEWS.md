@@ -1,4 +1,4 @@
-# epoxy (development version)
+# epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
   inline HTML transformations. This makes it easier to wrap a vector in
