@@ -73,7 +73,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="epoxy-development-version">epoxy (development version)<a class="anchor" aria-label="anchor" href="#epoxy-development-version"></a></h2>
-</div>
+<ul><li><p><code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code> now (again) returns a collapsed character string for inline HTML transformations. This makes it easier to wrap a vector in individual HTML tags and then slot it into a parent template. You can still get length-consistent output by setting <code>collapse = FALSE</code>, which is most useful when you want the template around the expression to repeat. (<a href="https://github.com/gadenbuie/epoxy/issues/96" class="external-link">#96</a>)</p></li>
+<li><p>Fixed an issue with <code><a href="../reference/epoxy_transform.html">epoxy_transform_set()</a></code> that prevented it from working when <code>knitr::opts_current$get("engine")</code> returned an unexpected value.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="epoxy-010">epoxy 0.1.0<a class="anchor" aria-label="anchor" href="#epoxy-010"></a></h2><p class="text-muted">CRAN release: 2023-05-30</p>
 <p>This is epoxy’s first release on CRAN! This NEWS file collects changes from versions that were available on GitHub prior to the CRAN release.</p>
