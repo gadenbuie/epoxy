@@ -118,20 +118,20 @@ epoxy_transform_html <- function(
 			)
 		})
 
-    if (!isTRUE(collapse)) {
+		if (!isTRUE(collapse)) {
 			# Return a vector of html character strings
 			return(html_chr(vapply(html, format, character(1))))
 		}
 
 		# otherwise, collapse length-1 html tags into a single character string
 		out <-
-      if (length(html) == 1) {
-        html[[1]]
-      } else {
-        htmltools::tagList(html)
-      }
+			if (length(html) == 1) {
+				html[[1]]
+			} else {
+				htmltools::tagList(html)
+			}
 
-    html_chr(out)
+		html_chr(out)
 	}
 }
 
