@@ -184,14 +184,9 @@ epoxy_latex <- function(
 }
 
 with_epoxy_engine <- function(engine, expr) {
-	local_epoxy_engine(engine)
-	expr
-}
-
-local_epoxy_engine <- function(engine = "md", .local_envir = parent.frame()) {
-	withr::local_options(
+	with_options(
 		list(epoxy.engine = engine_validate_alias(engine)),
-		.local_envir = .local_envir
+		expr
 	)
 }
 

@@ -154,3 +154,17 @@ describe("epoxy_transform_set()", {
 		)
 	})
 })
+
+test_that("with_epoxy_engine()", {
+	old_opts <- options(epoxy.engine = NULL)
+	on.exit(options(old_opts))
+
+	expect_equal(with_epoxy_engine("html", engine_current()), "html")
+	expect_null(engine_current())
+
+	expect_equal(with_epoxy_engine("markdown", engine_current()), "md")
+	expect_null(engine_current())
+
+	expect_equal(with_epoxy_engine("latex", engine_current()), "latex")
+	expect_null(engine_current())
+})
