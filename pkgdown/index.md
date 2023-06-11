@@ -62,9 +62,8 @@ There’s a whole lot more that epoxy can do!
 <div class="col p-0">
 <div class="card card-as-link">
 <div class="card-body">
-<h3 class="card-title mt-0 mb-3">Get Started</h3>
+<h3 class="card-title mt-0 mb-3"><a href="articles/epoxy.html" class="card-primary-link card-header-link text-decoration-none">Get started</a></h3>
 <p class="card-text">Get up and running with epoxy in reports or Shiny apps.</p>
-<a href="articles/epoxy.html" class="card-primary-link btn btn-link text-decoration-none float-end">Get started</a>
 </div>
 </div>
 </div>
@@ -72,9 +71,8 @@ There’s a whole lot more that epoxy can do!
 <div class="col p-0">
 <div class="card card-as-link">
 <div class="card-body">
-<h3 class="card-title mt-0 mb-3">Reference</h3>
+<h3 class="card-title mt-0 mb-3"><a href="reference/index.html" class="card-primary-link card-header-link text-decoration-none">Reference</a></h3>
 <p class="card-text">Function reference with usage and examples.</p>
-<a href="reference/index.html" class="card-primary-link btn btn-link text-decoration-none float-end">Reference</a>
 </div>
 </div>
 </div>
@@ -82,9 +80,8 @@ There’s a whole lot more that epoxy can do!
 <div class="col p-0">
 <div class="card card-as-link">
 <div class="card-body">
-<h3 class="card-title mt-0 mb-4">Articles</h3>
+<h3 class="card-title mt-0 mb-4"><a href="articles/" class="card-primary-link card-header-link text-decoration-none">Articles</a></h3>
 <p class="card-text">Longer posts and tutorials about using epoxy in your reports and apps.</p>
-<a href="articles/" class="card-primary-link btn btn-link text-decoration-none float-end">Articles</a>
 </div>
 </div>
 </div>
