@@ -6,6 +6,9 @@
   get length-consistent output by setting `collapse = FALSE`, which is most
   useful when you want the template around the expression to repeat. (#96)
 
+* Fixed an issue with `epoxy_transform_set()` that prevented it from working
+  when `knitr::opts_current$get("engine")` returned an unexpected value.
+
 # epoxy 0.1.0
 
 This is epoxy's first release on CRAN! This NEWS file collects changes from
