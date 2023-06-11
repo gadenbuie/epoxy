@@ -127,8 +127,8 @@ epoxy_html <- function(
 	.transformer = NULL
 ) {
 	res <-
-		with_options(
-			list(epoxy.engine = "html"),
+		with_epoxy_engine(
+			"html",
 			epoxy(
 				...,
 				.data = .data,
@@ -164,8 +164,8 @@ epoxy_latex <- function(
 	.trim = FALSE,
 	.transformer = NULL
 ) {
-	with_options(
-		list(epoxy.engine = "latex"),
+	with_epoxy_engine(
+		"latex",
 		epoxy(
 			...,
 			.data = .data,
@@ -180,6 +180,18 @@ epoxy_latex <- function(
 			.trim = .trim,
 			.transformer = .transformer
 		)
+	)
+}
+
+with_epoxy_engine <- function(engine, expr) {
+	local_epoxy_engine(engine)
+	expr
+}
+
+local_epoxy_engine <- function(engine = "md", .local_envir = parent.frame()) {
+	withr::local_options(
+		list(epoxy.engine = engine_validate_alias(engine)),
+		.local_envir = .local_envir
 	)
 }
 
