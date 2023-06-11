@@ -70,7 +70,7 @@ write !!expr in the inline markup: {{ li#food.fruit !!fruit_name }}.
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,6 +166,7 @@ write <code>!!expr</code> in the inline markup: <code>{{ li#food.fruit !!fruit_n
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_transform_html</span><span class="op">(</span></span>
 <span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  element <span class="op">=</span> <span class="st">"span"</span>,</span>
+<span>  collapse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -180,6 +181,14 @@ HTML element.</p></dd>
 <dt>element</dt>
 <dd><p><code>[character()</code><br> The default HTML element tag name to be used
 when an element isn't specified in the expression.</p></dd>
+
+
+<dt>collapse</dt>
+<dd><p><code>[logical(1)]</code><br> If <code>TRUE</code>, transformed HTML outputs will be
+collapsed into a single character string. This is helpful when you're
+including the value of a vector within an outer HTML tag. Use <code>collapse = FALSE</code> to return a vector of HTML character strings instead, which follows
+what you'd typically expect from <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, i.e. when you want to
+repeat the outer wrapping text for each element of the vector.</p></dd>
 
 
 <dt>transformer</dt>
@@ -209,9 +218,9 @@ the current transformation. In nearly all cases, you can let
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span><span class="st">"&lt;ul&gt;{{ li letters[1:3] }}&lt;/ul&gt;"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ul&gt;&lt;li&gt;a&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;b&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;c&lt;/li&gt;&lt;/ul&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ul&gt;&lt;li&gt;a&lt;/li&gt;&lt;li&gt;b&lt;/li&gt;&lt;li&gt;c&lt;/li&gt;&lt;/ul&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span><span class="st">"&lt;ul&gt;{{ li.alpha letters[1:3] }}&lt;/ul&gt;"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ul&gt;&lt;li class="alpha"&gt;a&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li class="alpha"&gt;b&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li class="alpha"&gt;c&lt;/li&gt;&lt;/ul&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ul&gt;&lt;li class="alpha"&gt;a&lt;/li&gt;&lt;li class="alpha"&gt;b&lt;/li&gt;&lt;li class="alpha"&gt;c&lt;/li&gt;&lt;/ul&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span><span class="st">"&lt;ul&gt;{{ li#my-letter letters[7] }}&lt;/ul&gt;"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ul&gt;&lt;li id="my-letter"&gt;g&lt;/li&gt;&lt;/ul&gt;</span>
 <span class="r-in"><span></span></span>
