@@ -347,7 +347,7 @@ engine_current <- function(default = NULL) {
 		return(NULL)
 	}
 
-	engine_aliases[engine]
+	unname(engine_aliases[engine])
 }
 
 engine_aliases <- c(
