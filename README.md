@@ -101,7 +101,7 @@ and it features movie stars
 <blockquote>
 The movie *Back to the Future Part II* was released in **1989**. It
 earned \$118,450,002 with a budget of \$40,000,000, and it features
-movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
+movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson and Thomas
 F. Wilson.
 </blockquote>
 
