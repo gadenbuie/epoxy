@@ -166,6 +166,7 @@ write <code>!!expr</code> in the inline markup: <code>{{ li#food.fruit !!fruit_n
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_transform_html</span><span class="op">(</span></span>
 <span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  element <span class="op">=</span> <span class="st">"span"</span>,</span>
+<span>  collapse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -180,6 +181,14 @@ HTML element.</p></dd>
 <dt>element</dt>
 <dd><p><code>[character()</code><br> The default HTML element tag name to be used
 when an element isn't specified in the expression.</p></dd>
+
+
+<dt>collapse</dt>
+<dd><p><code>[logical(1)]</code><br> If <code>TRUE</code>, transformed HTML outputs will be
+collapsed into a single character string. This is helpful when you're
+including the value of a vector within an outer HTML tag. Use <code>collapse = FALSE</code> to return a vector of HTML character strings instead, which follows
+what you'd typically expect from <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, i.e. when you want to
+repeat the outer wrapping text for each element of the vector.</p></dd>
 
 
 <dt>transformer</dt>
