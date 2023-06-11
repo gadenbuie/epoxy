@@ -14,7 +14,7 @@ describe("epoxy_html()", {
 	it("uses html, inline transformers by default", {
 		expect_equal(
 			epoxy_html("{{ span letters[1:3] }}"),
-			html_chr(glue("<span>{x}</span>", x = letters[1:3]))
+			html_chr(glue("<span>a</span><span>b</span><span>c</span>"))
 		)
 
 		expect_equal(

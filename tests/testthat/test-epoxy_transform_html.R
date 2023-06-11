@@ -25,7 +25,7 @@ describe("epoxy_transform_html()", {
 		)
 	})
 
-	it("returns a character vector when given a length > 1 vector", {
+	it("collapse = TRUE returns a character string", {
 		expect_equal(
 			epoxy_transform_html()("x", env),
 			letters[1:3]
@@ -33,6 +33,28 @@ describe("epoxy_transform_html()", {
 
 		expect_equal(
 			epoxy_transform_html()("span x", env),
+			html_chr("<span>a</span><span>b</span><span>c</span>")
+		)
+
+		expect_equal(
+			epoxy_transform_html()("span.test-class x", env),
+			html_chr('<span class="test-class">a</span><span class="test-class">b</span><span class="test-class">c</span>')
+		)
+
+		expect_equal(
+			epoxy_transform_html()("span.test-class#test-id x", env),
+			html_chr('<span class="test-class" id="test-id">a</span><span class="test-class" id="test-id">b</span><span class="test-class" id="test-id">c</span>')
+		)
+	})
+
+	it("collapse = FALSE returns a character vector", {
+		expect_equal(
+			epoxy_transform_html(collapse = FALSE)("x", env),
+			letters[1:3]
+		)
+
+		expect_equal(
+			epoxy_transform_html(collapse = FALSE)("span x", env),
 			html_chr(c(
 				"<span>a</span>",
 				"<span>b</span>",
@@ -41,7 +63,7 @@ describe("epoxy_transform_html()", {
 		)
 
 		expect_equal(
-			epoxy_transform_html()("span.test-class x", env),
+			epoxy_transform_html(collapse = FALSE)("span.test-class x", env),
 			html_chr(c(
 				'<span class="test-class">a</span>',
 				'<span class="test-class">b</span>',
@@ -50,7 +72,7 @@ describe("epoxy_transform_html()", {
 		)
 
 		expect_equal(
-			epoxy_transform_html()("span.test-class#test-id x", env),
+			epoxy_transform_html(collapse = FALSE)("span.test-class#test-id x", env),
 			html_chr(c(
 				'<span class="test-class" id="test-id">a</span>',
 				'<span class="test-class" id="test-id">b</span>',

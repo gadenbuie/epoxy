@@ -69,6 +69,12 @@
 #'   HTML element.
 #' @param element `[character()`\cr The default HTML element tag name to be used
 #'   when an element isn't specified in the expression.
+#' @param collapse `[logical(1)]`\cr If `TRUE`, transformed HTML outputs will be
+#'   collapsed into a single character string. This is helpful when you're
+#'   including the value of a vector within an outer HTML tag. Use `collapse =
+#'   FALSE` to return a vector of HTML character strings instead, which follows
+#'   what you'd typically expect from `glue::glue()`, i.e. when you want to
+#'   repeat the outer wrapping text for each element of the vector.
 #'
 #' @inheritParams epoxy_transform_inline
 #' @inherit epoxy_transform params return
@@ -79,6 +85,7 @@
 epoxy_transform_html <- function(
 	class = NULL,
 	element = "span",
+	collapse = TRUE,
 	transformer = glue::identity_transformer
 ) {
 	function(text, envir) {
@@ -111,7 +118,20 @@ epoxy_transform_html <- function(
 			)
 		})
 
-		html_chr(vapply(html, format, character(1)))
+    if (!isTRUE(collapse)) {
+			# Return a vector of html character strings
+			return(html_chr(vapply(html, format, character(1))))
+		}
+
+		# otherwise, collapse length-1 html tags into a single character string
+		out <-
+      if (length(html) == 1) {
+        html[[1]]
+      } else {
+        htmltools::tagList(html)
+      }
+
+    html_chr(out)
 	}
 }
 

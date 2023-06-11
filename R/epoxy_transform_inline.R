@@ -310,7 +310,7 @@ epoxy_bold <- function(text) {
 	before <- engine_pick("**", "<strong>", "\\textbf{")
 	after <- engine_pick("**", "</strong>", "}")
 	x <- paste0(before, text, after)
-	engine_pick(x, HTML(x))
+	engine_pick(x, html_chr(x))
 }
 
 epoxy_italic <- function(text) {
@@ -318,7 +318,7 @@ epoxy_italic <- function(text) {
 	before <- engine_pick("_", "<em>", "\\emph{")
 	after <- engine_pick("_", "</em>", "}")
 	x <- paste0(before, text, after)
-	engine_pick(x, HTML(x))
+	engine_pick(x, html_chr(x))
 }
 
 epoxy_code <- function(text) {
@@ -326,7 +326,7 @@ epoxy_code <- function(text) {
 	before <- engine_pick("`", "<code>", "\\texttt{")
 	after <- engine_pick("`", "</code>", "}")
 	x <- paste0(before, text, after)
-	engine_pick(x, HTML(x))
+	engine_pick(x, html_chr(x))
 }
 
 # nocov start
