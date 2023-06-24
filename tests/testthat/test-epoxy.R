@@ -1,3 +1,23 @@
+test_that("epoxy .data pronoun", {
+	expect_equal(
+		epoxy("{.data}", .data = list(a = "hi", b = "there")),
+		glue('{list(a = "hi", b = "there")}')
+	)
+
+	expect_equal(
+		epoxy("{.data$a}", .data = list(a = "hi", b = "there")),
+		glue("hi")
+	)
+
+	expect_equal(
+		epoxy(
+			"{.comma unlist(.data[c('b', 'a')])}",
+		  .data = list(a = "hi", b = "there")
+		),
+		glue("there, hi")
+	)
+})
+
 describe("epoxy_html()", {
 	it("returns an html glue character", {
 		expect_s3_class(

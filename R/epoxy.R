@@ -82,6 +82,7 @@ epoxy <- function(
 	if (!is.null(.data)) {
 		glue_env <- new.env(parent = .envir)
 		assign("$", epoxy_data_subset, envir = glue_env)
+		assign(".data", .data, envir = glue_env)
 	}
 
 	opts_transformer <- list(
