@@ -12,7 +12,7 @@ test_that("epoxy .data pronoun", {
 	expect_equal(
 		epoxy(
 			"{.comma unlist(.data[c('b', 'a')])}",
-		  .data = list(a = "hi", b = "there")
+			.data = list(a = "hi", b = "there")
 		),
 		glue("there, hi")
 	)
