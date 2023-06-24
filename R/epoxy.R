@@ -193,14 +193,16 @@ with_epoxy_engine <- function(engine, expr) {
 
 epoxy_data_subset <- function(x, y) {
 	y <- substitute(y)
+	exact <- inherits(x, "tbl_df")
+
 	if (identical(deparse(substitute(x)), ".data")) {
-		return(base::`[[`(x, y, exact = FALSE))
+		return(base::`[[`(x, y, exact = exact))
 	}
 
-	ret <- tryCatch(base::`[[`(x, y, exact = FALSE), error = function(...) NULL)
+	ret <- tryCatch(base::`[[`(x, y, exact = exact), error = function(...) NULL)
 	if (!is.null(ret)) return(ret)
 
-	z <- lapply(x, function(.x) base::`[[`(.x, y, exact = FALSE))
+	z <- lapply(x, function(.x) base::`[[`(.x, y, exact = exact))
 	z_len_1 <- vapply(z, function(z) length(z) == 1, logical(1))
 	if (all(z_len_1)) unlist(z) else z
 }
