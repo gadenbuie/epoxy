@@ -193,9 +193,16 @@ with_epoxy_engine <- function(engine, expr) {
 
 epoxy_data_subset <- function(x, y) {
 	y <- substitute(y)
-	x <- lapply(x, function(.x) base::`[[`(.x, y))
-	x_len_1 <- vapply(x, function(x) length(x) == 1, logical(1))
-	if (all(x_len_1)) unlist(x) else x
+	if (identical(deparse(substitute(x)), ".data")) {
+		return(base::`[[`(x, y, exact = FALSE))
+	}
+
+	ret <- tryCatch(base::`[[`(x, y, exact = FALSE), error = function(...) NULL)
+	if (!is.null(ret)) return(ret)
+
+	z <- lapply(x, function(.x) base::`[[`(.x, y, exact = FALSE))
+	z_len_1 <- vapply(z, function(z) length(z) == 1, logical(1))
+	if (all(z_len_1)) unlist(z) else z
 }
 
 epoxy_options_get_transformer <- function(options) {

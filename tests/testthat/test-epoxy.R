@@ -18,6 +18,35 @@ test_that("epoxy .data pronoun", {
 	)
 })
 
+test_that("epoxy_data_subset()", {
+	nested <- list(
+		outer = list(
+			list(inner = "one"),
+			list(inner = "two")
+		),
+		flat = list(inner = "flat"),
+		ragged = list(
+			list(inner = c("one", "two")),
+			list(inner = "three")
+		)
+	)
+
+	expect_equal(
+		epoxy("{.comma outer$inner}", .data = nested),
+		glue("one, two")
+	)
+
+	expect_equal(
+		epoxy("{flat$inner}", .data = nested),
+		glue("flat")
+	)
+
+	expect_equal(
+		epoxy("{ragged$inner[[1]][2]}", .data = nested),
+		glue("two")
+	)
+})
+
 describe("epoxy_html()", {
 	it("returns an html glue character", {
 		expect_s3_class(
