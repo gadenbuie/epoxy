@@ -1,5 +1,9 @@
 # epoxy (development version)
 
+* `epoxy()` now adds a `.data` pronoun that allows you to refer to the list or
+  data frame passed into either the `.data` argument of `epoxy()` or the `data`
+  or `.data` chunk options. (#100)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
