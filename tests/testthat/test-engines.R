@@ -59,10 +59,12 @@ describe("knitr engines", {
 		})
 
 		it("prefers .data over data", {
-			opts$.data <- data.frame(x = 5:6, y = 7:8)
-			expect_equal(
-				knitr_engine_epoxy(opts),
-				"5 and 7\n6 and 8\n"
+			opts$data <- data.frame(x = 5:6, y = 7:8)
+			lifecycle::expect_deprecated(
+				expect_equal(
+					knitr_engine_epoxy(opts),
+					"1 and 3\n2 and 4\n"
+				)
 			)
 		})
 
