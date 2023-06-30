@@ -50,7 +50,7 @@ describe("knitr engines", {
 			opts$data <- opts$.data
 			opts$.data <- NULL
 
-      lifecycle::expect_deprecated(
+			lifecycle::expect_deprecated(
 				expect_equal(
 					knitr_engine_epoxy(opts),
 					"1 and 3\n2 and 4\n"
