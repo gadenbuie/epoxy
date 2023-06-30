@@ -52,12 +52,12 @@ Both Tristan and Yihui Xie call _inline reporting_
 the act of interleaving R expressions in the prose of markdown text.
 When you click the **Knit** button or call `rmarkdown::render()`
 to build your report,
-`knitr` evaluates these R expressions, 
+`knitr` evaluates these R expressions,
 turns them into text and plugs them into your output.
 
 The most common use case is for reporting descriptive statistics.
 To illustrate, I'll use the [`Orange` dataset](https://rdrr.io/r/datasets/Orange.html)
-which contains circumference measurements of 
+which contains circumference measurements of
 ```{epoxy}
 {n_trees} orange trees at {n_timepoints} points in time.
 ```
@@ -106,11 +106,11 @@ as we'll discover in this vignette.
 In the above example,
 we used normal variables that were available in the global environment of our document.
 But a small structural change can bring great benefits.
-It's worth reading [Tristan's blog post][tj-lists], 
+It's worth reading [Tristan's blog post][tj-lists],
 but to steal his thunder: store your data in lists.
 
 We could, on the one hand,
-create variables named `knitted_when`, `knitted_where` and `knitted_with` 
+create variables named `knitted_when`, `knitted_where` and `knitted_with`
 that all store facts about the knitting process.
 The `knitted_` prefix is helpful as an aid to remember that these variables are related.
 
@@ -130,37 +130,37 @@ knitted <- list(
 
 ````{verbatim}
 ```{epoxy}
-Report prepared on {knitted$when} from `{knitted$where}` 
-with knitr version {knitted$with} {emo_ji('happy')}. 
+Report prepared on {knitted$when} from `{knitted$where}`
+with knitr version {knitted$with} {emo_ji('happy')}.
 Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 ````
 
 ::: epoxy-output
 ```{epoxy echo=FALSE}
-Report prepared on {knitted$when} from `{knitted$where}` 
-with knitr version {knitted$with} {emo_ji('happy')}. 
+Report prepared on {knitted$when} from `{knitted$where}`
+with knitr version {knitted$with} {emo_ji('happy')}.
 Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 :::
 
 This is still essentially equivalent to R Markdown's inline R chunks.
-But `epoxy` chunks include a `data` chunk argument,
+But `epoxy` chunks include a `.data` chunk argument,
 which allows us to reference items in the `knitted` list
 directly without having to use `$`.
 
 ````{verbatim}
-```{epoxy knitted-2, data = knitted}
-Report prepared on {when} from `{where}` 
-with knitr version {with} {emo_ji('happy')}. 
+```{epoxy knitted-2, .data = knitted}
+Report prepared on {when} from `{where}`
+with knitr version {with} {emo_ji('happy')}.
 Read more about [`knitr::knit()`]({doc_url}).
 ```
 ````
 
 ::: epoxy-output
-```{epoxy knitted-2, data = knitted}
-Report prepared on {when} from `{where}` 
-with knitr version {with} {emo_ji('happy')}. 
+```{epoxy knitted-2, .data = knitted}
+Report prepared on {when} from `{where}`
+with knitr version {with} {emo_ji('happy')}.
 Read more about [`knitr::knit()`]({doc_url}).
 ```
 :::
@@ -214,23 +214,23 @@ Now we can write up our results with inline reporting:
 ::: epoxy-output
 ```{epoxy stats-paragraph}
 The average log-size in the control condition was
-{stats$intercept$estimate} units, 
+{stats$intercept$estimate} units,
 95% Wald CI {stats$intercept$ci}.
-There was not a statistically clear difference between the 
-ozone conditions for their intercepts (day-0 values), 
+There was not a statistically clear difference between the
+ozone conditions for their intercepts (day-0 values),
 *B* = {stats$ozone$estimate}, {stats$ozone$ci}.
-For the control group, the average growth rate was 
-{stats$hund_days$estimate} log-size units per 100 days, 
-{stats$hund_days$ci}. The growth rate for 
-the ozone treatment group was significantly slower, 
-*diff* = {stats$hund_days_ozone$estimate}, 
+For the control group, the average growth rate was
+{stats$hund_days$estimate} log-size units per 100 days,
+{stats$hund_days$ci}. The growth rate for
+the ozone treatment group was significantly slower,
+*diff* = {stats$hund_days_ozone$estimate},
 {stats$hund_days_ozone$ci}.
 ```
 :::
 
 ### Inline reporting with autocomplete
 
-What's extra neat about epoxy — 
+What's extra neat about epoxy —
 and not readily apparent if you're reading this vignette —
 is that RStudio's autocomplete feature kicks in when you type `stats$`
 inside a braced expression `{ }`.
@@ -249,7 +249,7 @@ inside an `epoxy` chunk;
 you can wrap only the data-heavy parts as needed.
 
 ````{verbatim}
-There was not a statistically clear difference between the 
+There was not a statistically clear difference between the
 ozone conditions for their intercepts (day-0 values),
 ```{epoxy}
 *B* = {stats$ozone$estimate}, {stats$ozone$ci}.
@@ -261,15 +261,15 @@ The growth rate for the ozone treatment group was significantly slower,
 ````
 
 ::: epoxy-output
-There was not a statistically clear difference between the 
+There was not a statistically clear difference between the
 ozone conditions for their intercepts (day-0 values),
 ```{epoxy}
 *B* = {stats$ozone$estimate}, {stats$ozone$ci}.
 ```
-The growth rate for 
+The growth rate for
 the ozone treatment group was significantly slower,
 ```{epoxy}
-*diff* = {stats$hund_days_ozone$estimate}, 
+*diff* = {stats$hund_days_ozone$estimate},
 {stats$hund_days_ozone$ci}.
 ```
 :::
@@ -309,7 +309,7 @@ we can use this feature to our advantage.
 ````{verbatim}
 A quick recap of the growth observed in the orange trees:
 
-```{epoxy data = orange_summary}
+```{epoxy .data = orange_summary}
 - Tree number {tree} started out at {circumference_first}mm and,
   over {age_range} days, grew to be {circumference_last}mm.
 ```
@@ -327,7 +327,7 @@ A quick recap of the growth observed in the orange trees:
 ### Template inline reporting chunks
 
 By using [knitr's reference labels feature](https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html#ref-label),
-and the `epoxy` `data` chunk option we saw above,
+and the `epoxy` `.data` chunk option we saw above,
 you can create an epoxy template
 that you can re-use like a parameterized chunk.
 
@@ -343,24 +343,24 @@ an average of {signif(growth_rate * 7, 2)}mm per week.
 an average of {signif(growth_rate * 7, 2)}mm per week.
 ```
 
-that you can later use in your prose 
+that you can later use in your prose
 by referencing the chunk with `ref.label`
-and providing a different slice of data via the `data` chunk option.
+and providing a different slice of data via the `.data` chunk option.
 
 ````{verbatim}
 The fourth tree was the largest tree at the end of the study, growing
-```{epoxy ref.label="average-growth", data = summarize_tree_growth(4)}
+```{epoxy ref.label="average-growth", .data = summarize_tree_growth(4)}
 ```
 Meanwhile, the smallest tree was the third, which grew at
-```{epoxy ref.label="average-growth", data = summarize_tree_growth(3)}
+```{epoxy ref.label="average-growth", .data = summarize_tree_growth(3)}
 ```
 ````
 
 ::: epoxy-output
 The fourth tree was the largest tree at the end of the study, growing
-```{epoxy ref.label="average-growth", data = summarize_tree_growth(4)}
+```{epoxy ref.label="average-growth", .data = summarize_tree_growth(4)}
 ```
 Meanwhile, the smallest tree was the third, which grew at
-```{epoxy ref.label="average-growth", data = summarize_tree_growth(3)}
+```{epoxy ref.label="average-growth", .data = summarize_tree_growth(3)}
 ```
 :::
