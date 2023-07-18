@@ -50,17 +50,21 @@ describe("knitr engines", {
 			opts$data <- opts$.data
 			opts$.data <- NULL
 
-			expect_equal(
-				knitr_engine_epoxy(opts),
-				"1 and 3\n2 and 4\n"
+			lifecycle::expect_deprecated(
+				expect_equal(
+					knitr_engine_epoxy(opts),
+					"1 and 3\n2 and 4\n"
+				)
 			)
 		})
 
 		it("prefers .data over data", {
-			opts$.data <- data.frame(x = 5:6, y = 7:8)
-			expect_equal(
-				knitr_engine_epoxy(opts),
-				"5 and 7\n6 and 8\n"
+			opts$data <- data.frame(x = 5:6, y = 7:8)
+			lifecycle::expect_deprecated(
+				expect_equal(
+					knitr_engine_epoxy(opts),
+					"1 and 3\n2 and 4\n"
+				)
 			)
 		})
 
@@ -85,7 +89,7 @@ library(epoxy)
 data <- list(name = "Chris", value = 1000, taxed = 600, in_ca = TRUE)
 ```
 
-```{whisker data = data, data_asis = TRUE, echo=FALSE}
+```{whisker .data = data, data_asis = TRUE, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}
@@ -107,7 +111,7 @@ knitr::opts_chunk$set(echo = FALSE)
 data <- list(name = "Chris", value = 1000, taxed = 600, in_ca = TRUE)
 ```
 
-```{whisker data = data, echo=FALSE}
+```{whisker .data = data, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}
@@ -129,7 +133,7 @@ knitr::opts_chunk$set(echo = FALSE)
 data <- list(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600), in_ca = c(TRUE, FALSE))
 ```
 
-```{whisker data = data, echo=FALSE}
+```{whisker .data = data, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}
@@ -154,7 +158,7 @@ knitr::opts_chunk$set(echo = FALSE)
 data <- list(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600), in_ca = NULL)
 ```
 
-```{whisker data = data, echo=FALSE}
+```{whisker .data = data, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}
@@ -179,7 +183,7 @@ knitr::opts_chunk$set(echo = FALSE)
 data <- list(name = c("Chris", "Jane"), value = 1000, taxed = c(600, 600), in_ca = NULL)
 ```
 
-```{whisker data = data, echo=FALSE}
+```{whisker .data = data, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}

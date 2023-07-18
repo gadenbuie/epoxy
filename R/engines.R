@@ -61,6 +61,30 @@ use_epoxy_glue_engine <- function() {
 	invisible(old)
 }
 
+prefer_dotted_data_option <- function(options) {
+	if (!"data" %in% names(options)) {
+		return(options)
+	}
+	both_provided <- ".data" %in% names(options)
+
+	lifecycle::deprecate_warn(
+		when = "0.2.0",
+		what = I("The `data` chunk option"),
+		with = I("the `.data` option (note the leading dot)"),
+		details = if (both_provided) {
+			"Both `data` and `.data` were provided. The `.data` option will be used."
+		}
+	)
+
+	if (both_provided) {
+		return(options)
+	}
+
+	# rename "data" to ".data"
+	names(options)[which(names(options) == "data")] <- ".data"
+	options
+}
+
 eval_epoxy_engine <- function(fn, code, options) {
 	defaults <- formals(fn)
 	exclude <- c("...", ".data", ".style", ".transformer")
@@ -71,9 +95,7 @@ eval_epoxy_engine <- function(fn, code, options) {
 	chunk_opt_names <- c("data", ".data", names(defaults))
 	chunk_opts <- options[intersect(chunk_opt_names, names(options))]
 
-	if ("data" %in% names(chunk_opts) && !".data" %in% names(chunk_opts)) {
-		names(chunk_opts)[which(names(chunk_opts) == "data")] <- ".data"
-	}
+	chunk_opts <- prefer_dotted_data_option(chunk_opts)
 
 	args <- purrr::list_assign(defaults, !!!chunk_opts)
 	args$.transformer <- epoxy_options_get_transformer(options)
@@ -94,6 +116,7 @@ knitr_engine_epoxy <- function(options) {
 	}
 
 	options$results <- "asis"
+	options$output <- "asis"
 	options$echo <- knitr_chunk_option_echo(options)
 	knitr::engine_output(options, options$code, out)
 }
@@ -112,10 +135,11 @@ knitr_engine_epoxy_html <- function(options) {
 		if (isTRUE(options$html_raw %||% TRUE)) {
 			# use pandoc's raw html block by default, but this isn't always available
 			# so it can be disabled with the html_raw chunk option.
-			out <- paste0('```{=html}\n', out, "\n```")
+			out <- paste0("```{=html}\n", out, "\n```")
 		}
 	}
 	options$results <- "asis"
+	options$output <- "asis"
 	options$echo <- knitr_chunk_option_echo(options)
 	knitr::engine_output(options, options$code, out)
 }
@@ -145,22 +169,29 @@ knitr_engine_epoxy_latex <- function(options) {
 knitr_engine_whisker <- function(options) {
 	out <- if (isTRUE(options$eval)) {
 		options <- deprecate_glue_data_chunk_option(options)
+		options <- prefer_dotted_data_option(options)
+
 		code <- paste(options$code, collapse = "\n")
-		code <- if (!is.null(options[["data"]])) {
-			if (isTRUE(options[["data_asis"]])) {
-				whisker::whisker.render(code, data = options[["data"]])
+		code <-
+			if (!is.null(options[[".data"]])) {
+				use_data_asis <-
+					inherits(options[[".data"]], "asis") ||
+						isTRUE(options[["data_asis"]])
+				if (use_data_asis) {
+					whisker::whisker.render(code, data = options[[".data"]])
+				} else {
+					vapply(
+						prep_whisker_data(options[[".data"]]),
+						function(d) {
+							whisker::whisker.render(code, data = d)
+						},
+						character(1)
+					)
+				}
 			} else {
-				vapply(
-					prep_whisker_data(options[["data"]]),
-					function(d) {
-						whisker::whisker.render(code, data = d)
-					},
-					character(1)
-				)
+				whisker::whisker.render(code, options[[".envir"]] %||% knitr::knit_global())
 			}
-		} else {
-			whisker::whisker.render(code, options[[".envir"]] %||% knitr::knit_global())
-		}
+
 		code <- glue_collapse(code, sep = "\n")
 		if (isTRUE(options$html_raw %||% FALSE)) {
 			# use pandoc's raw html block by default, but this isn't always available
@@ -169,6 +200,7 @@ knitr_engine_whisker <- function(options) {
 		}
 		code
 	}
+
 	options$results <- "asis"
 	options$echo <- knitr_chunk_option_echo(options)
 	knitr::engine_output(options, options$code, out)
@@ -211,7 +243,9 @@ deprecate_glue_data_chunk_option <- function(options) {
 }
 
 deprecate_epoxy_style_chunk_option <- function(options) {
-	if (is.null(options[["epoxy_style"]])) return()
+	if (is.null(options[["epoxy_style"]])) {
+		return()
+	}
 
 	lifecycle::deprecate_soft(
 		when = "0.1.0",
