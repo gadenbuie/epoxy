@@ -4,6 +4,10 @@
   data frame passed into either the `.data` argument of `epoxy()` or the `data`
   or `.data` chunk options. (#100)
 
+* `.data` is now the preferred chunk option for passing data frames or lists of
+  data to epoxy chunks. It works in `whisker` and `epoxy` chunks, and is more
+  consistent with the `.data` argument of `glue()` and `epoxy()`. (#102)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
