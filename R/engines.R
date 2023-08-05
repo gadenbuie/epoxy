@@ -25,6 +25,9 @@
 #' @examplesIf interactive()
 #' use_epoxy_knitr_engines()
 #'
+#' @param include The epoxy knitr engines to include. Defaults to all engines
+#'   except for the `glue` engine (which is just an alias for the `epoxy`
+#'   engine).
 #' @param use_glue_engine If `TRUE` (default `FALSE`), uses \pkg{epoxy}'s `glue`
 #'   engine, most likely overwriting the `glue` engine provided by \pkg{glue}.
 #'
@@ -32,17 +35,47 @@
 #'   [knitr::knit_engines] as they were prior to the function call.
 #'
 #' @export
-use_epoxy_knitr_engines <- function(use_glue_engine = FALSE) {
+use_epoxy_knitr_engines <- function(
+	use_glue_engine = "glue" %in% include,
+	include = c("md", "html", "latex", "mustache")
+) {
 	old <- knitr::knit_engines$get()
+	force(use_glue_engine)
 
-	knitr::knit_engines$set(
-		epoxy         = knitr_engine_epoxy,
-		"epoxy_html"  = knitr_engine_epoxy_html,
-		"glue_html"   = knitr_engine_epoxy_html,
-		"epoxy_latex" = knitr_engine_epoxy_latex,
-		"glue_latex"  = knitr_engine_epoxy_latex,
-		"whisker"     = knitr_engine_whisker
+	include <- rlang::arg_match(
+		include,
+		values = c(names(engine_aliases), "mustache", "whisker"),
+		multiple = TRUE
 	)
+
+	include_mustache <- any(c("mustache", "whisker") %in% include)
+	include <- setdiff(include, c("mustache", "whisker"))
+	include <- unname(engine_validate_alias(include))
+
+	if ("md" %in% include) {
+		knitr::knit_engines$set(epoxy  = knitr_engine_epoxy)
+	}
+
+	if ("html" %in% include) {
+		knitr::knit_engines$set(
+			epoxy_html  = knitr_engine_epoxy_html,
+			"glue_html" = knitr_engine_epoxy_html
+		)
+	}
+
+	if ("latex" %in% include) {
+		knitr::knit_engines$set(
+			"epoxy_latex" = knitr_engine_epoxy_latex,
+			"glue_latex"  = knitr_engine_epoxy_latex
+		)
+	}
+
+  if (include_mustache) {
+		knitr::knit_engines$set(
+			"whisker"  = knitr_engine_whisker,
+			"mustache" = knitr_engine_whisker
+		)
+	}
 
 	if (isTRUE(use_glue_engine)) {
 		use_epoxy_glue_engine()
