@@ -5,13 +5,20 @@
 \alias{use_epoxy_glue_engine}
 \title{Use the epoxy knitr engines}
 \usage{
-use_epoxy_knitr_engines(use_glue_engine = FALSE)
+use_epoxy_knitr_engines(
+  use_glue_engine = "glue" \%in\% include,
+  include = c("md", "html", "latex", "mustache")
+)
 
 use_epoxy_glue_engine()
 }
 \arguments{
 \item{use_glue_engine}{If \code{TRUE} (default \code{FALSE}), uses \pkg{epoxy}'s \code{glue}
 engine, most likely overwriting the \code{glue} engine provided by \pkg{glue}.}
+
+\item{include}{The epoxy knitr engines to include. Defaults to all engines
+except for the \code{glue} engine (which is just an alias for the \code{epoxy}
+engine).}
 }
 \value{
 Silently sets \pkg{epoxy}'s knitr engines and invisible returns
