@@ -58,3 +58,7 @@ the \code{glue} engine.
 use_epoxy_knitr_engines()
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+\code{\link[=epoxy]{epoxy()}}, \code{\link[=epoxy_html]{epoxy_html()}}, \code{\link[=epoxy_latex]{epoxy_latex()}}, and \code{\link[=epoxy_mustache]{epoxy_mustache()}}
+for the functions that power these knitr engines.
+}

@@ -34,6 +34,8 @@
 #' @return Silently sets \pkg{epoxy}'s knitr engines and invisible returns
 #'   [knitr::knit_engines] as they were prior to the function call.
 #'
+#' @seealso [epoxy()], [epoxy_html()], [epoxy_latex()], and [epoxy_mustache()]
+#'   for the functions that power these knitr engines.
 #' @export
 use_epoxy_knitr_engines <- function(
 	use_glue_engine = "glue" %in% include,
