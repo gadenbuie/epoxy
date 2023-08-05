@@ -173,8 +173,8 @@ knitr_engine_whisker <- function(options) {
 
 		if (
 			!is.null(options[[".data"]]) &&
-			isTRUE(options[["data_asis"]]) &&
-			!inherits(options[[".data"]], "AsIs")
+				isTRUE(options[["data_asis"]]) &&
+				!inherits(options[[".data"]], "AsIs")
 		) {
 			options[[".data"]] <- I(options[[".data"]])
 		}
@@ -184,7 +184,7 @@ knitr_engine_whisker <- function(options) {
 			.data = options[[".data"]],
 			.sep = "\n",
 			.vectorized = options[[".vectorized"]] %||%
-			  inherits(options[[".data"]], "data.frame"),
+				inherits(options[[".data"]], "data.frame"),
 			.partials = options[[".partials"]]
 		)
 
