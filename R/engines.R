@@ -219,9 +219,11 @@ prep_whisker_data <- function(x) {
 		stop("data must be the same length: ", paste(x_len[!x_null], collapse = ", "), call. = FALSE)
 	}
 
-	# turn list(a = 1:2, b = 3:4)
-	# into list(list(a = 1, b = 3), list(a = 2, b = 4))
-	lapply(seq_len(max(x_len)), function(i) lapply(x, function(y) y[[i]]))
+	# turn list(a = 1:2, b = 3:4, c = 5)
+	# into list(list(a = 1, b = 3, c = 5), list(a = 2, b = 4, c = 5))
+	lapply(seq_len(max(x_len)), function(i) lapply(x, function(y) {
+		y[[if (length(y) == 1) 1 else i]]
+	}))
 }
 
 knitr_chunk_option_echo <- function(options) {
