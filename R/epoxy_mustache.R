@@ -18,7 +18,7 @@
 #'   be a character vector of the same length as the number of rows in the data
 #'   frame.
 #'
-#' @examples man/examples/epoxy_mustache.R
+#' @example man/examples/epoxy_mustache.R
 #'
 #' @param ... A string or a vector of strings containing the template(s). Refer
 #'   to the [mustache documentation](http://mustache.github.io/) for an overview
