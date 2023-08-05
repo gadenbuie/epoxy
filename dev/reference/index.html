@@ -83,14 +83,14 @@
 
       <dl><dt>
           
-          <code><a href="use_epoxy_knitr_engines.html">use_epoxy_knitr_engines()</a></code> <code><a href="use_epoxy_knitr_engines.html">use_epoxy_glue_engine()</a></code> 
-        </dt>
-        <dd>Use the epoxy knitr engines</dd>
-      </dl><dl><dt>
-          
           <code><a href="epoxy.html">epoxy()</a></code> <code><a href="epoxy.html">epoxy_html()</a></code> <code><a href="epoxy.html">epoxy_latex()</a></code> 
         </dt>
         <dd>Epoxy string interpolation</dd>
+      </dl><dl><dt>
+          
+          <code><a href="use_epoxy_knitr_engines.html">use_epoxy_knitr_engines()</a></code> <code><a href="use_epoxy_knitr_engines.html">use_epoxy_glue_engine()</a></code> 
+        </dt>
+        <dd>Use the epoxy knitr engines</dd>
       </dl></div><div class="section level2">
       <h2 id="epoxy-transformers">epoxy Transformers<a class="anchor" aria-label="anchor" href="#epoxy-transformers"></a></h2>
       
@@ -150,11 +150,6 @@
         <dd>Epoxy Markdown Template for Shiny</dd>
       </dl><dl><dt>
           
-          <code><a href="ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> <code><a href="ui_epoxy_mustache.html">ui_epoxy_whisker()</a></code> 
-        </dt>
-        <dd>Epoxy HTML Mustache Template</dd>
-      </dl><dl><dt>
-          
           <code><a href="render_epoxy.html">render_epoxy()</a></code> <code><a href="render_epoxy.html">renderEpoxyHTML()</a></code> 
         </dt>
         <dd>Render Epoxy Output</dd>
@@ -163,6 +158,27 @@
           <code><a href="run_epoxy_example_app.html">run_epoxy_example_app()</a></code> 
         </dt>
         <dd>Example epoxy Shiny apps</dd>
+      </dl></div><div class="section level2">
+      <h2 id="mustache-style-templating">Mustache-style Templating<a class="anchor" aria-label="anchor" href="#mustache-style-templating"></a></h2>
+      
+      <p class="section-desc"></p><p>Sometimes you need just a little bit more templating power than <code><a href="../reference/epoxy.html">epoxy()</a></code> or <a href="https://github.com/tidyverse/glue" class="external-link">glue</a> can provide. The <a href="https://mustache.github.io/" class="external-link">mustache templating language</a> is a simple, popular, logic-less templating language. Consider using mustache when your template uses nested data structures or conditionally included content, but doesn’t require any inline formatting.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="epoxy_mustache.html">epoxy_mustache()</a></code> 
+        </dt>
+        <dd>Mustache-style string interpolation</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ui_epoxy_mustache.html">ui_epoxy_mustache()</a></code> <code><a href="ui_epoxy_mustache.html">ui_epoxy_whisker()</a></code> 
+        </dt>
+        <dd>Epoxy HTML Mustache Template</dd>
       </dl></div><div class="section level2">
       <h2 id="example-datasets">Example Datasets<a class="anchor" aria-label="anchor" href="#example-datasets"></a></h2>
       
