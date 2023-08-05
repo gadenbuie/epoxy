@@ -70,7 +70,7 @@ use_epoxy_knitr_engines <- function(
 		)
 	}
 
-  if (include_mustache) {
+	if (include_mustache) {
 		knitr::knit_engines$set(
 			"whisker"  = knitr_engine_whisker,
 			"mustache" = knitr_engine_whisker
