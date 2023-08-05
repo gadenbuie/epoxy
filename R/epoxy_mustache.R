@@ -54,7 +54,7 @@ epoxy_mustache <- function(
 ) {
 	dots <- list_split_named(rlang::list2(...))
 
-  if (length(dots$named)) {
+	if (length(dots$named)) {
 		rlang::abort("Named arguments are not supported in `epoxy_mustache()`.")
 	}
 
@@ -70,7 +70,7 @@ epoxy_mustache <- function(
 	)
 
 	if (!isTRUE(.vectorized)) {
-    return(as_glue_chr(whisker_render(data = .data)))
+		return(as_glue_chr(whisker_render(data = .data)))
 	}
 
 	if (!is_data_asis) {
