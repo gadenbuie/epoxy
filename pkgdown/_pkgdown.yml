@@ -34,8 +34,8 @@ articles:
 reference:
 - title: epoxy, super-glue wrappers
   contents:
-  - use_epoxy_knitr_engines
   - epoxy
+  - use_epoxy_knitr_engines
 - title: epoxy Transformers
   contents:
   - epoxy_transform
