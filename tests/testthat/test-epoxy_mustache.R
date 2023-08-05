@@ -62,4 +62,15 @@ describe("epoxy_mustache()", {
 			paste("mpg:", paste(mtcars$mpg[1:3], collapse = ","))
 		)
 	})
+
+	it("vectorizes over lists", {
+		expect_equal(
+			epoxy_mustache(
+				"{{thing}}",
+				.data = list(thing = c("one", "two"), other = 3),
+				.vectorized = TRUE
+			),
+			c("one", "two")
+		)
+	})
 })

@@ -171,26 +171,22 @@ knitr_engine_whisker <- function(options) {
 		options <- deprecate_glue_data_chunk_option(options)
 		options <- prefer_dotted_data_option(options)
 
-		code <- paste(options$code, collapse = "\n")
-		code <-
-			if (!is.null(options[[".data"]])) {
-				use_data_asis <-
-					inherits(options[[".data"]], "asis") ||
-						isTRUE(options[["data_asis"]])
-				if (use_data_asis) {
-					whisker::whisker.render(code, data = options[[".data"]])
-				} else {
-					vapply(
-						prep_whisker_data(options[[".data"]]),
-						function(d) {
-							whisker::whisker.render(code, data = d)
-						},
-						character(1)
-					)
-				}
-			} else {
-				whisker::whisker.render(code, options[[".envir"]] %||% knitr::knit_global())
-			}
+		if (
+			!is.null(options[[".data"]]) &&
+			isTRUE(options[["data_asis"]]) &&
+			!inherits(options[[".data"]], "AsIs")
+		) {
+			options[[".data"]] <- I(options[[".data"]])
+		}
+
+		code <- epoxy_mustache(
+			!!!options[["code"]],
+			.data = options[[".data"]],
+			.sep = "\n",
+			.vectorized = options[[".vectorized"]] %||%
+			  inherits(options[[".data"]], "data.frame"),
+			.partials = options[[".partials"]]
+		)
 
 		code <- glue_collapse(code, sep = "\n")
 		if (isTRUE(options$html_raw %||% FALSE)) {

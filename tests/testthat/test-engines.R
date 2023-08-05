@@ -130,7 +130,7 @@ Well, ${{taxed}}, after taxes.
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
-data <- list(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600), in_ca = c(TRUE, FALSE))
+data <- data.frame(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600), in_ca = c(TRUE, FALSE))
 ```
 
 ```{whisker .data = data, echo=FALSE}
@@ -155,7 +155,7 @@ Well, ${{taxed}}, after taxes.
 ```{r include=FALSE}
 library(epoxy)
 knitr::opts_chunk$set(echo = FALSE)
-data <- list(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600), in_ca = NULL)
+data <- data.frame(name = c("Chris", "Jane"), value = c(1000, 2000), taxed = c(600, 600))
 ```
 
 ```{whisker .data = data, echo=FALSE}
@@ -175,7 +175,7 @@ Well, ${{taxed}}, after taxes.
 		)
 	)
 
-	# But mismatched data item lengths throws an error
+	# Use .vectorized = TRUE for lists
 	rmd <- '
 ```{r include=FALSE}
 library(epoxy)
@@ -183,7 +183,7 @@ knitr::opts_chunk$set(echo = FALSE)
 data <- list(name = c("Chris", "Jane"), value = 1000, taxed = c(600, 600), in_ca = NULL)
 ```
 
-```{whisker .data = data, echo=FALSE}
+```{whisker .data = data, .vectorized = TRUE, echo=FALSE}
 Hello {{name}},
 You have just won ${{value}}!
 {{#in_ca}}
@@ -192,7 +192,13 @@ Well, ${{taxed}}, after taxes.
 ```
 '
 
-	expect_error(render_rmd(rmd))
+	expect_equal(
+		render_rmd(rmd),
+		c("Hello Chris, You have just won $1000!",
+			"",
+			"Hello Jane, You have just won $1000!"
+		)
+	)
 })
 
 
