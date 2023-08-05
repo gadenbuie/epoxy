@@ -8,6 +8,24 @@
   data to epoxy chunks. It works in `whisker` and `epoxy` chunks, and is more
   consistent with the `.data` argument of `glue()` and `epoxy()`. (#102)
 
+* New `epoxy_mustache()` provides an epoxy-style interface to the
+  [mustache](https://mustache.github.io/) templating language, using the
+  [whisker](https://cran.r-project.org/package=whisker) package. This function
+  also now powers the `whisker` or `mustache` knitr engines. `epoxy` also now
+  provides aliases for whisker and mustache in all places, so you can use
+  whichever name resonates with you. (#103)
+
+* **Breaking change:** now that the `whisker` engine is powered by
+  `epoxy_mustache()`, there have been a few small changes. In particular, if you
+  previously used a list for the `.data` chunk option in a `whisker` chunk, and
+  relied on the `whisker` engine's special treatment of lists to iterate over
+  their items, you'll need to specifically opt into this behavior by adding a
+  `.vectorized = TRUE` chunk option.
+
+  This chunk engine still vectorizes over rows in a data frame by default, where
+  it's much more likely to be the behavior you want, but bare lists require
+  specifically opting in. (#103)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
