@@ -176,3 +176,7 @@ epoxy_latex(
   .transformer = c("italic", "collapse")
 )
 }
+\seealso{
+\code{\link[=epoxy_mustache]{epoxy_mustache()}} for more powerful templating needs when you don't
+need epoxy's inline formatting syntax.
+}
