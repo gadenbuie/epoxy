@@ -50,6 +50,12 @@
 #'   additional transformers provided to the `.transformer` argument of
 #'   `epoxy()`.
 #'
+#' @seealso
+#'   * [use_epoxy_knitr_engines()] for knitr engines powered by these epoxy
+#'     functions.
+#'   * [epoxy_mustache()] for more powerful templating needs when you don't
+#'     need epoxy's inline formatting syntax.
+#'
 #' @rdname epoxy
 #' @name epoxy
 #' @export

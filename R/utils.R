@@ -73,3 +73,8 @@ list_split_named <- function(l) {
 discard_null <- function(x) {
 	x[!vapply(x, is.null, logical(1))]
 }
+
+as_glue_chr <- function(x) {
+	class(x) <- c("glue", class(x))
+	x
+}

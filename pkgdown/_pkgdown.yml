@@ -34,8 +34,8 @@ articles:
 reference:
 - title: epoxy, super-glue wrappers
   contents:
-  - use_epoxy_knitr_engines
   - epoxy
+  - use_epoxy_knitr_engines
 - title: epoxy Transformers
   contents:
   - epoxy_transform
@@ -47,9 +47,19 @@ reference:
   contents:
   - ui_epoxy_html
   - ui_epoxy_markdown
-  - ui_epoxy_mustache
   - render_epoxy
   - run_epoxy_example_app
+- title: Mustache-style Templating
+  description: >
+    Sometimes you need just a little bit more templating power than `epoxy()` or
+    `{glue}` can provide. The [mustache templating
+    language](https://mustache.github.io/) is a simple, popular, logic-less
+    templating language. Consider using mustache when your template uses nested
+    data structures or conditionally included content, but doesn't require any
+    inline formatting.
+  contents:
+  - epoxy_mustache
+  - ui_epoxy_mustache
 - title: Example Datasets
   description: |
     Interesting datasets that can help you explore, learn, and practice using epoxy.

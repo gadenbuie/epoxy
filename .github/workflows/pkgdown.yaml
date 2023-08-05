@@ -67,12 +67,14 @@ jobs:
       - name: "[PR] Set documentation subdirectory"
         if: github.event_name == 'pull_request'
         run: |
+          echo "PKGDOWN_DEV_MODE=unreleased" >> $GITHUB_ENV
           echo "subdir=preview/pr${{ github.event.number }}" >> $GITHUB_ENV
 
       # If event is a tag, set subdir to '<tag_name>'
       - name: "[tag] Set documentation subdirectory"
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         run: |
+          echo "PKGDOWN_DEV_MODE=release" >> $GITHUB_ENV
           echo "subdir=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       # If event is workflow_dispatch, set subdir to 'inputs.tag'

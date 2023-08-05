@@ -512,6 +512,7 @@ epoxyHTML_transformer <- function(
 #'
 #' @return Returns a Shiny output UI element.
 #'
+#' @family Mustache-style template functions
 #' @seealso [ui_epoxy_html()], [render_epoxy()]
 #' @export
 ui_epoxy_mustache <- function(

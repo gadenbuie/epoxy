@@ -176,3 +176,11 @@ epoxy_latex(
   .transformer = c("italic", "collapse")
 )
 }
+\seealso{
+\itemize{
+\item \code{\link[=use_epoxy_knitr_engines]{use_epoxy_knitr_engines()}} for knitr engines powered by these epoxy
+functions.
+\item \code{\link[=epoxy_mustache]{epoxy_mustache()}} for more powerful templating needs when you don't
+need epoxy's inline formatting syntax.
+}
+}
