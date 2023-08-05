@@ -101,4 +101,8 @@ run_epoxy_example_app("ui_epoxy_mustache")
 }
 \seealso{
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=render_epoxy]{render_epoxy()}}
+
+Other Mustache-style template functions: 
+\code{\link{epoxy_mustache}()}
 }
+\concept{Mustache-style template functions}
