@@ -122,7 +122,7 @@ prefer_dotted_data_option <- function(options) {
 
 eval_epoxy_engine <- function(fn, code, options) {
 	defaults <- formals(fn)
-	exclude <- c("...", ".data", ".style", ".transformer")
+	exclude <- c("...", ".data", ".style", ".transformer", ".envir")
 	defaults <- defaults[setdiff(names(defaults), exclude)]
 	defaults <- lapply(defaults, rlang::eval_bare, env = environment(fn))
 	defaults$.envir <- knitr::knit_global()
