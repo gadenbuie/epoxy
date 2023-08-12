@@ -12,31 +12,31 @@
 #'
 #' ```{r}
 #' # Re-using the template we defined above
-#' epoxy_template_chunk(bechdel[1, ], "movie-release")
+#' epoxy_use_chunk(bechdel[1, ], "movie-release")
 #' ```
 #'
 #' ```{r}
 #' # Using in a dplyr pipeline
 #' bechdel |>
 #'   dplyr::filter(year == 1989) |>
-#'   epoxy_template_chunk("movie-release")
+#'   epoxy_use_chunk("movie-release")
 #' ```
 #' ``````
 #'
 #' Or you can even use it inline:
 #'
 #' ``````
-#' > `r epoxy_template_chunk(bechdel[2, ], "movie-release")`
+#' > `r epoxy_use_chunk(bechdel[2, ], "movie-release")`
 #' ``````
 #'
 #' ## Template Options
 #'
-#' When rendering a template, `epoxy_template_chunk()` will inherit the options
+#' When rendering a template, `epoxy_use_chunk()` will inherit the options
 #' set in a number of different ways. The final template options are determined
 #' in the following order, ranked by importance. Options set in a higher-ranked
 #' location will override options set in a lower-ranked location.
 #'
-#' 1. The arguments passed to `epoxy_template_chunk()`, such as `.data` or any
+#' 1. The arguments passed to `epoxy_use_chunk()`, such as `.data` or any
 #'    arguments passed in the `...`. These options always have preference over
 #'    options set anywhere else.
 #'
@@ -58,7 +58,7 @@
 #'
 #' @family Templating functions
 #' @export
-epoxy_template_chunk <- function(.data = NULL, label, ...) {
+epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	if (!rlang::is_string(label)) {
 		rlang::abort("`label` must be a string")
 	}
