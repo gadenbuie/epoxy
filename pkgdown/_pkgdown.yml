@@ -45,7 +45,7 @@ reference:
   - engine_pick
 - title: Reuse epoxy Templates
   contents:
-  - epoxy_template_chunk
+  - epoxy_use_chunk
 - title: Templating for Shiny
   contents:
   - ui_epoxy_html
