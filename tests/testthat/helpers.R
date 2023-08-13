@@ -1,4 +1,10 @@
 render_rmd <- function(rmd_text, ..., output_format = rmarkdown::md_document()) {
+	if (length(rmd_text) == 1 && !grepl("\n", rmd_text)) {
+		if (file.exists(rmd_text)) {
+			rmd_text <- readLines(rmd_text)
+		}
+	}
+
 	tmpfile <- tempfile(fileext = ".Rmd")
 	on.exit(unlink(tmpfile))
 	writeLines(rmd_text, tmpfile)

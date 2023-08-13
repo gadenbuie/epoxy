@@ -1,0 +1,42 @@
+---
+output: markdown_document
+---
+
+```{r setup, include=FALSE}
+library(epoxy)
+
+the_data <- list(
+	list(first = "one", second = "two"),
+	list(first = "three", second = "four"),
+	list(first = "five", second = "six"),
+	list(first = "seven", second = "eight"),
+	list(first = "nine", second = "ten")
+)
+
+knitr::opts_chunk$set(.data = the_data[[1]], ...detect_inline_chunks = TRUE)
+knitr::knit_hooks$set(...detect_inline_chunks = function(before, options) {
+	if (before) {
+		knitr::opts_current$set(...inline_chunk = FALSE)
+	} else {
+		knitr::opts_current$set(...inline_chunk = TRUE)
+	}
+})
+```
+
+```{epoxy chunk-template, .data = the_data[[2]]}
+{first} followed by {second}
+```
+
+```{r echo=FALSE}
+epoxy_use_chunk(the_data[[3]], "chunk-template")
+```
+
+```{r echo=FALSE, .data = the_data[[3]]}
+epoxy_use_chunk(the_data[[4]], "chunk-template")
+```
+
+```{r echo=FALSE, .data = the_data[[5]]}
+epoxy_use_chunk(label = "chunk-template")
+```
+
+`r epoxy_use_chunk(label = "chunk-template")`

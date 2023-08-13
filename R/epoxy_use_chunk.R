@@ -82,7 +82,14 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	opts <- purrr::list_assign(opts, !!!opts_fn)
 
 	opts$eval <- knitr::opts_current$eval
-	opts$.data <- .data %||% opts$.data
+
+	data_current <- knitr_chunk_specific_options()[[".data"]]
+	data_global <- knitr::opts_chunk$get(".data")
+
+	opts$.data <- .data %||%
+	  data_current %||%
+		template$opts$.data %||%
+		data_global
 
 	fn <- switch(
 		template$opts$engine,
@@ -105,24 +112,4 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	)
 
 	knitr::asis_output(eval(call))
-}
-
-knitr_chunk_get <- function(label) {
-	chunk <- knitr::knit_code$get(label)
-	list(
-		code = paste(c(chunk), collapse = "\n"),
-		opts = knitr_chunk_specific_options(label)
-	)
-}
-
-knitr_chunk_specific_options <- function(label) {
-	chunk <- knitr::knit_code$get(label)
-	opts <- attr(chunk, "chunk_opts")
-
-	lapply(opts, function(opt) {
-		if (!(rlang::is_symbol(opt) || rlang::is_call(opt))) {
-			return(opt)
-		}
-		rlang::eval_bare(opt, env = knitr::knit_global())
-	})
 }

@@ -83,6 +83,8 @@ use_epoxy_knitr_engines <- function(
 		use_epoxy_glue_engine()
 	}
 
+	knitr_register_detect_inline()
+
 	invisible(old)
 }
 
