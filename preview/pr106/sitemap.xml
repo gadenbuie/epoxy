@@ -58,9 +58,6 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/epoxy_style.html</loc>
   </url>
   <url>
-    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/epoxy_template_chunk.html</loc>
-  </url>
-  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/epoxy_transform.html</loc>
   </url>
   <url>
@@ -71,6 +68,9 @@
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/epoxy_transform_one_shot.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/epoxy_use_chunk.html</loc>
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/preview/pr106/reference/index.html</loc>
