@@ -1,4 +1,3 @@
-
 knitr_current_label <- function() {
 	if (isTRUE(knitr::opts_current$get("...inline_chunk"))) {
 		return("___inline_chunk___")
@@ -60,5 +59,5 @@ knitr_hook_detect_inline_chunk <- function(before, ...) {
 
 knitr_is_inline_chunk <- function() {
 	knitr::opts_current$get("...inline_chunk") %||%
-	  is.null(knitr::opts_current$get("label"))
+		is.null(knitr::opts_current$get("label"))
 }

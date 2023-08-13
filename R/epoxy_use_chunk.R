@@ -87,7 +87,7 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	data_global <- knitr::opts_chunk$get(".data")
 
 	opts$.data <- .data %||%
-	  data_current %||%
+		data_current %||%
 		template$opts$.data %||%
 		data_global
 
