@@ -72,23 +72,20 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	# For options, we want to apply options in this order:
 	# 0. `.data` from this fn and `eval` from this chunk
 	# 1. Options from this function call in the ...
+	# 2. Options specifically on the calling chunk
 	# 2. Options from the chunk in the template
 	# 3. Global knitr options in the current environment
-	opts_fn <- rlang::list2(...)
+	opts_fn <- rlang::list2(eval = TRUE, ...)
+	if (!is.null(.data)) opts_fn[[".data"]] <- .data
+
 	opts_global <- knitr::opts_current$get()
 	opts_current <- knitr_chunk_specific_options()
 
-	# global << template << function
+  # global << template << current << function
 	opts <- opts_global
 	opts <- purrr::list_assign(opts, !!!template$opts)
-	opts <- purrr::list_assign(opts, !!!opts_fn)
-
-	opts$eval <- opts_current$eval %||% TRUE
-	opts$.data <-
-		.data %||%
-		opts_current[[".data"]] %||%
-		template$opts$.data %||%
-		opts_global[[".data"]]
+	opts <- purrr::list_assign(opts, !!!opts_current)
+	opts <- purrr::list_assign(opts, !!!purrr::compact(opts_fn))
 
 	fn <- switch(
 		template$opts$engine,
