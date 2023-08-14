@@ -76,20 +76,19 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	# 3. Global knitr options in the current environment
 	opts_fn <- rlang::list2(...)
 	opts_global <- knitr::opts_current$get()
+	opts_current <- knitr_chunk_specific_options()
 
+  # global << template << function
 	opts <- opts_global
 	opts <- purrr::list_assign(opts, !!!template$opts)
 	opts <- purrr::list_assign(opts, !!!opts_fn)
 
-	opts$eval <- knitr::opts_current$eval
-
-	data_current <- knitr_chunk_specific_options()[[".data"]]
-	data_global <- knitr::opts_chunk$get(".data")
-
-	opts$.data <- .data %||%
-		data_current %||%
+	opts$eval <- opts_current$eval %||% TRUE
+	opts$.data <-
+	  .data %||%
+		opts_current[[".data"]] %||%
 		template$opts$.data %||%
-		data_global
+		opts_global[[".data"]]
 
 	fn <- switch(
 		template$opts$engine,
