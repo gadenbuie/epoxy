@@ -32,46 +32,46 @@ describe("epoxy_use_chunk()", {
 		expect_equal(res[9], "three followed by four")
 	})
 
-  it("picks the correct default transformer function", {
-    epoxy_transform_set(epoxy_transform_bold, engine = "md")
-    epoxy_transform_set(epoxy_transform_italic, engine = "html")
-    epoxy_transform_set(epoxy_transform_code, engine = "latex")
-    on.exit({ epoxy_transform_set(NULL) })
+	it("picks the correct default transformer function", {
+		epoxy_transform_set(epoxy_transform_bold, engine = "md")
+		epoxy_transform_set(epoxy_transform_italic, engine = "html")
+		epoxy_transform_set(epoxy_transform_code, engine = "latex")
+		on.exit({ epoxy_transform_set(NULL) })
 
-    picked_md <- NULL
-    picked_html <- NULL
-    picked_latex <- NULL
+		picked_md <- NULL
+		picked_html <- NULL
+		picked_latex <- NULL
 
-    render_basic_rmd(
-      "```{epoxy md}",
-      "{picked_md <- epoxy_default_transformer(); 'ignore'}",
-      "```",
-      "```{epoxy_html html}",
-      "{{ picked_html <- epoxy_default_transformer(); 'ignore' }}",
-      "```",
-      "```{epoxy_latex latex, .open = '<<', .close = '>>'}",
-      "<< picked_latex <- epoxy_default_transformer(); 'ignore' >>",
-      "```",
-      "```{r}",
-      "epoxy_use_chunk(label = 'md')",
-      "epoxy_use_chunk(label = 'html')",
-      "epoxy_use_chunk(label = 'latex')",
-      "```"
-    )
+		render_basic_rmd(
+			"```{epoxy md}",
+			"{picked_md <- epoxy_default_transformer(); 'ignore'}",
+			"```",
+			"```{epoxy_html html}",
+			"{{ picked_html <- epoxy_default_transformer(); 'ignore' }}",
+			"```",
+			"```{epoxy_latex latex, .open = '<<', .close = '>>'}",
+			"<< picked_latex <- epoxy_default_transformer(); 'ignore' >>",
+			"```",
+			"```{r}",
+			"epoxy_use_chunk(label = 'md')",
+			"epoxy_use_chunk(label = 'html')",
+			"epoxy_use_chunk(label = 'latex')",
+			"```"
+		)
 
-    expect_equal(
-      picked_md,
-      epoxy_transform_bold()
-    )
-    expect_equal(
-      picked_html,
-      with_epoxy_engine("html", epoxy_transform_italic())
-    )
-    expect_equal(
-      picked_latex,
-      with_epoxy_engine("latex", epoxy_transform_code())
-    )
-  })
+		expect_equal(
+			picked_md,
+			epoxy_transform_bold()
+		)
+		expect_equal(
+			picked_html,
+			with_epoxy_engine("html", epoxy_transform_italic())
+		)
+		expect_equal(
+			picked_latex,
+			with_epoxy_engine("latex", epoxy_transform_code())
+		)
+	})
 
 	it("throws for bad labels", {
 		expect_error(epoxy_use_chunk(label = 27))

@@ -121,7 +121,7 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 		options = opts
 	)
 
-  with_epoxy_engine(
+	with_epoxy_engine(
 		template$opts$engine,
 		knitr::asis_output(eval(call))
 	)
