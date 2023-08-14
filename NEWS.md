@@ -189,4 +189,4 @@ versions that were available on GitHub prior to the CRAN release.
 * The `glue_html` engine now uses `{{` and `}}` for open/close delimiters.
 
 * glue/whisker chunks now accept `.envir` chunk option for the containing
-  environemnt, otherwise falling back to the `knitr::knit_global()` env.
+  environment, otherwise falling back to the `knitr::knit_global()` env.
