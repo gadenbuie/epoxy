@@ -32,17 +32,17 @@ describe("epoxy_use_chunk()", {
 		expect_equal(res[9], "three followed by four")
 	})
 
-  it("throws for bad labels", {
-    expect_error(epoxy_use_chunk(label = 27))
-    expect_error(epoxy_use_chunk(label = c("bad", "label")))
-    expect_error(epoxy_use_chunk(label = NULL))
-  })
+	it("throws for bad labels", {
+		expect_error(epoxy_use_chunk(label = 27))
+		expect_error(epoxy_use_chunk(label = c("bad", "label")))
+		expect_error(epoxy_use_chunk(label = NULL))
+	})
 
-  it("throws for unknown labels", {
-    render_basic_rmd(
-      "```{r}",
-      "expect_error(epoxy_use_chunk(label = 'bad-label'))",
-      "```"
-    )
-  })
+	it("throws for unknown labels", {
+		render_basic_rmd(
+			"```{r}",
+			"expect_error(epoxy_use_chunk(label = 'bad-label'))",
+			"```"
+		)
+	})
 })

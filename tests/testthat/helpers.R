@@ -21,11 +21,11 @@ render_rmd <- function(
 }
 
 render_basic_rmd <- function(..., envir = parent.frame()) {
-  render_rmd(c(
-    "---",
-    "output: markdown_document",
-    "---",
-    "",
-    ...
-  ), envir = envir)
+	render_rmd(c(
+		"---",
+		"output: markdown_document",
+		"---",
+		"",
+		...
+	), envir = envir)
 }
