@@ -9,7 +9,12 @@ epoxy_use_chunk(.data = NULL, label, ...)
 \arguments{
 \item{.data}{A data set}
 
-\item{label}{The chunk label, i.e. the human-readable name of the chunk.}
+\item{label}{The chunk label, i.e. the human-readable name, of the chunk
+containing the template string. This chunk should be an \code{epoxy},
+\code{epoxy_html} or other epoxy-provided chunk type and it must have a label.
+\code{epoxy_use_chunk()} will apply the options from this chunk to the template,
+giving preference to arguments in \code{epoxy_use_chunk()} or the chunk options
+where it is called. See the "Template Options" section for more details.}
 
 \item{...}{
   Arguments passed on to \code{\link[=epoxy]{epoxy}}
@@ -58,7 +63,13 @@ chunk. The results are marked as \code{"asis"} output so that they are treated
 as regular text rather than being displayed as code results.
 }
 \description{
-Reuse a chunk
+\subsection{Description}{
+
+Reuse a template from another chunk. By calling \code{epoxy_use_chunk()} in an R
+chunk or inline R expression, you can reuse a template defined in another
+chunk in your document.
+}
+
 \subsection{Use in R Markdown or Quarto}{
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{```\{epoxy movie-release\}
@@ -80,8 +91,12 @@ bechdel |>
 
 Or you can even use it inline:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{> `r epoxy_use_chunk(bechdel[2, ], "movie-release")`
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{It's hard to believe that
+`r epoxy_use_chunk(bechdel[2, ], "movie-release")`.
 }\if{html}{\out{</div>}}
+
+It's hard to believe that
+\emph{Back to the Future Part II} was released in 1989.
 }
 
 \subsection{Template Options}{
@@ -94,12 +109,12 @@ location will override options set in a lower-ranked location.
 \item The arguments passed to \code{epoxy_use_chunk()}, such as \code{.data} or any
 arguments passed in the \code{...}. These options always have preference over
 options set anywhere else.
+\item The chunk options from the chunk where \code{epoxy_use_chunk()} is called.
 \item The chunk options from the template chunk. These options typically are
 relevant to the template itself, such as the engine used or the opening
 and closing delimiters.
-\item The current knitr options for the chunk where the template is rendered.
-In most cases, this will be the global knitr options, but you could still
-override these options locally in the chunk where you render the template.
+\item Global knitr chunk options for the document. You can set these with
+\code{knitr::opts_chunk$set()}, see \code{?knitr::opts_chunk} for more information.
 }
 }
 }

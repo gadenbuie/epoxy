@@ -1,7 +1,10 @@
 #' Reuse a Template Chunk
 #'
 #' @description
-#' Reuse a chunk
+#' ## Description
+#' Reuse a template from another chunk. By calling `epoxy_use_chunk()` in an R
+#' chunk or inline R expression, you can reuse a template defined in another
+#' chunk in your document.
 #'
 #' ## Use in R Markdown or Quarto
 #'
@@ -25,9 +28,14 @@
 #'
 #' Or you can even use it inline:
 #'
+#' ``````markdown
+#' It's hard to believe that
+#' `r epoxy_use_chunk(bechdel[2, ], "movie-release")`.
 #' ``````
-#' > `r epoxy_use_chunk(bechdel[2, ], "movie-release")`
-#' ``````
+#'
+#' It's hard to believe that
+#' _Back to the Future Part II_ was released in 1989.
+#'
 #'
 #' ## Template Options
 #'
@@ -40,15 +48,21 @@
 #'    arguments passed in the `...`. These options always have preference over
 #'    options set anywhere else.
 #'
-#' 2. The chunk options from the template chunk. These options typically are
+#' 1. The chunk options from the chunk where `epoxy_use_chunk()` is called.
+#'
+#' 1. The chunk options from the template chunk. These options typically are
 #'    relevant to the template itself, such as the engine used or the opening
 #'    and closing delimiters.
 #'
-#' 3. The current knitr options for the chunk where the template is rendered.
-#'    In most cases, this will be the global knitr options, but you could still
-#'    override these options locally in the chunk where you render the template.
+#' 1. Global knitr chunk options for the document. You can set these with
+#'    `knitr::opts_chunk$set()`, see `?knitr::opts_chunk` for more information.
 #'
-#' @param label The chunk label, i.e. the human-readable name of the chunk.
+#' @param label The chunk label, i.e. the human-readable name, of the chunk
+#'   containing the template string. This chunk should be an `epoxy`,
+#'   `epoxy_html` or other epoxy-provided chunk type and it must have a label.
+#'   `epoxy_use_chunk()` will apply the options from this chunk to the template,
+#'   giving preference to arguments in `epoxy_use_chunk()` or the chunk options
+#'   where it is called. See the "Template Options" section for more details.
 #' @inheritDotParams epoxy
 #' @inheritParams epoxy
 #'
