@@ -37,6 +37,7 @@ knitr_chunk_specific_options <- function(label = knitr_current_label()) {
 # previous chunk -- or at least `opts_current` returns the previous chunk's
 # options. This inline chunk detector could probably be built into knitr in some
 # way: https://github.com/yihui/knitr/issues/1988
+# nocov start
 knitr_register_detect_inline <- function() {
 	if ("...detect_inline_chunk" %in% knitr::opts_chunk$get()) {
 		return()
@@ -51,6 +52,7 @@ knitr_register_detect_inline <- function() {
 		...detect_inline_chunks = knitr_hook_detect_inline_chunk
 	)
 }
+# nocov end
 
 knitr_hook_detect_inline_chunk <- function(before, ...) {
 	# Set to FALSE inside a code chunk, reset to TRUE outside
