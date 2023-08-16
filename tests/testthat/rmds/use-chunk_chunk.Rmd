@@ -1,0 +1,20 @@
+---
+output: markdown_document
+---
+
+```{r setup, include=FALSE}
+library(epoxy)
+
+the_data <- list(
+	list(first = "one", second = "two"),
+	list(first = "three", second = "four")
+)
+```
+
+```{epoxy chunk-template, .data = the_data[[1]]}
+{first} followed by {second}
+```
+
+```{r echo=FALSE}
+epoxy_use_chunk(the_data[[2]], "chunk-template")
+```

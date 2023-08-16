@@ -43,6 +43,9 @@ reference:
   - epoxy_transform_html
   - epoxy_transform_one_shot
   - engine_pick
+- title: Reuse epoxy Templates
+  contents:
+  - epoxy_use_chunk
 - title: Templating for Shiny
   contents:
   - ui_epoxy_html

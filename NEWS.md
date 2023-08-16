@@ -15,6 +15,10 @@
   provides aliases for whisker and mustache in all places, so you can use
   whichever name resonates with you. (#103)
 
+* New `epoxy_use_chunk()` allows you to re-use an `epoxy`, `epoxy_html` or other
+  epoxy-provided knitr chunk as a template. In most cases, you'll want to use
+  this function to re-use the template chunk with new data. (#106)
+
 * **Breaking change:** now that the `whisker` engine is powered by
   `epoxy_mustache()`, there have been a few small changes. In particular, if you
   previously used a list for the `.data` chunk option in a `whisker` chunk, and
@@ -185,4 +189,4 @@ versions that were available on GitHub prior to the CRAN release.
 * The `glue_html` engine now uses `{{` and `}}` for open/close delimiters.
 
 * glue/whisker chunks now accept `.envir` chunk option for the containing
-  environemnt, otherwise falling back to the `knitr::knit_global()` env.
+  environment, otherwise falling back to the `knitr::knit_global()` env.

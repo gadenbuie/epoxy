@@ -333,7 +333,8 @@ engine_pick <- function(md, html = md, latex = md) {
 }
 
 engine_current <- function(default = NULL) {
-	knitr_engine <- knitr::opts_current$get("engine")
+	knitr_engine <- if (!knitr_is_inline_chunk()) knitr::opts_current$get("engine")
+
 	if (!is.null(knitr_engine) && !knitr_engine %in% names(engine_aliases)) {
 		knitr_engine <- NULL
 	}
