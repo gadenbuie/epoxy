@@ -222,11 +222,11 @@ And as before, you can unset session defaults for a specific <code>engine</code>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **a, b, and c**</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># In an epoxy_html chunk...</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span><span class="st">"{{.strong {{.or letters[1:3] }} }}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_html</a></span><span class="op">(</span><span class="st">"{{.strong {{.or letters[1:3]}} }}"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;span class="strong"&gt;a, b, or c&lt;/span&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or in an epoxy_latex chunk...</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_latex</a></span><span class="op">(</span><span class="st">"&lt;.and &lt;.strong letters[1:3] &gt;&gt;"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="epoxy.html">epoxy_latex</a></span><span class="op">(</span><span class="st">"&lt;&lt;.and &lt;&lt;.strong letters[1:3]&gt;&gt; &gt;&gt;"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \textbf{a}, \textbf{b}, and \textbf{c}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ---- Other Transformers ----</span></span></span>

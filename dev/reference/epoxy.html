@@ -162,8 +162,8 @@ a set of classes. Learn more about this syntax in <code><a href="epoxy_transform
 <span>  .data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .sep <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  .open <span class="op">=</span> <span class="st">"&lt;"</span>,</span>
-<span>  .close <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
+<span>  .open <span class="op">=</span> <span class="st">"&lt;&lt;"</span>,</span>
+<span>  .close <span class="op">=</span> <span class="st">"&gt;&gt;"</span>,</span>
 <span>  .na <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .null <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .comment <span class="op">=</span> <span class="st">""</span>,</span>
@@ -322,7 +322,7 @@ need epoxy's inline formatting syntax.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch &lt;em&gt;Back to the Future Part II&lt;/em&gt;, &lt;em&gt;The Simpsons Movie&lt;/em&gt;, or &lt;em&gt;Another Year&lt;/em&gt;.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">epoxy_latex</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"I'd be happy to watch &lt; title| &gt;."</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"I'd be happy to watch &lt;&lt; title| &gt;&gt;."</span>,</span></span>
 <span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movies</span>,</span></span>
 <span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"italic"</span>, <span class="st">"collapse"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

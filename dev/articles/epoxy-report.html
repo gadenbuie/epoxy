@@ -148,7 +148,7 @@ toward a different output context.</p>
 <tr class="odd">
 <td align="left"><code>epoxy_latex</code></td>
 <td align="left">LaTeX</td>
-<td align="center"><code>&lt;expr&gt;</code></td>
+<td align="center"><code>&lt;&lt;expr&gt;&gt;</code></td>
 </tr>
 <tr class="even">
 <td align="left"><code>whisker</code></td>
@@ -443,8 +443,8 @@ and not an inline transformer class.</p>
 <pre><code>```{=html}
 &lt;span class="uppercase"&gt;Chevrolet&lt;/span&gt;
 ```</code></pre>
-<p>You can get access the inline formatter by adding one additional
-layer of <code>{{ }}</code>.</p>
+<p>You can access the inline formatter by adding one additional layer of
+<code>{{ }}</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>```{epoxy_html .data = mpg[1,]}</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>{{span {{.uppercase manufacturer}} }}</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
@@ -459,25 +459,32 @@ example, <code>{{ {{.uppercase manufacturer }} }}</code> would produce
 <h3 id="raw-latex-chunks">Raw LaTeX chunks<a class="anchor" aria-label="anchor" href="#raw-latex-chunks"></a>
 </h3>
 <p>Similarly, you can also use <code>epoxy_latex</code> chunks to epoxy
-R and LaTeX together. By default, expressions in these types of chunks
-are wrapped in <code>&lt;</code> and <code>&gt;</code>.</p>
+R and LaTeX together. Wrap expressions in these types of chunks with
+<code>&lt;&lt;</code> and <code>&gt;&gt;</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>\begin{itemize}</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_latex, .data = mpg}</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>\item \textbf{&lt;manufacturer&gt;} \textit{&lt;model&gt;} gets &lt;cty&gt; city and &lt;hwy&gt; highway miles per gallon.</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>\item &lt;&lt;.strong manufacturer&gt;&gt; &lt;&lt;.emph model&gt;&gt; gets &lt;&lt;cty&gt;&gt; city and &lt;&lt;hwy&gt;&gt; highway miles per gallon.</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>```</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>\end{itemize}</span></code></pre></div>
 <p>In R Markdown knitting into a LaTeX output, this renders as:</p>
 <pre><code>\begin{itemize}
 ```{=latex}
-\item \textbf{Chevrolet} \textit{Malibu} gets 19 city and 27 highway miles per gallon.
-\item \textbf{Dodge} \textit{Caravan} gets 7 city and 24 highway miles per gallon.
-\item \textbf{Ford} \textit{Expedition} gets 11 city and 17 highway miles per gallon.
+\item \textbf{Chevrolet} \emph{Malibu} gets 19 city and 27 highway miles per gallon.
+\item \textbf{Dodge} \emph{Caravan} gets 7 city and 24 highway miles per gallon.
+\item \textbf{Ford} \emph{Expedition} gets 11 city and 17 highway miles per gallon.
 ```
 \end{itemize}</code></pre>
 <p>Note that, like <code>epoxy_html</code> chunks,
 <code>epoxy_latex</code> places the output in <a href="https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html" class="external-link">raw
 latex blocks</a>. This behavior can be disabled by setting the chunk
 option <code>latex_raw = FALSE</code>.</p>
+<p>⚠️ <strong>Note:</strong> Prior to v1.0.0, epoxy used single
+<code>&lt;</code> and <code>&gt;</code> characters for expression
+delimiters in <code><a href="../reference/epoxy.html">epoxy_latex()</a></code> chunks. This can lead to subtle
+but inescapable problems if you need to use these characters
+<em>inside</em> your expression. As a result, <code><a href="../reference/epoxy.html">epoxy_latex()</a></code>
+now uses <code>&lt;&lt;</code> and <code>&gt;&gt;</code> to delimit
+inline expressions.</p>
 </div>
 </div>
 
