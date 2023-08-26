@@ -108,7 +108,7 @@ describe("epoxy_transform_set()", {
 		)
 
 		expect_equal(
-			epoxy_latex("<1> and <2> is <3>"),
+			epoxy_latex("<<1>> and <<2>> is <<3>>"),
 			glue("\\textbf{{1}} and \\textbf{{2}} is \\textbf{{3}}")
 		)
 	})
@@ -128,7 +128,7 @@ describe("epoxy_transform_set()", {
 		)
 
 		expect_equal(
-			epoxy_latex("<.bold 'hi'>"),
+			epoxy_latex("<<.bold 'hi'>>"),
 			glue("PASS")
 		)
 	})
@@ -198,7 +198,7 @@ describe("epoxy_transform_set()", {
 		)
 
 		expect_equal(
-			epoxy_latex("<1> and <2> is <3>"),
+			epoxy_latex("<<1>> and <<2>> is <<3>>"),
 			glue("\\texttt{{1}} and \\texttt{{2}} is \\texttt{{3}}")
 		)
 	})

@@ -6,10 +6,10 @@ epoxy("{letters[1:3]&}", .transformer = epoxy_transform("bold", "collapse"))
 epoxy("{letters[1:3]&}", .transformer = epoxy_transform("collapse", "bold"))
 
 # In an epoxy_html chunk...
-epoxy_html("{{.strong {{.or letters[1:3] }} }}")
+epoxy_html("{{.strong {{.or letters[1:3]}} }}")
 
 # Or in an epoxy_latex chunk...
-epoxy_latex("<.and <.strong letters[1:3] >>")
+epoxy_latex("<<.and <<.strong letters[1:3]>> >>")
 
 # ---- Other Transformers ----
 

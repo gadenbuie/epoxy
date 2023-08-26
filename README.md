@@ -153,7 +153,7 @@ output context.
 |:--------------|:---------------------|:---------------------------------------------------------:|
 | `epoxy`       | all-purpose markdown |                         `{expr}`                          |
 | `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
-| `epoxy_latex` | LaTeX                |                         `<expr>`                          |
+| `epoxy_latex` | LaTeX                |                        `<<expr>>`                         |
 | `whisker`     | all-purpose          | [mustache template language](https://mustache.github.io/) |
 
 ⚠️ **Caution:** Previously, epoxy provided a `glue` engine, but this

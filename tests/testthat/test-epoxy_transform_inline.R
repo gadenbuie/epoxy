@@ -167,7 +167,7 @@ describe("epoxy internal inline formatters", {
 		)
 
 		expect_equal(
-			epoxy_latex("<.strong letters[1]>", .transformer = "inline"),
+			epoxy_latex("<<.strong letters[1]>>", .transformer = "inline"),
 			"\\textbf{a}"
 		)
 	})
@@ -184,7 +184,7 @@ describe("epoxy internal inline formatters", {
 		)
 
 		expect_equal(
-			epoxy_latex("<.italic letters[1]>", .transformer = "inline"),
+			epoxy_latex("<<.italic letters[1]>>", .transformer = "inline"),
 			"\\emph{a}"
 		)
 	})
@@ -201,7 +201,7 @@ describe("epoxy internal inline formatters", {
 		)
 
 		expect_equal(
-			epoxy_latex("<.code letters[1]>", .transformer = "inline"),
+			epoxy_latex("<<.code letters[1]>>", .transformer = "inline"),
 			"\\texttt{a}"
 		)
 	})
