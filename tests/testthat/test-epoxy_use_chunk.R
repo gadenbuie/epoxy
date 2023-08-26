@@ -49,7 +49,7 @@ describe("epoxy_use_chunk()", {
 			"```{epoxy_html html}",
 			"{{ picked_html <- epoxy_default_transformer(); 'ignore' }}",
 			"```",
-			"```{epoxy_latex latex, .open = '<<', .close = '>>'}",
+			"```{epoxy_latex latex}",
 			"<< picked_latex <- epoxy_default_transformer(); 'ignore' >>",
 			"```",
 			"```{r}",

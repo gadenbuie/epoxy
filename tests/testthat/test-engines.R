@@ -25,7 +25,7 @@ describe("knitr engines", {
 	})
 
 	it("works with knitr_engine_epoxy_latex()", {
-		opts$code <- "<.bold 'hello'>"
+		opts$code <- "<<.bold 'hello'>>"
 		opts$engine <- "epoxy_latex"
 
 		expect_equal(

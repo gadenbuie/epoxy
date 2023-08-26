@@ -34,7 +34,7 @@ epoxy_html(
 )
 
 epoxy_latex(
-  "I'd be happy to watch < title| >.",
+  "I'd be happy to watch << title| >>.",
   .data = movies,
   .transformer = c("italic", "collapse")
 )

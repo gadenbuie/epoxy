@@ -290,7 +290,7 @@ and not an inline transformer class.
 ```
 ````
 
-You can get access the inline formatter by adding one additional layer of `{{ }}`.
+You can access the inline formatter by adding one additional layer of `{{ }}`.
 
 ````{verbatim}
 ```{epoxy_html .data = mpg[1,]}
@@ -311,12 +311,12 @@ In the last example,
 ### Raw LaTeX chunks
 
 Similarly, you can also use `epoxy_latex` chunks to epoxy R and LaTeX together.
-By default, expressions in these types of chunks are wrapped in `<` and `>`.
+Wrap expressions in these types of chunks with `<<` and `>>`.
 
 ````{verbatim}
 \begin{itemize}
 ```{epoxy_latex, .data = mpg}
-\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
+\item <<.strong manufacturer>> <<.emph model>> gets <<cty>> city and <<hwy>> highway miles per gallon.
 ```
 \end{itemize}
 ````
@@ -327,7 +327,7 @@ this renders as:
 ````
 \begin{itemize}
 ```{epoxy_latex, .data = mpg}
-\item \textbf{<manufacturer>} \textit{<model>} gets <cty> city and <hwy> highway miles per gallon.
+\item <<.strong manufacturer>> <<.emph model>> gets <<cty>> city and <<hwy>> highway miles per gallon.
 ```
 \end{itemize}
 ````
@@ -337,3 +337,10 @@ Note that, like `epoxy_html` chunks,
 [raw latex blocks]( https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html).
 This behavior can be disabled by setting the chunk option
 `latex_raw = FALSE`.
+
+⚠️ **Note:** Prior to v1.0.0, epoxy used single `<` and `>` characters
+for expression delimiters in `epoxy_latex()` chunks.
+This can lead to subtle but inescapable problems
+if you need to use these characters _inside_ your expression.
+As a result, `epoxy_latex()` now uses `<<` and `>>`
+to delimit inline expressions.
