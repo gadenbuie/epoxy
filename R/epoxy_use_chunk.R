@@ -107,8 +107,8 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 		epoxy_html = epoxy_html,
 		epoxy_latex = epoxy_latex,
 		mustache = epoxy_mustache,
-		whisker = epoxy_whisker,
-		glue = epoxy_glue,
+		whisker = epoxy_mustache,
+		glue = epoxy,
 		glue_html = epoxy_html,
 		glue_latex = epoxy_latex,
 		epoxy
