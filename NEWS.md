@@ -30,8 +30,8 @@
   it's much more likely to be the behavior you want, but bare lists require
   specifically opting in. (#103)
 
-* **Breaking change:** `epoxy_latex()` (and the corresponding `epoxy_latex`
-  chunk engine) now uses `<<` and `>>` to delimit the expression. Where you
+* **Breaking change:** `epoxy_latex()` and the `epoxy_latex` chunk engine it
+  powers now use `<<` and `>>` to delimit inline expressions. Where you
   previously may have used `<expr>`, please now use `<<expr>>`. This breaking
   change was necessary to allow the `expr` to include common R operators like
   `<` and `>`. (#107)
