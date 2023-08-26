@@ -14,6 +14,8 @@ test_that("ui_epoxy_mustache() with an array of values", {
 		expect_values_screenshot_args = FALSE
 	)
 
+  app$wait_for_idle()
+
 	expect_equal(
 		app$get_text("#template h2"),
 		"Hello, user!"
