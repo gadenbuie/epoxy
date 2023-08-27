@@ -178,7 +178,7 @@ epoxy_transform_set <- function(
 find_epoxy_transformer <- function(name) {
 	fn_name <- glue("epoxy_transform_{name}")
 	tryCatch(
-		rlang::as_function(fn_name),
+		rlang::as_function(fn_name, env = rlang::fn_env(find_epoxy_transformer)),
 		error = function(err) {
 			msg <- glue("`epoxy_transform_{name}()` doesn't exist.")
 			info <- glue("`{name}` doesn't correspond to an {{epoxy}} function.")
