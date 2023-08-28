@@ -350,13 +350,16 @@ roxy_inline_params <- function() {
 			return("chosen internally based on the output format")
 		}
 		if (grepl("^function", expr)) {
-			return(paste0("`", expr, "`"))
+			# internal defaults, defined in the function signature
+			return(paste("``", expr, "``"))
 		}
-		expr <- sub("\\(.+\\)$", "()", expr)
-		if (grepl("\\(\\)$", expr)) {
-			return(expr)
+		if (!grepl("\\(.*\\)", expr)) {
+			# default is a function, e.g. and::and
+			return(sprintf("[%s()]", expr))
 		}
-		paste0("[", expr, "()]")
+		# default is a function call, maybe with arguments
+		link <- sub("\\(.*\\)$", "", expr)
+		return(sprintf("[%s][%s]", expr, link))
 	})
 
 	extras <- epoxy_inline_aliases
