@@ -260,99 +260,99 @@ the current transformation. In nearly all cases, you can let
 
 
 <dt>.and</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..and x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::and()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.and x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::and()</a></code>.</p></dd>
 
 
 <dt>.or</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..or x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::or()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.or x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::or()</a></code>.</p></dd>
 
 
 <dt>.incr</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..incr x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.incr x}</code>. Default is <code><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort()</a></code>.</p></dd>
 
 
 <dt>.decr</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..decr x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.decr x}</code>. Default is <code>function(x) sort(x, decreasing = TRUE)</code>.</p></dd>
 
 
 <dt>.bytes</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..bytes x}</code>. Default is scales::label_bytes().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.bytes x}</code>. Default is scales::label_bytes().</p></dd>
 
 
 <dt>.date</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..date x}</code>. Default is <code>function(x) format(x, format = "%F")</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.date x}</code>. Default is <code>function(x) format(x, format = "%F")</code>.</p></dd>
 
 
 <dt>.time</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..time x}</code>. Default is <code>function(x) format(x, format = "%T")</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.time x}</code>. Default is <code>function(x) format(x, format = "%T")</code>.</p></dd>
 
 
 <dt>.datetime</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..datetime x}</code>. Default is <code>function(x) format(x, format = "%F %T")</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.datetime x}</code> or <code>{.dttm x}</code>. Default is <code>function(x) format(x, format = "%F %T")</code>.</p></dd>
 
 
 <dt>.dollar</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..dollar x}</code>. Default is scales::label_dollar().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.dollar x}</code>. Default is scales::label_dollar().</p></dd>
 
 
 <dt>.number</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..number x}</code>. Default is scales::label_number().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.number x}</code> or <code>{.num x}</code>. Default is scales::label_number().</p></dd>
 
 
 <dt>.comma</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..comma x}</code>. Default is scales::label_comma().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.comma x}</code>. Default is scales::label_comma().</p></dd>
 
 
 <dt>.ordinal</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..ordinal x}</code>. Default is scales::label_ordinal().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.ordinal x}</code>. Default is scales::label_ordinal().</p></dd>
 
 
 <dt>.percent</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..percent x}</code>. Default is scales::label_percent().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.percent x}</code> or <code>{.pct x}</code>. Default is scales::label_percent().</p></dd>
 
 
 <dt>.pvalue</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..pvalue x}</code>. Default is scales::label_pvalue().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.pvalue x}</code>. Default is scales::label_pvalue().</p></dd>
 
 
 <dt>.scientific</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..scientific x}</code>. Default is scales::label_scientific().</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.scientific x}</code>. Default is scales::label_scientific().</p></dd>
 
 
 <dt>.uppercase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..uppercase x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.uppercase x}</code> or <code>{.uc x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code>.</p></dd>
 
 
 <dt>.lowercase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..lowercase x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.lowercase x}</code> or <code>{.lc x}</code>. Default is <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower()</a></code>.</p></dd>
 
 
 <dt>.titlecase</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..titlecase x}</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.titlecase x}</code> or <code>{.tc x}</code>. Default is <code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>.</p></dd>
 
 
 <dt>.sentence</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..sentence x}</code>. Default is <code>function(x) </code>substr&lt;-<code>(x, 1, 1, toupper(substr(x, 1, 1)))</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.sentence x}</code> or <code>{.sc x}</code>. Default is <code>function(x) </code>substr&lt;-<code>(x, 1, 1, toupper(substr(x, 1, 1)))</code>.</p></dd>
 
 
 <dt>.squote</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..squote x}</code>. Default is <code>function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.squote x}</code>. Default is <code>function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
 
 
 <dt>.dquote</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..dquote x}</code>. Default is <code>function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.dquote x}</code>. Default is <code>function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))</code>.</p></dd>
 
 
 <dt>.strong</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..strong x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.strong x}</code> or <code>{.bold x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 
 <dt>.emph</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..emph x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.emph x}</code> or <code>{.italic x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 
 <dt>.code</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{..code x}</code>. Default is chosen internally based on the output format.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.code x}</code>. Default is chosen internally based on the output format.</p></dd>
 
 </dl></div>
     <div class="section level2">
