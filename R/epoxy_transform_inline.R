@@ -279,21 +279,30 @@ epoxy_transform_inline_defaults <- function() {
 	defaults
 }
 
+epoxy_inline_aliases <- c(
+	.bold   = ".strong",
+	.italic = ".emph",
+	.dttm   = ".datetime",
+	.num    = ".number",
+	.pct    = ".percent",
+	.uc     = ".uppercase",
+	.lc     = ".lowercase",
+	.tc     = ".titlecase",
+	.sc     = ".sentence"
+)
+
 epoxy_transform_inline_add_aliases <- function(fmts) {
-	apply_if_missing_but_has <- function(miss, has) {
-		if (!miss %in% names(fmts) && has %in% names(fmts)) {
-			fmts[[miss]] <<- fmts[[has]]
+  aliases <- epoxy_inline_aliases
+	aliases <- aliases[aliases %in% names(fmts)]
+
+	for (i in seq_along(aliases)) {
+		alias <- names(aliases)[i]
+		impl <- aliases[[i]]
+		if (!alias %in% names(fmts) && impl %in% names(fmts)) {
+			fmts[[alias]] <- fmts[[impl]]
 		}
 	}
-	apply_if_missing_but_has(".bold", ".strong")
-	apply_if_missing_but_has(".italic", ".emph")
-	apply_if_missing_but_has(".dttm", ".datetime")
-	apply_if_missing_but_has(".num", ".number")
-	apply_if_missing_but_has(".pct", ".percent")
-	apply_if_missing_but_has(".lc", ".lowercase")
-	apply_if_missing_but_has(".uc", ".uppercase")
-	apply_if_missing_but_has(".tc", ".titlecase")
-	apply_if_missing_but_has(".sc", ".sentence")
+
 	fmts
 }
 
@@ -350,21 +359,11 @@ roxy_inline_params <- function() {
 		paste0("[", expr, "()]")
 	})
 
-	extras <- c(
-		bold   = "strong",
-		italic = "emph",
-		dttm   = "datetime",
-		num    = "number",
-		pct    = "percent",
-		uc     = "uppercase",
-		lo     = "lowercase",
-		tc     = "titlecase",
-		sc         = "sentence"
-	)
+	extras <- epoxy_inline_aliases
 
 	values <- purrr::map_chr(names(args), function(label) {
 		label <- c(label, names(extras[extras == label]))
-		knitr::combine_words(label, before = "`{.", after = " x}`", and = " or ")
+		knitr::combine_words(label, before = "`{", after = " x}`", and = " or ")
 	})
 
 	glue(
