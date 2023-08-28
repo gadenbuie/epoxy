@@ -96,7 +96,7 @@ epoxy_transform_inline <- function(
 	.scientific  = scales::label_scientific(),
 	.uppercase   = toupper,
 	.lowercase   = tolower,
-	.titlecase   = tools::toTitleCase,
+	.titlecase   = function(x) tools::toTitleCase(as.character(x)),
 	.sentence    = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
 	.squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
 	.dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
