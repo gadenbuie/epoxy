@@ -36,6 +36,11 @@
   change was necessary to allow the `expr` to include common R operators like
   `<` and `>`. (#107)
 
+* Aded `.sentence` (alias `.sc`) to the list of inline transformers provided by
+  `epoxy_transform_inline()`. This transformer will capitalize the first letter
+  of the first word in the expression. This is useful when you want to need to
+  start a sentence with a variable that may contain more than one word. (#112)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
