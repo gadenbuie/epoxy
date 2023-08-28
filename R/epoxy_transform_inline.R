@@ -97,6 +97,7 @@ epoxy_transform_inline <- function(
 	.uppercase   = toupper,
 	.lowercase   = tolower,
 	.titlecase   = tools::toTitleCase,
+	.sentence    = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
 	.squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
 	.dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
 	.strong      = NULL,
@@ -292,6 +293,7 @@ epoxy_transform_inline_add_aliases <- function(fmts) {
 	apply_if_missing_but_has(".lc", ".lowercase")
 	apply_if_missing_but_has(".uc", ".uppercase")
 	apply_if_missing_but_has(".tc", ".titlecase")
+	apply_if_missing_but_has(".sc", ".sentence")
 	fmts
 }
 
@@ -356,7 +358,8 @@ roxy_inline_params <- function() {
 		pct    = "percent",
 		uc     = "uppercase",
 		lo     = "lowercase",
-		tc     = "titlecase"
+		tc     = "titlecase",
+		sc 	   = "sentence"
 	)
 
 	values <- purrr::map_chr(names(args), function(label) {

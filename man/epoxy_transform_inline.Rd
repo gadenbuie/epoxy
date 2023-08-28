@@ -25,6 +25,7 @@ epoxy_transform_inline(
   .uppercase = toupper,
   .lowercase = tolower,
   .titlecase = tools::toTitleCase,
+  .sentence = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
   .squote = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
   .dquote = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
   .strong = NULL,
@@ -80,6 +81,8 @@ the current transformation. In nearly all cases, you can let
 \item{.lowercase}{The function to apply to \code{x} when the template is \verb{\{..lowercase x\}}. Default is \code{\link[=tolower]{tolower()}}.}
 
 \item{.titlecase}{The function to apply to \code{x} when the template is \verb{\{..titlecase x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+
+\item{.sentence}{The function to apply to \code{x} when the template is \verb{\{..sentence x\}}. Default is \verb{function(x) }substr<-\verb{(x, 1, 1, toupper(substr(x, 1, 1)))}.}
 
 \item{.squote}{The function to apply to \code{x} when the template is \verb{\{..squote x\}}. Default is \code{function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))}.}
 
