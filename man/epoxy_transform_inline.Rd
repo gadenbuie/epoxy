@@ -24,7 +24,8 @@ epoxy_transform_inline(
   .scientific = scales::label_scientific(),
   .uppercase = toupper,
   .lowercase = tolower,
-  .titlecase = tools::toTitleCase,
+  .titlecase = function(x) tools::toTitleCase(as.character(x)),
+  .sentence = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
   .squote = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
   .dquote = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
   .strong = NULL,
@@ -45,51 +46,53 @@ the current transformation. In nearly all cases, you can let
 \code{epoxy_transform()} handle this for you. The chain ends when
 \code{\link[glue:identity_transformer]{glue::identity_transformer()}} is used as the \code{transformer}.}
 
-\item{.and}{The function to apply to \code{x} when the template is \verb{\{..and x\}}. Default is \code{\link[and:and]{and::and()}}.}
+\item{.and}{The function to apply to \code{x} when the template is \verb{\{.and x\}}. Default is \code{\link[and:and]{and::and()}}.}
 
-\item{.or}{The function to apply to \code{x} when the template is \verb{\{..or x\}}. Default is \code{\link[and:and]{and::or()}}.}
+\item{.or}{The function to apply to \code{x} when the template is \verb{\{.or x\}}. Default is \code{\link[and:and]{and::or()}}.}
 
-\item{.incr}{The function to apply to \code{x} when the template is \verb{\{..incr x\}}. Default is \code{\link[=sort]{sort()}}.}
+\item{.incr}{The function to apply to \code{x} when the template is \verb{\{.incr x\}}. Default is \code{\link[=sort]{sort()}}.}
 
-\item{.decr}{The function to apply to \code{x} when the template is \verb{\{..decr x\}}. Default is \code{function(x) sort(x, decreasing = TRUE)}.}
+\item{.decr}{The function to apply to \code{x} when the template is \verb{\{.decr x\}}. Default is \code{function(x) sort(x, decreasing = TRUE)}.}
 
-\item{.bytes}{The function to apply to \code{x} when the template is \verb{\{..bytes x\}}. Default is scales::label_bytes().}
+\item{.bytes}{The function to apply to \code{x} when the template is \verb{\{.bytes x\}}. Default is \link[scales:label_bytes]{scales::label_bytes()}.}
 
-\item{.date}{The function to apply to \code{x} when the template is \verb{\{..date x\}}. Default is \code{function(x) format(x, format = "\%F")}.}
+\item{.date}{The function to apply to \code{x} when the template is \verb{\{.date x\}}. Default is \code{function(x) format(x, format = "\%F")}.}
 
-\item{.time}{The function to apply to \code{x} when the template is \verb{\{..time x\}}. Default is \code{function(x) format(x, format = "\%T")}.}
+\item{.time}{The function to apply to \code{x} when the template is \verb{\{.time x\}}. Default is \code{function(x) format(x, format = "\%T")}.}
 
-\item{.datetime}{The function to apply to \code{x} when the template is \verb{\{..datetime x\}}. Default is \code{function(x) format(x, format = "\%F \%T")}.}
+\item{.datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \code{function(x) format(x, format = "\%F \%T")}.}
 
-\item{.dollar}{The function to apply to \code{x} when the template is \verb{\{..dollar x\}}. Default is scales::label_dollar().}
+\item{.dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \link[scales:label_dollar]{scales::label_dollar(prefix = engine_pick("$", "$", "\\$"))}.}
 
-\item{.number}{The function to apply to \code{x} when the template is \verb{\{..number x\}}. Default is scales::label_number().}
+\item{.number}{The function to apply to \code{x} when the template is \verb{\{.number x\}} or \verb{\{.num x\}}. Default is \link[scales:label_number]{scales::label_number()}.}
 
-\item{.comma}{The function to apply to \code{x} when the template is \verb{\{..comma x\}}. Default is scales::label_comma().}
+\item{.comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is \link[scales:label_number]{scales::label_comma()}.}
 
-\item{.ordinal}{The function to apply to \code{x} when the template is \verb{\{..ordinal x\}}. Default is scales::label_ordinal().}
+\item{.ordinal}{The function to apply to \code{x} when the template is \verb{\{.ordinal x\}}. Default is \link[scales:label_ordinal]{scales::label_ordinal()}.}
 
-\item{.percent}{The function to apply to \code{x} when the template is \verb{\{..percent x\}}. Default is scales::label_percent().}
+\item{.percent}{The function to apply to \code{x} when the template is \verb{\{.percent x\}} or \verb{\{.pct x\}}. Default is \link[scales:label_percent]{scales::label_percent(suffix = engine_pick("\%", "\%", "\\\%"))}.}
 
-\item{.pvalue}{The function to apply to \code{x} when the template is \verb{\{..pvalue x\}}. Default is scales::label_pvalue().}
+\item{.pvalue}{The function to apply to \code{x} when the template is \verb{\{.pvalue x\}}. Default is \link[scales:label_pvalue]{scales::label_pvalue()}.}
 
-\item{.scientific}{The function to apply to \code{x} when the template is \verb{\{..scientific x\}}. Default is scales::label_scientific().}
+\item{.scientific}{The function to apply to \code{x} when the template is \verb{\{.scientific x\}}. Default is \link[scales:label_scientific]{scales::label_scientific()}.}
 
-\item{.uppercase}{The function to apply to \code{x} when the template is \verb{\{..uppercase x\}}. Default is \code{\link[=toupper]{toupper()}}.}
+\item{.uppercase}{The function to apply to \code{x} when the template is \verb{\{.uppercase x\}} or \verb{\{.uc x\}}. Default is \code{\link[=toupper]{toupper()}}.}
 
-\item{.lowercase}{The function to apply to \code{x} when the template is \verb{\{..lowercase x\}}. Default is \code{\link[=tolower]{tolower()}}.}
+\item{.lowercase}{The function to apply to \code{x} when the template is \verb{\{.lowercase x\}} or \verb{\{.lc x\}}. Default is \code{\link[=tolower]{tolower()}}.}
 
-\item{.titlecase}{The function to apply to \code{x} when the template is \verb{\{..titlecase x\}}. Default is \code{\link[tools:toTitleCase]{tools::toTitleCase()}}.}
+\item{.titlecase}{The function to apply to \code{x} when the template is \verb{\{.titlecase x\}} or \verb{\{.tc x\}}. Default is \code{function(x) tools::toTitleCase(as.character(x))}.}
 
-\item{.squote}{The function to apply to \code{x} when the template is \verb{\{..squote x\}}. Default is \code{function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))}.}
+\item{.sentence}{The function to apply to \code{x} when the template is \verb{\{.sentence x\}} or \verb{\{.sc x\}}. Default is \code{function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1)))}.}
 
-\item{.dquote}{The function to apply to \code{x} when the template is \verb{\{..dquote x\}}. Default is \code{function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))}.}
+\item{.squote}{The function to apply to \code{x} when the template is \verb{\{.squote x\}}. Default is \code{function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))}.}
 
-\item{.strong}{The function to apply to \code{x} when the template is \verb{\{..strong x\}}. Default is chosen internally based on the output format.}
+\item{.dquote}{The function to apply to \code{x} when the template is \verb{\{.dquote x\}}. Default is \code{function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE))}.}
 
-\item{.emph}{The function to apply to \code{x} when the template is \verb{\{..emph x\}}. Default is chosen internally based on the output format.}
+\item{.strong}{The function to apply to \code{x} when the template is \verb{\{.strong x\}} or \verb{\{.bold x\}}. Default is chosen internally based on the output format.}
 
-\item{.code}{The function to apply to \code{x} when the template is \verb{\{..code x\}}. Default is chosen internally based on the output format.}
+\item{.emph}{The function to apply to \code{x} when the template is \verb{\{.emph x\}} or \verb{\{.italic x\}}. Default is chosen internally based on the output format.}
+
+\item{.code}{The function to apply to \code{x} when the template is \verb{\{.code x\}}. Default is chosen internally based on the output format.}
 }
 \value{
 A function of \code{text} and \code{envir} suitable for the \code{.transformer} argument of

@@ -82,6 +82,19 @@ describe("epoxy_transform_inline()", {
 		)
 	})
 
+	it("applies .sentence and .sc", {
+		start <- "it was a dark and stormy night"
+		expect_equal(
+			epoxy("{.sentence start}", .transformer = "inline"),
+			"It was a dark and stormy night"
+		)
+
+		expect_equal(
+			epoxy("{.sc start}", .transformer = "inline"),
+			"It was a dark and stormy night"
+		)
+	})
+
 	it("errors if a non-dotted argument name is provided", {
 		expect_snapshot_error(
 			epoxy_transform_inline(

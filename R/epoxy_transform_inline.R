@@ -96,7 +96,8 @@ epoxy_transform_inline <- function(
 	.scientific  = scales::label_scientific(),
 	.uppercase   = toupper,
 	.lowercase   = tolower,
-	.titlecase   = tools::toTitleCase,
+	.titlecase   = function(x) tools::toTitleCase(as.character(x)),
+	.sentence    = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
 	.squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
 	.dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
 	.strong      = NULL,
@@ -278,20 +279,30 @@ epoxy_transform_inline_defaults <- function() {
 	defaults
 }
 
+epoxy_inline_aliases <- c(
+	.bold   = ".strong",
+	.italic = ".emph",
+	.dttm   = ".datetime",
+	.num    = ".number",
+	.pct    = ".percent",
+	.uc     = ".uppercase",
+	.lc     = ".lowercase",
+	.tc     = ".titlecase",
+	.sc     = ".sentence"
+)
+
 epoxy_transform_inline_add_aliases <- function(fmts) {
-	apply_if_missing_but_has <- function(miss, has) {
-		if (!miss %in% names(fmts) && has %in% names(fmts)) {
-			fmts[[miss]] <<- fmts[[has]]
+	aliases <- epoxy_inline_aliases
+	aliases <- aliases[aliases %in% names(fmts)]
+
+	for (i in seq_along(aliases)) {
+		alias <- names(aliases)[i]
+		impl <- aliases[[i]]
+		if (!alias %in% names(fmts) && impl %in% names(fmts)) {
+			fmts[[alias]] <- fmts[[impl]]
 		}
 	}
-	apply_if_missing_but_has(".bold", ".strong")
-	apply_if_missing_but_has(".italic", ".emph")
-	apply_if_missing_but_has(".dttm", ".datetime")
-	apply_if_missing_but_has(".num", ".number")
-	apply_if_missing_but_has(".pct", ".percent")
-	apply_if_missing_but_has(".lc", ".lowercase")
-	apply_if_missing_but_has(".uc", ".uppercase")
-	apply_if_missing_but_has(".tc", ".titlecase")
+
 	fmts
 }
 
@@ -339,29 +350,23 @@ roxy_inline_params <- function() {
 			return("chosen internally based on the output format")
 		}
 		if (grepl("^function", expr)) {
-			return(paste0("`", expr, "`"))
+			# internal defaults, defined in the function signature
+			return(paste("``", expr, "``"))
 		}
-		expr <- sub("\\(.+\\)$", "()", expr)
-		if (grepl("\\(\\)$", expr)) {
-			return(expr)
+		if (!grepl("\\(.*\\)", expr)) {
+			# default is a function, e.g. and::and
+			return(sprintf("[%s()]", expr))
 		}
-		paste0("[", expr, "()]")
+		# default is a function call, maybe with arguments
+		link <- sub("\\(.*\\)$", "", expr)
+		return(sprintf("[%s][%s]", expr, link))
 	})
 
-	extras <- c(
-		bold   = "strong",
-		italic = "emph",
-		dttm   = "datetime",
-		num    = "number",
-		pct    = "percent",
-		uc     = "uppercase",
-		lo     = "lowercase",
-		tc     = "titlecase"
-	)
+	extras <- epoxy_inline_aliases
 
 	values <- purrr::map_chr(names(args), function(label) {
 		label <- c(label, names(extras[extras == label]))
-		knitr::combine_words(label, before = "`{.", after = " x}`", and = " or ")
+		knitr::combine_words(label, before = "`{", after = " x}`", and = " or ")
 	})
 
 	glue(
