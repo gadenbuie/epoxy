@@ -359,7 +359,7 @@ roxy_inline_params <- function() {
 		uc     = "uppercase",
 		lo     = "lowercase",
 		tc     = "titlecase",
-		sc 	   = "sentence"
+		sc         = "sentence"
 	)
 
 	values <- purrr::map_chr(names(args), function(label) {
