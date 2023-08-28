@@ -17,7 +17,7 @@ URL: https://pkg.garrickadenbuie.com/epoxy/,
     https://github.com/gadenbuie/epoxy
 BugReports: https://github.com/gadenbuie/epoxy/issues
 Depends:
-    R (>= 2.10)
+    R (>= 3.6.0)
 Imports:
     and,
     glue (>= 1.5.0),
