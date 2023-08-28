@@ -292,7 +292,7 @@ epoxy_inline_aliases <- c(
 )
 
 epoxy_transform_inline_add_aliases <- function(fmts) {
-  aliases <- epoxy_inline_aliases
+	aliases <- epoxy_inline_aliases
 	aliases <- aliases[aliases %in% names(fmts)]
 
 	for (i in seq_along(aliases)) {
