@@ -237,7 +237,7 @@ describe("chunk engine deprecations", {
 test_that(".collapse chunk option", {
 	rmd <- test_path("rmds", "use-chunk_collapse.Rmd")
 
-  res <- render_rmd(rmd)
+	res <- render_rmd(rmd)
 
 	expect_equal(
 		res[[1]],
