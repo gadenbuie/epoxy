@@ -1,0 +1,24 @@
+---
+output: md_document
+---
+
+```{r setup, include=FALSE}
+library(epoxy)
+
+the_data <- list(
+	first = c("one", "three"),
+	second = c("two", "four")
+)
+```
+
+```{epoxy chunk-template, .data = the_data, .collapse = " == "}
+{first} followed by {second}
+```
+
+```{r echo=FALSE}
+epoxy_use_chunk(
+	.data = the_data,
+	label = "chunk-template",
+	.collapse = " || "
+)
+```

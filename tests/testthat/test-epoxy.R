@@ -18,6 +18,37 @@ test_that("epoxy .data pronoun", {
 	)
 })
 
+test_that("epoxy(.collapse =)", {
+	expect_equal(
+		epoxy("{letters[1:3]}", .collapse = ", "),
+		"a, b, c"
+	)
+
+	expect_equal(
+		epoxy_latex("<<letters[1:3]>>", .collapse = " \\middot "),
+		"a \\middot b \\middot c"
+	)
+
+	expect_equal(
+		epoxy_html(
+			"{{values}}",
+			values = letters[1:3],
+			.collapse = "<br>"
+		),
+		"a<br>b<br>c"
+	)
+
+	expect_equal(
+		epoxy_html(
+			"{{li values}}",
+			values = letters[1:3],
+			# inline html tranformers pre-collapse
+			.collapse = "<br>"
+		),
+		"<li>a</li><li>b</li><li>c</li>"
+	)
+})
+
 test_that("epoxy_data_subset()", {
 	nested <- list(
 		outer = list(
