@@ -45,6 +45,13 @@
   `as.character()` before applying `tools::toTitleCase()`, since `toTitleCase()`
   will throw an error for non-character inputs. (#112)
 
+* `epoxy()`, and by extension the LaTex and HTML counterparts, and all `epoxy_*`
+  knitr engines gain a `.collapse` argument to determine how a vector of
+  epoxy-transformed templates should be collapsed. The default is `NULL`, which
+  means that the output is returned as a vector. This argument is also useful in
+  `epoxy_use_chunk()` and for knitr chunks being used as a vectorized template.
+  (#115)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
