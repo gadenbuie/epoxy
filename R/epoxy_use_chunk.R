@@ -83,6 +83,22 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 
 	template <- knitr_chunk_get(label)
 
+	epoxy_use_template(
+		template$code,
+		.data = .data,
+		...,
+		options = template$opts,
+		engine = template$opts$engine
+	)
+}
+
+epoxy_use_template <- function(
+	template,
+	.data = NULL,
+	...,
+	options = list(),
+	engine = options$engine
+) {
 	# For options, we want to apply options in this order:
 	# 0. `.data` from this fn and `eval` from this chunk
 	# 1. Options from this function call in the ...
@@ -97,12 +113,12 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 
 	# global << template << current << function
 	opts <- opts_global
-	opts <- purrr::list_assign(opts, !!!template$opts)
+	opts <- purrr::list_assign(opts, !!!options)
 	opts <- purrr::list_assign(opts, !!!opts_current)
 	opts <- purrr::list_assign(opts, !!!purrr::compact(opts_fn))
 
 	fn <- switch(
-		template$opts$engine,
+		engine,
 		epoxy = epoxy,
 		epoxy_html = epoxy_html,
 		epoxy_latex = epoxy_latex,
@@ -117,12 +133,12 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	call <- rlang::call2(
 		"eval_epoxy_engine",
 		fn = fn,
-		code = template$code,
+		code = template,
 		options = opts
 	)
 
 	with_epoxy_engine(
-		template$opts$engine,
+		engine,
 		knitr::asis_output(eval(call))
 	)
 }
