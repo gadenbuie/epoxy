@@ -176,4 +176,8 @@ describe("epoxy_use_file()", {
 			knitr::asis_output("\\href{https://example.com}{example link}")
 		)
 	})
+
+	it("errors when the file doesn't exist", {
+		expect_error(epoxy_use_file(file = "bad-file.md"))
+	})
 })
