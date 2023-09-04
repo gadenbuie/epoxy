@@ -43,6 +43,20 @@
 #' It's hard to believe that
 #' _Back to the Future Part II_ was released in 1989.
 #'
+#' The same template could also be stored in a file, e.g. `movie-release.md`:
+#'
+#' ```markdown
+#' ---
+#' engine: epoxy
+#' ---
+#'
+#' {.emph title} was released in {year}.
+#' ```
+#'
+#' The YAML front matter is used in template files to set options for the
+#' template. You can use the `engine` option to choose the epoxy function to be
+#' applied to the template, e.g. `engine: epoxy_html` or `engine: epoxy_latex`.
+#' By default, `engine: epoxy` is assumed unless otherwise specified.
 #'
 #' @section Template Options:
 #'

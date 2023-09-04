@@ -111,6 +111,20 @@ Or you can even use it inline:
 
 It's hard to believe that
 \emph{Back to the Future Part II} was released in 1989.
+
+The same template could also be stored in a file, e.g. \code{movie-release.md}:
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{---
+engine: epoxy
+---
+
+\{.emph title\} was released in \{year\}.
+}\if{html}{\out{</div>}}
+
+The YAML front matter is used in template files to set options for the
+template. You can use the \code{engine} option to choose the epoxy function to be
+applied to the template, e.g. \code{engine: epoxy_html} or \code{engine: epoxy_latex}.
+By default, \code{engine: epoxy} is assumed unless otherwise specified.
 }
 
 \section{Template Options}{
