@@ -1,12 +1,16 @@
 #' Reuse a Template Chunk
 #'
 #' @description
-#' ## Description
-#' Reuse a template from another chunk. By calling `epoxy_use_chunk()` in an R
-#' chunk or inline R expression, you can reuse a template defined in another
-#' chunk in your document.
+#' Reuse a template from another chunk or file. By calling `epoxy_use_chunk()`
+#' in an R chunk or inline R expression, you can reuse a template defined in
+#' another chunk in your document. Alternatively, you can store the template in
+#' a separate file and use `epoxy_use_file()` to reuse it. When stored in a
+#' file, the template file can contain YAML front matter (following the [same
+#' rules as pandoc
+#' documents](https://pandoc.org/MANUAL.html#extension-yaml_metadata_block))
+#' with options that should be applied when calling [epoxy()].
 #'
-#' ## Use in R Markdown or Quarto
+#' @section Use in R Markdown or Quarto:
 #'
 #' ``````
 #' ```{epoxy movie-release}
@@ -37,22 +41,24 @@
 #' _Back to the Future Part II_ was released in 1989.
 #'
 #'
-#' ## Template Options
+#' @section Template Options:
 #'
-#' When rendering a template, `epoxy_use_chunk()` will inherit the options
-#' set in a number of different ways. The final template options are determined
-#' in the following order, ranked by importance. Options set in a higher-ranked
-#' location will override options set in a lower-ranked location.
+#' When rendering a template, `epoxy_use_chunk()` and `epoxy_use_file()` will
+#' inherit the options set in a number of different ways. The final template
+#' options are determined in the following order, ranked by importance. Options
+#' set in a higher-ranked location will override options set in a lower-ranked
+#' location.
 #'
 #' 1. The arguments passed to `epoxy_use_chunk()`, such as `.data` or any
 #'    arguments passed in the `...`. These options always have preference over
 #'    options set anywhere else.
 #'
-#' 1. The chunk options from the chunk where `epoxy_use_chunk()` is called.
+#' 1. The chunk options from the chunk where `epoxy_use_chunk()` or
+#'    `epoxy_use_file()` is called.
 #'
-#' 1. The chunk options from the template chunk. These options typically are
-#'    relevant to the template itself, such as the engine used or the opening
-#'    and closing delimiters.
+#' 1. The chunk options from the template chunk or file. These options typically
+#'    are relevant to the template itself, such as the engine used or the
+#'    opening and closing delimiters.
 #'
 #' 1. Global knitr chunk options for the document. You can set these with
 #'    `knitr::opts_chunk$set()`, see `?knitr::opts_chunk` for more information.
@@ -71,6 +77,7 @@
 #'   as regular text rather than being displayed as code results.
 #'
 #' @family Templating functions
+#' @name epoxy_use
 #' @export
 epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	if (!rlang::is_string(label)) {
@@ -92,6 +99,13 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	)
 }
 
+#' @param file The template file, i.e. a plain text file, containing the
+#'   template. An `.md` or `.txt` file extension is recommended. In addition to
+#'   the template, the file may also contain YAML front matter containing
+#'   options that are used when rendering the template via [epoxy()].
+#'
+#' @rdname epoxy_use
+#' @export
 epoxy_use_file <- function(.data = NULL, file, ...) {
 	if (!file.exists(file)) {
 		rlang::abort(paste0("File '", file, "' does not exist"))
