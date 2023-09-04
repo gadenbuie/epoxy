@@ -92,6 +92,48 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 	)
 }
 
+epoxy_use_file <- function(.data = NULL, file, ...) {
+	if (!file.exists(file)) {
+		rlang::abort(paste0("File '", file, "' does not exist"))
+	}
+
+	options <- rmarkdown::yaml_front_matter(file)
+	template <- read_body_without_yaml(file)
+
+	epoxy_use_template(
+		template,
+		.data = .data,
+		...,
+		options = options,
+		engine = options$engine %||% "epoxy"
+	)
+}
+
+read_body_without_yaml <- function(path) {
+	x <- readLines(path)
+	x_trimmed <- trimws(x)
+
+	idx_nzchar <- which(nzchar(x_trimmed))[1]
+	idx_start <- grep("^---$", x_trimmed)[1]
+
+	if (idx_nzchar < idx_start) {
+		return(paste(x, collapse = "\n"))
+	}
+
+	idx_end <- grep("^([-]{3}|[.]{3})$", x_trimmed)
+	if (!length(idx_end)) {
+		return(paste(x, collapse = "\n"))
+	}
+
+	idx_end <- idx_end[idx_end > idx_start][1]
+
+	idx_body <- which(nzchar(x_trimmed))
+	idx_body <- idx_body[idx_body > idx_end][1]
+
+	x <- x[-2:-idx_body + 1]
+	paste(x, collapse = "\n")
+}
+
 epoxy_use_template <- function(
 	template,
 	.data = NULL,

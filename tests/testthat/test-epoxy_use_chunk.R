@@ -87,3 +87,46 @@ describe("epoxy_use_chunk()", {
 		)
 	})
 })
+
+describe("epoxy_use_file()", {
+	template <- test_path("rmds", "use-file_example-1.Rmd")
+	template <- normalizePath(template)
+
+	data1 <- list(one = "first", two = "second", three = "third")
+	data2 <- list(one = "apple", two = "banana", three = "mango")
+
+	it("reads from a file", {
+		expect_equal(
+			epoxy_use_file(data1, template),
+			knitr::asis_output("first then second then third")
+		)
+		expect_equal(
+			epoxy_use_file(data2, template),
+			knitr::asis_output("apple then banana then mango")
+		)
+	})
+
+	it("works inside an Rmd", {
+		rmd_res <- render_basic_rmd(
+			"```{r echo=FALSE}",
+			"epoxy_use_file(data1, template)",
+			"```"
+		)
+
+		expect_equal(
+			rmd_res,
+			"first then second then third"
+		)
+
+		rmd_res2 <- render_basic_rmd(
+			"```{r echo=FALSE, .data = data2}",
+			"epoxy_use_file(file = template)",
+			"```"
+		)
+
+		expect_equal(
+			rmd_res2,
+			"apple then banana then mango"
+		)
+	})
+})
