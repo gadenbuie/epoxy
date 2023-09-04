@@ -217,3 +217,65 @@ test_that("with_epoxy_engine()", {
 	expect_equal(with_epoxy_engine("latex", engine_current()), "latex")
 	expect_null(engine_current())
 })
+
+describe("epoxy() with various delimiters", {
+	one <- "apple"
+	two <- "banana"
+	three <- "mango"
+
+  it("works with { }", {
+		expect_equal(
+			epoxy("{one} and {two} or {three}"),
+			glue("{one} and {two} or {three}")
+		)
+
+		expect_equal(
+			epoxy("{one} and {{two}} or {three}"),
+			glue("{one} and {{two}} or {three}")
+		)
+	})
+
+  it("works with {{ }}", {
+		expect_equal(
+			epoxy("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}"),
+			glue("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}")
+		)
+
+	})
+
+	it("works with [ ]", {
+		expect_equal(
+			epoxy("[one] and [two] or [three]", .open = "[", .close = "]"),
+			glue("[one] and [two] or [three]", .open = "[", .close = "]")
+		)
+
+		expect_equal(
+			epoxy("[one] and [[two]] or [three]", .open = "[", .close = "]"),
+			glue("[one] and [[two]] or [three]", .open = "[", .close = "]")
+		)
+	})
+
+  it("works with [[ ]]", {
+		expect_equal(
+			epoxy("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]"),
+			glue("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]")
+		)
+
+		expect_equal(
+			epoxy("[[one]] and [[two]] or [[three]]", .open = "[[", .close = "]]"),
+			glue("[[one]] and [[two]] or [[three]]", .open = "[[", .close = "]]")
+		)
+	})
+
+	it("works with < > and << >>", {
+		expect_equal(
+			epoxy("<one> and <<two>> or <three>", .open = "<", .close = ">"),
+			glue("<one> and <<two>> or <three>", .open = "<", .close = ">")
+		)
+
+		expect_equal(
+			epoxy("<<one>> and <<two>> or <<three>>", .open = "<<", .close = ">>"),
+			glue("<<one>> and <<two>> or <<three>>", .open = "<<", .close = ">>")
+		)
+	})
+})
