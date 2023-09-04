@@ -232,7 +232,7 @@ detect_wrapped_delims <- function(text, open = NULL, close = NULL) {
 		gregexpr(open, text, fixed = TRUE)[[1]][[1]]
 	}
 
-  idx_open <- first_open(open)
+	idx_open <- first_open(open)
 	idx_open_escaped <- first_open(strrep(open, 2))
 	if (idx_open == idx_open_escaped || idx_open != 1) {
 		return(FALSE)

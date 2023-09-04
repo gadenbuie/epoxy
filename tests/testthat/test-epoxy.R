@@ -223,7 +223,7 @@ describe("epoxy() with various delimiters", {
 	two <- "banana"
 	three <- "mango"
 
-  it("works with { }", {
+	it("works with { }", {
 		expect_equal(
 			epoxy("{one} and {two} or {three}"),
 			glue("{one} and {two} or {three}")
@@ -235,7 +235,7 @@ describe("epoxy() with various delimiters", {
 		)
 	})
 
-  it("works with {{ }}", {
+	it("works with {{ }}", {
 		expect_equal(
 			epoxy("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}"),
 			glue("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}")
@@ -255,7 +255,7 @@ describe("epoxy() with various delimiters", {
 		)
 	})
 
-  it("works with [[ ]]", {
+	it("works with [[ ]]", {
 		expect_equal(
 			epoxy("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]"),
 			glue("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]")
