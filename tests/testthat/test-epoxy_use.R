@@ -89,7 +89,7 @@ describe("epoxy_use_chunk()", {
 })
 
 describe("epoxy_use_file()", {
-	template <- test_path("rmds", "use-file_example-1.Rmd")
+	template <- test_path("rmds", "use-file_example-1.md")
 	template <- normalizePath(template)
 
 	data1 <- list(one = "first", two = "second", three = "third")
@@ -131,7 +131,7 @@ describe("epoxy_use_file()", {
 	})
 
 	it("allows .data to be defined in the yaml header", {
-		template <- test_path("rmds", "use-file_example-2.Rmd")
+		template <- test_path("rmds", "use-file_example-2.md")
 
 		expect_equal(
 			epoxy_use_file(file = template),
