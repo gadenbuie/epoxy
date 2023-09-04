@@ -129,4 +129,21 @@ describe("epoxy_use_file()", {
 			"apple then banana then mango"
 		)
 	})
+
+	it("allows .data to be defined in the yaml header", {
+		template <- test_path("rmds", "use-file_example-2.Rmd")
+
+		expect_equal(
+			epoxy_use_file(file = template),
+			knitr::asis_output("one fish, two fish, red fish, blue fish")
+		)
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(one = "one", two = "two", three = "red", four = "blue"),
+				file = template
+			),
+			knitr::asis_output("one, two, red, blue")
+		)
+	})
 })
