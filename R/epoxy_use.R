@@ -3,12 +3,15 @@
 #' @description
 #' Reuse a template from another chunk or file. By calling `epoxy_use_chunk()`
 #' in an R chunk or inline R expression, you can reuse a template defined in
-#' another chunk in your document. Alternatively, you can store the template in
-#' a separate file and use `epoxy_use_file()` to reuse it. When stored in a
-#' file, the template file can contain YAML front matter (following the [same
-#' rules as pandoc
+#' another chunk in your document.
+#'
+#' Alternatively, you can store the template in a separate file and use
+#' `epoxy_use_file()` to reuse it. When stored in a file, the template file can
+#' contain YAML front matter (following the [same rules as pandoc
 #' documents](https://pandoc.org/MANUAL.html#extension-yaml_metadata_block))
-#' with options that should be applied when calling [epoxy()].
+#' with options that should be applied when calling an epoxy function. The
+#' specific function called by `epoxy_use_file()` can be set via the `engine`
+#' option in the YAML front matter; the default is [epoxy()].
 #'
 #' @section Use in R Markdown or Quarto:
 #'

@@ -146,4 +146,34 @@ describe("epoxy_use_file()", {
 			knitr::asis_output("one, two, red, blue")
 		)
 	})
+
+	it("sets html engine via engine yaml option", {
+		template_html <- test_path("rmds", "use-file_html.md")
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(
+					link = "https://example.com",
+					text = "example link"
+				),
+				file = template_html
+			),
+			knitr::asis_output("<a href=\"https://example.com\">example link</a>")
+		)
+	})
+
+	it("sets latex engine via engine yaml option", {
+		template_latex <- test_path("rmds", "use-file_latex.md")
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(
+					link = "https://example.com",
+					text = "example link"
+				),
+				file = template_latex
+			),
+			knitr::asis_output("\\href{https://example.com}{example link}")
+		)
+	})
 })

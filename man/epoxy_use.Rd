@@ -74,10 +74,14 @@ as regular text rather than being displayed as code results.
 \description{
 Reuse a template from another chunk or file. By calling \code{epoxy_use_chunk()}
 in an R chunk or inline R expression, you can reuse a template defined in
-another chunk in your document. Alternatively, you can store the template in
-a separate file and use \code{epoxy_use_file()} to reuse it. When stored in a
-file, the template file can contain YAML front matter (following the \href{https://pandoc.org/MANUAL.html#extension-yaml_metadata_block}{same rules as pandoc documents})
-with options that should be applied when calling \code{\link[=epoxy]{epoxy()}}.
+another chunk in your document.
+
+Alternatively, you can store the template in a separate file and use
+\code{epoxy_use_file()} to reuse it. When stored in a file, the template file can
+contain YAML front matter (following the \href{https://pandoc.org/MANUAL.html#extension-yaml_metadata_block}{same rules as pandoc documents})
+with options that should be applied when calling an epoxy function. The
+specific function called by \code{epoxy_use_file()} can be set via the \code{engine}
+option in the YAML front matter; the default is \code{\link[=epoxy]{epoxy()}}.
 }
 \section{Use in R Markdown or Quarto}{
 
