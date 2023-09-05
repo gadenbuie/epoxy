@@ -139,6 +139,7 @@ a set of classes. Learn more about this syntax in <code><a href="epoxy_transform
 <span>  .literal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .transformer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .collapse <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .style <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -154,7 +155,8 @@ a set of classes. Learn more about this syntax in <code><a href="epoxy_transform
 <span>  .comment <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .literal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  .transformer <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  .transformer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .collapse <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">epoxy_latex</span><span class="op">(</span></span>
@@ -169,7 +171,8 @@ a set of classes. Learn more about this syntax in <code><a href="epoxy_transform
 <span>  .comment <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .literal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  .transformer <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  .transformer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .collapse <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -248,6 +251,11 @@ names, e.g. <code>c("bold", "collapse")</code> or a list of epoxy transformers, 
 information on transformers.</p></dd>
 
 
+<dt>.collapse</dt>
+<dd><p>A character string used to collapse a vector result into a
+single value. If <code>NULL</code> (the default), the result is not collapsed.</p></dd>
+
+
 <dt>.style</dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please use <code>.transformer</code>
 instead.</p></dd>
@@ -276,56 +284,52 @@ need epoxy's inline formatting syntax.</p></li>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">movie</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">movies</span> <span class="op">&lt;-</span> <span class="va">bechdel</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"*{movie$title}* ({movie$year}) was directed by {movie$director}."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *Inception* (2010) was directed by Christopher Nolan.</span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"- *{movies$title}* ({movies$year}) was directed by {movies$director}."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *Back to the Future Part II* (1989) was directed by Robert Zemeckis.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *The Simpsons Movie* (2007) was directed by David Silverman.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *Another Year* (2010) was directed by Mike Leigh.</span>
+<span class="r-in"><span><span class="co"># A basic example with a single row of data</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"{.emph movie$title} ({movie$year}) was directed by {movie$director}."</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> _Inception_ (2010) was directed by Christopher Nolan.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"*{title}* ({year}) was directed by {director}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *Inception* (2010) was directed by Christopher Nolan.</span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"- *{title}* ({year}) was directed by {director}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *Back to the Future Part II* (1989) was directed by Robert Zemeckis.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *The Simpsons Movie* (2007) was directed by David Silverman.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - *Another Year* (2010) was directed by Mike Leigh.</span>
+<span class="r-in"><span><span class="co"># Or vectorized over multiple rows of data</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"* {.emph movies$title} ({movies$year}) was directed by {movies$director}."</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _Back to the Future Part II_ (1989) was directed by Robert Zemeckis.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _The Simpsons Movie_ (2007) was directed by David Silverman.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _Another Year_ (2010) was directed by Mike Leigh.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"{title} ({year}) was directed by {director}."</span>,</span></span>
-<span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movie</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="st">"bold"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **Inception** (**2010**) was directed by **Christopher Nolan**.</span>
+<span class="r-in"><span><span class="co"># You can provide the data frame to `.data` to avoid repeating `data$`</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"{.emph title} ({year}) was directed by {director}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> _Inception_ (2010) was directed by Christopher Nolan.</span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"* {.emph title} ({year}) was directed by {director}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _Back to the Future Part II_ (1989) was directed by Robert Zemeckis.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _The Simpsons Movie_ (2007) was directed by David Silverman.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * _Another Year_ (2010) was directed by Mike Leigh.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"I'd be happy to watch { title| }."</span>,</span></span>
-<span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movies</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"italic"</span>, <span class="st">"collapse"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Inline transformers can be nested</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"I'd be happy to watch {.or {.italic title}}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch _Back to the Future Part II_, _The Simpsons Movie_, or _Another Year_.</span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"They were directed by {.and {.bold director}}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> They were directed by **Robert Zemeckis**, **David Silverman**, and **Mike Leigh**.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"They were directed by { director&amp; }."</span>,</span></span>
-<span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movies</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"collapse"</span>, <span class="st">"bold"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> They were directed by **Robert Zemeckis, David Silverman, and Mike Leigh**.</span>
+<span class="r-in"><span><span class="co"># Learn more about inline transformers in ?epoxy_transform_inline</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"The budget for {.emph title} was {.dollar budget}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The budget for _Inception_ was $160,000,000.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy</span><span class="op">(</span><span class="st">"The budget for *{title}* was {.dollar budget}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The budget for *Inception* was $160,000,000.</span>
+<span class="r-in"><span><span class="co"># --------- HTML and LaTeX variants ---------</span></span></span>
+<span class="r-in"><span><span class="co"># There are also HTML and LaTeX variants of epoxy.</span></span></span>
+<span class="r-in"><span><span class="co"># Each uses default options that are most natural for the format.</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"I'd be happy to watch {{ title| }}."</span>,</span></span>
-<span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movies</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"italic"</span>, <span class="st">"collapse"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># epoxy_html() uses `{{ expr }}` for delimiters</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{ title }}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch Inception.</span>
+<span class="r-in"><span><span class="co"># It also supports an HTML transformer syntax</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{em.movie-title title}}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch &lt;em class="movie-title"&gt;Inception&lt;/em&gt;.</span>
+<span class="r-in"><span><span class="co"># Or use the inline transformer syntax, which requires</span></span></span>
+<span class="r-in"><span><span class="co"># one more level of embracing. The `!!` tells `epoxy_html()`</span></span></span>
+<span class="r-in"><span><span class="co"># that this field contains HTML that doesn't need to be escaped.</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{!! {{.or {{.emph title}} }} }}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch &lt;em&gt;Back to the Future Part II&lt;/em&gt;, &lt;em&gt;The Simpsons Movie&lt;/em&gt;, or &lt;em&gt;Another Year&lt;/em&gt;.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">epoxy_latex</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"I'd be happy to watch &lt;&lt; title| &gt;&gt;."</span>,</span></span>
-<span class="r-in"><span>  .data <span class="op">=</span> <span class="va">movies</span>,</span></span>
-<span class="r-in"><span>  .transformer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"italic"</span>, <span class="st">"collapse"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># epoxy_latex() uses `&lt;&lt; expr &gt;&gt;` for delimiters</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy_latex</span><span class="op">(</span><span class="st">"I'd be happy to watch &lt;&lt;.or &lt;&lt;.emph title &gt;&gt; &gt;&gt;."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch \emph{Back to the Future Part II}, \emph{The Simpsons Movie}, or \emph{Another Year}.</span>
 </code></pre></div>
     </div>
