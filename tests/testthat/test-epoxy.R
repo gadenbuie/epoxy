@@ -221,6 +221,7 @@ test_that("with_epoxy_engine()", {
 test_that("epoxy() and epoxy_mustache() collect remote `tbl_sql` tables", {
 	skip_if_not_installed("dplyr")
 	skip_if_not_installed("dbplyr")
+	skip_if_not_installed("RSQLite")
 
 	# https://dbplyr.tidyverse.org/articles/reprex.html
 	mtcars_db <- dbplyr::memdb_frame(!!!mtcars)
