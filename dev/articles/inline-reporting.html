@@ -333,8 +333,8 @@ structure but for different slices of your data.</p>
 <h3 id="vectorized-inline-reporting-chunks">Vectorized inline reporting chunks<a class="anchor" aria-label="anchor" href="#vectorized-inline-reporting-chunks"></a>
 </h3>
 <p>Suppose we summarize the orange tree growth (normally I would use a
-combination of <code>dplyr::group_by()</code> and
-<code>dplyr::summarize()</code> here.)</p>
+combination of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> and
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">dplyr::summarize()</a></code> here.)</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarize_tree_growth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">tree</span> <span class="op">&lt;-</span> <span class="va">Orange</span><span class="op">[</span><span class="va">Orange</span><span class="op">$</span><span class="va">Tree</span> <span class="op">==</span> <span class="va">tree</span>, <span class="op">]</span></span>
