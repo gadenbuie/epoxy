@@ -87,3 +87,97 @@ describe("epoxy_use_chunk()", {
 		)
 	})
 })
+
+describe("epoxy_use_file()", {
+	template <- test_path("rmds", "use-file_example-1.md")
+	template <- normalizePath(template)
+
+	data1 <- list(one = "first", two = "second", three = "third")
+	data2 <- list(one = "apple", two = "banana", three = "mango")
+
+	it("reads from a file", {
+		expect_equal(
+			epoxy_use_file(data1, template),
+			knitr::asis_output("first then second then third")
+		)
+		expect_equal(
+			epoxy_use_file(data2, template),
+			knitr::asis_output("apple then banana then mango")
+		)
+	})
+
+	it("works inside an Rmd", {
+		rmd_res <- render_basic_rmd(
+			"```{r echo=FALSE}",
+			"epoxy_use_file(data1, template)",
+			"```"
+		)
+
+		expect_equal(
+			rmd_res,
+			"first then second then third"
+		)
+
+		rmd_res2 <- render_basic_rmd(
+			"```{r echo=FALSE, .data = data2}",
+			"epoxy_use_file(file = template)",
+			"```"
+		)
+
+		expect_equal(
+			rmd_res2,
+			"apple then banana then mango"
+		)
+	})
+
+	it("allows .data to be defined in the yaml header", {
+		template <- test_path("rmds", "use-file_example-2.md")
+
+		expect_equal(
+			epoxy_use_file(file = template),
+			knitr::asis_output("one fish, two fish, red fish, blue fish")
+		)
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(one = "one", two = "two", three = "red", four = "blue"),
+				file = template
+			),
+			knitr::asis_output("one, two, red, blue")
+		)
+	})
+
+	it("sets html engine via engine yaml option", {
+		template_html <- test_path("rmds", "use-file_html.md")
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(
+					link = "https://example.com",
+					text = "example link"
+				),
+				file = template_html
+			),
+			knitr::asis_output("<a href=\"https://example.com\">example link</a>")
+		)
+	})
+
+	it("sets latex engine via engine yaml option", {
+		template_latex <- test_path("rmds", "use-file_latex.md")
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(
+					link = "https://example.com",
+					text = "example link"
+				),
+				file = template_latex
+			),
+			knitr::asis_output("\\href{https://example.com}{example link}")
+		)
+	})
+
+	it("errors when the file doesn't exist", {
+		expect_error(epoxy_use_file(file = "bad-file.md"))
+	})
+})

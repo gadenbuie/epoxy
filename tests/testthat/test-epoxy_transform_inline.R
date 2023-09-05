@@ -219,3 +219,18 @@ describe("epoxy internal inline formatters", {
 		)
 	})
 })
+
+test_that("detect_wrapped_delims", {
+	expect_true(detect_wrapped_delims("{{ foo }}", open = "{{", close = "}}"))
+	expect_true(detect_wrapped_delims("[x]", open = "[", close = "]"))
+	expect_true(detect_wrapped_delims("{x]", open = "{", close = "]"))
+	expect_true(detect_wrapped_delims("{x}", open = "{", close = "}"))
+
+	expect_false(detect_wrapped_delims("{{ foo }}", open = "[", close = "]"))
+	expect_false(detect_wrapped_delims("[x]", open = "{", close = "}"))
+	expect_false(detect_wrapped_delims("x"))
+
+	expect_false(detect_wrapped_delims("{{ x }}", open = "{", close = "}"))
+	expect_false(detect_wrapped_delims("{{ x }", open = "{", close = "}"))
+	expect_false(detect_wrapped_delims("{ x }}", open = "{", close = "}"))
+})

@@ -249,6 +249,68 @@ test_that("with_epoxy_engine()", {
 	expect_null(engine_current())
 })
 
+describe("epoxy() with various delimiters", {
+	one <- "apple"
+	two <- "banana"
+	three <- "mango"
+
+	it("works with { }", {
+		expect_equal(
+			epoxy("{one} and {two} or {three}"),
+			glue("{one} and {two} or {three}")
+		)
+
+		expect_equal(
+			epoxy("{one} and {{two}} or {three}"),
+			glue("{one} and {{two}} or {three}")
+		)
+	})
+
+	it("works with {{ }}", {
+		expect_equal(
+			epoxy("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}"),
+			glue("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}")
+		)
+
+	})
+
+	it("works with [ ]", {
+		expect_equal(
+			epoxy("[one] and [two] or [three]", .open = "[", .close = "]"),
+			glue("[one] and [two] or [three]", .open = "[", .close = "]")
+		)
+
+		expect_equal(
+			epoxy("[one] and [[two]] or [three]", .open = "[", .close = "]"),
+			glue("[one] and [[two]] or [three]", .open = "[", .close = "]")
+		)
+	})
+
+	it("works with [[ ]]", {
+		expect_equal(
+			epoxy("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]"),
+			glue("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]")
+		)
+
+		expect_equal(
+			epoxy("[[one]] and [[two]] or [[three]]", .open = "[[", .close = "]]"),
+			glue("[[one]] and [[two]] or [[three]]", .open = "[[", .close = "]]")
+		)
+	})
+
+	it("works with < > and << >>", {
+		expect_equal(
+			epoxy("<one> and <<two>> or <three>", .open = "<", .close = ">"),
+			glue("<one> and <<two>> or <three>", .open = "<", .close = ">")
+		)
+
+		expect_equal(
+			epoxy("<<one>> and <<two>> or <<three>>", .open = "<<", .close = ">>"),
+			glue("<<one>> and <<two>> or <<three>>", .open = "<<", .close = ">>")
+		)
+	})
+})
+
 test_that("epoxy() and epoxy_mustache() collect remote `tbl_sql` tables", {
 	skip_if_not_installed("dplyr")
 	skip_if_not_installed("dbplyr")

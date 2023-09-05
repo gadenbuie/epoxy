@@ -15,9 +15,13 @@
   provides aliases for whisker and mustache in all places, so you can use
   whichever name resonates with you. (#103)
 
-* New `epoxy_use_chunk()` allows you to re-use an `epoxy`, `epoxy_html` or other
-  epoxy-provided knitr chunk as a template. In most cases, you'll want to use
-  this function to re-use the template chunk with new data. (#106)
+* New `epoxy_use_chunk()` and `epoxy_use_file()` allow you to re-use an
+  `epoxy()`, `epoxy_html()` or other epoxy-provided knitr chunk or file as a
+  template. `epoxy_use_chunk()` lets you re-use a template chunk with new data,
+  and `epoxy_use_file()` lets you repeatedly use a template stored in a file.
+  Both function also re-use the options from the template chunk or the options
+  set in the YAML from matter of the template file. See `?epoxy_use` for more
+  details about how options for both functions are determined. (#106, #116)
 
 * **Breaking change:** now that the `whisker` engine is powered by
   `epoxy_mustache()`, there have been a few small changes. In particular, if you
@@ -44,14 +48,17 @@
 * The `.titlecase` inline transformer now coerces inputs to character with
   `as.character()` before applying `tools::toTitleCase()`, since `toTitleCase()`
   will throw an error for non-character inputs. (#112)
-  
+
 * `epoxy()`, and by extension the LaTex and HTML counterparts, and all `epoxy_*`
   knitr engines gain a `.collapse` argument to determine how a vector of
   epoxy-transformed templates should be collapsed. The default is `NULL`, which
   means that the output is returned as a vector. This argument is also useful in
   `epoxy_use_chunk()` and for knitr chunks being used as a vectorized template.
   (#115)
-  
+
+* Fixed an issue with `epoxy_inline_transform()` when used with custom
+  delimiters (#116).
+
 * `epoxy()`, `epoxy_html()`, `epoxy_latex()` and `epoxy_mustache()` (and their
   related knitr engines) will all collect remote `tbl_sql` tables before
   evaluation. This makes it much easier to pass data from a remote database

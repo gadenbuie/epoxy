@@ -221,17 +221,41 @@ epoxy_transform_inline <- function(
 	self
 }
 
-detect_wrapped_delims <- function(text) {
+detect_wrapped_delims <- function(text, open = NULL, close = NULL) {
 	delims <- getOption("epoxy:::private", list())
-	open <- delims$.open %||% "{"
-	close <- delims$.close %||% "}"
-	open <- gsub("([}{])", "\\\\\\1", open)
-	close <- gsub("([}{])", "\\\\\\1", close)
+	open <- open %||% delims$.open %||% "{"
+	close <- close %||% delims$.close %||% "}"
 
 	text <- trimws(text)
 
-	if (!grepl(paste0("^", open), text)) return(FALSE)
-	if (!grepl(paste0(close, "$"), text)) return(FALSE)
+	first_open <- function(open) {
+		gregexpr(open, text, fixed = TRUE)[[1]][[1]]
+	}
+
+	idx_open <- first_open(open)
+	idx_open_escaped <- first_open(strrep(open, 2))
+	if (idx_open == idx_open_escaped || idx_open != 1) {
+		return(FALSE)
+	}
+
+	last_close <- function(close) {
+		idx_close <- gregexpr(close, text, fixed = TRUE)[[1]]
+		idx_close[[length(idx_close)]]
+	}
+
+	idx_close <- last_close(close)
+	idx_close_escaped <- last_close(strrep(close, 2))
+
+	idx_final_close <- nchar(text) - nchar(close) + 1
+	idx_final_escaped <- nchar(text) - (nchar(close) * 2) + 1
+
+	ends_with_close <- idx_close == idx_final_close
+	ends_with_escaped <- idx_close_escaped == idx_final_escaped
+
+	if (ends_with_escaped || !ends_with_close) {
+		return(FALSE)
+	}
+
 	TRUE
 }
 
