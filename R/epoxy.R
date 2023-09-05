@@ -44,6 +44,8 @@
 #'   around the template variable or expression. Doubling the full delimiter
 #'   escapes it.
 ####
+#' @param .collapse A character string used to collapse a vector result into a
+#'   single value. If `NULL` (the default), the result is not collapsed.
 #' @inheritParams glue::glue
 #'
 #' @return Returns a transformed string, using `glue::glue()` but with the
@@ -72,6 +74,7 @@ epoxy <- function(
 	.literal = FALSE,
 	.trim = FALSE,
 	.transformer = NULL,
+	.collapse = NULL,
 	.style = lifecycle::deprecated()
 ) {
 	if (lifecycle::is_present(.style)) {
@@ -101,7 +104,7 @@ epoxy <- function(
 	old_opts <- options("epoxy:::private" = list(.open = .open, .close = .close))
 	on.exit(old_opts, add = TRUE)
 
-	glue_data(
+	res <- glue_data(
 		.x = .data,
 		...,
 		.sep     = .sep,
@@ -115,6 +118,12 @@ epoxy <- function(
 		.trim    = .trim,
 		.transformer = epoxy_options_get_transformer(opts_transformer)
 	)
+
+	if (is.null(.collapse) || length(res) <= 1) {
+		return(res)
+	}
+
+	glue_collapse(res, sep = .collapse)
 }
 
 
@@ -132,7 +141,8 @@ epoxy_html <- function(
 	.comment = "",
 	.literal = FALSE,
 	.trim = FALSE,
-	.transformer = NULL
+	.transformer = NULL,
+	.collapse = NULL
 ) {
 	res <-
 		with_epoxy_engine(
@@ -149,7 +159,8 @@ epoxy_html <- function(
 				.comment = .comment,
 				.literal = .literal,
 				.trim = .trim,
-				.transformer = .transformer
+				.transformer = .transformer,
+				.collapse = .collapse
 			)
 		)
 	html_chr(res)
@@ -170,7 +181,8 @@ epoxy_latex <- function(
 	.comment = "",
 	.literal = FALSE,
 	.trim = FALSE,
-	.transformer = NULL
+	.transformer = NULL,
+	.collapse = NULL
 ) {
 	with_epoxy_engine(
 		"latex",
@@ -186,7 +198,8 @@ epoxy_latex <- function(
 			.comment = .comment,
 			.literal = .literal,
 			.trim = .trim,
-			.transformer = .transformer
+			.transformer = .transformer,
+			.collapse = .collapse
 		)
 	)
 }
