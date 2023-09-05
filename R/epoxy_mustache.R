@@ -61,6 +61,7 @@ epoxy_mustache <- function(
 	template <- paste(dots$unnamed, collapse = .sep)
 
 	is_data_asis <- inherits(.data, "AsIs")
+	.data <- maybe_collect(.data)
 
 	whisker_render <- purrr::partial(
 		whisker::whisker.render,

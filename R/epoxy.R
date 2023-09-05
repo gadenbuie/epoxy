@@ -89,6 +89,7 @@ epoxy <- function(
 
 	glue_env <- .envir
 	if (!is.null(.data)) {
+		.data <- maybe_collect(.data)
 		glue_env <- new.env(parent = .envir)
 		assign("$", epoxy_data_subset, envir = glue_env)
 		assign(".data", .data, envir = glue_env)
@@ -208,6 +209,12 @@ with_epoxy_engine <- function(engine, expr) {
 		list(epoxy.engine = engine_validate_alias(engine)),
 		expr
 	)
+}
+
+maybe_collect <- function(x) {
+	if (!inherits(x, "tbl_sql")) return(x)
+	if (!requireNamespace("dplyr", quietly = TRUE)) return(x)
+	dplyr::collect(x)
 }
 
 epoxy_data_subset <- function(x, y) {
