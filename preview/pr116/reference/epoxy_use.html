@@ -146,6 +146,10 @@ it.</p></dd>
 around the template variable or expression. Doubling the full delimiter
 escapes it.</p></dd>
 
+    <dt><code>.collapse</code></dt>
+<dd><p>A character string used to collapse a vector result into a
+single value. If <code>NULL</code> (the default), the result is not collapsed.</p></dd>
+
     <dt><code>.sep</code></dt>
 <dd><p>[<code>character(1)</code>: ‘""’]<br> Separator used to separate elements.</p></dd>
 
@@ -226,6 +230,16 @@ as regular text rather than being displayed as code results.</p>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">`r epoxy_use_chunk(bechdel[2, ], "movie-release")`</span>.</span></code></pre><p></p></div>
 <p>It's hard to believe that
 <em>Back to the Future Part II</em> was released in 1989.</p>
+<p>The same template could also be stored in a file, e.g. <code>movie-release.md</code>:</p>
+<p></p><div class="sourceCode markdown"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> epoxy</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>{.emph title} was released in {year}.</span></code></pre><p></p></div>
+<p>The YAML front matter is used in template files to set options for the
+template. You can use the <code>engine</code> option to choose the epoxy function to be
+applied to the template, e.g. <code>engine: epoxy_html</code> or <code>engine: epoxy_latex</code>.
+By default, <code>engine: epoxy</code> is assumed unless otherwise specified.</p>
     </div>
     <div class="section level2">
     <h2 id="template-options">Template Options<a class="anchor" aria-label="anchor" href="#template-options"></a></h2>

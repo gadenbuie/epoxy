@@ -197,7 +197,7 @@ results by accessing the list elements by name with <code>$</code>.</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Read more about [`knitr::knit()`]({knitted$doc_url}).</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2023-09-04 from <code>inline-reporting.Rmd</code>
+<p>Report prepared on 2023-09-05 from <code>inline-reporting.Rmd</code>
 with knitr version 1.43 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>This is still essentially equivalent to R Markdown’s inline R chunks.
@@ -210,7 +210,7 @@ list directly without having to use <code>$</code>.</p>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>Read more about [`knitr::knit()`]({doc_url}).</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2023-09-04 from <code>inline-reporting.Rmd</code>
+<p>Report prepared on 2023-09-05 from <code>inline-reporting.Rmd</code>
 with knitr version 1.43 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>Note that we can still have arbitrary R code in epoxy inline
@@ -332,8 +332,8 @@ structure but for different slices of your data.</p>
 <h3 id="vectorized-inline-reporting-chunks">Vectorized inline reporting chunks<a class="anchor" aria-label="anchor" href="#vectorized-inline-reporting-chunks"></a>
 </h3>
 <p>Suppose we summarize the orange tree growth (normally I would use a
-combination of <code>dplyr::group_by()</code> and
-<code>dplyr::summarize()</code> here.)</p>
+combination of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> and
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">dplyr::summarize()</a></code> here.)</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarize_tree_growth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">tree</span> <span class="op">&lt;-</span> <span class="va">Orange</span><span class="op">[</span><span class="va">Orange</span><span class="op">$</span><span class="va">Tree</span> <span class="op">==</span> <span class="va">tree</span>, <span class="op">]</span></span>
