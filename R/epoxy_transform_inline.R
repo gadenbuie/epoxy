@@ -383,7 +383,7 @@ roxy_inline_params <- function() {
 		}
 		# default is a function call, maybe with arguments
 		link <- sub("\\(.*\\)$", "", expr)
-		return(sprintf("[%s][%s]", expr, link))
+		return(sprintf("[`%s`][%s]", expr, link))
 	})
 
 	extras <- epoxy_inline_aliases
