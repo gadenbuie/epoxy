@@ -217,3 +217,21 @@ test_that("with_epoxy_engine()", {
 	expect_equal(with_epoxy_engine("latex", engine_current()), "latex")
 	expect_null(engine_current())
 })
+
+test_that("epoxy() collects remote tables when they're `tbl_sql` classed", {
+	skip_if_not_installed("dplyr")
+	skip_if_not_installed("dbplyr")
+
+	# https://dbplyr.tidyverse.org/articles/reprex.html
+	mtcars_db <- dbplyr::memdb_frame(!!!mtcars)
+	mtcars_row <- dplyr::filter(mtcars_db, cyl == 4, gear == 4, disp > 145)
+
+	expect_equal(
+		epoxy(
+			"The car with {gear} gears, weighing {wt} tons, ",
+			"and with {hp} horsepower gets {mpg} mpg.",
+			.data = mtcars_row
+		),
+		"The car with 4 gears, weighing 3.19 tons, and with 62 horsepower gets 24.4 mpg."
+	)
+})

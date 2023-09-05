@@ -33,7 +33,9 @@ Imports:
 Suggests:
     cleanrmd,
     commonmark,
+    dbplyr,
     debugme,
+    dplyr,
     pandoc,
     shiny,
     shinytest2,
