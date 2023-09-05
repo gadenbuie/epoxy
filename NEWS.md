@@ -49,8 +49,20 @@
   `as.character()` before applying `tools::toTitleCase()`, since `toTitleCase()`
   will throw an error for non-character inputs. (#112)
 
+* `epoxy()`, and by extension the LaTex and HTML counterparts, and all `epoxy_*`
+  knitr engines gain a `.collapse` argument to determine how a vector of
+  epoxy-transformed templates should be collapsed. The default is `NULL`, which
+  means that the output is returned as a vector. This argument is also useful in
+  `epoxy_use_chunk()` and for knitr chunks being used as a vectorized template.
+  (#115)
+
 * Fixed an issue with `epoxy_inline_transform()` when used with custom
   delimiters (#116).
+
+* `epoxy()`, `epoxy_html()`, `epoxy_latex()` and `epoxy_mustache()` (and their
+  related knitr engines) will all collect remote `tbl_sql` tables before
+  evaluation. This makes it much easier to pass data from a remote database
+  using `{dplyr}` and `{dbplyr}`. (#117)
 
 # epoxy 0.1.1
 

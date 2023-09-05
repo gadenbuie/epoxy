@@ -39,6 +39,8 @@ it.}
     \item{\code{.close}}{[\code{character(1)}: \sQuote{\\\}}]\cr The closing delimiter
 around the template variable or expression. Doubling the full delimiter
 escapes it.}
+    \item{\code{.collapse}}{A character string used to collapse a vector result into a
+single value. If \code{NULL} (the default), the result is not collapsed.}
     \item{\code{.sep}}{[\code{character(1)}: \sQuote{""}]\cr Separator used to separate elements.}
     \item{\code{.envir}}{[\code{environment}: \code{parent.frame()}]\cr Environment to evaluate each expression in. Expressions are
 evaluated from left to right. If \code{.x} is an environment, the expressions are

@@ -128,6 +128,7 @@ eval_epoxy_engine <- function(fn, code, options) {
 	defaults <- defaults[setdiff(names(defaults), exclude)]
 	defaults <- lapply(defaults, rlang::eval_bare, env = environment(fn))
 	defaults$.envir <- knitr::knit_global()
+	defaults$.collapse  <- "\n"
 
 	chunk_opt_names <- c("data", ".data", names(defaults))
 	chunk_opts <- options[intersect(chunk_opt_names, names(options))]
@@ -137,8 +138,7 @@ eval_epoxy_engine <- function(fn, code, options) {
 	args <- purrr::list_assign(defaults, !!!chunk_opts)
 	args$.transformer <- epoxy_options_get_transformer(options)
 
-	out <- rlang::exec(fn, code, !!!args)
-	glue_collapse(out, sep = "\n")
+	rlang::exec(fn, code, !!!args)
 }
 
 knitr_engine_epoxy <- function(options) {

@@ -18,6 +18,37 @@ test_that("epoxy .data pronoun", {
 	)
 })
 
+test_that("epoxy(.collapse =)", {
+	expect_equal(
+		epoxy("{letters[1:3]}", .collapse = ", "),
+		"a, b, c"
+	)
+
+	expect_equal(
+		epoxy_latex("<<letters[1:3]>>", .collapse = " \\middot "),
+		"a \\middot b \\middot c"
+	)
+
+	expect_equal(
+		epoxy_html(
+			"{{values}}",
+			values = letters[1:3],
+			.collapse = "<br>"
+		),
+		"a<br>b<br>c"
+	)
+
+	expect_equal(
+		epoxy_html(
+			"{{li values}}",
+			values = letters[1:3],
+			# inline html tranformers pre-collapse
+			.collapse = "<br>"
+		),
+		"<li>a</li><li>b</li><li>c</li>"
+	)
+})
+
 test_that("epoxy_data_subset()", {
 	nested <- list(
 		outer = list(
@@ -278,4 +309,33 @@ describe("epoxy() with various delimiters", {
 			glue("<<one>> and <<two>> or <<three>>", .open = "<<", .close = ">>")
 		)
 	})
+})
+
+test_that("epoxy() and epoxy_mustache() collect remote `tbl_sql` tables", {
+	skip_if_not_installed("dplyr")
+	skip_if_not_installed("dbplyr")
+	skip_if_not_installed("RSQLite")
+
+	# https://dbplyr.tidyverse.org/articles/reprex.html
+	mtcars_db <- dbplyr::memdb_frame(!!!mtcars)
+	mtcars_row <- dplyr::filter(mtcars_db, cyl == 4, gear == 4, disp > 145)
+
+	expect_equal(
+		epoxy(
+			"The car with {gear} gears, weighing {wt} tons, ",
+			"and with {hp} horsepower gets {mpg} mpg.",
+			.data = mtcars_row
+		),
+		"The car with 4 gears, weighing 3.19 tons, and with 62 horsepower gets 24.4 mpg."
+	)
+
+	expect_equal(
+		epoxy_mustache(
+			"The car with {{gear}} gears, weighing {{wt}} tons, ",
+			"and with {{hp}} horsepower gets {{mpg}} mpg.",
+			.data = mtcars_row,
+			.sep = ""
+		),
+		"The car with 4 gears, weighing 3.19 tons, and with 62 horsepower gets 24.4 mpg."
+	)
 })
