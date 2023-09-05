@@ -44,7 +44,7 @@ VignetteBuilder:
     cleanrmd,
     knitr,
     rmarkdown
-Config/Needs/rcmdcheck: rstudio/chromote
+Config/Needs/rcmdcheck: RSQLite, rstudio/chromote
 Config/Needs/website: rstudio/rmarkdown, gadenbuie/grkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
