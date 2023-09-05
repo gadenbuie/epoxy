@@ -19,6 +19,7 @@ epoxy(
   .literal = FALSE,
   .trim = FALSE,
   .transformer = NULL,
+  .collapse = NULL,
   .style = lifecycle::deprecated()
 )
 
@@ -34,7 +35,8 @@ epoxy_html(
   .comment = "",
   .literal = FALSE,
   .trim = FALSE,
-  .transformer = NULL
+  .transformer = NULL,
+  .collapse = NULL
 )
 
 epoxy_latex(
@@ -49,7 +51,8 @@ epoxy_latex(
   .comment = "",
   .literal = FALSE,
   .trim = FALSE,
-  .transformer = NULL
+  .transformer = NULL,
+  .collapse = NULL
 )
 }
 \arguments{
@@ -102,6 +105,9 @@ names, e.g. \code{c("bold", "collapse")} or a list of epoxy transformers, e.g.
 In \pkg{epoxy}, you'll most likely want to use the defaults or consult
 \code{\link[=epoxy_transform]{epoxy_transform()}} for more information. See also \code{\link[glue:glue]{glue::glue()}} for more
 information on transformers.}
+
+\item{.collapse}{A character string used to collapse a vector result into a
+single value. If \code{NULL} (the default), the result is not collapsed.}
 
 \item{.style}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.transformer}
 instead.}
