@@ -45,6 +45,11 @@
   `as.character()` before applying `tools::toTitleCase()`, since `toTitleCase()`
   will throw an error for non-character inputs. (#112)
 
+* `epoxy()`, `epoxy_html()`, `epoxy_latex()` and `epoxy_mustache()` (and their
+  related knitr engines) will all collect remote `tbl_sql` tables before
+  evaluation. This makes it much easier to pass data from a remote database
+  using `{dplyr}` and `{dbplyr}`. (#117)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
