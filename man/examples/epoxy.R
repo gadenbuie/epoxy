@@ -26,10 +26,8 @@ epoxy("The budget for {.emph title} was {.dollar budget}.", .data = movie)
 epoxy_html("I'd be happy to watch {{ title }}.", .data = movie)
 # It also supports an HTML transformer syntax
 epoxy_html("I'd be happy to watch {{em.movie-title title}}.", .data = movie)
-# Or use the inline transformer syntax, which requires
-# one more level of embracing. The `!!` tells `epoxy_html()`
-# that this field contains HTML that doesn't need to be escaped.
-epoxy_html("I'd be happy to watch {{!! {{.or {{.emph title}} }} }}.", .data = movies)
+# Or use the inline transformer syntax, which uses `@` instead of `.` in HTML
+epoxy_html("I'd be happy to watch {{@or {{@emph title}} }}.", .data = movies)
 
 # epoxy_latex() uses `<< expr >>` for delimiters
 epoxy_latex("I'd be happy to watch <<.or <<.emph title >> >>.", .data = movies)

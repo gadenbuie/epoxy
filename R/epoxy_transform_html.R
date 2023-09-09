@@ -90,6 +90,11 @@ epoxy_transform_html <- function(
 ) {
 	function(text, envir) {
 		'!DEBUG html {text: "`text`"}'
+
+		if (grepl(epoxy_transform_inline_regex("@"), text, perl = TRUE)) {
+			return(transformer(text, envir))
+		}
+
 		markup <- parse_html_markup(text)
 
 		text <- transformer(markup$item, envir)

@@ -133,6 +133,22 @@ describe("epoxy_transform_html()", {
 			html_chr("<mark><i>italic</i></mark>")
 		)
 	})
+
+	it("delegates to `transformer` if the text starts with @", {
+		expect_equal(
+			epoxy_transform_html(
+				transformer = function(text, ...) "PASS"
+			)("@thing x", env),
+			"PASS"
+		)
+
+		expect_equal(
+			epoxy_transform_html(
+				transformer = function(text, ...) "FAIL"
+			)(".thing x", env),
+			html_chr('<span class="thing">FAIL</span>')
+		)
+	})
 })
 
 describe("parse_html_markup()", {

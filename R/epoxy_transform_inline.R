@@ -153,7 +153,7 @@ epoxy_transform_inline <- function(
 		'!DEBUG inline {text: "`text`"}'
 
 		# https://github.com/r-lib/cli/blob/8d8a211c/R/inline.R#L241
-		inline_regex <- "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
+		inline_regex <- epoxy_transform_inline_regex()
 
 		if (!grepl(inline_regex, text, perl = TRUE)) {
 			"!DEBUG inline regex unmatched"
@@ -219,6 +219,12 @@ epoxy_transform_inline <- function(
 	}
 
 	self
+}
+
+epoxy_transform_inline_regex <- function(
+	prefix = engine_pick(".", html = ".@")
+) {
+	sprintf("(?s)^[%s]([-[:alnum:]_]+)[[:space:]]+(.*)", prefix)
 }
 
 detect_wrapped_delims <- function(text, open = NULL, close = NULL) {
