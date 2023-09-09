@@ -322,10 +322,8 @@ need epoxy's inline formatting syntax.</p></li>
 <span class="r-in"><span><span class="co"># It also supports an HTML transformer syntax</span></span></span>
 <span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{em.movie-title title}}."</span>, .data <span class="op">=</span> <span class="va">movie</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch &lt;em class="movie-title"&gt;Inception&lt;/em&gt;.</span>
-<span class="r-in"><span><span class="co"># Or use the inline transformer syntax, which requires</span></span></span>
-<span class="r-in"><span><span class="co"># one more level of embracing. The `!!` tells `epoxy_html()`</span></span></span>
-<span class="r-in"><span><span class="co"># that this field contains HTML that doesn't need to be escaped.</span></span></span>
-<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{!! {{.or {{.emph title}} }} }}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Or use the inline transformer syntax, which uses `@` instead of `.` in HTML</span></span></span>
+<span class="r-in"><span><span class="fu">epoxy_html</span><span class="op">(</span><span class="st">"I'd be happy to watch {{@or {{@emph title}} }}."</span>, .data <span class="op">=</span> <span class="va">movies</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I'd be happy to watch &lt;em&gt;Back to the Future Part II&lt;/em&gt;, &lt;em&gt;The Simpsons Movie&lt;/em&gt;, or &lt;em&gt;Another Year&lt;/em&gt;.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># epoxy_latex() uses `&lt;&lt; expr &gt;&gt;` for delimiters</span></span></span>

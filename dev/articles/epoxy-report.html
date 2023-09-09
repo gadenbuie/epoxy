@@ -434,26 +434,23 @@ manufacturer and model in <code>&lt;strong&gt;</code> and
   &lt;/li&gt;
 ```
 &lt;/ul&gt;</code></pre>
-<p>Because <code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code> is applied first,
+<p>Because the <code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code> transformer uses
+<code>.&lt;class&gt;</code> to create
+<code>&lt;span class="class"&gt;</code> elements,
+<code><a href="../reference/epoxy.html">epoxy_html()</a></code> also recognizes <code>@&lt;inline&gt;</code>
+to access the inline transformers. So
 <code>{{.uppercase manufacturer}}</code> is assumed to be a CSS class
 and not an inline transformer class.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>```{epoxy_html .data = mpg[1,]}</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>{{.uppercase manufacturer}}</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>{{@uppercase manufacturer}}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <pre><code>```{=html}
 &lt;span class="uppercase"&gt;Chevrolet&lt;/span&gt;
+
+CHEVROLET
 ```</code></pre>
-<p>You can access the inline formatter by adding one additional layer of
-<code>{{ }}</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>```{epoxy_html .data = mpg[1,]}</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>{{span {{.uppercase manufacturer}} }}</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
-<pre><code>```{=html}
-&lt;span&gt;CHEVROLET&lt;/span&gt;
-```</code></pre>
-<p>This works even if you don’t use the HTML formatter. In the last
-example, <code>{{ {{.uppercase manufacturer }} }}</code> would produce
-<code>CHEVROLET</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="raw-latex-chunks">Raw LaTeX chunks<a class="anchor" aria-label="anchor" href="#raw-latex-chunks"></a>
@@ -461,11 +458,11 @@ example, <code>{{ {{.uppercase manufacturer }} }}</code> would produce
 <p>Similarly, you can also use <code>epoxy_latex</code> chunks to epoxy
 R and LaTeX together. Wrap expressions in these types of chunks with
 <code>&lt;&lt;</code> and <code>&gt;&gt;</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>\begin{itemize}</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_latex, .data = mpg}</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>\item &lt;&lt;.strong manufacturer&gt;&gt; &lt;&lt;.emph model&gt;&gt; gets &lt;&lt;cty&gt;&gt; city and &lt;&lt;hwy&gt;&gt; highway miles per gallon.</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>\end{itemize}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>\begin{itemize}</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_latex, .data = mpg}</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>\item &lt;&lt;.strong manufacturer&gt;&gt; &lt;&lt;.emph model&gt;&gt; gets &lt;&lt;cty&gt;&gt; city and &lt;&lt;hwy&gt;&gt; highway miles per gallon.</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>\end{itemize}</span></code></pre></div>
 <p>In R Markdown knitting into a LaTeX output, this renders as:</p>
 <pre><code>\begin{itemize}
 ```{=latex}
