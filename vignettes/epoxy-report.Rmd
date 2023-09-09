@@ -274,39 +274,27 @@ each with a custom class.
 </ul>
 ````
 
-Because `epoxy_transform_html()` is applied first,
-`{{.uppercase manufacturer}}` is assumed to be a CSS class
+Because the `epoxy_transform_html()` transformer uses `.<class>`
+to create `<span class="class">` elements,
+`epoxy_html()` also recognizes `@<inline>` to access the inline transformers.
+So `{{.uppercase manufacturer}}` is assumed to be a CSS class
 and not an inline transformer class.
 
 ````{verbatim}
 ```{epoxy_html .data = mpg[1,]}
 {{.uppercase manufacturer}}
+
+{{@uppercase manufacturer}}
 ```
 ````
 
 ````
 ```{epoxy_html .data = mpg[1,]}
 {{.uppercase manufacturer}}
+
+{{@uppercase manufacturer}}
 ```
 ````
-
-You can access the inline formatter by adding one additional layer of `{{ }}`.
-
-````{verbatim}
-```{epoxy_html .data = mpg[1,]}
-{{span {{.uppercase manufacturer}} }}
-```
-````
-
-````
-```{epoxy_html .data = mpg[1,]}
-{{span {{.uppercase manufacturer}} }}
-```
-````
-
-This works even if you don't use the HTML formatter.
-In the last example,
-`{{ {{.uppercase manufacturer }} }}` would produce `CHEVROLET`.
 
 ### Raw LaTeX chunks
 

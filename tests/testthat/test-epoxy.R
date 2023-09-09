@@ -114,6 +114,25 @@ describe("epoxy_html()", {
 			html_chr(glue('<span class="and">a</span>'))
 		)
 	})
+
+	it("uses @ to jump to epoxy_transform_inline", {
+		expect_equal(
+			epoxy_html("{{@and letters[1:3] }}"),
+			html_chr(glue(and::and(letters[1:3])))
+		)
+
+		# outer dots go to html transformer
+		expect_equal(
+			epoxy_html("{{.and {{@and letters[1:3] }} }}"),
+			html_chr(glue('<span class="and">{and::and(letters[1:3])}</span>'))
+		)
+
+		# inner dots are now in the inline transformer
+		expect_equal(
+			epoxy_html("{{@and {{.uppercase letters[1:3] }} }}"),
+			glue(and::and(LETTERS[1:3]))
+		)
+	})
 })
 
 describe("epoxy_transform_set()", {

@@ -64,6 +64,13 @@
   evaluation. This makes it much easier to pass data from a remote database
   using `{dplyr}` and `{dbplyr}`. (#117)
 
+* `epoxy_html()` now supports inline transformations prefixed with `@` instead
+  of `.`, e.g. `@strong` instead of `.strong`. Previously, you would have to
+  place the inline transformer in a nested `{{ }}` block, e.g.
+  `{{ {{ .strong expr }} }}`, but now you only need `{{@strong expr}}`. To combine the HTML transformer (`epoxy_transform_html()`) with the inline
+  transformer, you still need to nest: `{{.text-muted {{@strong expr}}}}`
+  creates `<span class="text-muted"><strong>{expr}</strong></span>`. (#120)
+
 # epoxy 0.1.1
 
 * `epoxy_transform_html()` now (again) returns a collapsed character string for
