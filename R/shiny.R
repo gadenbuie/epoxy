@@ -241,7 +241,7 @@ html_dependency_hint_css <- function() {
 #'   [commonmark::markdown_html()].
 #' @inheritParams ui_epoxy_html
 #'
-#' @examplesIf rlang::is_installed("shiny")
+#' @examplesIf rlang::is_installed("shiny") && rlang::is_interactive()
 #' library(shiny)
 #'
 #' # Shiny epoxy template functions don't support inline transformations,
