@@ -157,7 +157,6 @@ epoxy_transform_set <- function(
 
 	if (length(inlines)) {
 		for (eng in engine) {
-			# TODO: make it possible to reset inline transformer settings
 			.globals[["inline"]][[eng]] <-
 				purrr::list_assign(.globals[["inline"]][[eng]], !!!inlines)
 		}
