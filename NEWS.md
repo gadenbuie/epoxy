@@ -1,4 +1,4 @@
-# epoxy (development version)
+# epoxy 1.0.0
 
 * `epoxy()` now adds a `.data` pronoun that allows you to refer to the list or
   data frame passed into either the `.data` argument of `epoxy()` or the `data`
