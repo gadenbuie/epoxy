@@ -1,6 +1,6 @@
 /* globals Shiny,$,CustomEvent */
 
-class EpoxyHTML extends HTMLElement {
+class EpoxyHTML extends window.HTMLElement {
   static is_set_global_event_listener = false
 
   last = null
@@ -47,7 +47,7 @@ class EpoxyHTML extends HTMLElement {
     return true
   }
 
-  _deepEqual (x, y) {
+  _deep_equal (x, y) {
     if (x === y) {
       return true
     }
@@ -69,7 +69,7 @@ class EpoxyHTML extends HTMLElement {
     }
 
     for (const key of keysX) {
-      if (!keysY.includes(key) || !this._deepEqual(x[key], y[key])) {
+      if (!keysY.includes(key) || !this._deep_equal(x[key], y[key])) {
         return false
       }
     }
@@ -84,14 +84,14 @@ class EpoxyHTML extends HTMLElement {
     )
   }
 
-  _eventUpdated (key, value) {
+  _event_updated (key, value) {
     return new CustomEvent('epoxy-updated', {
       bubbles: true,
       detail: { output: this.id, key, value, outputType: 'html' }
     })
   }
 
-  _eventErrored (key, data) {
+  _event_errored (key, data) {
     return new CustomEvent('epoxy-errored', {
       bubbles: true,
       detail: {
@@ -103,48 +103,50 @@ class EpoxyHTML extends HTMLElement {
     })
   }
 
-  errorClasses = ['epoxy-item__error', 'hint--top-right', 'hint--error']
+  error_classes = ['epoxy-item__error', 'hint--top-right', 'hint--error']
 
-  _clearError (item) {
-    this.errorClasses.forEach(c => item.classList.remove(c))
+  _item_clear_error (item) {
+    this.error_classes.forEach(c => item.classList.remove(c))
     item.removeAttribute('aria-label')
   }
 
-  _showError (item, data) {
+  _item_show_error (item, data) {
     const itemKey = item.dataset.epoxyItem
-    this.errorClasses.forEach(c => item.classList.add(c))
+    this.error_classes.forEach(c => item.classList.add(c))
     this._remove_item_copies(item)
 
-    updateContents(item, item.dataset.epoxyPlaceholder || '')
+    this._item_update_contents(item, item.dataset.epoxyPlaceholder || '')
     item.style.removeProperty('display')
     item.setAttribute('aria-label', data)
-    item.dispatchEvent(this._eventErrored(itemKey, data))
+    item.dispatchEvent(this._event_errored(itemKey, data))
   }
 
-  updateEpoxyValues (data) {
+  _item_update_contents (item, contents) {
+    const itemKey = item.dataset.epoxyItem || item.dataset.epoxyCopy
+    const asHTML = item.dataset.epoxyAsHtml === 'true'
+
+    asHTML ? (item.innerHTML = contents) : (item.textContent = contents)
+    item.dispatchEvent(this._event_updated(itemKey, contents))
+    return item
+  }
+
+  update_epoxy_values (data) {
     const items = this.querySelectorAll('[data-epoxy-item]')
 
     items.forEach(item => {
       item.classList.remove('epoxy-item__placeholder')
       const itemName = item.dataset.epoxyItem
-      const asHTML = item.dataset.epoxyAsHtml === 'true'
-
-      const updateContents = (el, contents) => {
-        asHTML ? (el.innerHTML = contents) : (el.textContent = contents)
-        el.dispatchEvent(this._eventUpdated(itemName, contents))
-        return el
-      }
 
       let itemData = data[itemName]
 
       if (data.__errors__ && data.__errors__.includes(itemName)) {
-        this._showError(item, itemData)
+        this._item_show_error(item, itemData)
         return
       } else {
-        this._clearError(item)
+        this._item_clear_error(item)
       }
 
-      if (this._last && this._deepEqual(itemData, this._last[itemName])) {
+      if (this._last && this._deep_equal(itemData, this._last[itemName])) {
         // don't do anything, the value hasn't changed
         return
       }
@@ -164,12 +166,12 @@ class EpoxyHTML extends HTMLElement {
       }
 
       if (!(itemData instanceof Array)) {
-        updateContents(item, itemData)
+        this._item_update_contents(item, itemData)
         return
       }
 
       // If an array, use the initial item as a pattern
-      updateContents(item, itemData[0])
+      this._item_update_contents(item, itemData[0])
       const itemParent = item.parentElement
       itemData = itemData.slice(1)
 
@@ -178,7 +180,7 @@ class EpoxyHTML extends HTMLElement {
         itemNew.removeAttribute('data-epoxy-item')
         itemNew.dataset.epoxyCopy = itemName
         itemParent.insertAdjacentElement('beforeend', itemNew)
-        updateContents(itemNew, itemDataThis)
+        this._item_update_contents(itemNew, itemDataThis)
       }
     })
 
@@ -187,7 +189,7 @@ class EpoxyHTML extends HTMLElement {
   }
 }
 
-customElements.define('epoxy-html', EpoxyHTML)
+window.customElements.define('epoxy-html', EpoxyHTML)
 
 if (window.Shiny) {
   const epoxyOutputBinding = new Shiny.OutputBinding()
@@ -197,7 +199,7 @@ if (window.Shiny) {
       return $(scope).find('epoxy-html')
     },
     renderValue: function (el, data) {
-      el.updateEpoxyValues(data)
+      el.update_epoxy_values(data)
     },
     renderError: function (el, err) {
       this.clearError(el)
