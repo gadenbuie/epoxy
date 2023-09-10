@@ -111,7 +111,7 @@ markdown to HTML using \code{\link[pandoc:pandoc_convert]{pandoc::pandoc_convert
 available) or \code{\link[commonmark:commonmark]{commonmark::markdown_html()}} otherwise.
 }
 \examples{
-\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(shiny)
 
 # Shiny epoxy template functions don't support inline transformations,
