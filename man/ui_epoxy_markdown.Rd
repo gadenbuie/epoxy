@@ -10,9 +10,9 @@ ui_epoxy_markdown(
   .markdown_fn = NULL,
   .markdown_args = list(),
   .class = NULL,
-  .class_item = NULL,
-  .container = "div",
-  .container_item = "span",
+  .style = NULL,
+  .item_tag = "span",
+  .item_class = NULL,
   .placeholder = "",
   .sep = "",
   .open = "{{",
@@ -22,7 +22,10 @@ ui_epoxy_markdown(
   .literal = FALSE,
   .trim = FALSE,
   .aria_live = c("polite", "off", "assertive"),
-  .aria_atomic = TRUE
+  .aria_atomic = TRUE,
+  .class_item = deprecated(),
+  .container = deprecated(),
+  .container_item = deprecated()
 )
 }
 \arguments{
@@ -40,14 +43,12 @@ otherwise we use \code{\link[commonmark:commonmark]{commonmark::markdown_html()}
 \item{.markdown_args}{A list of arguments to pass to
 \code{\link[commonmark:commonmark]{commonmark::markdown_html()}}.}
 
-\item{.class_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
-\pkg{epoxy} v1.0.0, please use \code{.item_class} instead.}
+\item{.class, .style}{Classes and inline style directives added to the
+\verb{<epoxy-html>} container into which the elements in \code{...} are placed.}
 
-\item{.container}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
-\pkg{epoxy} v1.0.0, where the container is now always \verb{<epoxy-html>}.}
-
-\item{.container_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
-\pkg{epoxy} v1.0.0, please use \code{.item_tag} instead.}
+\item{.item_tag, .item_class}{The HTML element tag name and classes used to
+wrap each template variable. By default, each template is wrapped in a
+\verb{<span>}.}
 
 \item{.placeholder}{Default placeholder if a template variable placeholder
 isn't provided.}
@@ -97,6 +98,15 @@ of the values within change. In other words, set \code{.aria_live = "off"} and
 containers of each region in the app that receives updates.
 \code{ui_epoxy_html()} does targeted updates, changing only the parts of the
 UI that have changed.}
+
+\item{.class_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, please use \code{.item_class} instead.}
+
+\item{.container}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, where the container is now always \verb{<epoxy-html>}.}
+
+\item{.container_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, please use \code{.item_tag} instead.}
 }
 \value{
 An HTML object.

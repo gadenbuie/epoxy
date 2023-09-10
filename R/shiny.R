@@ -367,9 +367,9 @@ ui_epoxy_markdown <- function(
 	.markdown_fn = NULL,
 	.markdown_args = list(),
 	.class = NULL,
-	.class_item = NULL,
-	.container = "div",
-	.container_item = "span",
+	.style = NULL,
+	.item_tag = "span",
+	.item_class = NULL,
 	.placeholder = "",
 	.sep = "",
 	.open = "{{",
@@ -379,7 +379,11 @@ ui_epoxy_markdown <- function(
 	.literal = FALSE,
 	.trim = FALSE,
 	.aria_live = c("polite", "off", "assertive"),
-	.aria_atomic = TRUE
+	.aria_atomic = TRUE,
+	# Deprecated arguments ----
+	.class_item = deprecated(),
+	.container = deprecated(),
+	.container_item = deprecated()
 ) {
 
 	dots <- list_split_named(rlang::dots_list(...))
@@ -411,9 +415,9 @@ ui_epoxy_markdown <- function(
 		htmltools::HTML(html),
 		!!!dots,
 		.class = .class,
-		.class_item = .class_item,
-		.container = .container,
-		.container_item = .container_item,
+		.style = .style,
+		.item_tag = .item_tag,
+		.item_class = .item_class,
 		.placeholder = .placeholder,
 		.sep = .sep,
 		.open = .open,
@@ -423,7 +427,11 @@ ui_epoxy_markdown <- function(
 		.literal = .literal,
 		.trim = .trim,
 		.aria_live = .aria_live,
-		.aria_atomic = .aria_atomic
+		.aria_atomic = .aria_atomic,
+		# Deprecated arguments ----
+		.class_item = .class_item,
+		.container = .container,
+		.container_item = .container_item
 	)
 }
 
@@ -431,7 +439,7 @@ ui_epoxy_markdown <- function(
 #'   alias, please use `ui_epoxy_html()`.
 #' @export
 epoxyHTML <- function(.id, ...) {
-	lifecycle::deprecate_soft(
+	lifecycle::deprecate_warn(
 		"0.1.0",
 		"epoxyHTML()",
 		"ui_epoxy_html()",
