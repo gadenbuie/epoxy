@@ -24,9 +24,14 @@ class EpoxyHTML extends HTMLElement {
     EpoxyHTML.is_set_global_event_listener = true
   }
 
-  static update (data) {
+  static update (data, partial = false) {
     // { [id]: { [itemKey]: value }}
     // { example: { thing: "dolphin", color: "blue", height: 5 }}
+    if (partial) {
+      for (const key of Object.keys(data)) {
+        data[key].__partial = true
+      }
+    }
     const event = new CustomEvent('epoxy-message', { detail: data })
     window.dispatchEvent(event)
   }
