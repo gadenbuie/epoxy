@@ -40,16 +40,14 @@ otherwise we use \code{\link[commonmark:commonmark]{commonmark::markdown_html()}
 \item{.markdown_args}{A list of arguments to pass to
 \code{\link[commonmark:commonmark]{commonmark::markdown_html()}}.}
 
-\item{.class}{Classes added to the output div, in addition to \code{.epoxy-html}}
+\item{.class_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, please use \code{.item_class} instead.}
 
-\item{.class_item}{Classes added to the \code{.container} wrapping each template
-variable.}
+\item{.container}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, where the container is now always \verb{<epoxy-html>}.}
 
-\item{.container}{The name of the HTML element to be used for the output
-element, by default \code{"div"}.}
-
-\item{.container_item}{The name of the HTML element to be used for each
-template item, by default \code{"span"}.}
+\item{.container_item}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in
+\pkg{epoxy} v1.0.0, please use \code{.item_tag} instead.}
 
 \item{.placeholder}{Default placeholder if a template variable placeholder
 isn't provided.}
