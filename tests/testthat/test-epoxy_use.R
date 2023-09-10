@@ -177,7 +177,32 @@ describe("epoxy_use_file()", {
 		)
 	})
 
+	it("works without a yaml header", {
+		template_no_header <- test_path("rmds", "use-file_example-no-yaml.md")
+
+		expect_equal(
+			epoxy_use_file(
+				.data = list(
+					one = "first",
+					two = "second",
+					three = "third",
+					four = "fourth"
+				),
+				file = template_no_header
+			),
+			knitr::asis_output("first, second, third, fourth")
+		)
+	})
+
 	it("errors when the file doesn't exist", {
 		expect_error(epoxy_use_file(file = "bad-file.md"))
+	})
+
+	it("errors when the file is essentially empty", {
+		tmpfile <- tempfile(fileext = ".md")
+		on.exit(unlink(tmpfile))
+
+		writeLines(c("", "  ", "\t\t", ""), tmpfile)
+		expect_error(epoxy_use_file(file = tmpfile))
 	})
 })

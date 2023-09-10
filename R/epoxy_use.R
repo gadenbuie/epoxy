@@ -144,10 +144,16 @@ read_body_without_yaml <- function(path) {
 	x <- readLines(path)
 	x_trimmed <- trimws(x)
 
-	idx_nzchar <- which(nzchar(x_trimmed))[1]
-	idx_start <- grep("^---$", x_trimmed)[1]
+	if (!any(nzchar(x_trimmed))) {
+		rlang::abort(paste0("File '", path, "' is empty"))
+	}
 
-	if (idx_nzchar < idx_start) {
+	idx_nzchar <- which(nzchar(x_trimmed))[1]
+	idx_start <- grep("^---$", x_trimmed)
+
+	if (length(idx_start)) idx_start <- idx_start[1]
+
+	if (length(idx_start) == 0 || idx_nzchar < idx_start) {
 		return(paste(x, collapse = "\n"))
 	}
 
