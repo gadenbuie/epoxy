@@ -18,7 +18,7 @@ class EpoxyHTML extends window.HTMLElement {
           console.warn(`[epoxy] No element with id "${key}"`, { [key]: value })
           continue
         }
-        el.updateEpoxyValues(value)
+        el.update_epoxy_values(value)
       }
     })
     EpoxyHTML.is_set_global_event_listener = true
@@ -122,7 +122,6 @@ class EpoxyHTML extends window.HTMLElement {
   }
 
   _item_update_contents (item, contents) {
-    const itemKey = item.dataset.epoxyItem || item.dataset.epoxyCopy
     const asHTML = item.dataset.epoxyAsHtml === 'true'
 
     asHTML ? (item.innerHTML = contents) : (item.textContent = contents)
