@@ -55,21 +55,21 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		"epoxy_updated_list",
 		output = "list",
 		key = "item",
-		value = "a",
+		data = "a",
 		outputType = "html"
 	)
 	expect_event(
 		"epoxy_updated_desc_n",
 		output = "desc",
 		key = "n",
-		value = 1L,
+		data = 1L,
 		outputType = "html"
 	)
 	expect_event(
 		"epoxy_updated_desc_thing",
 		output = "desc",
 		key = "thing",
-		value = "letter",
+		data = "letter",
 		outputType = "html"
 	)
 
@@ -86,7 +86,7 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		"epoxy_updated_list",
 		output = "list",
 		key = "item",
-		value = as.list(letters[1:4]),
+		data = as.list(letters[1:4]),
 		outputType = "html",
 		# there are three copies created from the original letter template
 		# the event has dom elements, shinytest2 only sees an empty named list
@@ -96,14 +96,14 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		"epoxy_updated_desc_n",
 		output = "desc",
 		key = "n",
-		value = 4L,
+		data = 4L,
 		outputType = "html"
 	)
 	expect_event(
 		"epoxy_updated_desc_thing",
 		output = "desc",
 		key = "thing",
-		value = "letters",
+		data = "letters",
 		outputType = "html"
 	)
 })

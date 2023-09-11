@@ -10,21 +10,14 @@ class EpoxyHTML extends window.HTMLElement {
 
     if (EpoxyHTML.is_set_global_event_listener) return
 
-    window.addEventListener('epoxy-message', ev => {
+    window.addEventListener('epoxy-message.html', ev => {
       // {example: {thing: "dolphin", color: "blue", height: 5}}
-      for (const [key, value] of Object.entries(ev.detail)) {
-        const el = document.getElementById(key)
-        if (!el) {
-          console.warn(`[epoxy] No element with id "${key}"`, { [key]: value })
-          continue
-        }
-        el.update_epoxy_values(value)
-      }
+      EpoxyHTML.update_all(ev.detail)
     })
     EpoxyHTML.is_set_global_event_listener = true
   }
 
-  static update (data, partial = false) {
+  static update_all (data, partial = false) {
     // { [id]: { [itemKey]: value }}
     // { example: { thing: "dolphin", color: "blue", height: 5 }}
     if (partial) {
@@ -32,8 +25,17 @@ class EpoxyHTML extends window.HTMLElement {
         data[key].__partial = true
       }
     }
-    const event = new CustomEvent('epoxy-message', { detail: data })
-    window.dispatchEvent(event)
+
+    for (const [key, value] of Object.entries(data)) {
+      const el = document.getElementById(key)
+      if (!el) {
+        console.warn(
+          `[epoxy-html] [${key}] No element found with id`, { [key]: value }
+        )
+        continue
+      }
+      el.update(value)
+    }
   }
 
   /* ---- Private methods ---- */
@@ -84,14 +86,16 @@ class EpoxyHTML extends window.HTMLElement {
     )
   }
 
-  _event_updated (key, value) {
+  _event_updated (key, data) {
     return new CustomEvent('epoxy-updated', {
       bubbles: true,
-      detail: { output: this.id, key, value, outputType: 'html' }
+      detail: { output: this.id, key, data, outputType: 'html' }
     })
   }
 
   _event_errored (key, data) {
+    console.error(`[epoxy-html] [${this.id}]: ${data}`)
+
     return new CustomEvent('epoxy-errored', {
       bubbles: true,
       detail: {
@@ -128,7 +132,7 @@ class EpoxyHTML extends window.HTMLElement {
     return item
   }
 
-  update_epoxy_values (data) {
+  update (data) {
     const items = this.querySelectorAll('[data-epoxy-item]')
 
     items.forEach(item => {
@@ -204,12 +208,12 @@ if (window.Shiny) {
       return $(scope).find('epoxy-html')
     },
     renderValue: function (el, data) {
-      el.update_epoxy_values(data)
+      el.update(data)
     },
     renderError: function (el, err) {
       this.clearError(el)
       if (err.message !== '') {
-        console.error('[epoxy] ' + err.message)
+        console.error(`[epoxy-html] [${el.id}] ${err.message}`)
         el.classList.add('epoxy-error')
       }
     },

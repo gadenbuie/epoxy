@@ -9,7 +9,7 @@ function sendUpdatesToEpoxy (id) {
     }
 
     const data = { [id]: value }
-    EpoxyHTML.update(data, true)
+    EpoxyHTML.update_all(data, true)
   }
 }
 
@@ -20,7 +20,7 @@ function initApp () {
       last: document.getElementById('last').value
     }
   }
-  EpoxyHTML.update(initData)
+  EpoxyHTML.update_all(initData)
   ;['first', 'last'].forEach(inputId => {
     document
       .getElementById(inputId)
