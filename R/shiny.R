@@ -533,6 +533,12 @@ epoxyHTML_transformer <- function(
 #'   })
 #'
 #'   favorites <- reactive({
+#'     if (identical(input$fruits, "123456")) {
+#'       # Errors are equivalent to "empty" values,
+#'       # the rest of the template will still render.
+#'       stop("Bad fruits, bad!")
+#'     }
+#'
 #'     if (!nzchar(input$fruits)) return(NULL)
 #'     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
 #'   })
@@ -569,14 +575,14 @@ ui_epoxy_mustache <- function(
 	...,
 	.file = NULL,
 	.sep = "",
-	.container = "div"
+	.container = "epoxy-mustache"
 ) {
 	rlang::check_dots_unnamed()
 
 	if (is.character(.container)) {
 		tag_name <- .container
 		.container <- function(...) {
-			htmltools::tags[[tag_name]](..., "aria-live" = "polite")
+			htmltools::tag(tag_name, list(..., "aria-live" = "polite"))
 		}
 	}
 

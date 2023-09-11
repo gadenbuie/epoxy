@@ -34,6 +34,9 @@ server <- function(input, output, session) {
   })
 
   favorites <- reactive({
+    if (identical(input$fruits, "123456")) {
+      stop("Bad fruits, bad!")
+    }
     if (!nzchar(input$fruits)) return(NULL)
     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
   })
