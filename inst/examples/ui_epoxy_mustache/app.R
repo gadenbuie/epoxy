@@ -35,8 +35,11 @@ server <- function(input, output, session) {
 
   favorites <- reactive({
     if (identical(input$fruits, "123456")) {
+      # Errors are equivalent to "empty" values,
+      # the rest of the template will still render.
       stop("Bad fruits, bad!")
     }
+
     if (!nzchar(input$fruits)) return(NULL)
     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
   })
