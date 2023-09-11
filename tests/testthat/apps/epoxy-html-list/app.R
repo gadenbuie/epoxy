@@ -14,7 +14,7 @@ ui <- fixedPage(
 )
 
 server <- function(input, output, session) {
-  output$list <- render_epoxy(
+	output$list <- render_epoxy(
 		item = letters[1:input$n]
 	)
 

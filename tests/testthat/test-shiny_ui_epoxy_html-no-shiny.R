@@ -44,7 +44,7 @@ test_that("ui_epoxy_html() can be used without shiny", {
 		)
 	}
 
-  expect_epoxy_text()
+	expect_epoxy_text()
 
 	update_input("first", "Jane")
 	expect_epoxy_text()

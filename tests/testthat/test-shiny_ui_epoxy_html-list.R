@@ -42,7 +42,7 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		)
 	}
 
-  app$set_inputs(n = 1)
+	app$set_inputs(n = 1)
 	expect_equal(
 		get_test_element_text("desc"),
 		"You've picked 1 letter:"
