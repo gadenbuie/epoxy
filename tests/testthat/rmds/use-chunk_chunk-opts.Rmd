@@ -13,14 +13,7 @@ the_data <- list(
 	list(first = "nine", second = "ten")
 )
 
-knitr::opts_chunk$set(.data = the_data[[1]], ...detect_inline_chunks = TRUE)
-knitr::knit_hooks$set(...detect_inline_chunks = function(before, options) {
-	if (before) {
-		knitr::opts_current$set(...inline_chunk = FALSE)
-	} else {
-		knitr::opts_current$set(...inline_chunk = TRUE)
-	}
-})
+knitr::opts_chunk$set(.data = the_data[[1]])
 ```
 
 ```{epoxy chunk-template, .data = the_data[[2]]}
