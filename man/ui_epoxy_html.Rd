@@ -154,7 +154,7 @@ ui <- fluidPage(
   h2("ui_epoxy_html demo"),
   ui_epoxy_html(
     .id = "example",
-    .class_item = "inner",
+    .item_class = "inner",
     fluidRow(
       tags$div(
         class = "col-xs-4",
