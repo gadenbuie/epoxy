@@ -126,7 +126,6 @@ class EpoxyHTML extends window.HTMLElement {
     const asHTML = item.dataset.epoxyAsHtml === 'true'
 
     asHTML ? (item.innerHTML = contents) : (item.textContent = contents)
-    item.dispatchEvent(this._event_updated(itemKey, contents))
     return item
   }
 
@@ -135,18 +134,18 @@ class EpoxyHTML extends window.HTMLElement {
 
     items.forEach(item => {
       item.classList.remove('epoxy-item__placeholder')
-      const itemName = item.dataset.epoxyItem
+      const itemKey = item.dataset.epoxyItem
 
-      let itemData = data[itemName]
+      let itemData = data[itemKey]
 
-      if (data.__errors__ && data.__errors__.includes(itemName)) {
+      if (data.__errors__ && data.__errors__.includes(itemKey)) {
         this._item_show_error(item, itemData)
         return
       } else {
         this._item_clear_error(item)
       }
 
-      if (this._last && this._deep_equal(itemData, this._last[itemName])) {
+      if (this._last && this._deep_equal(itemData, this._last[itemKey])) {
         // don't do anything, the value hasn't changed
         return
       }
@@ -156,7 +155,7 @@ class EpoxyHTML extends window.HTMLElement {
       if (this._is_empty(itemData)) {
         if (data.__partial) {
           // This is partial update, so the empty value is ignored.
-          data[itemName] = this._last[itemName]
+          data[itemKey] = this._last[itemKey]
           return
         }
         item.style.display = 'none'
@@ -167,21 +166,28 @@ class EpoxyHTML extends window.HTMLElement {
 
       if (!(itemData instanceof Array)) {
         this._item_update_contents(item, itemData)
+        item.dispatchEvent(this._event_updated(itemKey, itemData))
         return
       }
 
       // If an array, use the initial item as a pattern
-      this._item_update_contents(item, itemData[0])
+      const itemEventUpdated = this._event_updated(itemKey, itemData)
+      itemEventUpdated.detail.copies = []
       const itemParent = item.parentElement
+
+      this._item_update_contents(item, itemData[0])
       itemData = itemData.slice(1)
 
       for (const itemDataThis of itemData) {
         const itemNew = item.cloneNode()
         itemNew.removeAttribute('data-epoxy-item')
-        itemNew.dataset.epoxyCopy = itemName
+        itemNew.dataset.epoxyCopy = itemKey
         itemParent.insertAdjacentElement('beforeend', itemNew)
         this._item_update_contents(itemNew, itemDataThis)
+        itemEventUpdated.detail.copies.push(itemNew)
       }
+
+      item.dispatchEvent(itemEventUpdated)
     })
 
     this._last = data
