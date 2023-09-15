@@ -199,14 +199,22 @@ epoxy_use_template <- function(
 	fn <- switch(
 		engine,
 		epoxy = epoxy,
+		html = ,
 		epoxy_html = epoxy_html,
+		latex = ,
 		epoxy_latex = epoxy_latex,
-		mustache = epoxy_mustache,
+		mustache = ,
 		whisker = epoxy_mustache,
 		glue = epoxy,
 		glue_html = epoxy_html,
 		glue_latex = epoxy_latex,
-		epoxy
+		{
+			rlang::warn(c(
+				glue("Unexpected engine '{engine}', defaulting to `epoxy()`."),
+				"i" = "Set an epoxy knitr engine in the chunk or file.",
+			))
+			epoxy
+		}
 	)
 
 	call <- rlang::call2(
