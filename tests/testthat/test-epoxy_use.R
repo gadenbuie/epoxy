@@ -205,4 +205,22 @@ describe("epoxy_use_file()", {
 		writeLines(c("", "  ", "\t\t", ""), tmpfile)
 		expect_error(epoxy_use_file(file = tmpfile))
 	})
+
+	it("allows the user to set the engine from the fn call", {
+		tmpl <- test_path("rmds", "use-file_html.md")
+		expect_equal(
+			epoxy_use_file(file = tmpl, engine = "epoxy"),
+			knitr::asis_output(
+				gsub(
+					"}}", "}",
+					gsub(
+						"{{", "{",
+						read_body_without_yaml(tmpl),
+						fixed = TRUE
+					),
+					fixed = TRUE
+				)
+			)
+		)
+	})
 })

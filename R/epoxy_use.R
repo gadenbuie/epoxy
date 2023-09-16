@@ -111,8 +111,7 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 		template$code,
 		.data = .data,
 		...,
-		options = template$opts,
-		engine = template$opts$engine
+		options = template$opts
 	)
 }
 
@@ -135,8 +134,7 @@ epoxy_use_file <- function(.data = NULL, file, ...) {
 		template,
 		.data = .data,
 		...,
-		options = options,
-		engine = options$engine %||% "epoxy"
+		options = options
 	)
 }
 
@@ -176,7 +174,7 @@ epoxy_use_template <- function(
 	.data = NULL,
 	...,
 	options = list(),
-	engine = options$engine
+	engine = NULL
 ) {
 	# For options, we want to apply options in this order:
 	# 0. `.data` from this fn and `eval` from this chunk
@@ -195,6 +193,8 @@ epoxy_use_template <- function(
 	opts <- purrr::list_assign(opts, !!!options)
 	opts <- purrr::list_assign(opts, !!!opts_current)
 	opts <- purrr::list_assign(opts, !!!purrr::compact(opts_fn))
+
+	engine <- engine %||% options$engine %||% "epoxy"
 
 	fn <- switch(
 		engine,
