@@ -211,7 +211,7 @@ epoxy_use_template <- function(
 		{
 			rlang::warn(c(
 				glue("Unexpected engine '{engine}', defaulting to `epoxy()`."),
-				"i" = "Set an epoxy knitr engine in the chunk or file.",
+				"i" = "Set an epoxy knitr engine in the chunk or file."
 			))
 			epoxy
 		}
