@@ -218,7 +218,7 @@ versions that were available on GitHub prior to the CRAN release.
   (#37).
 
 * `epoxy_transform_collapse()` now uses the
-  [and package](https://and.rossellhayes.com/), which provides language-aware
+  [and package](https://github.com/rossellhayes/and/), which provides language-aware
   conjoining of strings. As a result, the `sep_and` and `sep_or` arguments of
   `epoxy_transform_collapse()` are deprecated and are silently ignored if
   provided (#45).
