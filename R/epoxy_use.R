@@ -111,8 +111,7 @@ epoxy_use_chunk <- function(.data = NULL, label, ...) {
 		template$code,
 		.data = .data,
 		...,
-		options = template$opts,
-		engine = template$opts$engine
+		options = template$opts
 	)
 }
 
@@ -135,8 +134,7 @@ epoxy_use_file <- function(.data = NULL, file, ...) {
 		template,
 		.data = .data,
 		...,
-		options = options,
-		engine = options$engine %||% "epoxy"
+		options = options
 	)
 }
 
@@ -144,10 +142,16 @@ read_body_without_yaml <- function(path) {
 	x <- readLines(path)
 	x_trimmed <- trimws(x)
 
-	idx_nzchar <- which(nzchar(x_trimmed))[1]
-	idx_start <- grep("^---$", x_trimmed)[1]
+	if (!any(nzchar(x_trimmed))) {
+		rlang::abort(paste0("File '", path, "' is empty"))
+	}
 
-	if (idx_nzchar < idx_start) {
+	idx_nzchar <- which(nzchar(x_trimmed))[1]
+	idx_start <- grep("^---$", x_trimmed)
+
+	if (length(idx_start)) idx_start <- idx_start[1]
+
+	if (length(idx_start) == 0 || idx_nzchar < idx_start) {
 		return(paste(x, collapse = "\n"))
 	}
 
@@ -170,7 +174,7 @@ epoxy_use_template <- function(
 	.data = NULL,
 	...,
 	options = list(),
-	engine = options$engine
+	engine = NULL
 ) {
 	# For options, we want to apply options in this order:
 	# 0. `.data` from this fn and `eval` from this chunk
@@ -190,17 +194,27 @@ epoxy_use_template <- function(
 	opts <- purrr::list_assign(opts, !!!opts_current)
 	opts <- purrr::list_assign(opts, !!!purrr::compact(opts_fn))
 
+	engine <- engine %||% options$engine %||% "epoxy"
+
 	fn <- switch(
 		engine,
 		epoxy = epoxy,
+		html = ,
 		epoxy_html = epoxy_html,
+		latex = ,
 		epoxy_latex = epoxy_latex,
-		mustache = epoxy_mustache,
+		mustache = ,
 		whisker = epoxy_mustache,
 		glue = epoxy,
 		glue_html = epoxy_html,
 		glue_latex = epoxy_latex,
-		epoxy
+		{
+			rlang::warn(c(
+				glue("Unexpected engine '{engine}', defaulting to `epoxy()`."),
+				"i" = "Set an epoxy knitr engine in the chunk or file."
+			))
+			epoxy
+		}
 	)
 
 	call <- rlang::call2(

@@ -40,7 +40,7 @@
 #'   h2("ui_epoxy_html demo"),
 #'   ui_epoxy_html(
 #'     .id = "example",
-#'     .class_item = "inner",
+#'     .item_class = "inner",
 #'     fluidRow(
 #'       tags$div(
 #'         class = "col-xs-4",
@@ -101,13 +101,11 @@
 #' @param .id The output id
 #' @param ... UI elements or text (that will be treated as HTML), containing
 #'   template variables. Use named values to provide initial placeholder values.
-#' @param .class Classes added to the output div, in addition to `.epoxy-html`
-#' @param .class_item Classes added to the `.container` wrapping each template
-#'   variable.
-#' @param .container The name of the HTML element to be used for the output
-#'   element, by default `"div"`.
-#' @param .container_item The name of the HTML element to be used for each
-#'   template item, by default `"span"`.
+#' @param .class,.style Classes and inline style directives added to the
+#'   `<epoxy-html>` container into which the elements in `...` are placed.
+#' @param .item_tag,.item_class The HTML element tag name and classes used to
+#'   wrap each template variable. By default, each template is wrapped in a
+#'   `<span>`.
 #' @param .placeholder Default placeholder if a template variable placeholder
 #'   isn't provided.
 #' @param .aria_live,.aria_atomic The
@@ -129,6 +127,12 @@
 #'   UI that have changed.
 #' @inheritParams epoxy
 #' @inheritParams glue::glue
+#' @param .container `r lifecycle::badge("deprecated")` Deprecated in
+#'   \pkg{epoxy} v1.0.0, where the container is now always `<epoxy-html>`.
+#' @param .class_item `r lifecycle::badge("deprecated")` Deprecated in
+#'   \pkg{epoxy} v1.0.0, please use `.item_class` instead.
+#' @param .container_item `r lifecycle::badge("deprecated")` Deprecated in
+#'   \pkg{epoxy} v1.0.0, please use `.item_tag` instead.
 #'
 #' @seealso [ui_epoxy_mustache()], [render_epoxy()]
 #' @return An HTML object.
@@ -137,9 +141,9 @@ ui_epoxy_html <- function(
 	.id,
 	...,
 	.class = NULL,
-	.class_item = NULL,
-	.container = "div",
-	.container_item = "span",
+	.style = NULL,
+	.item_tag = "span",
+	.item_class = NULL,
 	.placeholder = "",
 	.sep = "",
 	.open = "{{",
@@ -149,10 +153,43 @@ ui_epoxy_html <- function(
 	.literal = FALSE,
 	.trim = FALSE,
 	.aria_live = c("polite", "off", "assertive"),
-	.aria_atomic = TRUE
+	.aria_atomic = TRUE,
+	# Deprecated arguments ----
+	.class_item = deprecated(),
+	.container = deprecated(),
+	.container_item = deprecated()
 ) {
-	.container <- match.arg(.container, names(htmltools::tags))
-	.container_item <- match.arg(.container_item, names(htmltools::tags))
+	if (lifecycle::is_present(.container)) {
+		lifecycle::deprecate_warn(
+			"1.0.0",
+			"ui_epoxy_html(.container = )",
+			details = "This argument is no longer used."
+		)
+	}
+
+	if (lifecycle::is_present(.container_item)) {
+		lifecycle::deprecate_warn(
+			"1.0.0",
+			"ui_epoxy_html(.container_item = )",
+			"ui_epoxy_html(.item_container = )"
+		)
+		if (missing(.item_tag)) {
+			.item_tag <- .container_item
+		}
+	}
+
+	if (lifecycle::is_present(.class_item)) {
+		lifecycle::deprecate_warn(
+			"1.0.0",
+			"ui_epoxy_html(.class_item = )",
+			"ui_epoxy_html(.item_class = )"
+		)
+		if (missing(.item_class)) {
+			.item_class <- .class_item
+		}
+	}
+
+	.item_container <- match.arg(.item_tag, names(htmltools::tags))
 
 	.aria_live <- rlang::arg_match(.aria_live)
 	.aria_atomic <- if (!is.null(.aria_atomic)) {
@@ -161,7 +198,7 @@ ui_epoxy_html <- function(
 
 	dots <- rlang::list2(...)
 	dots$.placeholder <- .placeholder
-	dots$.transformer <- epoxyHTML_transformer(.class_item, .container_item)
+	dots$.transformer <- epoxyHTML_transformer(.item_class, .item_tag)
 	dots$.na <- .na
 	dots$.sep <- .sep
 	dots$.null <- .null
@@ -182,15 +219,19 @@ ui_epoxy_html <- function(
 
 	res <- rlang::eval_bare(rlang::call2(glue::glue, !!!dots))
 
-	out <- htmltools::tags[[.container]](
-		id = .id,
-		class = "epoxy-html epoxy-init",
-		class = .class,
-		"aria-atomic" = .aria_atomic,
-		"aria-live" = .aria_live,
-		htmltools::HTML(res),
-		html_dependency_epoxy(),
-		html_dependency_hint_css()
+	out <- htmltools::tag(
+		"epoxy-html",
+		list(
+			id = .id,
+			class = "epoxy-html epoxy-init",
+			class = .class,
+			style = .style,
+			"aria-atomic" = .aria_atomic,
+			"aria-live" = .aria_live,
+			htmltools::HTML(res),
+			html_dependency_epoxy(),
+			html_dependency_hint_css()
+		)
 	)
 	if (!is.null(deps) && length(deps)) {
 		htmltools::attachDependencies(out, deps)
@@ -241,7 +282,7 @@ html_dependency_hint_css <- function() {
 #'   [commonmark::markdown_html()].
 #' @inheritParams ui_epoxy_html
 #'
-#' @examplesIf rlang::is_installed("shiny")
+#' @examplesIf rlang::is_installed("shiny") && rlang::is_interactive()
 #' library(shiny)
 #'
 #' # Shiny epoxy template functions don't support inline transformations,
@@ -326,9 +367,9 @@ ui_epoxy_markdown <- function(
 	.markdown_fn = NULL,
 	.markdown_args = list(),
 	.class = NULL,
-	.class_item = NULL,
-	.container = "div",
-	.container_item = "span",
+	.style = NULL,
+	.item_tag = "span",
+	.item_class = NULL,
 	.placeholder = "",
 	.sep = "",
 	.open = "{{",
@@ -338,7 +379,11 @@ ui_epoxy_markdown <- function(
 	.literal = FALSE,
 	.trim = FALSE,
 	.aria_live = c("polite", "off", "assertive"),
-	.aria_atomic = TRUE
+	.aria_atomic = TRUE,
+	# Deprecated arguments ----
+	.class_item = deprecated(),
+	.container = deprecated(),
+	.container_item = deprecated()
 ) {
 
 	dots <- list_split_named(rlang::dots_list(...))
@@ -370,9 +415,9 @@ ui_epoxy_markdown <- function(
 		htmltools::HTML(html),
 		!!!dots,
 		.class = .class,
-		.class_item = .class_item,
-		.container = .container,
-		.container_item = .container_item,
+		.style = .style,
+		.item_tag = .item_tag,
+		.item_class = .item_class,
 		.placeholder = .placeholder,
 		.sep = .sep,
 		.open = .open,
@@ -382,7 +427,11 @@ ui_epoxy_markdown <- function(
 		.literal = .literal,
 		.trim = .trim,
 		.aria_live = .aria_live,
-		.aria_atomic = .aria_atomic
+		.aria_atomic = .aria_atomic,
+		# Deprecated arguments ----
+		.class_item = .class_item,
+		.container = .container,
+		.container_item = .container_item
 	)
 }
 
@@ -390,7 +439,7 @@ ui_epoxy_markdown <- function(
 #'   alias, please use `ui_epoxy_html()`.
 #' @export
 epoxyHTML <- function(.id, ...) {
-	lifecycle::deprecate_soft(
+	lifecycle::deprecate_warn(
 		"0.1.0",
 		"epoxyHTML()",
 		"ui_epoxy_html()",
@@ -484,6 +533,12 @@ epoxyHTML_transformer <- function(
 #'   })
 #'
 #'   favorites <- reactive({
+#'     if (identical(input$fruits, "123456")) {
+#'       # Errors are equivalent to "empty" values,
+#'       # the rest of the template will still render.
+#'       stop("Bad fruits, bad!")
+#'     }
+#'
 #'     if (!nzchar(input$fruits)) return(NULL)
 #'     list(fruits = strsplit(input$fruits, "\\s*,\\s*")[[1]])
 #'   })
@@ -520,14 +575,14 @@ ui_epoxy_mustache <- function(
 	...,
 	.file = NULL,
 	.sep = "",
-	.container = "div"
+	.container = "epoxy-mustache"
 ) {
 	rlang::check_dots_unnamed()
 
 	if (is.character(.container)) {
 		tag_name <- .container
 		.container <- function(...) {
-			htmltools::tags[[tag_name]](..., "aria-live" = "polite")
+			htmltools::tag(tag_name, list(..., "aria-live" = "polite"))
 		}
 	}
 

@@ -1,5 +1,5 @@
 knitr_current_label <- function() {
-	if (isTRUE(knitr::opts_current$get("...inline_chunk"))) {
+	if (isTRUE(.globals$inline_chunk)) {
 		return("___inline_chunk___")
 	}
 
@@ -37,13 +37,17 @@ knitr_chunk_specific_options <- function(label = knitr_current_label()) {
 # previous chunk -- or at least `opts_current` returns the previous chunk's
 # options. This inline chunk detector could probably be built into knitr in some
 # way: https://github.com/yihui/knitr/issues/1988
+# Prior to knitr 1.44 we could use `opts_current$set()` to set an inline chunk
+# option, but modifying the current chunk options will now throw an error,
+# see: https://github.com/yihui/knitr/issues/1798
 # nocov start
 knitr_register_detect_inline <- function() {
 	if ("...detect_inline_chunk" %in% knitr::opts_chunk$get()) {
+		# We've already registered the global option we hook into
 		return()
 	}
 
-	# We key off this chunk to always set inline chunk status
+	# We key off this chunk options to always set inline chunk status
 	knitr::opts_chunk$set(...detect_inline_chunks = TRUE)
 
 	# Set `...inline_chunk` chunk option to FALSE when entering any
@@ -56,10 +60,10 @@ knitr_register_detect_inline <- function() {
 
 knitr_hook_detect_inline_chunk <- function(before, ...) {
 	# Set to FALSE inside a code chunk, reset to TRUE outside
-	knitr::opts_current$set(...inline_chunk = !before)
+	.globals$inline_chunk <- !before
 }
 
 knitr_is_inline_chunk <- function() {
-	knitr::opts_current$get("...inline_chunk") %||%
+	.globals$inline_chunk %||%
 		is.null(knitr::opts_current$get("label"))
 }

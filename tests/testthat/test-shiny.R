@@ -33,20 +33,45 @@ describe("ui_epoxy_html()", {
 		expect_true(grepl("<strong>placeholder</strong>", format(ex2), fixed = TRUE))
 	})
 
-	it (".container and .container_item", {
+	it (".item_container", {
 		div_span <- ui_epoxy_html("test", "{{item}}")
 		expect_s3_class(div_span, "shiny.tag")
-		expect_equal(div_span$name, "div")
+		expect_equal(div_span$name, "epoxy-html")
 		expect_true(grepl("^<span", div_span$children[[1]]))
 
-		ul_li <- ui_epoxy_html("test", "{{item}}", .container = "ul", .container_item = "li")
+		ul_li <- ui_epoxy_html("test", "{{item}}", .item_tag = "li")
 		expect_s3_class(ul_li, "shiny.tag")
-		expect_equal(ul_li$name, "ul")
+		expect_equal(ul_li$name, "epoxy-html")
 		expect_true(grepl("^<li", ul_li$children[[1]]))
 
-		ul_li <- ui_epoxy_html("test", "{{li item}}", .container = "ul")
+		ul_li <- ui_epoxy_html("test", "{{li item}}")
 		expect_s3_class(ul_li, "shiny.tag")
-		expect_equal(ul_li$name, "ul")
+		expect_equal(ul_li$name, "epoxy-html")
 		expect_true(grepl("^<li", ul_li$children[[1]]))
+	})
+
+	it("deprecated arguments", {
+		lifecycle::expect_deprecated(ui_epoxy_html("test", .container = "foo"))
+
+		lifecycle::expect_deprecated(
+			ui_epoxy_html("test", .container_item = "foo")
+		)
+
+		lifecycle::expect_deprecated(
+			expect_equal(
+				ui_epoxy_html("test", "{{item}}", .container_item = "foo"),
+				ui_epoxy_html("test", "{{item}}", .item_tag = "foo")
+			)
+		)
+
+		lifecycle::expect_deprecated(
+			ui_epoxy_html("test", .class_item = "foo")
+		)
+		lifecycle::expect_deprecated(
+			expect_equal(
+				ui_epoxy_html("test", "{{item}}", .class_item = "foo"),
+				ui_epoxy_html("test", "{{item}}", .item_class = "foo")
+			)
+		)
 	})
 })

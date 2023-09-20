@@ -1,12 +1,30 @@
-# epoxy (development version)
+# epoxy 1.0.0
 
-* `epoxy()` now adds a `.data` pronoun that allows you to refer to the list or
-  data frame passed into either the `.data` argument of `epoxy()` or the `data`
-  or `.data` chunk options. (#100)
+## Breaking Changes
+
+* **Breaking change:** `epoxy_latex()` and the `epoxy_latex` chunk engine it
+  powers now use `<<` and `>>` to delimit inline expressions. Where you
+  previously may have used `<expr>`, please now use `<<expr>>`. This breaking
+  change was necessary to allow the `expr` to include common R operators like
+  `<` and `>`. (#107)
+
+* **Breaking change:** the `whisker` engine is now powered by
+  `epoxy_mustache()`, resulting in a few small changes. In particular, if you
+  previously used a list for the `.data` chunk option in a `whisker` chunk, and
+  relied on the `whisker` engine's special treatment of lists to iterate over
+  their items, you'll need to specifically opt into this behavior by adding a
+  `.vectorized = TRUE` chunk option.
+
+  This chunk engine still vectorizes over rows in a data frame by default, where
+  it's much more likely to be the behavior you want, but bare lists require
+  specifically opting in. (#103)
 
 * `.data` is now the preferred chunk option for passing data frames or lists of
-  data to epoxy chunks. It works in `whisker` and `epoxy` chunks, and is more
-  consistent with the `.data` argument of `glue()` and `epoxy()`. (#102)
+  data to epoxy chunks, where previously `data` was used in some places. It
+  works in `whisker` and `epoxy` chunks, and is more consistent with the `.data`
+  argument of `glue()` and `epoxy()`. (#102)
+
+## New Features
 
 * New `epoxy_mustache()` provides an epoxy-style interface to the
   [mustache](https://mustache.github.io/) templating language, using the
@@ -19,26 +37,29 @@
   `epoxy()`, `epoxy_html()` or other epoxy-provided knitr chunk or file as a
   template. `epoxy_use_chunk()` lets you re-use a template chunk with new data,
   and `epoxy_use_file()` lets you repeatedly use a template stored in a file.
-  Both function also re-use the options from the template chunk or the options
+  Both functions also re-use the options from the template chunk or the options
   set in the YAML from matter of the template file. See `?epoxy_use` for more
   details about how options for both functions are determined. (#106, #116)
 
-* **Breaking change:** now that the `whisker` engine is powered by
-  `epoxy_mustache()`, there have been a few small changes. In particular, if you
-  previously used a list for the `.data` chunk option in a `whisker` chunk, and
-  relied on the `whisker` engine's special treatment of lists to iterate over
-  their items, you'll need to specifically opt into this behavior by adding a
-  `.vectorized = TRUE` chunk option.
+## Improvements and bug fixes
 
-  This chunk engine still vectorizes over rows in a data frame by default, where
-  it's much more likely to be the behavior you want, but bare lists require
-  specifically opting in. (#103)
+* `epoxy()` now adds a `.data` pronoun that allows you to refer to the list or
+  data frame passed into either the `.data` argument of `epoxy()` or the `data`
+  or `.data` chunk options. (#100)
 
-* **Breaking change:** `epoxy_latex()` and the `epoxy_latex` chunk engine it
-  powers now use `<<` and `>>` to delimit inline expressions. Where you
-  previously may have used `<expr>`, please now use `<<expr>>`. This breaking
-  change was necessary to allow the `expr` to include common R operators like
-  `<` and `>`. (#107)
+* `epoxy_html()` now supports inline transformations prefixed with `@` instead
+  of `.`, e.g. `@strong` instead of `.strong`. Previously, you would have to
+  place the inline transformer in a nested `{{ }}` block, e.g.
+  `{{ {{ .strong expr }} }}`, but now you only need `{{@strong expr}}`. To combine the HTML transformer (`epoxy_transform_html()`) with the inline
+  transformer, you still need to nest: `{{.text-muted {{@strong expr}}}}`
+  creates `<span class="text-muted"><strong>{expr}</strong></span>`. (#120)
+
+* `epoxy()`, and by extension the LaTex and HTML counterparts, and all `epoxy_*`
+  knitr engines gain a `.collapse` argument to determine how a vector of
+  epoxy-transformed templates should be collapsed. The default is `NULL`, which
+  means that the output is returned as a vector. This argument is also useful in
+  `epoxy_use_chunk()` and for knitr chunks being used as a vectorized template.
+  (#115)
 
 * Aded `.sentence` (alias `.sc`) to the list of inline transformers provided by
   `epoxy_transform_inline()`. This transformer will capitalize the first letter
@@ -49,27 +70,13 @@
   `as.character()` before applying `tools::toTitleCase()`, since `toTitleCase()`
   will throw an error for non-character inputs. (#112)
 
-* `epoxy()`, and by extension the LaTex and HTML counterparts, and all `epoxy_*`
-  knitr engines gain a `.collapse` argument to determine how a vector of
-  epoxy-transformed templates should be collapsed. The default is `NULL`, which
-  means that the output is returned as a vector. This argument is also useful in
-  `epoxy_use_chunk()` and for knitr chunks being used as a vectorized template.
-  (#115)
-
-* Fixed an issue with `epoxy_inline_transform()` when used with custom
-  delimiters (#116).
-
 * `epoxy()`, `epoxy_html()`, `epoxy_latex()` and `epoxy_mustache()` (and their
   related knitr engines) will all collect remote `tbl_sql` tables before
   evaluation. This makes it much easier to pass data from a remote database
   using `{dplyr}` and `{dbplyr}`. (#117)
 
-* `epoxy_html()` now supports inline transformations prefixed with `@` instead
-  of `.`, e.g. `@strong` instead of `.strong`. Previously, you would have to
-  place the inline transformer in a nested `{{ }}` block, e.g.
-  `{{ {{ .strong expr }} }}`, but now you only need `{{@strong expr}}`. To combine the HTML transformer (`epoxy_transform_html()`) with the inline
-  transformer, you still need to nest: `{{.text-muted {{@strong expr}}}}`
-  creates `<span class="text-muted"><strong>{expr}</strong></span>`. (#120)
+* Fixed an issue with `epoxy_inline_transform()` when used with custom
+  delimiters (#116).
 
 # epoxy 0.1.1
 
@@ -211,7 +218,7 @@ versions that were available on GitHub prior to the CRAN release.
   (#37).
 
 * `epoxy_transform_collapse()` now uses the
-  [and package](https://and.rossellhayes.com/), which provides language-aware
+  [and package](https://github.com/rossellhayes/and/), which provides language-aware
   conjoining of strings. As a result, the `sep_and` and `sep_or` arguments of
   `epoxy_transform_collapse()` are deprecated and are silently ignored if
   provided (#45).
