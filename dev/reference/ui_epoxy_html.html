@@ -18,7 +18,7 @@ the server-side data have changed are updated in ui_epoxy_html().'><meta propert
     
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,9 +94,9 @@ the server-side data have changed are updated in <code>ui_epoxy_html()</code>.</
 <span>  <span class="va">.id</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  .class <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  .class_item <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  .container <span class="op">=</span> <span class="st">"div"</span>,</span>
-<span>  .container_item <span class="op">=</span> <span class="st">"span"</span>,</span>
+<span>  .style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .item_tag <span class="op">=</span> <span class="st">"span"</span>,</span>
+<span>  .item_class <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .placeholder <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .sep <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  .open <span class="op">=</span> <span class="st">"{{"</span>,</span>
@@ -106,7 +106,10 @@ the server-side data have changed are updated in <code>ui_epoxy_html()</code>.</
 <span>  .literal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .trim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .aria_live <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"polite"</span>, <span class="st">"off"</span>, <span class="st">"assertive"</span><span class="op">)</span>,</span>
-<span>  .aria_atomic <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  .aria_atomic <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .class_item <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .container <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .container_item <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">epoxyHTML</span><span class="op">(</span><span class="va">.id</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -123,23 +126,15 @@ the server-side data have changed are updated in <code>ui_epoxy_html()</code>.</
 template variables. Use named values to provide initial placeholder values.</p></dd>
 
 
-<dt>.class</dt>
-<dd><p>Classes added to the output div, in addition to <code>.epoxy-html</code></p></dd>
+<dt>.class, .style</dt>
+<dd><p>Classes and inline style directives added to the
+<code>&lt;epoxy-html&gt;</code> container into which the elements in <code>...</code> are placed.</p></dd>
 
 
-<dt>.class_item</dt>
-<dd><p>Classes added to the <code>.container</code> wrapping each template
-variable.</p></dd>
-
-
-<dt>.container</dt>
-<dd><p>The name of the HTML element to be used for the output
-element, by default <code>"div"</code>.</p></dd>
-
-
-<dt>.container_item</dt>
-<dd><p>The name of the HTML element to be used for each
-template item, by default <code>"span"</code>.</p></dd>
+<dt>.item_tag, .item_class</dt>
+<dd><p>The HTML element tag name and classes used to
+wrap each template variable. By default, each template is wrapped in a
+<code>&lt;span&gt;</code>.</p></dd>
 
 
 <dt>.placeholder</dt>
@@ -207,6 +202,21 @@ containers of each region in the app that receives updates.
 <code>ui_epoxy_html()</code> does targeted updates, changing only the parts of the
 UI that have changed.</p></dd>
 
+
+<dt>.class_item</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Deprecated in
+<span class="pkg">epoxy</span> v1.0.0, please use <code>.item_class</code> instead.</p></dd>
+
+
+<dt>.container</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Deprecated in
+<span class="pkg">epoxy</span> v1.0.0, where the container is now always <code>&lt;epoxy-html&gt;</code>.</p></dd>
+
+
+<dt>.container_item</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Deprecated in
+<span class="pkg">epoxy</span> v1.0.0, please use <code>.item_tag</code> instead.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -255,7 +265,7 @@ HTML, use <code>!!</code> before the placeholder, e.g. <code>{{&lt;markup&gt; !!
 <span class="r-in"><span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">h2</a></span><span class="op">(</span><span class="st">"ui_epoxy_html demo"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu">ui_epoxy_html</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    .id <span class="op">=</span> <span class="st">"example"</span>,</span></span>
-<span class="r-in"><span>    .class_item <span class="op">=</span> <span class="st">"inner"</span>,</span></span>
+<span class="r-in"><span>    .item_class <span class="op">=</span> <span class="st">"inner"</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidRow</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="va">tags</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span></span>
 <span class="r-in"><span>        class <span class="op">=</span> <span class="st">"col-xs-4"</span>,</span></span>
