@@ -175,6 +175,9 @@
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxyHTML.html</loc>
   </url>
   <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_mustache.html</loc>
+  </url>
+  <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_output_mustache.html</loc>
   </url>
   <url>
@@ -203,6 +206,9 @@
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_transform_one_shot.html</loc>
+  </url>
+  <url>
+    <loc>http://pkg.garrickadenbuie.com/epoxy/reference/epoxy_use.html</loc>
   </url>
   <url>
     <loc>http://pkg.garrickadenbuie.com/epoxy/reference/index.html</loc>
