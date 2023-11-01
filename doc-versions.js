@@ -87,7 +87,7 @@
       }
 
       for (const [text, url] of Object.entries(item)) {
-        const isCurrent = text === current.innerText
+        const isCurrent = text === `v${current.innerText}`
         ul.appendChild(createVersionDropdownItem(text, url, isCurrent))
       }
     })
