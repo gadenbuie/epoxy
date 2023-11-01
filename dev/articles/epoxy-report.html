@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.7.9000/font.css" rel="stylesheet">
-<link href="../deps/Outfit-0.4.7.9000/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/IBM_Plex_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/Outfit-0.4.7/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="epoxy in Reports">
@@ -174,10 +174,10 @@ following in your setup chunk.</p>
 the engine of your choice. In that chunk, write in markdown, HTML, or
 LaTeX as needed, wrapping R expressions inside the delimiters for the
 epoxy chunk.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>The average speed of the cars was **{mean(cars$speed)} mph.**</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>But on average the distance traveled was only _{mean(cars$dist)}_.</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>The average speed of the cars was **{mean(cars$speed)} mph.**</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>But on average the distance traveled was only _{mean(cars$dist)}_.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p>The average speed of the cars was <strong>15.4 mph</strong>. But on
 average the distance traveled was only <em>42.98 ft</em>.</p>
 <p><code>epoxy</code> is built around <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>, which
@@ -222,14 +222,14 @@ Movie data
 <span>  <span class="op">)</span>,</span>
 <span>  runtime <span class="op">=</span> <span class="fl">108L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>```{epoxy}</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>The movie {.emph {.titlecase movie$title}}</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>was released in {.strong movie$year}.</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>It earned {.dollar movie$domgross}</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>with a budget of {.dollar movie$budget},</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>and it features movie stars</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>{.and movie$actors}.</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>```</span></code></pre></div>
+</details><div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>```{epoxy}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>The movie {.emph {.titlecase movie$title}}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>was released in {.strong movie$year}.</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>It earned {.dollar movie$domgross}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>with a budget of {.dollar movie$budget},</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>and it features movie stars</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>{.and movie$actors}.</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <blockquote>
 The movie <em>Back to the Future Part II</em> was released in
 <strong>1989</strong>. It earned $118,450,002 with a budget of
@@ -358,9 +358,9 @@ Well, ${{taxed}}, after taxes.
 <p>The <code>epoxy</code> chunk engine can be used in any output format.
 In practice, it works best in markdown (i.e. generally in R Markdown or
 Quarto)</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>```{epoxy, .data = mpg}</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>- **{manufacturer}** _{model}_</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>```{epoxy, .data = mpg}</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>- **{manufacturer}** _{model}_</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <p>where it renders as:</p>
 <pre><code>- **Chevrolet** _Malibu_
 - **Dodge** _Caravan_
@@ -380,11 +380,11 @@ writing raw HTML and <code>epoxy_latex</code> for writing raw LaTeX.</p>
 together. The output is <a href="https://pandoc.org/MANUAL.html#raw-htmltex" class="external-link">raw HTML</a>. By
 default, expressions in these types of blocks are wrapped in
 <code>{{</code> and <code>}}</code>, like whisker templates above.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>&lt;ul&gt;</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>```{epoxy_html, .data = mpg}</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  &lt;li&gt;&lt;strong&gt;{{manufacturer}}&lt;/strong&gt; &lt;em&gt;{{model}}&lt;/em&gt;&lt;/li&gt;</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>```</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>&lt;/ul&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>&lt;ul&gt;</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_html, .data = mpg}</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  &lt;li&gt;&lt;strong&gt;{{manufacturer}}&lt;/strong&gt; &lt;em&gt;{{model}}&lt;/em&gt;&lt;/li&gt;</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>&lt;/ul&gt;</span></code></pre></div>
 <pre><code>&lt;ul&gt;
 ```{=html}
   &lt;li&gt;&lt;strong&gt;Chevrolet&lt;/strong&gt; &lt;em&gt;Malibu&lt;/em&gt;&lt;/li&gt;
@@ -403,13 +403,13 @@ be included in HTML documents</a>.</p>
 <p>If your <code>epoxy_html</code> block is contained within another a
 raw html block, or if you want to force the output to appear, you can
 set the chunk option <code>html_raw = FALSE</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>````{=html}</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>&lt;ul&gt;</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>```{epoxy_html, .data = mpg, html_raw = FALSE}</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  &lt;li&gt;&lt;strong&gt;{{manufacturer}}&lt;/strong&gt; &lt;em&gt;{{model}}&lt;/em&gt;&lt;/li&gt;</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>```</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>&lt;/ul&gt;</span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>````</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>````{=html}</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>&lt;ul&gt;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>```{epoxy_html, .data = mpg, html_raw = FALSE}</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  &lt;li&gt;&lt;strong&gt;{{manufacturer}}&lt;/strong&gt; &lt;em&gt;{{model}}&lt;/em&gt;&lt;/li&gt;</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>&lt;/ul&gt;</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>````</span></code></pre></div>
 <p><code>epoxy_html</code> uses two custom transformers,
 <code><a href="../reference/epoxy_transform_inline.html">epoxy_transform_inline()</a></code> and
 <code><a href="../reference/epoxy_transform_html.html">epoxy_transform_html()</a></code>, applying the html transformer
@@ -418,14 +418,14 @@ you can use <code>element.class#id</code> syntax to wrap expressions in
 HTML elements (all parts are optional). Let’s use this syntax to place
 manufacturer and model in <code>&lt;strong&gt;</code> and
 <code>&lt;em&gt;</code> elements, each with a custom class.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>&lt;ul&gt;</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>```{epoxy_html, .data = mpg}</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  &lt;li&gt;</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    {{strong.car-make manufacturer}}</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    {{em.car-model model}}</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  &lt;/li&gt;</span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>```</span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>&lt;/ul&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;ul&gt;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_html, .data = mpg}</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  &lt;li&gt;</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    {{strong.car-make manufacturer}}</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    {{em.car-model model}}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  &lt;/li&gt;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>&lt;/ul&gt;</span></code></pre></div>
 <pre><code>&lt;ul&gt;
 ```{=html}
   &lt;li&gt;
@@ -441,11 +441,11 @@ manufacturer and model in <code>&lt;strong&gt;</code> and
 to access the inline transformers. So
 <code>{{.uppercase manufacturer}}</code> is assumed to be a CSS class
 and not an inline transformer class.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>```{epoxy_html .data = mpg[1,]}</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>{{.uppercase manufacturer}}</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>{{@uppercase manufacturer}}</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>```{epoxy_html .data = mpg[1,]}</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>{{.uppercase manufacturer}}</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>{{@uppercase manufacturer}}</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
 <pre><code>```{=html}
 &lt;span class="uppercase"&gt;Chevrolet&lt;/span&gt;
 
@@ -458,11 +458,11 @@ CHEVROLET
 <p>Similarly, you can also use <code>epoxy_latex</code> chunks to epoxy
 R and LaTeX together. Wrap expressions in these types of chunks with
 <code>&lt;&lt;</code> and <code>&gt;&gt;</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>\begin{itemize}</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>```{epoxy_latex, .data = mpg}</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>\item &lt;&lt;.strong manufacturer&gt;&gt; &lt;&lt;.emph model&gt;&gt; gets &lt;&lt;cty&gt;&gt; city and &lt;&lt;hwy&gt;&gt; highway miles per gallon.</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>```</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>\end{itemize}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>\begin{itemize}</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>```{epoxy_latex, .data = mpg}</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>\item &lt;&lt;.strong manufacturer&gt;&gt; &lt;&lt;.emph model&gt;&gt; gets &lt;&lt;cty&gt;&gt; city and &lt;&lt;hwy&gt;&gt; highway miles per gallon.</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>\end{itemize}</span></code></pre></div>
 <p>In R Markdown knitting into a LaTeX output, this renders as:</p>
 <pre><code>\begin{itemize}
 ```{=latex}

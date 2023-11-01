@@ -1,10 +1,10 @@
 [
 	{
-		"Latest": "https://pkg.garrickadenbuie.com/epoxy/",
-	  "Development": "https://pkg.garrickadenbuie.com/epoxy/dev/"
+		"Latest Release": "https://pkg.garrickadenbuie.com/epoxy/",
+		"Development": "https://pkg.garrickadenbuie.com/epoxy/dev/"
 	},
 	"---",
-	"Releases",
+	"Previous Releases",
 	{
 		"v1.0.0": "https://pkg.garrickadenbuie.com/epoxy/v1.0.0/",
 		"v0.1.1": "https://pkg.garrickadenbuie.com/epoxy/v0.1.1/",
