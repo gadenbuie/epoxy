@@ -214,8 +214,8 @@ expression. In this example, I add a <code>.runif</code> inline formatter that g
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">epoxy_transform_inline</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  transformer <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/identity_transformer.html" class="external-link">identity_transformer</a></span>,</span>
-<span>  .and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and</a></span>,</span>
-<span>  .or <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">or</a></span>,</span>
+<span>  .and <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://pkg.rossellhayes.com/and/reference/and.html" class="external-link">and</a></span>,</span>
+<span>  .or <span class="op">=</span> <span class="fu">and</span><span class="fu">::</span><span class="va"><a href="https://pkg.rossellhayes.com/and/reference/and.html" class="external-link">or</a></span>,</span>
 <span>  .incr <span class="op">=</span> <span class="va">sort</span>,</span>
 <span>  .decr <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  .bytes <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_bytes.html" class="external-link">label_bytes</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -260,11 +260,11 @@ the current transformation. In nearly all cases, you can let
 
 
 <dt>.and</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.and x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::and()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.and x}</code>. Default is <code><a href="https://pkg.rossellhayes.com/and/reference/and.html" class="external-link">and::and()</a></code>.</p></dd>
 
 
 <dt>.or</dt>
-<dd><p>The function to apply to <code>x</code> when the template is <code>{.or x}</code>. Default is <code><a href="https://rdrr.io/pkg/and/man/and.html" class="external-link">and::or()</a></code>.</p></dd>
+<dd><p>The function to apply to <code>x</code> when the template is <code>{.or x}</code>. Default is <code><a href="https://pkg.rossellhayes.com/and/reference/and.html" class="external-link">and::or()</a></code>.</p></dd>
 
 
 <dt>.incr</dt>
@@ -438,5 +438,5 @@ the current transformation. In nearly all cases, you can let
 
   
 
-  <script>window.jQuery('.navbar-brand + small').addClass(['badge', 'bg-secondary', 'text-light']).removeClass('text-muted')</script></body></html>
+  <script src="doc-versions.js"></script></body></html>
 
