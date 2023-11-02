@@ -21,18 +21,19 @@
     return origin + path
   }
 
+  function ensureTrailingSlash (url) {
+    return /\/$/.test(url) ? url : url + '/'
+  }
+
   function findPkgdownLocalRoot () {
     // get `src` attribute of the current <script> tag
     const scripts = document.getElementsByTagName('script')
     const currentScript = scripts[scripts.length - 1]
-    const src = currentScript.getAttribute('src')
+    const src = currentScript.getAttribute('src').replace(/\/[^\/]+$/, '/')
 
-    // remove file from src to get current pkgdown root
-    src.replace(/\/[^\/]+$/, '/')
-
-    const currentDir = window.location.pathname.replace(/[^/]+$/, '/')
-    const root = new URL(currentDir + src)
-    return root.toString()
+    const currentDir = window.location.href.replace(/\/[^\/]+$/, '/')
+    const root = new URL(currentDir + src).toString()
+    return ensureTrailingSlash(root)
   }
 
   async function getVersions () {
@@ -57,7 +58,9 @@
 
   function createVersionDropdown (current, versions) {
     if (typeof versions === 'string') {
-      console.error('`doc-versions.json` should be an array or object, not a string')
+      console.error(
+        '`doc-versions.json` should be an array or object, not a string'
+      )
       return
     }
 
@@ -116,7 +119,10 @@
     if (isCurrent) a.classList.add('fw-bold')
 
     // link to current page in the other version (may not exist!)
-    a.href = window.location.href.replace(findPkgdownLocalRoot(), url)
+    a.href = window.location.href.replace(
+      findPkgdownLocalRoot(),
+      ensureTrailingSlash(url)
+    )
     a.innerText = text
 
     li.appendChild(a)
