@@ -21,6 +21,16 @@
     return origin + path
   }
 
+  function currentPkgdownRoot () {
+    // get `src` attribute of the current <script> tag
+    const scripts = document.getElementsByTagName('script')
+    const currentScript = scripts[scripts.length - 1]
+    const src = currentScript.getAttribute('src')
+
+    // remove file from src to get current pkgdown root
+    return src.replace(/\/[^\/]+$/, '/')
+  }
+
   async function getVersions () {
     let versionsUrl
     if (window.PKGDOWN_VERSIONS_URL) {
@@ -99,13 +109,13 @@
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.classList.add('dropdown-item')
-    a.href = url
-    a.innerText = text
-    if (isCurrent) {
-      a.classList.add('fw-bold')
-    }
-    li.appendChild(a)
+    if (isCurrent) a.classList.add('fw-bold')
 
+    // link to current page in the other version (may not exist!)
+    a.href = window.location.href.replace(currentPkgdownRoot(), url)
+    a.innerText = text
+
+    li.appendChild(a)
     return li
   }
 
