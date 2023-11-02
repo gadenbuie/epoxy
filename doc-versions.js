@@ -1,5 +1,5 @@
 ;(function () {
-  function findPkgdownRoot () {
+  function findPkgdownGlobalRoot () {
     const origin = window.location.origin
     const path = window.location.pathname.replace(/[^/]+$/, '')
 
@@ -21,14 +21,18 @@
     return origin + path
   }
 
-  function currentPkgdownRoot () {
+  function findPkgdownLocalRoot () {
     // get `src` attribute of the current <script> tag
     const scripts = document.getElementsByTagName('script')
     const currentScript = scripts[scripts.length - 1]
     const src = currentScript.getAttribute('src')
 
     // remove file from src to get current pkgdown root
-    return src.replace(/\/[^\/]+$/, '/')
+    src.replace(/\/[^\/]+$/, '/')
+
+    const currentDir = window.location.pathname.replace(/[^/]+$/, '/')
+    const root = new URL(currentDir + src)
+    return root.toString()
   }
 
   async function getVersions () {
@@ -36,7 +40,7 @@
     if (window.PKGDOWN_VERSIONS_URL) {
       versionsUrl = window.PKGDOWN_VERSIONS_URL
     } else {
-      let pkgdownRoot = findPkgdownRoot()
+      let pkgdownRoot = findPkgdownGlobalRoot()
       if (!/\/$/.test(pkgdownRoot)) {
         pkgdownRoot += '/'
       }
@@ -112,7 +116,7 @@
     if (isCurrent) a.classList.add('fw-bold')
 
     // link to current page in the other version (may not exist!)
-    a.href = window.location.href.replace(currentPkgdownRoot(), url)
+    a.href = window.location.href.replace(findPkgdownLocalRoot(), url)
     a.innerText = text
 
     li.appendChild(a)
