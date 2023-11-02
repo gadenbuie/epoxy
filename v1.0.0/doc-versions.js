@@ -1,5 +1,5 @@
 ;(function () {
-  function findPkgdownGlobalRoot () {
+  function findPkgdownRoot () {
     const origin = window.location.origin
     const path = window.location.pathname.replace(/[^/]+$/, '')
 
@@ -21,27 +21,12 @@
     return origin + path
   }
 
-  function ensureTrailingSlash (url) {
-    return /\/$/.test(url) ? url : url + '/'
-  }
-
-  function findPkgdownLocalRoot () {
-    // get `src` attribute of the current <script> tag
-    const scripts = document.getElementsByTagName('script')
-    const currentScript = scripts[scripts.length - 1]
-    const src = currentScript.getAttribute('src').replace(/\/[^\/]+$/, '/')
-
-    const currentDir = window.location.href.replace(/\/[^\/]+$/, '/')
-    const root = new URL(currentDir + src).toString()
-    return ensureTrailingSlash(root)
-  }
-
   async function getVersions () {
     let versionsUrl
     if (window.PKGDOWN_VERSIONS_URL) {
       versionsUrl = window.PKGDOWN_VERSIONS_URL
     } else {
-      let pkgdownRoot = findPkgdownGlobalRoot()
+      let pkgdownRoot = findPkgdownRoot()
       if (!/\/$/.test(pkgdownRoot)) {
         pkgdownRoot += '/'
       }
@@ -58,9 +43,7 @@
 
   function createVersionDropdown (current, versions) {
     if (typeof versions === 'string') {
-      console.error(
-        '`doc-versions.json` should be an array or object, not a string'
-      )
+      console.error('`doc-versions.json` should be an array or object, not a string')
       return
     }
 
@@ -116,16 +99,13 @@
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.classList.add('dropdown-item')
-    if (isCurrent) a.classList.add('fw-bold')
-
-    // link to current page in the other version (may not exist!)
-    a.href = window.location.href.replace(
-      findPkgdownLocalRoot(),
-      ensureTrailingSlash(url)
-    )
+    a.href = url
     a.innerText = text
-
+    if (isCurrent) {
+      a.classList.add('fw-bold')
+    }
     li.appendChild(a)
+
     return li
   }
 
