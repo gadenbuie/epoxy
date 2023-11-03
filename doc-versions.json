@@ -9,7 +9,7 @@
 		"version": "1.0.0.9000",
 		"url": "https://pkg.garrickadenbuie.com/epoxy/dev/",
 		"banner": {
-			"html": "This is the development version of epoxy. View the <a href=\"#\">latest release</a>.",
+			"html": "This is the development version of epoxy. View the <a>latest release</a>.",
 			"class": "alert-warning"
 		}
 	},
@@ -19,7 +19,7 @@
 		"text": "v0.1.1",
 		"url": "https://pkg.garrickadenbuie.com/epoxy/v0.1.1/",
 		"banner": {
-			"html": "A <a href=\"#\">newer version of epoxy</a> is available!",
+			"html": "A <a>newer version of epoxy</a> is available!",
 			"class": "alert-info"
 		}
 	},
@@ -27,7 +27,7 @@
 		"text": "v0.1.0",
 		"url": "https://pkg.garrickadenbuie.com/epoxy/v0.1.0/",
 		"banner": {
-			"html": "A <a href=\"#\">newer version of epoxy</a> is available!",
+			"html": "A <a>newer version of epoxy</a> is available!",
 			"class": "alert-info"
 		}
 	}

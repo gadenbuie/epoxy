@@ -182,7 +182,7 @@
     div.classList.add('alert', 'px-3', 'py-2', 'text-center', ...classes)
     div.innerHTML = html
     div.querySelectorAll('a').forEach(a => {
-      if (a.getAttribute('href') === '#') {
+      if (!a.hasAttribute('href')) {
         a.href = makeNewPkgdownLink(findPkgdownGlobalRoot())
       }
     })
