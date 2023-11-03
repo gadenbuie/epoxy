@@ -133,7 +133,7 @@
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.classList.add('dropdown-item')
-    if (isCurrent) a.classList.add('fw-bold')
+    if (isCurrent) a.classList.add('active')
 
     // link to current page in the other version (may not exist!)
     a.href = makeNewPkgdownLink(url)
