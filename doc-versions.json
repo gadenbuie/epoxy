@@ -10,7 +10,7 @@
 		"url": "https://pkg.garrickadenbuie.com/epoxy/dev/",
 		"banner": {
 			"html": "This is the development version of epoxy. View the <a href=\"#\">latest release</a>.",
-			"class": "alert-bg-warning"
+			"class": "alert-warning"
 		}
 	},
 	"---",
@@ -21,7 +21,7 @@
 		"url": "https://pkg.garrickadenbuie.com/epoxy/v0.1.1/",
 		"banner": {
 			"html": "A <a href=\"#\">newer version of epoxy</a> is available!",
-			"class": "alert-bg-info"
+			"class": "alert-info"
 		}
 	},
 	{
@@ -30,7 +30,7 @@
 		"url": "https://pkg.garrickadenbuie.com/epoxy/v0.1.0/",
 		"banner": {
 			"html": "A <a href=\"#\">newer version of epoxy</a> is available!",
-			"class": "alert-bg-info"
+			"class": "alert-info"
 		}
 	}
 ]
