@@ -22,7 +22,7 @@
   }
 
   function pathDir (url) {
-    return url.replace(/\/[^\/]+$/, '/')
+    return url.replace(/\/[^/]+$/, '/')
   }
 
   function ensureTrailingSlash (url) {
@@ -39,7 +39,7 @@
     const currentScript = scripts[scripts.length - 1]
 
     let src = pathDir(currentScript.getAttribute('src'))
-    if (!src.includes('/') || src === "/") {
+    if (!src.includes('/') || src === '/') {
       src = ''
     }
 
@@ -121,7 +121,7 @@
         return
       }
 
-      const version = item.version ? item.version : label
+      const version = item.version ? item.version : item.text.replace(/^v/, '')
       const isCurrent = current.innerText === version
       ul.appendChild(createVersionDropdownItem(item, isCurrent))
     })
@@ -129,7 +129,7 @@
     return dropdown
   }
 
-  function createVersionDropdownItem ({text, url}, isCurrent = false) {
+  function createVersionDropdownItem ({ text, url }, isCurrent = false) {
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.classList.add('dropdown-item')
@@ -167,7 +167,7 @@
   function insertBanner (banner) {
     if (!banner) return
     const main = document.querySelector('main')
-    if (!navbar) return
+    if (!main) return
 
     let { html, class: classes } = banner
     if (typeof classes === 'string') {
@@ -181,13 +181,11 @@
     const div = document.createElement('div')
     div.classList.add('alert', 'px-3', 'py-2', 'text-center', ...classes)
     div.innerHTML = html
-    div
-      .querySelectorAll('a')
-      .forEach(a => {
-        if (a.getAttribute('href') === '#') {
-          a.href = makeNewPkgdownLink(findPkgdownGlobalRoot())
-        }
-      })
+    div.querySelectorAll('a').forEach(a => {
+      if (a.getAttribute('href') === '#') {
+        a.href = makeNewPkgdownLink(findPkgdownGlobalRoot())
+      }
+    })
 
     main.insertAdjacentElement('afterbegin', div)
     return div
