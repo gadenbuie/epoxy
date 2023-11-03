@@ -21,19 +21,37 @@
     return origin + path
   }
 
+  function pathDir (url) {
+    return url.replace(/\/[^\/]+$/, '/')
+  }
+
   function ensureTrailingSlash (url) {
     return /\/$/.test(url) ? url : url + '/'
+  }
+
+  function ensureFullPath (url) {
+    return /^\//.test(url) ? window.location.origin + url : url
   }
 
   function findPkgdownLocalRoot () {
     // get `src` attribute of the current <script> tag
     const scripts = document.getElementsByTagName('script')
     const currentScript = scripts[scripts.length - 1]
-    const src = currentScript.getAttribute('src').replace(/\/[^\/]+$/, '/')
 
-    const currentDir = window.location.href.replace(/\/[^\/]+$/, '/')
+    let src = pathDir(currentScript.getAttribute('src'))
+    if (!src.includes('/') || src === "/") {
+      src = ''
+    }
+
+    const currentDir = pathDir(window.location.href)
     const root = new URL(currentDir + src).toString()
     return ensureTrailingSlash(root)
+  }
+
+  function makeNewPkgdownLink (newBase) {
+    newBase = ensureFullPath(newBase)
+    newBase = ensureTrailingSlash(newBase)
+    return window.location.href.replace(findPkgdownLocalRoot(), newBase)
   }
 
   async function getVersions () {
@@ -103,26 +121,22 @@
         return
       }
 
-      for (const [text, url] of Object.entries(item)) {
-        const isCurrent = text === `v${current.innerText}`
-        ul.appendChild(createVersionDropdownItem(text, url, isCurrent))
-      }
+      const version = item.version ? item.version : label
+      const isCurrent = current.innerText === version
+      ul.appendChild(createVersionDropdownItem(item, isCurrent))
     })
 
     return dropdown
   }
 
-  function createVersionDropdownItem (text, url, isCurrent = false) {
+  function createVersionDropdownItem ({text, url}, isCurrent = false) {
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.classList.add('dropdown-item')
     if (isCurrent) a.classList.add('fw-bold')
 
     // link to current page in the other version (may not exist!)
-    a.href = window.location.href.replace(
-      findPkgdownLocalRoot(),
-      ensureTrailingSlash(url)
-    )
+    a.href = makeNewPkgdownLink(url)
     a.innerText = text
 
     li.appendChild(a)
@@ -150,6 +164,52 @@
     return li
   }
 
+  function insertBanner (banner) {
+    if (!banner) return
+    const main = document.querySelector('main')
+    if (!navbar) return
+
+    let { html, class: classes } = banner
+    if (typeof classes === 'string') {
+      // Classes can be a string or an array of strings
+      classes = [classes]
+    }
+
+    // <div class="d-block px-3 py-2 text-center text-bold skippy">
+    // <a href="https://getbootstrap.com/" class="text-white text-decoration-none">There's a newer version of Bootstrap!</a>
+    // </div>
+    const div = document.createElement('div')
+    div.classList.add('alert', 'px-3', 'py-2', 'text-center', ...classes)
+    div.innerHTML = html
+    div
+      .querySelectorAll('a')
+      .forEach(a => {
+        if (a.getAttribute('href') === '#') {
+          a.href = makeNewPkgdownLink(findPkgdownGlobalRoot())
+        }
+      })
+
+    main.insertAdjacentElement('afterbegin', div)
+    return div
+  }
+
+  function maybeInsertBanner (versions) {
+    if (!versions) return
+    if (!Array.isArray(versions)) return
+
+    // keep versions entries that are objects with a `banner` property
+    versions = versions.filter(item => item && item.banner)
+
+    const localRoot = findPkgdownLocalRoot()
+
+    for (const version of versions) {
+      const versionUrl = ensureFullPath(version.url)
+      if (localRoot === versionUrl) {
+        return insertBanner(version.banner)
+      }
+    }
+  }
+
   async function replaceVersionWithMenu () {
     const current = document.querySelector('.navbar .navbar-brand + small')
     if (!current) return
@@ -159,6 +219,7 @@
 
     const dropdown = createVersionDropdown(current, versions)
     current.replaceWith(dropdown)
+    maybeInsertBanner(versions)
   }
 
   replaceVersionWithMenu()
