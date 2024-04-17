@@ -33,7 +33,7 @@
 #' HTML, use `!!` before the placeholder, e.g. `{{<markup> !!<name>}}`. So
 #' `{{h3 !!demo}}` will create an `<h3>` tag that accepts HTML within it.
 #'
-#' @examplesIf rlang::is_installed("shiny")
+#' @examplesIf rlang::is_installed("shiny") && rlang::is_interactive()
 #' library(shiny)
 #'
 #' ui <- fluidPage(
@@ -498,7 +498,7 @@ epoxyHTML_transformer <- function(
 #' server -- unlike [ui_epoxy_html()], whose updates are specific to the parts
 #' of the data that have changed.
 #'
-#' @examplesIf rlang::is_installed("shiny")
+#' @examplesIf rlang::is_installed("shiny") && rlang::is_interactive()
 #' library(shiny)
 #'
 #' ui <- fluidPage(
@@ -655,7 +655,7 @@ epoxy_mustache_dependencies <- function() {
 #' [ui_epoxy_html()] or [ui_epoxy_mustache()]. When the values are updated by
 #' the app, `render_epoxy()` will update the values shown in the app's UI.
 #'
-#' @examplesIf rlang::is_installed("shiny")
+#' @examplesIf rlang::is_installed("shiny") && rlang::is_interactive()
 #' # This small app shows the current time using `ui_epoxy_html()`
 #' # to provide the HTML template and `render_epoxy()` to
 #' # update the current time every second.

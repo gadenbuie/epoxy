@@ -22,7 +22,7 @@
 #' note that this will most likely overwrite the `glue` engine provided by the
 #' \pkg{glue} package.
 #'
-#' @examplesIf interactive()
+#' @examplesIf rlang::is_interactive()
 #' use_epoxy_knitr_engines()
 #'
 #' @param include The epoxy knitr engines to include. Defaults to all engines

@@ -53,7 +53,7 @@ please use \code{render_epoxy()}.
 
 }}
 \examples{
-\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # This small app shows the current time using `ui_epoxy_html()`
 # to provide the HTML template and `render_epoxy()` to
 # update the current time every second.

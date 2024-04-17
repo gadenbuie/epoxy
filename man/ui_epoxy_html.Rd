@@ -147,7 +147,7 @@ HTML, use \verb{!!} before the placeholder, e.g. \verb{\{\{<markup> !!<name>\}\}
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("shiny")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(shiny)
 
 ui <- fluidPage(
