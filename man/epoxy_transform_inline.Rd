@@ -48,7 +48,7 @@ the current transformation. In nearly all cases, you can let
 
 \item{.and}{The function to apply to \code{x} when the template is \verb{\{.and x\}}. Default is \code{\link[and:and]{and::and()}}.}
 
-\item{.or}{The function to apply to \code{x} when the template is \verb{\{.or x\}}. Default is \code{\link[and:and]{and::or()}}.}
+\item{.or}{The function to apply to \code{x} when the template is \verb{\{.or x\}}. Default is \code{\link[and:or]{and::or()}}.}
 
 \item{.incr}{The function to apply to \code{x} when the template is \verb{\{.incr x\}}. Default is \code{\link[=sort]{sort()}}.}
 
@@ -62,11 +62,11 @@ the current transformation. In nearly all cases, you can let
 
 \item{.datetime}{The function to apply to \code{x} when the template is \verb{\{.datetime x\}} or \verb{\{.dttm x\}}. Default is \code{function(x) format(x, format = "\%F \%T")}.}
 
-\item{.dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \code{\link[scales:dollar_format]{scales::label_dollar(prefix = engine_pick("$", "$", "\\\\$"))}}.}
+\item{.dollar}{The function to apply to \code{x} when the template is \verb{\{.dollar x\}}. Default is \code{\link[scales:label_dollar]{scales::label_dollar(prefix = engine_pick("$", "$", "\\\\$"))}}.}
 
 \item{.number}{The function to apply to \code{x} when the template is \verb{\{.number x\}} or \verb{\{.num x\}}. Default is \code{\link[scales:label_number]{scales::label_number()}}.}
 
-\item{.comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is \code{\link[scales:label_number]{scales::label_comma()}}.}
+\item{.comma}{The function to apply to \code{x} when the template is \verb{\{.comma x\}}. Default is \code{\link[scales:label_comma]{scales::label_comma()}}.}
 
 \item{.ordinal}{The function to apply to \code{x} when the template is \verb{\{.ordinal x\}}. Default is \code{\link[scales:label_ordinal]{scales::label_ordinal()}}.}
 
@@ -114,7 +114,7 @@ in place.
 
 The formatters, e.g. \code{.dollar} in the example above, can be customized using
 the arguments of \code{epoxy_transform_inline()}. Pass a customized
-\code{\link[scales:dollar_format]{scales::label_dollar()}} to \code{.dollar} to achieve a different transformation.
+\code{\link[scales:label_dollar]{scales::label_dollar()}} to \code{.dollar} to achieve a different transformation.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dollars_nzd <- scales::label_dollar(suffix = " NZD")
 
@@ -205,8 +205,8 @@ epoxy_html(
 \seealso{
 \code{\link[=epoxy_transform]{epoxy_transform()}}, \code{\link[=epoxy_transform_set]{epoxy_transform_set()}}
 
-Other epoxy's glue transformers: 
-\code{\link{epoxy_transform}()},
-\code{\link{epoxy_transform_html}()}
+Other epoxy's glue transformers:
+\code{\link[=epoxy_transform]{epoxy_transform()}},
+\code{\link[=epoxy_transform_html]{epoxy_transform_html()}}
 }
 \concept{epoxy's glue transformers}

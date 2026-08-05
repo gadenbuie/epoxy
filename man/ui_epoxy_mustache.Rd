@@ -24,7 +24,7 @@ ui_epoxy_whisker(
 \arguments{
 \item{id}{The ID of the output.}
 
-\item{...}{Character strings of HTML or \link[htmltools:builder]{htmltools::tags}. All elements
+\item{...}{Character strings of HTML or \link[htmltools:tags]{htmltools::tags}. All elements
 should be unnamed.}
 
 \item{.file}{A path to a template file. If provided, no other template lines
@@ -33,7 +33,7 @@ should be included in \code{...}.}
 \item{.sep}{The separator used to concatenate elements in \code{...}.}
 
 \item{.container}{A character tag name, e.g. \code{"div"} or \code{"span"}, or a
-function that returns an \code{\link[htmltools:builder]{htmltools::tag()}}.}
+function that returns an \code{\link[htmltools:tag]{htmltools::tag()}}.}
 }
 \value{
 Returns a Shiny output UI element.
@@ -57,7 +57,7 @@ package.
 
 }}
 \examples{
-\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 library(shiny)
 
 ui <- fluidPage(
@@ -113,14 +113,14 @@ if (interactive()) {
   shiny::shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_mustache")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, \code{\link[=render_epoxy]{render_epoxy()}}
 
-Other Mustache-style template functions: 
-\code{\link{epoxy_mustache}()}
+Other Mustache-style template functions:
+\code{\link[=epoxy_mustache]{epoxy_mustache()}}
 }
 \concept{Mustache-style template functions}

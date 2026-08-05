@@ -21,7 +21,7 @@ giving preference to arguments in \code{epoxy_use_chunk()} or the chunk options
 where it is called. See the "Template Options" section for more details.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=epoxy]{epoxy}}
+  Arguments passed on to \code{\link{epoxy}}
   \describe{
     \item{\code{.transformer}}{A transformer function or transformer chain created with
 \code{\link[=epoxy_transform]{epoxy_transform()}}. Alternatively, a character vector of epoxy transformer

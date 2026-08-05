@@ -101,8 +101,8 @@ epoxy_html("{{ hello }}")
 \seealso{
 Used by default in \code{\link[=epoxy_html]{epoxy_html()}}
 
-Other epoxy's glue transformers: 
-\code{\link{epoxy_transform}()},
-\code{\link{epoxy_transform_inline}()}
+Other epoxy's glue transformers:
+\code{\link[=epoxy_transform]{epoxy_transform()}},
+\code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}
 }
 \concept{epoxy's glue transformers}

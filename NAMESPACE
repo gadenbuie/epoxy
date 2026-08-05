@@ -39,8 +39,10 @@ export(ui_epoxy_mustache)
 export(ui_epoxy_whisker)
 export(use_epoxy_glue_engine)
 export(use_epoxy_knitr_engines)
-importFrom(glue,glue)
-importFrom(glue,glue_collapse)
-importFrom(glue,glue_data)
+importFrom(glue,
+  glue,
+  glue_collapse,
+  glue_data
+)
 importFrom(htmltools,HTML)
 importFrom(lifecycle,deprecated)

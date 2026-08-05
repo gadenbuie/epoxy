@@ -79,7 +79,7 @@ the expression ends with a \code{*}. Elements are separated by \code{sep}, excep
 the last two elements, which use \code{last}.}
 
 \item{language}{In \code{epoxy_transform_collapse()}, \code{language} is passed to
-\code{\link[and:and]{and::and()}} or \code{\link[and:and]{and::or()}} to choose the correct and/or phrase and spacing
+\code{\link[and:and]{and::and()}} or \code{\link[and:or]{and::or()}} to choose the correct and/or phrase and spacing
 for the \code{language}. By default, will follow the system language. See
 \link[and:and_languages]{and::and_languages} for supported languages.}
 }

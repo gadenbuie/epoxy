@@ -172,8 +172,8 @@ epoxy(
 )
 }
 \seealso{
-Other epoxy's glue transformers: 
-\code{\link{epoxy_transform_html}()},
-\code{\link{epoxy_transform_inline}()}
+Other epoxy's glue transformers:
+\code{\link[=epoxy_transform_html]{epoxy_transform_html()}},
+\code{\link[=epoxy_transform_inline]{epoxy_transform_inline()}}
 }
 \concept{epoxy's glue transformers}

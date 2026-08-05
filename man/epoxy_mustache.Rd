@@ -113,7 +113,7 @@ epoxy_mustache(
 
 }
 \seealso{
-Other Mustache-style template functions: 
-\code{\link{ui_epoxy_mustache}()}
+Other Mustache-style template functions:
+\code{\link[=ui_epoxy_mustache]{ui_epoxy_mustache()}}
 }
 \concept{Mustache-style template functions}

@@ -38,10 +38,10 @@ arguments are treated as initial values for templated variables.}
 function is passed the markdown text as a character vector for the first
 argument and any additional arguments from the list \code{.markdown_args}. By
 default, we use \code{\link[pandoc:pandoc_convert]{pandoc::pandoc_convert()}} if \pkg{pandoc} is available,
-otherwise we use \code{\link[commonmark:commonmark]{commonmark::markdown_html()}}.}
+otherwise we use \code{\link[commonmark:markdown_html]{commonmark::markdown_html()}}.}
 
 \item{.markdown_args}{A list of arguments to pass to
-\code{\link[commonmark:commonmark]{commonmark::markdown_html()}}.}
+\code{\link[commonmark:markdown_html]{commonmark::markdown_html()}}.}
 
 \item{.class, .style}{Classes and inline style directives added to the
 \verb{<epoxy-html>} container into which the elements in \code{...} are placed.}
@@ -116,10 +116,10 @@ Create reactive HTML from a Markdown template. \code{ui_epoxy_markdown()} uses t
 same template syntax as \code{\link[=ui_epoxy_html]{ui_epoxy_html()}}, but rather than requiring HTML
 inputs, you can write in markdown. The template is first rendered from
 markdown to HTML using \code{\link[pandoc:pandoc_convert]{pandoc::pandoc_convert()}} (if \pkg{pandoc} is
-available) or \code{\link[commonmark:commonmark]{commonmark::markdown_html()}} otherwise.
+available) or \code{\link[commonmark:markdown_html]{commonmark::markdown_html()}} otherwise.
 }
 \examples{
-\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 library(shiny)
 
 # Shiny epoxy template functions don't support inline transformations,
@@ -193,7 +193,7 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_markdown")
 \dontshow{\}) # examplesIf}
 }

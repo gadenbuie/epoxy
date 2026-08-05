@@ -147,7 +147,7 @@ HTML, use \verb{!!} before the placeholder, e.g. \verb{\{\{<markup> !!<name>\}\}
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("shiny") && rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 library(shiny)
 
 ui <- fluidPage(
@@ -210,7 +210,7 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 run_epoxy_example_app("ui_epoxy_html")
 \dontshow{\}) # examplesIf}
 }
