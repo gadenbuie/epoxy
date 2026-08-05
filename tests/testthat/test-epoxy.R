@@ -336,7 +336,11 @@ test_that("epoxy() and epoxy_mustache() collect remote `tbl_sql` tables", {
 	skip_if_not_installed("RSQLite")
 
 	# https://dbplyr.tidyverse.org/articles/reprex.html
-	mtcars_db <- dbplyr::memdb_frame(!!!mtcars)
+	mtcars_db <- dplyr::copy_to(
+		dbplyr::memdb(),
+		mtcars,
+		name = paste0("epoxy_mtcars_", basename(tempfile()))
+	)
 	mtcars_row <- dplyr::filter(mtcars_db, cyl == 4, gear == 4, disp > 145)
 
 	expect_equal(
