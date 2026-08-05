@@ -89,7 +89,7 @@ from {n_trees} trees at {n_timepoints} timepoints in the study.
 ```
 :::
 
-With normal R Markdown [inline reporting](https://bookdown.org/yihui/rmarkdown-cookbook/r-code.html)
+With normal R Markdown [inline reporting](https://pkg.yihui.org/rmarkdown-cookbook/r-code.html)
 we would have written this in our `.Rmd` file instead:
 
 ````{verbatim}
@@ -326,7 +326,7 @@ A quick recap of the growth observed in the orange trees:
 
 ### Template inline reporting chunks
 
-By using [knitr's reference labels feature](https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html#ref-label),
+By using [knitr's reference labels feature](https://pkg.yihui.org/rmarkdown-cookbook/reuse-chunks.html#ref-label),
 and the `epoxy` `.data` chunk option we saw above,
 you can create an epoxy template
 that you can re-use like a parameterized chunk.

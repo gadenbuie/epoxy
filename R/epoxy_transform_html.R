@@ -2,7 +2,7 @@
 #'
 #' @description
 #' `epoxy_transform_html()` provides a
-#' [pug](https://pughtml.com/what-is-pug-html)-like syntax for expressions in
+#' [pug](https://www.pughtml.com/)-like syntax for expressions in
 #' HTML that are wrapped in HTML elements.
 #'
 #' ## Syntax
