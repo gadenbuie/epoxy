@@ -1,5 +1,8 @@
 # epoxy (development version)
 
+* Fixed an issue with a test fixture caused by an upstream breaking change to
+  get epoxy back on CRAN.
+
 # epoxy 1.0.0
 
 ## Breaking Changes
