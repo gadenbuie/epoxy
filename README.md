@@ -154,7 +154,7 @@ library(epoxy)
 ```
 
 Loading epoxy adds four new [knitr
-engines](https://bookdown.org/yihui/rmarkdown/language-engines.html), or
+engines](https://pkg.yihui.org/rmarkdown-book/language-engines.html), or
 chunk types. Each type lets you intermix text with R code or data
 (`expr` in the table below), and each is geared toward a different
 output context.
