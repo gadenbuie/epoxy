@@ -1,13 +1,18 @@
 describe("ui_epoxy_html()", {
 	example <- "BAD"
 
-	it ("doesn't find things in the global environment", {
+	it("doesn't find things in the global environment", {
 		example <- "BADBAD"
 		ex <- ui_epoxy_html("test", "{{example}}", example = "GOOD")
 		expect_true(grepl("GOOD", format(ex)))
 		expect_false(grepl("BAD", format(ex)))
 
-		ex2 <- ui_epoxy_html("test", "{{example}}", example = "GOOD", .placeholder = "NEUTRAL")
+		ex2 <- ui_epoxy_html(
+			"test",
+			"{{example}}",
+			example = "GOOD",
+			.placeholder = "NEUTRAL"
+		)
 		expect_true(grepl("GOOD", format(ex2)))
 		expect_false(grepl("NEUTRAL", format(ex2)))
 		expect_false(grepl("BAD", format(ex2)))
@@ -17,23 +22,42 @@ describe("ui_epoxy_html()", {
 		expect_false(grepl("BAD", format(ex3)))
 	})
 
-	it ("works with htmltags, too", {
-		ex <- ui_epoxy_html("test", htmltools::tags$p("{{example}}"), example = "GOOD")
+	it("works with htmltags, too", {
+		ex <- ui_epoxy_html(
+			"test",
+			htmltools::tags$p("{{example}}"),
+			example = "GOOD"
+		)
 		expect_true(grepl("<p>.+GOOD.*</p>", format(ex)))
 
 		ex2 <- ui_epoxy_html("test", "{{p example}}", example = "GOOD")
-		expect_true(grepl("<p class=\"epoxy-item__placeholder\".+GOOD.*</p>", format(ex2)))
+		expect_true(grepl(
+			"<p class=\"epoxy-item__placeholder\".+GOOD.*</p>",
+			format(ex2)
+		))
 	})
 
-	it ("works with html in placeholders", {
-		ex <- ui_epoxy_html("test", "{{example}}", example="<strong>placeholder</strong>")
+	it("works with html in placeholders", {
+		ex <- ui_epoxy_html(
+			"test",
+			"{{example}}",
+			example = "<strong>placeholder</strong>"
+		)
 		expect_true(grepl("<strong>placeholder</strong>", format(ex), fixed = TRUE))
 
-		ex2 <- ui_epoxy_html("test", "{{example}}", example = htmltools::tags$strong("placeholder"))
-		expect_true(grepl("<strong>placeholder</strong>", format(ex2), fixed = TRUE))
+		ex2 <- ui_epoxy_html(
+			"test",
+			"{{example}}",
+			example = htmltools::tags$strong("placeholder")
+		)
+		expect_true(grepl(
+			"<strong>placeholder</strong>",
+			format(ex2),
+			fixed = TRUE
+		))
 	})
 
-	it (".item_container", {
+	it(".item_container", {
 		div_span <- ui_epoxy_html("test", "{{item}}")
 		expect_s3_class(div_span, "shiny.tag")
 		expect_equal(div_span$name, "epoxy-html")

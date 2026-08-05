@@ -144,7 +144,8 @@ Well, ${{taxed}}, after taxes.
 
 	expect_equal(
 		render_rmd(rmd),
-		c("Hello Chris, You have just won $1000! Well, $600, after taxes.",
+		c(
+			"Hello Chris, You have just won $1000! Well, $600, after taxes.",
 			"",
 			"Hello Jane, You have just won $2000!"
 		)
@@ -169,7 +170,8 @@ Well, ${{taxed}}, after taxes.
 
 	expect_equal(
 		render_rmd(rmd),
-		c("Hello Chris, You have just won $1000!",
+		c(
+			"Hello Chris, You have just won $1000!",
 			"",
 			"Hello Jane, You have just won $2000!"
 		)
@@ -194,7 +196,8 @@ Well, ${{taxed}}, after taxes.
 
 	expect_equal(
 		render_rmd(rmd),
-		c("Hello Chris, You have just won $1000!",
+		c(
+			"Hello Chris, You have just won $1000!",
 			"",
 			"Hello Jane, You have just won $1000!"
 		)
@@ -203,25 +206,25 @@ Well, ${{taxed}}, after taxes.
 
 
 describe("chunk engine deprecations", {
-	it ("warns about `epoxy_style` deprecation", {
+	it("warns about `epoxy_style` deprecation", {
 		lifecycle::expect_deprecated(
 			deprecate_epoxy_style_chunk_option(list(epoxy_style = "bold"))
 		)
 	})
 
-	it ("warns about `glue_data` chunk option deprecation", {
+	it("warns about `glue_data` chunk option deprecation", {
 		lifecycle::expect_defunct(
 			deprecate_glue_data_chunk_option(list(glue_data = list()))
 		)
 	})
 
-	it ("warns about `glue` chunk engine usage", {
+	it("warns about `glue` chunk engine usage", {
 		lifecycle::expect_deprecated(
 			deprecate_glue_engine_prefix(list(engine = "glue"))
 		)
 	})
 
-	it ("warns about `glue` chunk engine prefix", {
+	it("warns about `glue` chunk engine prefix", {
 		lifecycle::expect_deprecated(
 			deprecate_glue_engine_prefix(list(engine = "glue_html")),
 			"epoxy_html"

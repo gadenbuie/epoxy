@@ -17,19 +17,30 @@ render_rmd <- function(
 	tmpfile <- tempfile(fileext = ".Rmd")
 	on.exit(unlink(tmpfile))
 	writeLines(rmd_text, tmpfile)
-	out <- rmarkdown::render(tmpfile, output_format = output_format, ..., envir = envir, quiet = TRUE)
+	out <- rmarkdown::render(
+		tmpfile,
+		output_format = output_format,
+		...,
+		envir = envir,
+		quiet = TRUE
+	)
 	if (is.character(out) && file.exists(out)) {
 		on.exit(unlink(out), add = TRUE)
 		readLines(out)
-	} else out
+	} else {
+		out
+	}
 }
 
 render_basic_rmd <- function(..., envir = parent.frame()) {
-	render_rmd(c(
-		"---",
-		"output: md_document",
-		"---",
-		"",
-		...
-	), envir = envir)
+	render_rmd(
+		c(
+			"---",
+			"output: md_document",
+			"---",
+			"",
+			...
+		),
+		envir = envir
+	)
 }

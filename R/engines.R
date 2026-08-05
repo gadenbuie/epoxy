@@ -55,12 +55,12 @@ use_epoxy_knitr_engines <- function(
 	include <- unname(engine_validate_alias(include))
 
 	if ("md" %in% include) {
-		knitr::knit_engines$set(epoxy  = knitr_engine_epoxy)
+		knitr::knit_engines$set(epoxy = knitr_engine_epoxy)
 	}
 
 	if ("html" %in% include) {
 		knitr::knit_engines$set(
-			epoxy_html  = knitr_engine_epoxy_html,
+			epoxy_html = knitr_engine_epoxy_html,
 			"glue_html" = knitr_engine_epoxy_html
 		)
 	}
@@ -68,13 +68,13 @@ use_epoxy_knitr_engines <- function(
 	if ("latex" %in% include) {
 		knitr::knit_engines$set(
 			"epoxy_latex" = knitr_engine_epoxy_latex,
-			"glue_latex"  = knitr_engine_epoxy_latex
+			"glue_latex" = knitr_engine_epoxy_latex
 		)
 	}
 
 	if (include_mustache) {
 		knitr::knit_engines$set(
-			"whisker"  = knitr_engine_whisker,
+			"whisker" = knitr_engine_whisker,
 			"mustache" = knitr_engine_whisker
 		)
 	}
@@ -128,7 +128,7 @@ eval_epoxy_engine <- function(fn, code, options) {
 	defaults <- defaults[setdiff(names(defaults), exclude)]
 	defaults <- lapply(defaults, rlang::eval_bare, env = environment(fn))
 	defaults$.envir <- knitr::knit_global()
-	defaults$.collapse  <- "\n"
+	defaults$.collapse <- "\n"
 
 	chunk_opt_names <- c("data", ".data", names(defaults))
 	chunk_opts <- options[intersect(chunk_opt_names, names(options))]
@@ -249,14 +249,20 @@ prep_whisker_data <- function(x) {
 	x_len <- vapply(x, length, integer(1))
 	x_null <- vapply(x, is.null, logical(1))
 	if (length(unique(x_len[!x_null])) != 1 && !all(x_len[!x_null] > 0)) {
-		stop("data must be the same length: ", paste(x_len[!x_null], collapse = ", "), call. = FALSE)
+		stop(
+			"data must be the same length: ",
+			paste(x_len[!x_null], collapse = ", "),
+			call. = FALSE
+		)
 	}
 
 	# turn list(a = 1:2, b = 3:4, c = 5)
 	# into list(list(a = 1, b = 3, c = 5), list(a = 2, b = 4, c = 5))
-	lapply(seq_len(max(x_len)), function(i) lapply(x, function(y) {
-		y[[if (length(y) == 1) 1 else i]]
-	}))
+	lapply(seq_len(max(x_len)), function(i) {
+		lapply(x, function(y) {
+			y[[if (length(y) == 1) 1 else i]]
+		})
+	})
 }
 
 knitr_chunk_option_echo <- function(options) {

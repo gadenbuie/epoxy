@@ -1,7 +1,6 @@
 # test_that()
 
 describe("epoxy_use_chunk()", {
-
 	it("can be called in an R chunk", {
 		expect_equal(
 			render_rmd(test_path("rmds", "use-chunk_chunk.Rmd")),
@@ -36,7 +35,9 @@ describe("epoxy_use_chunk()", {
 		epoxy_transform_set(epoxy_transform_bold, engine = "md")
 		epoxy_transform_set(epoxy_transform_italic, engine = "html")
 		epoxy_transform_set(epoxy_transform_code, engine = "latex")
-		on.exit({ epoxy_transform_set(NULL) })
+		on.exit({
+			epoxy_transform_set(NULL)
+		})
 
 		picked_md <- NULL
 		picked_html <- NULL
@@ -212,9 +213,11 @@ describe("epoxy_use_file()", {
 			epoxy_use_file(file = tmpl, engine = "epoxy"),
 			knitr::asis_output(
 				gsub(
-					"}}", "}",
+					"}}",
+					"}",
 					gsub(
-						"{{", "{",
+						"{{",
+						"{",
 						read_body_without_yaml(tmpl),
 						fixed = TRUE
 					),

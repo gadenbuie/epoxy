@@ -11,8 +11,6 @@ ui <- fixedPage(
 	includeScript("epoxy-no-shiny.js")
 )
 
-server <- function(input, output, session) {
-
-}
+server <- function(input, output, session) {}
 
 shinyApp(ui, server)

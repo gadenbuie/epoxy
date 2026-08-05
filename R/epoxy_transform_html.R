@@ -112,10 +112,14 @@ epoxy_transform_html <- function(
 		}
 
 		tag_name <- markup$element
-		if (is.null(tag_name)) tag_name <- element
+		if (is.null(tag_name)) {
+			tag_name <- element
+		}
 
 		html <- lapply(text, function(x) {
-			if (markup$as_html) x <- htmltools::HTML(x)
+			if (markup$as_html) {
+				x <- htmltools::HTML(x)
+			}
 			htmltools::tag(
 				tag_name,
 				list(class = class, class = markup$class, id = markup$id, x),
@@ -159,8 +163,7 @@ parse_html_markup <- function(x) {
 
 	# pug-like syntax starts with # (id), . (class), or element name
 	has_el_syntax <-
-		substr(x, 1, 1) %in% c("#", "%", ".") ||
-			grepl(html_element_rgx(), x)
+		substr(x, 1, 1) %in% c("#", "%", ".") || grepl(html_element_rgx(), x)
 
 	if (!has_el_syntax) {
 		return(parse_placeholder(x))
@@ -194,7 +197,9 @@ parse_html_markup <- function(x) {
 			out$id <- this_id
 		} else {
 			if (!is.null(out$element)) {
-				rlang::abort("Multiple elements were specified, please specify only one element.")
+				rlang::abort(
+					"Multiple elements were specified, please specify only one element."
+				)
 			}
 			if (!m_part %in% names(htmltools::tags)) {
 				rlang::abort(glue::glue("Unknown tag used in markup: `{m_part}`"))

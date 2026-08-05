@@ -56,7 +56,11 @@
 #'   be passed to the `.transformer` argument of [epoxy()] or [glue::glue()].
 #' @family epoxy's glue transformers
 #' @export
-epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()) {
+epoxy_transform <- function(
+	...,
+	engine = NULL,
+	syntax = lifecycle::deprecated()
+) {
 	if (lifecycle::is_present(syntax)) {
 		lifecycle::deprecate_warn(
 			"0.1.0",
@@ -73,16 +77,27 @@ epoxy_transform <- function(..., engine = NULL, syntax = lifecycle::deprecated()
 	parent_env <- rlang::caller_env()
 	dots <- rlang::enexprs(...)
 
-	dots <- purrr::modify_if(dots, rlang::is_call, close_over_transformer, parent_env)
+	dots <- purrr::modify_if(
+		dots,
+		rlang::is_call,
+		close_over_transformer,
+		parent_env
+	)
 	dots <- purrr::modify_if(dots, rlang::is_symbol, rlang::eval_bare, parent_env)
 	dots <- purrr::modify_if(dots, is.character, find_epoxy_transformer)
 
 	with_options(
 		list(epoxy.engine = engine),
-		purrr::reduce(dots, function(x, y) {
-			if (is.null(x)) return(y())
-			y(transformer = x)
-		}, .init = NULL)
+		purrr::reduce(
+			dots,
+			function(x, y) {
+				if (is.null(x)) {
+					return(y())
+				}
+				y(transformer = x)
+			},
+			.init = NULL
+		)
 	)
 }
 
@@ -145,7 +160,7 @@ epoxy_transform_set <- function(
 
 	dots <- list_split_named(rlang::list2(...))
 	transforms <- dots$unnamed
-	inlines  <- dots$named
+	inlines <- dots$named
 
 	if (length(transforms) + length(inlines) == 0) {
 		# get current option values
@@ -162,7 +177,9 @@ epoxy_transform_set <- function(
 		}
 	}
 
-	if (length(transforms) == 0) return(invisible())
+	if (length(transforms) == 0) {
+		return(invisible())
+	}
 
 	opts_to_set <- list()
 	for (eng in engine) {
@@ -248,7 +265,10 @@ epoxy_transform_wrap <- function(
 #' @describeIn epoxy_transform_one_shot Embolden variables using `**` in
 #'   markdown, `<strong>` in HTML, or `\textbf{}` in LaTeX.
 #' @export
-epoxy_transform_bold <- function(engine = NULL, transformer = glue::identity_transformer) {
+epoxy_transform_bold <- function(
+	engine = NULL,
+	transformer = glue::identity_transformer
+) {
 	epoxy_transform_wrap(
 		before = engine_pick("**", "<strong>", "\\textbf{"),
 		after = engine_pick("**", "</strong>", "}"),
@@ -260,7 +280,10 @@ epoxy_transform_bold <- function(engine = NULL, transformer = glue::identity_tra
 #' @describeIn epoxy_transform_one_shot Italicize variables using `_` in
 #'   markdown, `<em>` in HTML, or `\emph{}` in LaTeX.
 #' @export
-epoxy_transform_italic <- function(engine = NULL, transformer = glue::identity_transformer) {
+epoxy_transform_italic <- function(
+	engine = NULL,
+	transformer = glue::identity_transformer
+) {
 	epoxy_transform_wrap(
 		before = engine_pick("_", "<em>", "\\emph{"),
 		after = engine_pick("_", "</em>", "}"),
@@ -288,7 +311,10 @@ epoxy_transform_apply <- function(
 #' @describeIn epoxy_transform_one_shot Code format variables using ` `` ` in
 #'   markdown, `<code>` in HTML, or `\texttt{}` in LaTeX.
 #' @export
-epoxy_transform_code <- function(engine = NULL, transformer = glue::identity_transformer) {
+epoxy_transform_code <- function(
+	engine = NULL,
+	transformer = glue::identity_transformer
+) {
 	epoxy_transform_wrap(
 		before = engine_pick("`", "<code>", "\\texttt{"),
 		after = engine_pick("`", "</code>", "}"),
@@ -332,7 +358,9 @@ engine_pick <- function(md, html = md, latex = md) {
 }
 
 engine_current <- function(default = NULL) {
-	knitr_engine <- if (!knitr_is_inline_chunk()) knitr::opts_current$get("engine")
+	knitr_engine <- if (!knitr_is_inline_chunk()) {
+		knitr::opts_current$get("engine")
+	}
 
 	if (!is.null(knitr_engine) && !knitr_engine %in% names(engine_aliases)) {
 		knitr_engine <- NULL

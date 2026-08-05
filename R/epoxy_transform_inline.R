@@ -79,30 +79,30 @@
 epoxy_transform_inline <- function(
 	...,
 	transformer = glue::identity_transformer,
-	.and         = and::and,
-	.or          = and::or,
-	.incr        = sort,
-	.decr        = function(x) sort(x, decreasing = TRUE),
-	.bytes       = scales::label_bytes(),
-	.date        = function(x) format(x, format = "%F"),
-	.time        = function(x) format(x, format = "%T"),
-	.datetime    = function(x) format(x, format = "%F %T"),
-	.dollar      = scales::label_dollar(prefix = engine_pick("$", "$", "\\$")),
-	.number      = scales::label_number(),
-	.comma       = scales::label_comma(),
-	.ordinal     = scales::label_ordinal(),
-	.percent     = scales::label_percent(suffix = engine_pick("%", "%", "\\%")),
-	.pvalue      = scales::label_pvalue(),
-	.scientific  = scales::label_scientific(),
-	.uppercase   = toupper,
-	.lowercase   = tolower,
-	.titlecase   = function(x) tools::toTitleCase(as.character(x)),
-	.sentence    = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
-	.squote      = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
-	.dquote      = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
-	.strong      = NULL,
-	.emph        = NULL,
-	.code        = NULL
+	.and = and::and,
+	.or = and::or,
+	.incr = sort,
+	.decr = function(x) sort(x, decreasing = TRUE),
+	.bytes = scales::label_bytes(),
+	.date = function(x) format(x, format = "%F"),
+	.time = function(x) format(x, format = "%T"),
+	.datetime = function(x) format(x, format = "%F %T"),
+	.dollar = scales::label_dollar(prefix = engine_pick("$", "$", "\\$")),
+	.number = scales::label_number(),
+	.comma = scales::label_comma(),
+	.ordinal = scales::label_ordinal(),
+	.percent = scales::label_percent(suffix = engine_pick("%", "%", "\\%")),
+	.pvalue = scales::label_pvalue(),
+	.scientific = scales::label_scientific(),
+	.uppercase = toupper,
+	.lowercase = tolower,
+	.titlecase = function(x) tools::toTitleCase(as.character(x)),
+	.sentence = function(x) `substr<-`(x, 1, 1, toupper(substr(x, 1, 1))),
+	.squote = function(x) sQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
+	.dquote = function(x) dQuote(x, q = getOption("epoxy.fancy_quotes", FALSE)),
+	.strong = NULL,
+	.emph = NULL,
+	.code = NULL
 ) {
 	force(transformer)
 
@@ -310,15 +310,15 @@ epoxy_transform_inline_defaults <- function() {
 }
 
 epoxy_inline_aliases <- c(
-	.bold   = ".strong",
+	.bold = ".strong",
 	.italic = ".emph",
-	.dttm   = ".datetime",
-	.num    = ".number",
-	.pct    = ".percent",
-	.uc     = ".uppercase",
-	.lc     = ".lowercase",
-	.tc     = ".titlecase",
-	.sc     = ".sentence"
+	.dttm = ".datetime",
+	.num = ".number",
+	.pct = ".percent",
+	.uc = ".uppercase",
+	.lc = ".lowercase",
+	.tc = ".titlecase",
+	.sc = ".sentence"
 )
 
 epoxy_transform_inline_add_aliases <- function(fmts) {

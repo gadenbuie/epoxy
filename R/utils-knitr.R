@@ -20,7 +20,9 @@ knitr_chunk_specific_options <- function(label = knitr_current_label()) {
 	}
 
 	chunk <- knitr::knit_code$get(label)
-	if (is.null(chunk)) return(NULL)
+	if (is.null(chunk)) {
+		return(NULL)
+	}
 
 	opts <- attr(chunk, "chunk_opts")
 
