@@ -1,22 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <h1 align="center">
-
 <a href='http://pkg.garrickadenbuie.com/epoxy/'><img src='man/figures/logo.png' align="center" height="250" alt="epoxy logo" /></a><br/>
 {epoxy}
 </h1>
-
 <p align="center">
-
 <b>extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for
 scripts, reports, and apps.
 </p>
-
 <p align="center">
-
 <!-- badges: start -->
-
 <a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status" /></a>
 <a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge" /></a>
 <a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check" /></a>
@@ -71,9 +64,7 @@ the inline transformer to format the replacement text as we build up a
 description from this data.
 
 <details>
-
 <summary>
-
 Movie data
 </summary>
 
@@ -108,7 +99,6 @@ and it features movie stars
 ````
 
 <blockquote>
-
 The movie *Back to the Future Part II* was released in **1989**. It
 earned \$118,450,002 with a budget of \$40,000,000, and it features
 movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas
@@ -159,12 +149,12 @@ chunk types. Each type lets you intermix text with R code or data
 (`expr` in the table below), and each is geared toward a different
 output context.
 
-| Engine | Output Context | Delimiter |
-|:---|:---|:--:|
-| `epoxy` | all-purpose markdown | `{expr}` |
-| `epoxy_html` | HTML | `{{expr}}` |
-| `epoxy_latex` | LaTeX | `<<expr>>` |
-| `whisker` | all-purpose | [mustache template language](https://mustache.github.io/) |
+| Engine        | Output Context       |                         Delimiter                         |
+|:--------------|:---------------------|:---------------------------------------------------------:|
+| `epoxy`       | all-purpose markdown |                         `{expr}`                          |
+| `epoxy_html`  | HTML                 |                        `{{expr}}`                         |
+| `epoxy_latex` | LaTeX                |                        `<<expr>>`                         |
+| `whisker`     | all-purpose          | [mustache template language](https://mustache.github.io/) |
 
 ⚠️ **Caution:** Previously, epoxy provided a `glue` engine, but this
 conflicts with a similar chunk engine by the
