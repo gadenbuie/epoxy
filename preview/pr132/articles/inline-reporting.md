@@ -95,7 +95,7 @@ Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 ````
 
-Report prepared on 2026-08-05 from `inline-reporting.Rmd` with knitr
+Report prepared on 2026-08-07 from `inline-reporting.Rmd` with knitr
 version 1.51 😆. Read more about
 [`knitr::knit()`](https://rdrr.io/pkg/knitr/man/knit.html).
 
@@ -112,7 +112,7 @@ Read more about [`knitr::knit()`]({doc_url}).
 ```
 ````
 
-Report prepared on 2026-08-05 from `inline-reporting.Rmd` with knitr
+Report prepared on 2026-08-07 from `inline-reporting.Rmd` with knitr
 version 1.51 😆. Read more about
 [`knitr::knit()`](https://rdrr.io/pkg/knitr/man/knit.html).
 
