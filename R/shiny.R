@@ -10,7 +10,7 @@
 #' element in your UI, with the classes specified in `.class_item`.
 #'
 #' `ui_epoxy_html()` also supports an HTML markup syntax similar to
-#' [pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). As an
+#' [pug](https://www.pughtml.com/) (an HTML preprocessor). As an
 #' example, the markup syntax
 #' ```
 #' "{{h3.example.basic#basic-three demo}}"
@@ -385,7 +385,6 @@ ui_epoxy_markdown <- function(
 	.container = deprecated(),
 	.container_item = deprecated()
 ) {
-
 	dots <- list_split_named(rlang::dots_list(...))
 	lines <- dots[["unnamed"]]
 	dots <- dots[["named"]]
@@ -469,7 +468,9 @@ epoxyHTML_transformer <- function(
 			placeholder <- htmltools::HTML(placeholder)
 		}
 		tag_name <- markup$element
-		if (is.null(tag_name)) tag_name <- element
+		if (is.null(tag_name)) {
+			tag_name <- element
+		}
 		htmltools::tag(
 			tag_name,
 			list(
@@ -588,7 +589,9 @@ ui_epoxy_mustache <- function(
 
 	dots <- rlang::list2(...)
 	if (length(dots) == 0) {
-		if (is.null(.file)) return(NULL)
+		if (is.null(.file)) {
+			return(NULL)
+		}
 		dots <- as.list(readLines(.file))
 	} else {
 		if (!is.null(.file)) {
@@ -603,7 +606,9 @@ ui_epoxy_mustache <- function(
 	dots <- purrr::flatten_chr(dots)
 
 	if (!purrr::every(dots, is.character)) {
-		rlang::abort("All template elements in `...` must be characters or htmltools tags.")
+		rlang::abort(
+			"All template elements in `...` must be characters or htmltools tags."
+		)
 	}
 
 	out <- .container(
@@ -788,9 +793,15 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 	ex <- readLines(ex_path, warn = FALSE)
 	idx_start <- min(grep("## End(Don't show)", ex, fixed = TRUE))
 	idx_end <- max(grep("shinyApp", ex, fixed = TRUE))
-	if (is.infinite(idx_end)) return("")
-	if (nzchar(ex[idx_start])) idx_start <- idx_start + 1
-	if (ex[idx_start] == "library(shiny)") idx_start <- idx_start + 1
+	if (is.infinite(idx_end)) {
+		return("")
+	}
+	if (nzchar(ex[idx_start])) {
+		idx_start <- idx_start + 1
+	}
+	if (ex[idx_start] == "library(shiny)") {
+		idx_start <- idx_start + 1
+	}
 	app_lines <- c(
 		glue("# Generated from example in {fn_name}: do not edit by hand"),
 		"library(shiny)",
@@ -827,7 +838,12 @@ write_epoxy_example_app <- function(name, fn_name = paste0(name, "()")) {
 #' @seealso [ui_epoxy_html()], [ui_epoxy_markdown()], [ui_epoxy_mustache()], [render_epoxy()]
 #' @export
 run_epoxy_example_app <- function(
-	name = c("ui_epoxy_html", "ui_epoxy_markdown", "ui_epoxy_mustache", "render_epoxy"),
+	name = c(
+		"ui_epoxy_html",
+		"ui_epoxy_markdown",
+		"ui_epoxy_mustache",
+		"render_epoxy"
+	),
 	display.mode = "showcase",
 	...
 ) {

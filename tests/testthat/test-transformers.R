@@ -116,7 +116,10 @@ test_that("epoxy_transform_*() functions choose engine by argument", {
 	)
 
 	expect_equal(
-		glue("{'text'}", .transformer = epoxy_transform("bold", engine = "markdown")),
+		glue(
+			"{'text'}",
+			.transformer = epoxy_transform("bold", engine = "markdown")
+		),
 		"**text**"
 	)
 
@@ -301,24 +304,44 @@ describe("epoxy_transform_collapse()", {
 
 	it("chains transformers", {
 		expect_equal(
-			glue("{1:3&}", .transformer = epoxy_transform_collapse(transformer = epoxy_transform_bold())),
+			glue(
+				"{1:3&}",
+				.transformer = epoxy_transform_collapse(
+					transformer = epoxy_transform_bold()
+				)
+			),
 			and::and(glue("**{1:3}**"))
 			# "**1**, **2**, and **3**"
 		)
 
 		expect_equal(
-			glue("{1:3*}", .transformer = epoxy_transform_collapse(transformer = epoxy_transform_bold())),
+			glue(
+				"{1:3*}",
+				.transformer = epoxy_transform_collapse(
+					transformer = epoxy_transform_bold()
+				)
+			),
 			"**1**, **2**, **3**"
 		)
 
 		expect_equal(
-			glue("{1:3&}", .transformer = epoxy_transform_bold(transformer = epoxy_transform_collapse())),
+			glue(
+				"{1:3&}",
+				.transformer = epoxy_transform_bold(
+					transformer = epoxy_transform_collapse()
+				)
+			),
 			glue("**{and::and(1:3)}**")
 			# "**1, 2, and 3**"
 		)
 
 		expect_equal(
-			glue("{1:3*}", .transformer = epoxy_transform_bold(transformer = epoxy_transform_collapse())),
+			glue(
+				"{1:3*}",
+				.transformer = epoxy_transform_bold(
+					transformer = epoxy_transform_collapse()
+				)
+			),
 			"**1, 2, 3**"
 		)
 	})

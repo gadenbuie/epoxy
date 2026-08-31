@@ -1,6 +1,6 @@
 Package: epoxy
 Title: String Interpolation for Documents, Reports and Apps
-Version: 1.0.0.9000
+Version: 1.0.1
 Authors@R: c(
     person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7111-0077")),
@@ -46,8 +46,8 @@ VignetteBuilder:
     rmarkdown
 Config/Needs/rcmdcheck: RSQLite, rstudio/chromote
 Config/Needs/website: rstudio/rmarkdown, gadenbuie/grkgdown
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.1.0

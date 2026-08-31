@@ -290,7 +290,6 @@ describe("epoxy() with various delimiters", {
 			epoxy("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}"),
 			glue("{{one}} and {{two}} or {{three}}", .open = "{{", .close = "}}")
 		)
-
 	})
 
 	it("works with [ ]", {
@@ -307,7 +306,11 @@ describe("epoxy() with various delimiters", {
 
 	it("works with [[ ]]", {
 		expect_equal(
-			epoxy("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]"),
+			epoxy(
+				"[[one]] and [[[[two]]]] or [[three]]",
+				.open = "[[",
+				.close = "]]"
+			),
 			glue("[[one]] and [[[[two]]]] or [[three]]", .open = "[[", .close = "]]")
 		)
 

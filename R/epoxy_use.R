@@ -149,7 +149,9 @@ read_body_without_yaml <- function(path) {
 	idx_nzchar <- which(nzchar(x_trimmed))[1]
 	idx_start <- grep("^---$", x_trimmed)
 
-	if (length(idx_start)) idx_start <- idx_start[1]
+	if (length(idx_start)) {
+		idx_start <- idx_start[1]
+	}
 
 	if (length(idx_start) == 0 || idx_nzchar < idx_start) {
 		return(paste(x, collapse = "\n"))
@@ -183,7 +185,9 @@ epoxy_use_template <- function(
 	# 2. Options from the chunk in the template
 	# 3. Global knitr options in the current environment
 	opts_fn <- rlang::list2(eval = TRUE, ...)
-	if (!is.null(.data)) opts_fn[[".data"]] <- .data
+	if (!is.null(.data)) {
+		opts_fn[[".data"]] <- .data
+	}
 
 	opts_global <- knitr::opts_current$get()
 	opts_current <- knitr_chunk_specific_options()

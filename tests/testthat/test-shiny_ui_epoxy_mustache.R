@@ -4,7 +4,6 @@ skip_if_not_installed("shinytest2")
 library(shinytest2)
 
 test_that("ui_epoxy_mustache() with an array of values", {
-
 	app <- AppDriver$new(
 		app_dir = system.file("examples", "ui_epoxy_mustache", package = "epoxy"),
 		name = "shiny_word-list",

@@ -21,7 +21,8 @@ str_count <- function(text, pattern) {
 	vapply(x, length, integer(1))
 }
 
-is_htmlish_output <- function(exclude = NULL) { # nocov start
+is_htmlish_output <- function(exclude = NULL) {
+	# nocov start
 	if (isTRUE(rmarkdown::metadata$always_allow_html)) {
 		return(TRUE)
 	}
@@ -38,10 +39,18 @@ is_htmlish_output <- function(exclude = NULL) { # nocov start
 	}
 
 	fmt_htmlish <- c(
-		"markdown", "gfm",
-		"epub", "epub2", "epub3",
-		"html", "html4", "html5",
-		"revealjs", "s5", "slideous", "slidy"
+		"markdown",
+		"gfm",
+		"epub",
+		"epub2",
+		"epub3",
+		"html",
+		"html4",
+		"html5",
+		"revealjs",
+		"s5",
+		"slideous",
+		"slidy"
 	)
 	fmt_htmlish <- setdiff(fmt_htmlish, exclude)
 	fmt %in% fmt_htmlish

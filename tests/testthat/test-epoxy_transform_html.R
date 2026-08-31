@@ -38,12 +38,16 @@ describe("epoxy_transform_html()", {
 
 		expect_equal(
 			epoxy_transform_html()("span.test-class x", env),
-			html_chr('<span class="test-class">a</span><span class="test-class">b</span><span class="test-class">c</span>')
+			html_chr(
+				'<span class="test-class">a</span><span class="test-class">b</span><span class="test-class">c</span>'
+			)
 		)
 
 		expect_equal(
 			epoxy_transform_html()("span.test-class#test-id x", env),
-			html_chr('<span class="test-class" id="test-id">a</span><span class="test-class" id="test-id">b</span><span class="test-class" id="test-id">c</span>')
+			html_chr(
+				'<span class="test-class" id="test-id">a</span><span class="test-class" id="test-id">b</span><span class="test-class" id="test-id">c</span>'
+			)
 		)
 	})
 
@@ -168,7 +172,7 @@ describe("parse_html_markup()", {
 		expect_true(is.list(parse_html_markup("h1 item")))
 	})
 
-	it ("returns the item if only item", {
+	it("returns the item if only item", {
 		expect_equal(parse_html_markup("item")$item, "item")
 		expect_equal(parse_html_markup(" item")$item, "item")
 		expect_equal(parse_html_markup("      item")$item, "item")
@@ -176,12 +180,12 @@ describe("parse_html_markup()", {
 		expect_equal(parse_html_markup("... item")$item, "item")
 	})
 
-	it ("parses html elements", {
+	it("parses html elements", {
 		expect_equal(parse_html_markup("h1 item")$element, "h1")
 		expect_equal(parse_html_markup("span item")$element, "span")
 	})
 
-	it ("parses class into a single string", {
+	it("parses class into a single string", {
 		m <- parse_html_markup(".a.b.c item")
 		expect_equal(length(m$class), 1L)
 		expect_equal(m$class, "a b c")
@@ -191,7 +195,7 @@ describe("parse_html_markup()", {
 		expect_equal(m$class, "a b c")
 	})
 
-	it ("parses IDs using # or %",{
+	it("parses IDs using # or %", {
 		m <- parse_html_markup("#id item")
 		expect_equal(length(m$id), 1L)
 		expect_equal(m$id, "id")

@@ -83,7 +83,8 @@ epoxy <- function(
 			what = "epoxy(.style = )",
 			with = "epoxy(.transformer = )"
 		)
-	} else if (identical(.style, quote(expr = ))) { # rlang::is_missing()
+	} else if (identical(.style, quote(expr = ))) {
+		# rlang::is_missing()
 		.style <- NULL
 	}
 
@@ -107,15 +108,15 @@ epoxy <- function(
 	res <- glue_data(
 		.x = .data,
 		...,
-		.sep     = .sep,
-		.envir   = glue_env,
-		.open    = .open,
-		.close   = .close,
-		.na      = .na,
-		.null    = .null,
+		.sep = .sep,
+		.envir = glue_env,
+		.open = .open,
+		.close = .close,
+		.na = .na,
+		.null = .null,
 		.comment = .comment,
 		.literal = .literal,
-		.trim    = .trim,
+		.trim = .trim,
 		.transformer = epoxy_options_get_transformer(opts_transformer)
 	)
 
@@ -212,8 +213,12 @@ with_epoxy_engine <- function(engine, expr) {
 }
 
 maybe_collect <- function(x) {
-	if (!inherits(x, "tbl_sql")) return(x)
-	if (!requireNamespace("dplyr", quietly = TRUE)) return(x)
+	if (!inherits(x, "tbl_sql")) {
+		return(x)
+	}
+	if (!requireNamespace("dplyr", quietly = TRUE)) {
+		return(x)
+	}
 	dplyr::collect(x)
 }
 
@@ -226,7 +231,9 @@ epoxy_data_subset <- function(x, y) {
 	}
 
 	ret <- tryCatch(base::`[[`(x, y, exact = exact), error = function(...) NULL)
-	if (!is.null(ret)) return(ret)
+	if (!is.null(ret)) {
+		return(ret)
+	}
 
 	z <- lapply(x, function(.x) base::`[[`(.x, y, exact = exact))
 	z_len_1 <- vapply(z, function(z) length(z) == 1, logical(1))

@@ -23,7 +23,8 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		)
 	}
 
-	app$run_js("
+	app$run_js(
+		"
 	document.getElementById('list').addEventListener('epoxy-updated', ev => {
 		console.log(ev)
 		Shiny.setInputValue('epoxy_updated_list', ev.detail);
@@ -32,7 +33,8 @@ test_that("ui_epoxy_html() doesn't break block-level elements", {
 		console.log(ev)
 		Shiny.setInputValue('epoxy_updated_desc_' + ev.detail.key, ev.detail);
 	})
-	")
+	"
+	)
 
 	expect_event <- function(input, ...) {
 		data <- list(...)

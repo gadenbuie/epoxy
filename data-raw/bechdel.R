@@ -3,8 +3,12 @@ library(httr2)
 
 # ## Bechdel Test from tidytuesday
 # https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-09/readme.md
-raw_bechdel <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv')
-movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
+raw_bechdel <- readr::read_csv(
+	'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/raw_bechdel.csv'
+)
+movies <- readr::read_csv(
+	'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv'
+)
 
 set.seed(424042)
 top_movies <-
@@ -66,7 +70,9 @@ bechdel <-
 		across(where(is.character), ~ if_else(.x == "N/A", "", .x)),
 		across(budget:intgross, as.numeric),
 		runtime = as.integer(sub(" min$", "", runtime)),
-		poster = purrr::pmap_chr(., function(title, year, ...) get_tmdb_movie(title, year))
+		poster = purrr::pmap_chr(., function(title, year, ...) {
+			get_tmdb_movie(title, year)
+		})
 	)
 
 # bechdel %>%

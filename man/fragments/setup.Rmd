@@ -24,4 +24,4 @@ use_epoxy_glue_engine()
 ```
 
 [whisker]: https://mustache.github.io/
-[knitr-engines]: https://bookdown.org/yihui/rmarkdown/language-engines.html
+[knitr-engines]: https://pkg.yihui.org/rmarkdown-book/language-engines.html

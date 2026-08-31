@@ -68,7 +68,9 @@ describe("epoxy_transform_inline()", {
 		)
 
 		# from ?sQuote
-		opts <- options(epoxy.fancy_quotes = c("\xc2\xab", "\xc2\xbb", "\xc2\xbf", "?"))
+		opts <- options(
+			epoxy.fancy_quotes = c("\xc2\xab", "\xc2\xbb", "\xc2\xbf", "?")
+		)
 		on.exit(options(opts))
 
 		expect_equal(

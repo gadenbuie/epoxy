@@ -4,7 +4,6 @@ skip_if_not_installed("shinytest2")
 library(shinytest2)
 
 test_that("ui_epoxy_markdown()", {
-
 	app <- AppDriver$new(
 		app_dir = system.file("examples", "ui_epoxy_markdown", package = "epoxy"),
 		name = "ui_epoxy_markdown",

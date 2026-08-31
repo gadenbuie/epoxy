@@ -121,7 +121,7 @@ alias, please use \code{ui_epoxy_html()}.
 element in your UI, with the classes specified in \code{.class_item}.
 
 \code{ui_epoxy_html()} also supports an HTML markup syntax similar to
-\href{https://pughtml.com/what-is-pug-html}{pug} (an HTML preprocessor). As an
+\href{https://www.pughtml.com/}{pug} (an HTML preprocessor). As an
 example, the markup syntax
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{"\{\{h3.example.basic#basic-three demo\}\}"

@@ -37,7 +37,7 @@ A function of \code{text} and \code{envir} suitable for the \code{.transformer} 
 }
 \description{
 \code{epoxy_transform_html()} provides a
-\href{https://pughtml.com/what-is-pug-html}{pug}-like syntax for expressions in
+\href{https://www.pughtml.com/}{pug}-like syntax for expressions in
 HTML that are wrapped in HTML elements.
 \subsection{Syntax}{
 
