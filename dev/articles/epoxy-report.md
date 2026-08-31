@@ -8,7 +8,7 @@ library(epoxy)
 ```
 
 Loading epoxy adds four new [knitr
-engines](https://bookdown.org/yihui/rmarkdown/language-engines.html), or
+engines](https://pkg.yihui.org/rmarkdown-book/language-engines.html), or
 chunk types. Each type lets you intermix text with R code or data
 (`expr` in the table below), and each is geared toward a different
 output context.
@@ -292,7 +292,7 @@ Notice that the output is HTML but wrapped in a [pandoc raw html
 block](https://pandoc.org/MANUAL.html#extension-raw_attribute), which
 tells pandoc that the content is HTML that shouldn’t be modified[^1]. It
 also means that the output of the chunk will [only be included in HTML
-documents](https://bookdown.org/yihui/rmarkdown-cookbook/raw-content.html).
+documents](https://pkg.yihui.org/rmarkdown-cookbook/raw-content.html).
 
 If your `epoxy_html` block is contained within another a raw html block,
 or if you want to force the output to appear, you can set the chunk
@@ -386,8 +386,8 @@ In R Markdown knitting into a LaTeX output, this renders as:
 
 Note that, like `epoxy_html` chunks, `epoxy_latex` places the output in
 [raw latex
-blocks](https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html).
-This behavior can be disabled by setting the chunk option
+blocks](https://pkg.yihui.org/rmarkdown-cookbook/raw-latex.html). This
+behavior can be disabled by setting the chunk option
 `latex_raw = FALSE`.
 
 ⚠️ **Note:** Prior to v1.0.0, epoxy used single `<` and `>` characters

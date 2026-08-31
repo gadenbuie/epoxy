@@ -48,7 +48,7 @@ The dataset contains 35 tree size measurements from 5 trees at 7
 timepoints in the study.
 
 With normal R Markdown [inline
-reporting](https://bookdown.org/yihui/rmarkdown-cookbook/r-code.html) we
+reporting](https://pkg.yihui.org/rmarkdown-cookbook/r-code.html) we
 would have written this in our `.Rmd` file instead:
 
 ``` default
@@ -95,7 +95,7 @@ Read more about [`knitr::knit()`]({knitted$doc_url}).
 ```
 ````
 
-Report prepared on 2026-08-05 from `inline-reporting.Rmd` with knitr
+Report prepared on 2026-08-31 from `inline-reporting.Rmd` with knitr
 version 1.51 😆. Read more about
 [`knitr::knit()`](https://rdrr.io/pkg/knitr/man/knit.html).
 
@@ -112,7 +112,7 @@ Read more about [`knitr::knit()`]({doc_url}).
 ```
 ````
 
-Report prepared on 2026-08-05 from `inline-reporting.Rmd` with knitr
+Report prepared on 2026-08-31 from `inline-reporting.Rmd` with knitr
 version 1.51 😆. Read more about
 [`knitr::knit()`](https://rdrr.io/pkg/knitr/man/knit.html).
 
@@ -307,7 +307,7 @@ A quick recap of the growth observed in the orange trees:
 ### Template inline reporting chunks
 
 By using [knitr’s reference labels
-feature](https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html#ref-label),
+feature](https://pkg.yihui.org/rmarkdown-cookbook/reuse-chunks.html#ref-label),
 and the `epoxy` `.data` chunk option we saw above, you can create an
 epoxy template that you can re-use like a parameterized chunk.
 

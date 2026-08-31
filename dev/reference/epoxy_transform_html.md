@@ -1,8 +1,7 @@
 # Concise syntax for expressions inside HTML elements
 
-`epoxy_transform_html()` provides a
-[pug](https://pughtml.com/what-is-pug-html)-like syntax for expressions
-in HTML that are wrapped in HTML elements.
+`epoxy_transform_html()` provides a [pug](https://www.pughtml.com/)-like
+syntax for expressions in HTML that are wrapped in HTML elements.
 
 ### Syntax
 

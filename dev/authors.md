@@ -17,13 +17,13 @@ Source:
 [`DESCRIPTION`](https://github.com/gadenbuie/epoxy/blob/main/DESCRIPTION)
 
 Aden-Buie G (2026). *epoxy: String Interpolation for Documents, Reports
-and Apps*. R package version 1.0.0.9000,
+and Apps*. R package version 1.0.1.9000,
 <https://pkg.garrickadenbuie.com/epoxy/>.
 
     @Manual{,
       title = {epoxy: String Interpolation for Documents, Reports and Apps},
       author = {Garrick Aden-Buie},
       year = {2026},
-      note = {R package version 1.0.0.9000},
+      note = {R package version 1.0.1.9000},
       url = {https://pkg.garrickadenbuie.com/epoxy/},
     }

@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +121,7 @@ of these trees:</p>
 <p>The dataset contains 35 tree size measurements from 5 trees at 7
 timepoints in the study.</p>
 </div>
-<p>With normal R Markdown <a href="https://bookdown.org/yihui/rmarkdown-cookbook/r-code.html" class="external-link">inline
+<p>With normal R Markdown <a href="https://pkg.yihui.org/rmarkdown-cookbook/r-code.html" class="external-link">inline
 reporting</a> we would have written this in our <code>.Rmd</code> file
 instead:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>The dataset contains `r nrow(Orange)` tree size measurements</span>
@@ -158,7 +158,7 @@ results by accessing the list elements by name with <code>$</code>.</p>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>Read more about [`knitr::knit()`]({knitted$doc_url}).</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2026-08-05 from <code>inline-reporting.Rmd</code>
+<p>Report prepared on 2026-08-31 from <code>inline-reporting.Rmd</code>
 with knitr version 1.51 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>This is still essentially equivalent to R Markdown’s inline R chunks.
@@ -171,7 +171,7 @@ list directly without having to use <code>$</code>.</p>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>Read more about [`knitr::knit()`]({doc_url}).</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>```</span></code></pre></div>
 <div class="epoxy-output">
-<p>Report prepared on 2026-08-05 from <code>inline-reporting.Rmd</code>
+<p>Report prepared on 2026-08-31 from <code>inline-reporting.Rmd</code>
 with knitr version 1.51 😆. Read more about <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link"><code>knitr::knit()</code></a>.</p>
 </div>
 <p>Note that we can still have arbitrary R code in epoxy inline
@@ -345,7 +345,7 @@ over and over again, we can use this feature to our advantage.</p>
 <div class="section level3">
 <h3 id="template-inline-reporting-chunks">Template inline reporting chunks<a class="anchor" aria-label="anchor" href="#template-inline-reporting-chunks"></a>
 </h3>
-<p>By using <a href="https://bookdown.org/yihui/rmarkdown-cookbook/reuse-chunks.html#ref-label" class="external-link">knitr’s
+<p>By using <a href="https://pkg.yihui.org/rmarkdown-cookbook/reuse-chunks.html#ref-label" class="external-link">knitr’s
 reference labels feature</a>, and the <code>epoxy</code>
 <code>.data</code> chunk option we saw above, you can create an epoxy
 template that you can re-use like a parameterized chunk.</p>

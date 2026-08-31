@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">epoxy</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/epoxy/" class="external-link">epoxy</a></span><span class="op">)</span></span></code></pre></div>
-<p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html" class="external-link">knitr
+<p>Loading epoxy adds four new <a href="https://pkg.yihui.org/rmarkdown-book/language-engines.html" class="external-link">knitr
 engines</a>, or chunk types. Each type lets you intermix text with R
 code or data (<code>expr</code> in the table below), and each is geared
 toward a different output context.</p>
@@ -358,8 +358,8 @@ shouldn’t be modified<a class="footnote-ref" tabindex="0" data-bs-toggle="popo
 things to HTML, even if your output is HTML-friendly. If you are
 explicitly writing HTML markup in your R Markdown or Quarto document,
 you should probably wrap that markup in an &lt;code&gt;{=html}&lt;/code&gt; block.&lt;/p&gt;"><sup>1</sup></a>. It also means that the output of the chunk
-will <a href="https://bookdown.org/yihui/rmarkdown-cookbook/raw-content.html" class="external-link">only
-be included in HTML documents</a>.</p>
+will <a href="https://pkg.yihui.org/rmarkdown-cookbook/raw-content.html" class="external-link">only be
+included in HTML documents</a>.</p>
 <p>If your <code>epoxy_html</code> block is contained within another a
 raw html block, or if you want to force the output to appear, you can
 set the chunk option <code>html_raw = FALSE</code>.</p>
@@ -432,9 +432,9 @@ R and LaTeX together. Wrap expressions in these types of chunks with
 ```
 \end{itemize}</code></pre>
 <p>Note that, like <code>epoxy_html</code> chunks,
-<code>epoxy_latex</code> places the output in <a href="https://bookdown.org/yihui/rmarkdown-cookbook/raw-latex.html" class="external-link">raw
-latex blocks</a>. This behavior can be disabled by setting the chunk
-option <code>latex_raw = FALSE</code>.</p>
+<code>epoxy_latex</code> places the output in <a href="https://pkg.yihui.org/rmarkdown-cookbook/raw-latex.html" class="external-link">raw latex
+blocks</a>. This behavior can be disabled by setting the chunk option
+<code>latex_raw = FALSE</code>.</p>
 <p>⚠️ <strong>Note:</strong> Prior to v1.0.0, epoxy used single
 <code>&lt;</code> and <code>&gt;</code> characters for expression
 delimiters in <code><a href="../reference/epoxy.html">epoxy_latex()</a></code> chunks. This can lead to subtle

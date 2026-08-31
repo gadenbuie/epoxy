@@ -164,8 +164,8 @@ By default, placeholders are inserted into a `<span>` element in your
 UI, with the classes specified in `.class_item`.
 
 `ui_epoxy_html()` also supports an HTML markup syntax similar to
-[pug](https://pughtml.com/what-is-pug-html) (an HTML preprocessor). As
-an example, the markup syntax
+[pug](https://www.pughtml.com/) (an HTML preprocessor). As an example,
+the markup syntax
 
     "{{h3.example.basic#basic-three demo}}"
 
