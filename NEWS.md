@@ -1,3 +1,5 @@
+# epoxy (development version)
+
 # epoxy 1.0.1
 
 * Fixed an issue with a test fixture caused by an upstream breaking change to
