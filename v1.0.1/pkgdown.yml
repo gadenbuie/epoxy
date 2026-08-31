@@ -1,0 +1,13 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  epoxy-report: epoxy-report.html
+  epoxy-script: epoxy-script.html
+  epoxy-shiny: epoxy-shiny.html
+  epoxy: epoxy.html
+  inline-reporting: inline-reporting.html
+last_built: 2026-08-31T18:48Z
+urls:
+  reference: http:/pkg.garrickadenbuie.com/epoxy/v1.0.1/reference
+  article: http:/pkg.garrickadenbuie.com/epoxy/v1.0.1/articles
